@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Коучинг · Андрей Андреев</title>
+<meta name="description" content="Коучинговые направления и клиенты Андрея Андреева." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0E0E0E;--ink-3:#555;--ink-mute:#8A8A8A;--paper:#F4F0E8;--paper-2:#ECE6DA;--paper-3:#E1DACB;--coral:#E86F4D;--coral-soft:#F4A48A;--line:#E6E3DD;}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;font-family:'Manrope',system-ui,sans-serif;color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased}
+.nav{position:sticky;top:0;background:color-mix(in oklab,var(--paper) 88%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);z-index:50}
+.nav__inner{max-width:1100px;margin:0 auto;padding:18px 32px;display:flex;align-items:center;justify-content:space-between;font-size:14px}
+.nav__brand{display:flex;align-items:center;gap:10px;font-weight:700}
+.nav__brand .mark{width:28px;height:28px;border-radius:50%;background:var(--ink);color:var(--paper);display:grid;place-items:center;font-family:'Instrument Serif',serif;font-style:italic;font-size:16px;font-weight:700}
+.nav__back{color:var(--ink-mute);font-family:'JetBrains Mono',monospace;font-size:13px}
+.wrap{max-width:1100px;margin:0 auto;padding:80px 32px}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:16px;display:inline-block}
+h1{font-size:clamp(40px,5vw,72px);font-weight:600;letter-spacing:-.025em;line-height:1.02;margin:0 0 16px}
+h1 em{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400}
+.lede{font-size:19px;color:var(--ink-3);line-height:1.5;margin:0 0 56px;max-width:640px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px}
+.card{display:block;padding:36px 32px;background:#fff;border:1px solid var(--line);border-radius:20px;text-decoration:none;color:var(--ink);transition:all .25s ease;position:relative;overflow:hidden}
+.card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(14,14,14,.08)}
+.card::before{content:"";position:absolute;top:-30px;right:-30px;width:120px;height:120px;background:var(--coral-soft);border-radius:50%;opacity:.35;filter:blur(20px);transition:opacity .25s ease}
+.card:hover::before{opacity:.6}
+.card__num{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;color:var(--ink-mute);margin-bottom:14px;position:relative;z-index:1}
+.card__title{font-size:28px;font-weight:600;letter-spacing:-.02em;line-height:1.1;margin:0 0 8px;position:relative;z-index:1}
+.card__title em{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400}
+.card__sub{font-size:15px;color:var(--ink-3);margin:0 0 24px;position:relative;z-index:1}
+.card__cta{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--coral);position:relative;z-index:1}
+.card__cta::after{content:"→";font-family:'Instrument Serif',serif;font-style:italic;font-size:18px}
+.foot{margin-top:80px;padding-top:32px;border-top:1px solid var(--line);font-size:13px;color:var(--ink-mute);font-family:'JetBrains Mono',monospace}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav__inner">
+    <div class="nav__brand"><span class="mark">А</span> Андрей Андреев</div>
+    <a href="/" class="nav__back">← на главную</a>
+  </div>
+</nav>
+
+<main class="wrap">
+  <span class="eyebrow">Раздел · Коучинг</span>
+  <h1>Клиенты и <em>направления</em></h1>
+  <p class="lede">Здесь живут страницы коучинговых проектов и клиентов, которых ведёт Андрей.</p>
+
+  <div class="cards">
+    <a href="/coaching/pavlenko/" class="card">
+      <div class="card__num">01 · Книга-конспекты</div>
+      <div class="card__title">Ольга <em>Павленко</em></div>
+      <div class="card__sub">«Как я хочу?» — 50 конспектов о деньгах, самореализации и внутренних блокировках предпринимателя.</div>
+      <div class="card__cta">Перейти на страницу</div>
+    </a>
+  </div>
+
+  <div class="foot">© 2026 · следующие клиенты добавятся сюда</div>
+</main>
+</body>
+</html>
