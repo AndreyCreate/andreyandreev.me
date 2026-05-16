@@ -10,6 +10,18 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=109255989', 'ym');
+   ym(109255989, 'init', {ssr:true, webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true, trackHash:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/109255989" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
 <style>
 :root{
   --ink:#0E0E0E;--ink-2:#2A2A2A;--ink-3:#555;--ink-mute:#8A8A8A;
@@ -198,7 +210,7 @@ img{display:block;max-width:100%}
       <a href="#method">Подход</a>
       <a href="#pricing">Формат</a>
       <a href="#author">Обо мне</a>
-      <a href="https://cal.com/andrei-andreev/first" class="cta">Поговорить с Андреем</a>
+      <a href="https://cal.com/andrei-andreev/first" onclick="ym(109255989,'reachGoal','cta_cal_click')" class="cta">Поговорить с Андреем</a>
     </div>
   </div>
 </nav>
@@ -245,7 +257,7 @@ img{display:block;max-width:100%}
   </div>
 
   <div class="cta-inline">
-    <a href="https://cal.com/andrei-andreev/first" class="btn">Поговорить с Андреем <span class="arrow">→</span></a>
+    <a href="https://cal.com/andrei-andreev/first" onclick="ym(109255989,'reachGoal','cta_cal_click')" class="btn">Поговорить с Андреем <span class="arrow">→</span></a>
   </div>
 </section>
 
@@ -339,7 +351,7 @@ img{display:block;max-width:100%}
         <li>Работа с конкретным запросом</li>
         <li>План действий после сессии</li>
       </ul>
-      <a href="https://cal.com/andrei-andreev/first" class="price__btn">Записаться</a>
+      <a href="https://cal.com/andrei-andreev/first" onclick="ym(109255989,'reachGoal','price_btn_click')" class="price__btn">Записаться</a>
     </div>
 
     <div class="price price--featured">
@@ -354,7 +366,7 @@ img{display:block;max-width:100%}
         <li>Поддержка между сессиями</li>
         <li>Гибкий график (раз в 2 недели)</li>
       </ul>
-      <a href="https://cal.com/andrei-andreev/first" class="price__btn">Обсудить</a>
+      <a href="https://cal.com/andrei-andreev/first" onclick="ym(109255989,'reachGoal','price_btn_click')" class="price__btn">Обсудить</a>
     </div>
 
     <div class="price">
@@ -368,7 +380,7 @@ img{display:block;max-width:100%}
         <li>Поддержка между сессиями</li>
         <li>Гибкий график (раз в 2 недели)</li>
       </ul>
-      <a href="https://cal.com/andrei-andreev/first" class="price__btn">Обсудить</a>
+      <a href="https://cal.com/andrei-andreev/first" onclick="ym(109255989,'reachGoal','price_btn_click')" class="price__btn">Обсудить</a>
     </div>
   </div>
 </section>
@@ -437,7 +449,7 @@ img{display:block;max-width:100%}
     <div class="final-cta__eyebrow">Сессия-знакомство</div>
     <h2 class="final-cta__h">Поговорим, что <em>давно сидит занозой</em></h2>
     <p class="final-cta__t">Записывайтесь — расскажете, что не отпускает, с чем хотите поработать, что давно сидит занозой и никуда не делось. С меня — план действий и честная обратная связь, без «у вас огромный потенциал» и других вежливых формулировок.<br><br>Если будет контакт — позову в долгую работу. Если нет — разойдёмся друзьями.</p>
-    <a href="https://cal.com/andrei-andreev/first" class="final-cta__btn">Поговорить с Андреем <span class="arrow">→</span></a>
+    <a href="https://cal.com/andrei-andreev/first" onclick="ym(109255989,'reachGoal','cta_cal_click')" class="final-cta__btn">Поговорить с Андреем <span class="arrow">→</span></a>
   </div>
 </section>
 
@@ -446,9 +458,25 @@ img{display:block;max-width:100%}
   <div class="foot__socials">
     <a href="https://instagram.com/andreyandreev.me">Instagram</a>
     <a href="https://t.me/coaching_with_andrey">Telegram</a>
-    <a href="https://cal.com/andrei-andreev/first">Cal.com</a>
+    <a href="https://cal.com/andrei-andreev/first" onclick="ym(109255989,'reachGoal','cta_cal_click')">Cal.com</a>
   </div>
 </footer>
 
+<script>
+  // Yandex.Metrika: fire scroll-reach goal when final CTA enters viewport
+  (function(){
+    var target = document.querySelector('.final-cta');
+    if (!target || typeof IntersectionObserver === 'undefined') return;
+    var fired = false;
+    new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting && !fired) {
+          fired = true;
+          if (typeof ym === 'function') ym(109255989, 'reachGoal', 'scroll_final_cta');
+        }
+      });
+    }, {threshold: 0.5}).observe(target);
+  })();
+</script>
 </body>
 </html>
