@@ -173,6 +173,7 @@
   }
 
   function base(ctx, cfg, tplId, img, scrimKind, grainHeavy, isDuotone) {
+    ctx.save(); ctx.translate(-(cfg.textX || 0), -(cfg.textY || 0));
     // background
     if (cfg.source === 'photo' && img) {
       drawPhoto(ctx, img, cfg.focusX ?? 50, focusYFor(cfg, tplId),
@@ -185,6 +186,7 @@
     scrim(ctx, cfg.source === 'photo' || isDuotone ? scrimKind : 'none');
     if (cfg.darken) { ctx.save(); ctx.fillStyle = 'rgba(8,8,9,' + cfg.darken + ')'; ctx.fillRect(0, 0, W, H); ctx.restore(); }
     grain(ctx, grainHeavy);
+    ctx.restore();
   }
 
   function focusYFor(cfg, tplId) {
@@ -261,7 +263,7 @@
         color: ink, maxW: W - 2 * M - 120 }];
       drawStack(ctx, items, { anchor: 'top', topY: H * 0.16, gaps: [], cx: (W + 96) / 2 });
       // left spine bar
-      ctx.save();
+      ctx.save(); ctx.translate(-(cfg.textX || 0), -(cfg.textY || 0));
       ctx.fillStyle = 'rgba(236,231,220,0.92)';
       ctx.fillRect(0, 0, 96, H);
       ctx.fillStyle = '#1C1A16';
@@ -274,7 +276,7 @@
       ctx.fillText(String(cfg.collection || 'THE REELS COLLECTION').toUpperCase(), 0, 8);
       ctx.restore();
       // year at bottom of bar (vertical)
-      ctx.save();
+      ctx.save(); ctx.translate(-(cfg.textX || 0), -(cfg.textY || 0));
       ctx.fillStyle = '#1C1A16'; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
       ctx.translate(48, H - 40); ctx.rotate(Math.PI / 2);
       ctx.font = '400 22px ' + COND; ctx.letterSpacing = (0.2 * 22) + 'px';
@@ -291,7 +293,9 @@
     ctx.fillStyle = '#0A0A0B'; ctx.fillRect(0, 0, W, H);
     let img = null;
     if (cfg.source === 'photo') img = await loadImg(cfg.photo || (window.PHOTOS && window.PHOTOS[5] && window.PHOTOS[5].src));
+    ctx.save(); ctx.translate(cfg.textX || 0, cfg.textY || 0);
     (RENDER[tplId] || RENDER.centerpiece)(ctx, cfg, img);
+    ctx.restore();
     return cv;
   };
 })();
