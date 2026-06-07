@@ -176,8 +176,9 @@
     ctx.save(); ctx.translate(-(cfg.textX || 0), -(cfg.textY || 0));
     // background
     if (cfg.source === 'photo' && img) {
-      drawPhoto(ctx, img, cfg.focusX ?? 50, focusYFor(cfg, tplId),
-        (isDuotone || cfg.bw) ? 'grayscale(1) contrast(1.15) brightness(0.95)' : null, cfg.photoScale ?? 1);
+      var _bw = (isDuotone || cfg.bw);
+      var _f = (_bw ? 'grayscale(1) ' : '') + 'brightness(' + ((cfg.brightness ?? 1) * (_bw ? 0.95 : 1)) + ') contrast(' + ((cfg.contrast ?? 1) * (_bw ? 1.15 : 1)) + ')';
+      drawPhoto(ctx, img, cfg.focusX ?? 50, focusYFor(cfg, tplId), _f, cfg.photoScale ?? 1);
       if (isDuotone) duotone(ctx); else gradeWash(ctx, cfg.grade);
     } else {
       ctx.fillStyle = gradeHex(cfg.grade);
