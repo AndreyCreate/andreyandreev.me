@@ -30,8 +30,8 @@
     });
   }
 
-  function drawPhoto(ctx, img, focusX, focusY, filter) {
-    const s = Math.max(W / img.width, H / img.height);
+  function drawPhoto(ctx, img, focusX, focusY, filter, scaleMul) {
+    const s = Math.max(W / img.width, H / img.height) * (scaleMul || 1);
     const dw = img.width * s, dh = img.height * s;
     const dx = (W - dw) * (focusX / 100), dy = (H - dh) * (focusY / 100);
     ctx.save();
@@ -176,13 +176,14 @@
     // background
     if (cfg.source === 'photo' && img) {
       drawPhoto(ctx, img, cfg.focusX ?? 50, focusYFor(cfg, tplId),
-        (isDuotone || cfg.bw) ? 'grayscale(1) contrast(1.15) brightness(0.95)' : null);
+        (isDuotone || cfg.bw) ? 'grayscale(1) contrast(1.15) brightness(0.95)' : null, cfg.photoScale ?? 1);
       if (isDuotone) duotone(ctx); else gradeWash(ctx, cfg.grade);
     } else {
       ctx.fillStyle = gradeHex(cfg.grade);
       ctx.fillRect(0, 0, W, H);
     }
     scrim(ctx, cfg.source === 'photo' || isDuotone ? scrimKind : 'none');
+    if (cfg.darken) { ctx.save(); ctx.fillStyle = 'rgba(8,8,9,' + cfg.darken + ')'; ctx.fillRect(0, 0, W, H); ctx.restore(); }
     grain(ctx, grainHeavy);
   }
 
