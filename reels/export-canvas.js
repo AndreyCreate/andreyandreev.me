@@ -126,15 +126,34 @@
   }
 
   // A text item: { text, family, weight, size, lh, trackEm, color, alpha, upper, italic, maxW }
+  // Auto-fit: wrap() can only break on spaces, so a single long word (frequent in
+  // Russian titles) overflows maxW at the template's base size. Shrink the font
+  // until the widest unbreakable word fits, floor at 50% of the base size.
   function prep(ctx, it) {
-    const size = it.size;
-    ctx.font = (it.italic ? 'italic ' : '') + (it.weight || 400) + ' ' + size + 'px ' + it.family;
-    ctx.letterSpacing = ((it.trackEm || 0) * size) + 'px';
+    let size = it.size;
+    const maxW = it.maxW || (W - 2 * M);
     const txt = it.upper ? String(it.text).toUpperCase() : String(it.text);
-    const ls = wrap(ctx, txt, it.maxW || (W - 2 * M));
+    const floor = size * 0.5;
+    const setFont = () => {
+      ctx.font = (it.italic ? 'italic ' : '') + (it.weight || 400) + ' ' + size + 'px ' + it.family;
+      ctx.letterSpacing = ((it.trackEm || 0) * size) + 'px';
+    };
+    for (let pass = 0; pass < 4; pass++) {
+      setFont();
+      const words = txt.split(' ').filter(Boolean);
+      const widest = words.length ? Math.max.apply(null, words.map(w => ctx.measureText(w).width)) : 0;
+      if (widest <= maxW || size <= floor) break;
+      size = Math.max(floor, size * (maxW / widest) * 0.99);
+    }
+    it.size = size;
+    setFont();
+    const ls = wrap(ctx, txt, maxW);
     it._lines = ls;
     it._lineH = size * (it.lh || 1.1);
     it._h = ls.length * it._lineH;
+    // QA hook: expose fit metrics so the gate can assert lines stay inside maxW
+    const maxLine = ls.length ? Math.max.apply(null, ls.map(l => ctx.measureText(l).width)) : 0;
+    (window.__fitMetrics = window.__fitMetrics || []).push({ size: size, maxLine: maxLine, maxW: maxW });
     return it;
   }
 
@@ -219,13 +238,14 @@
       base(ctx, cfg, 'monolith', img, 'none', false, false);
       const ink = inkFor(cfg.grade, cfg.source);
       const sz = Math.round(150 * (cfg.titleScale ?? 1));
-      // title: bottom-left, can wrap
+      // title: top-left, can wrap; prep() may shrink the size (auto-fit) — draw with it.size
       const it = prep(ctx, { text: cfg.title, family: COND, weight: 700, size: sz, lh: 0.84,
         trackEm: -0.02, color: ink, upper: true, maxW: W - 2 * M });
+      const fsz = it.size;
       ctx.save();
       ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic'; ctx.fillStyle = ink;
-      ctx.font = '700 ' + sz + 'px ' + COND; ctx.letterSpacing = (-0.02 * sz) + 'px';
-      const startY = H * 0.12 + M + sz * 0.80;
+      ctx.font = '700 ' + fsz + 'px ' + COND; ctx.letterSpacing = (-0.02 * fsz) + 'px';
+      const startY = H * 0.12 + M + fsz * 0.80;
       it._lines.forEach((ln, i) => ctx.fillText(ln, M, startY + i * it._lineH));
       ctx.restore();
     },
