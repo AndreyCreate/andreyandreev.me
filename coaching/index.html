@@ -480,5 +480,19 @@ img{display:block;max-width:100%}
     }, {threshold: 0.5}).observe(target);
   })();
 </script>
+<!-- Instagram dashboard tracker (ig-dashboard) -->
+<script>window.CT_CONFIG={endpoint:'https://ig-dashboard-seven.vercel.app/api/track',landing_id:3};</script>
+<script src="https://ig-dashboard-seven.vercel.app/tracker.js" defer></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var cta = document.querySelectorAll('a[href*="cal.com/andrei-andreev"]');
+    for (var i = 0; i < cta.length; i++) {
+      cta[i].addEventListener('click', function () {
+        if (window.ctTrack) window.ctTrack('target_action', { step: 'cal_booking_click' });
+      });
+    }
+  });
+</script>
+<!-- /Instagram dashboard tracker -->
 </body>
 </html>
