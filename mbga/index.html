@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Make Blog Great Again — система автономного дохода с блога</title>
+<meta name="description" content="Мастер-группа Андрея Андреева: за 3 недели настраиваем систему контента на AI, которая приносит деньги с блога на органике при 1 часе работы в день. Для экспертов, коучей и психологов.">
+<meta property="og:title" content="Make Blog Great Again — система автономного дохода с блога">
+<meta property="og:description" content="За 3 недели настраиваем систему, которая приносит деньги с блога на органике — 1 час в день. Для экспертов, коучей, психологов.">
+<style>
+@font-face{font-family:'Corm';src:url('fonts/CormorantGaramond-normal-500-latin.woff2') format('woff2');font-weight:500;font-style:normal;unicode-range:U+0000-00FF}
+@font-face{font-family:'Corm';src:url('fonts/CormorantGaramond-normal-500-cyrillic.woff2') format('woff2');font-weight:500;font-style:normal;unicode-range:U+0400-04FF}
+@font-face{font-family:'Corm';src:url('fonts/CormorantGaramond-normal-600-cyrillic.woff2') format('woff2');font-weight:600;font-style:normal;unicode-range:U+0400-04FF}
+@font-face{font-family:'Corm';src:url('fonts/CormorantGaramond-italic-500-latin.woff2') format('woff2');font-weight:500;font-style:italic;unicode-range:U+0000-00FF}
+@font-face{font-family:'Corm';src:url('fonts/CormorantGaramond-italic-500-cyrillic.woff2') format('woff2');font-weight:500;font-style:italic;unicode-range:U+0400-04FF}
+@font-face{font-family:'Forum';src:url('fonts/Forum-normal-400-latin.woff2') format('woff2');font-weight:400;unicode-range:U+0000-00FF}
+@font-face{font-family:'Forum';src:url('fonts/Forum-normal-400-cyrillic.woff2') format('woff2');font-weight:400;unicode-range:U+0400-04FF}
+@font-face{font-family:'Osw';src:url('fonts/Oswald-normal-400-latin.woff2') format('woff2');font-weight:400;unicode-range:U+0000-00FF}
+@font-face{font-family:'Osw';src:url('fonts/Oswald-normal-400-cyrillic.woff2') format('woff2');font-weight:400;unicode-range:U+0400-04FF}
+@font-face{font-family:'Osw';src:url('fonts/Oswald-normal-500-latin.woff2') format('woff2');font-weight:500;unicode-range:U+0000-00FF}
+@font-face{font-family:'Osw';src:url('fonts/Oswald-normal-500-cyrillic.woff2') format('woff2');font-weight:500;unicode-range:U+0400-04FF}
+@font-face{font-family:'Osw';src:url('fonts/Oswald-normal-600-latin.woff2') format('woff2');font-weight:600;unicode-range:U+0000-00FF}
+@font-face{font-family:'Osw';src:url('fonts/Oswald-normal-600-cyrillic.woff2') format('woff2');font-weight:600;unicode-range:U+0400-04FF}
+:root{
+--cream:#F2EDE8; --cream-2:#E7DFD4; --ink:#1A1815; --ink-soft:#2A2724;
+--coral:#E5502A; --coral-deep:#C8401E; --muted:rgba(26,24,21,.60); --muted-2:rgba(26,24,21,.42);
+--line:rgba(26,24,21,.14); --on-dark:#F2EDE8; --on-dark-muted:rgba(242,237,232,.62);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--ink);font-family:'Osw',sans-serif;font-weight:400;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.wrap{max-width:1200px;margin:0 auto;padding:0 40px}
+.serif{font-family:'Corm',serif}
+h1,h2,h3{font-family:'Corm',serif;font-weight:500;line-height:1.02;letter-spacing:-.01em}
+em{font-style:italic}
+.kick{font-family:'Osw';font-weight:500;text-transform:uppercase;letter-spacing:.22em;font-size:.72rem;color:var(--muted-2)}
+.brandmark{font-family:'Corm';font-weight:600;font-size:1rem;letter-spacing:.02em}
+a{color:inherit;text-decoration:none}
+section{position:relative}
+.dark{background:var(--ink);color:var(--on-dark)}
+.dark .kick{color:var(--on-dark-muted)}
+.dark .muted{color:var(--on-dark-muted)}
+.coral{background:var(--coral);color:#fff}
+.coral .kick{color:rgba(255,255,255,.7)}
+.muted{color:var(--muted)}
+.pad{padding:110px 0}
+.pad-s{padding:80px 0}
+
+/* ---- top bar ---- */
+.top{position:absolute;top:0;left:0;right:0;z-index:10}
+.top .wrap{display:flex;justify-content:space-between;align-items:center;padding-top:30px}
+.top .cta-mini{font-family:'Osw';font-weight:500;text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;border:1px solid var(--line);padding:9px 18px;border-radius:100px}
+
+/* ---- hero ---- */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden}
+.hero .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;width:100%}
+.hero h1{font-size:5.2rem}
+.hero h1 em{color:var(--coral)}
+.hero .sub{margin-top:26px;font-size:1.12rem;line-height:1.6;color:var(--muted);max-width:30rem}
+.hero .who{margin-top:34px;display:flex;align-items:center;gap:14px}
+.hero .who .dot{width:44px;height:44px;border-radius:50%;background:var(--coral);flex:none;display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Corm';font-size:1.2rem}
+.hero .who .t{font-size:.82rem;line-height:1.4;color:var(--muted)}
+.hero .who .t b{color:var(--ink);font-weight:500;font-family:'Osw'}
+.blobwrap{position:relative;display:flex;justify-content:center;align-items:center;min-height:520px}
+.blob{width:118%;max-width:640px;height:auto;filter:drop-shadow(0 30px 60px rgba(200,64,30,.28))}
+.blob-note{position:absolute;top:6%;right:-2%;max-width:200px;font-size:.8rem;line-height:1.5;color:var(--muted);text-align:right}
+.hero-cta{position:absolute;bottom:8%;right:2%;display:flex;align-items:center;gap:14px}
+.hero-cta .big{font-family:'Corm';font-weight:500;font-size:2.6rem}
+.arrow{display:inline-block;transform:rotate(0)}
+
+/* ---- big statement ---- */
+.stmt h2{font-size:3.4rem;max-width:20ch}
+.stmt h2 em{color:var(--coral)}
+
+/* ---- pains ---- */
+.pains{display:grid;grid-template-columns:repeat(3,1fr);gap:34px;margin-top:56px}
+.pain{border-top:2px solid var(--coral);padding-top:20px}
+.pain .n{font-family:'Corm';font-style:italic;font-size:1.5rem;color:var(--coral)}
+.pain p{margin-top:10px;font-size:1rem;line-height:1.55;color:var(--on-dark-muted)}
+
+/* ---- numbers ---- */
+.nums{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;margin-top:56px}
+.num .big{font-family:'Corm';font-weight:600;font-size:3.6rem;line-height:1;color:#fff}
+.num .lbl{margin-top:12px;font-size:.9rem;line-height:1.45;color:rgba(255,255,255,.82)}
+.coral .disc{margin-top:40px;font-size:.85rem;color:rgba(255,255,255,.72);max-width:60ch;line-height:1.6}
+
+/* ---- modules ---- */
+.mods{margin-top:50px;border-top:1px solid var(--line)}
+.mod{display:grid;grid-template-columns:56px 1fr;gap:24px;padding:30px 0;border-bottom:1px solid var(--line);align-items:start}
+.mod .mn{font-family:'Corm';font-style:italic;font-size:1.8rem;color:var(--coral)}
+.mod h3{font-size:1.75rem;margin-bottom:8px}
+.mod p{font-size:1rem;line-height:1.6;color:var(--muted);max-width:60ch}
+
+/* ---- cases ---- */
+.cases{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;margin-top:52px}
+.case{background:var(--cream-2);border-radius:14px;padding:32px 30px}
+.case .who{font-family:'Osw';font-weight:600;font-size:1.02rem;text-transform:uppercase;letter-spacing:.04em}
+.case .niche{font-size:.82rem;color:var(--muted-2);margin-top:3px;margin-bottom:18px}
+.case .res{font-family:'Corm';font-size:1.5rem;line-height:1.28}
+.case .res b{color:var(--coral);font-weight:600}
+
+/* ---- quotes ---- */
+.quotes{columns:2;column-gap:26px;margin-top:50px}
+.q{break-inside:avoid;background:var(--cream);border:1px solid var(--line);border-radius:14px;padding:26px 26px;margin-bottom:26px}
+.q p{font-family:'Corm';font-size:1.34rem;line-height:1.4;font-style:italic}
+.q .a{margin-top:14px;font-family:'Osw';font-size:.78rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted-2)}
+
+/* ---- pricing ---- */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:52px}
+.plan{border:1px solid rgba(242,237,232,.2);border-radius:16px;padding:34px 30px;display:flex;flex-direction:column}
+.plan.feat{background:var(--coral);border-color:var(--coral)}
+.plan .pn{font-family:'Osw';font-weight:600;text-transform:uppercase;letter-spacing:.14em;font-size:.82rem;color:var(--on-dark-muted)}
+.plan.feat .pn{color:rgba(255,255,255,.85)}
+.plan .pp{font-family:'Corm';font-weight:600;font-size:2.8rem;margin-top:14px;line-height:1}
+.plan .pp small{font-size:1rem;color:var(--on-dark-muted);font-family:'Osw';font-weight:400}
+.plan.feat .pp small{color:rgba(255,255,255,.8)}
+.plan ul{list-style:none;margin-top:22px;flex:1}
+.plan li{padding:9px 0;font-size:.94rem;line-height:1.5;color:var(--on-dark-muted);border-bottom:1px solid rgba(242,237,232,.1)}
+.plan.feat li{color:rgba(255,255,255,.92);border-color:rgba(255,255,255,.16)}
+.plan li:last-child{border-bottom:none}
+.plan .pcta{margin-top:24px;text-align:center;font-family:'Osw';font-weight:500;text-transform:uppercase;letter-spacing:.14em;font-size:.8rem;padding:14px;border-radius:100px;border:1px solid rgba(242,237,232,.3)}
+.plan.feat .pcta{background:#fff;color:var(--coral);border-color:#fff}
+
+/* ---- format ---- */
+.fmt{display:grid;grid-template-columns:repeat(4,1fr);gap:26px;margin-top:50px}
+.fmt .item .big{font-family:'Corm';font-weight:600;font-size:3rem;color:var(--coral);line-height:1}
+.fmt .item .lbl{margin-top:10px;font-size:.95rem;color:var(--muted);line-height:1.45}
+
+/* ---- honest ---- */
+.honest{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:44px}
+.honest .q{background:transparent;border:none;padding:0}
+.honest .qh{font-family:'Corm';font-size:1.5rem;margin-bottom:8px}
+.honest .qa{font-size:1rem;line-height:1.6;color:var(--muted)}
+
+/* ---- final ---- */
+.final{text-align:center;padding:120px 40px 130px}
+.final h2{font-size:4.4rem}
+.final h2 em{color:var(--coral)}
+.final .fcta{margin-top:40px;display:inline-flex;align-items:center;gap:14px;background:var(--coral);color:#fff;font-family:'Osw';font-weight:500;text-transform:uppercase;letter-spacing:.16em;font-size:.92rem;padding:20px 44px;border-radius:100px}
+.final .sub{margin-top:20px;color:var(--muted);font-size:.95rem}
+footer{border-top:1px solid var(--line);padding:30px 0}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;font-size:.78rem;color:var(--muted-2);text-transform:uppercase;letter-spacing:.1em;font-family:'Osw'}
+
+@media(max-width:900px){
+  .wrap{padding:0 22px}
+  .pad{padding:66px 0}.pad-s{padding:50px 0}
+  .top .wrap{padding-top:20px}
+  .hero{min-height:auto;padding:96px 0 40px}
+  .hero .grid{grid-template-columns:1fr;gap:10px}
+  .hero h1{font-size:3.1rem}
+  .blobwrap{min-height:340px;order:2}.blob{max-width:400px}
+  .blob-note{display:none}
+  .hero-cta{position:static;justify-content:flex-start;margin-top:20px}
+  .hero-cta .big{font-size:2rem}
+  .stmt h2{font-size:2.2rem}
+  .final h2{font-size:2.6rem}
+  .pains,.nums,.cases,.plans,.fmt,.honest{grid-template-columns:1fr;gap:22px}
+  .nums{grid-template-columns:1fr 1fr}
+  .fmt{grid-template-columns:1fr 1fr}
+  .quotes{columns:1}
+  .num .big,.fmt .item .big{font-size:2.8rem}
+  .mod{grid-template-columns:40px 1fr;gap:14px}
+}
+</style>
+</head>
+<body>
+
+<!-- TOP -->
+<div class="top"><div class="wrap">
+  <div class="brandmark">Андрей Андреев</div>
+  <a href="#apply" class="cta-mini">Оставить заявку</a>
+</div></div>
+
+<!-- HERO -->
+<section class="hero"><div class="wrap"><div class="grid">
+  <div class="copy">
+    <div class="kick">Make Blog Great Again · мастер-группа</div>
+    <h1 style="margin-top:18px">Блог, который<br>приносит <em>деньги</em>.<br>Один час в день.</h1>
+    <p class="sub">За 3 недели настраиваем систему автономного контента на AI — под твой голос и твою нишу. Дальше она работает на органике, а ты тратишь час в день вместо четырёх.</p>
+    <div class="who">
+      <div class="dot">А</div>
+      <div class="t"><b>Андрей Андреев</b><br>5–6 млн просмотров в месяц. Без единого рилса. Показываю всю систему изнутри.</div>
+    </div>
+  </div>
+  <div class="blobwrap">
+    <svg class="blob" viewBox="0 0 600 560" xmlns="http://www.w3.org/2000/svg"><path fill="#E5502A" d="M300 20c92-8 178 34 226 108 46 72 44 168 8 244-34 72-104 128-188 148-88 20-190 6-256-52C28 462-6 372 6 288 18 204 74 132 148 84 196 52 244 25 300 20Z"/></svg>
+    <div class="blob-note">1 лекция → 1 вечер.<br>Ты получаешь новый профиль, который приводит «своих».</div>
+  </div>
+</div></div>
+  <div class="hero-cta"><span class="big">Оставить заявку</span><span class="big arrow">↘</span></div>
+</section>
+
+<!-- STATEMENT -->
+<section class="pad"><div class="wrap stmt">
+  <div class="kick">В чём проблема</div>
+  <h2 style="margin-top:18px">Все говорят, <em>чего</em> достигли. Никто не говорит — <em>как</em>.</h2>
+</div></section>
+
+<!-- PAINS (dark) -->
+<section class="dark pad-s"><div class="wrap">
+  <div class="kick">Знакомо?</div>
+  <div class="pains">
+    <div class="pain"><div class="n">01</div><p>Тратишь по 4 часа в день на контент — и всё равно выгораешь. Жизнь слишком коротка для этого.</p></div>
+    <div class="pain"><div class="n">02</div><p>Подписчики есть, а денег нет. Блог растёт, а на счёт это не приходит.</p></div>
+    <div class="pain"><div class="n">03</div><p>Скопировать чужие рубрики не выходит — у тебя своя ниша, свои смыслы, свой голос.</p></div>
+  </div>
+</div></section>
+
+<!-- WHAT IS -->
+<section class="pad"><div class="wrap">
+  <div class="kick">Что это</div>
+  <h2 style="margin-top:18px;font-size:3rem;max-width:24ch">Не курс. Мини-группа на 6–8 человек, где мы <em>вместе настраиваем</em> тебе систему.</h2>
+  <p class="muted" style="margin-top:26px;max-width:60ch;font-size:1.08rem;line-height:1.65">За 3 недели собираем твой персональный стек: база знаний в Notion, скиллы Claude под твой tone of voice, исследование аудитории, мини-продукт и воронку. AI ускоряет создание текстов — но голос остаётся твой, аутентичный. Никаких рилсов, никакого «гейма».</p>
+</div></section>
+
+<!-- NUMBERS (coral) -->
+<section class="coral pad"><div class="wrap">
+  <div class="kick">Результаты Андрея — на органике, без накрутки</div>
+  <div class="nums">
+    <div class="num"><div class="big">6 млн</div><div class="lbl">просмотров в месяц, без единого рилса</div></div>
+    <div class="num"><div class="big">+2 000</div><div class="lbl">подписчиков в неделю</div></div>
+    <div class="num"><div class="big">6–20К ₽</div><div class="lbl">в день с одного мини-продукта за 1 900 ₽</div></div>
+    <div class="num"><div class="big">1 час</div><div class="lbl">в день на весь контент — 3 поста</div></div>
+  </div>
+  <p class="disc">Почему это не хайп и не везение? Система. Эксперименты идут с января 2026 — рост здесь закономерность, а не случайность. Цифры можно накрутить гивами и рекламой, но это чистая органика настроенной системы.</p>
+</div></section>
+
+<!-- MODULES -->
+<section class="pad"><div class="wrap">
+  <div class="kick">Что внутри программы</div>
+  <h2 style="margin-top:18px;font-size:3rem">Пять блоков — от текста до автономной системы</h2>
+  <div class="mods">
+    <div class="mod"><div class="mn">01</div><div><h3>Тексты и продвижение</h3><p>Исследование своей аудитории, сборка личного tone of voice, экспертные посты через Manus, скилл Claude, который пишет твоим голосом. Итеративная доводка: с 10–15% до 90–95% попадания в стиль. Полный цикл «идея → готовый пост» — меньше часа.</p></div></div>
+    <div class="mod"><div class="mn">02</div><div><h3>Мини-продукт</h3><p>Собираешь продукт по MVP-подходу из запросов своей аудитории. Генерация структуры курса в Manus — около 30 минут. Некоторые получают первые продажи прямо на группе.</p></div></div>
+    <div class="mod"><div class="mn">03</div><div><h3>Система дизайна</h3><p>Своя дизайн-ДНК в Claude Design: цвет, типографика, шаблоны для лендингов и каруселей. Карусель за 5–10 минут вместо часов в редакторе.</p></div></div>
+    <div class="mod"><div class="mn">04</div><div><h3>Кастдев аудитории</h3><p>Глубинные интервью с клиентами, разбор через AI, точный портрет аудитории и её язык. Ты перестаёшь угадывать — и начинаешь попадать в смыслы.</p></div></div>
+    <div class="mod"><div class="mn">05</div><div><h3>Воронка и AI-агент</h3><p>Воронка в ManyChat на входящий трафик и личный AI-агент, который каждый день готовит контент на все площадки: пост в Telegram, в Threads, карусель, сценарий Reels.</p></div></div>
+  </div>
+</div></section>
+
+<!-- CASES -->
+<section class="pad-s"><div class="wrap">
+  <div class="kick">Ученики — реальные цифры</div>
+  <h2 style="margin-top:18px;font-size:3rem">Система работает не только у меня</h2>
+  <div class="cases">
+    <div class="case"><div class="who">Наталья Мальцева</div><div class="niche">Обучение продажам коучей и психологов · Поток 1</div><div class="res">Охваты выросли с <b>60К до 480К</b>, +2 000 подписчиков. Один пост по методике — <b>+700 подписчиков, 291 заявка, 8 продаж</b>. Доход с блога: 289К → <b>900К+ ₽</b>.</div></div>
+    <div class="case"><div class="who">Нелли Чернова</div><div class="niche">Телесно-эмоциональная терапия · Поток 1</div><div class="res">Один вирусный рилс по системе привёл <b>240 профильных специалистов</b>. Карусель, собранную по методике, репостили чужие студенты.</div></div>
+    <div class="case"><div class="who">Галина Фёдорова</div><div class="niche">Трансперсональный психолог · Поток 1</div><div class="res">Закрытый канал: <b>30 участников, ~150К ₽/мес</b>. В программе подготовила запуск продукта в записи.</div></div>
+    <div class="case"><div class="who">Виктория Шевчук</div><div class="niche">Соматика по Фельденкрайзу, Израиль · Поток 2</div><div class="res">За неделю работы по воронке — <b>+6 человек в клуб</b>, двое из них платных.</div></div>
+  </div>
+</div></section>
+
+<!-- QUOTES (dark) -->
+<section class="dark pad"><div class="wrap">
+  <div class="kick">Что говорят внутри</div>
+  <h2 style="margin-top:18px;font-size:3rem;color:#fff">Живые отклики из рабочих чатов</h2>
+  <div class="quotes" style="margin-top:44px">
+    <div class="q" style="background:var(--ink-soft);border-color:rgba(242,237,232,.14)"><p style="color:#fff">Скрестила пост про себя в прошлое с профессиональной темой. Залетел. +700 подписчиков, 291 кодовое слово и 8 продаж. Кайф! Работает!</p><div class="a">Наталья, Поток 1</div></div>
+    <div class="q" style="background:var(--ink-soft);border-color:rgba(242,237,232,.14)"><p style="color:#fff">Настроила так, что он автоматом каждый день: пост в телегу, пост в Threads, карусель в инст и сценарий для рилс. Система огонь!</p><div class="a">Екатерина, Поток 3</div></div>
+    <div class="q" style="background:var(--ink-soft);border-color:rgba(242,237,232,.14)"><p style="color:#fff">Сделала первый скилл по TOV и переписала текст. Сижу в шоке от результатов. Я хочу так писать!</p><div class="a">Таня, Поток 1</div></div>
+    <div class="q" style="background:var(--ink-soft);border-color:rgba(242,237,232,.14)"><p style="color:#fff">Как же мне нравится, как получается!!! Ещё одна карусель за 5 минут. Я видела репост этой карусели у чужих студентов — порадовалась.</p><div class="a">Нелли, Поток 1</div></div>
+  </div>
+</div></section>
+
+<!-- FORMAT -->
+<section class="pad"><div class="wrap">
+  <div class="kick">Как проходит</div>
+  <h2 style="margin-top:18px;font-size:3rem">Три недели плотной работы</h2>
+  <div class="fmt">
+    <div class="item"><div class="big">3</div><div class="lbl">недели: две основных + неделя поддержки</div></div>
+    <div class="item"><div class="big">3+2</div><div class="lbl">групповых и индивидуальных зума</div></div>
+    <div class="item"><div class="big">6–8</div><div class="lbl">человек в группе — работаю с каждым лично</div></div>
+    <div class="item"><div class="big">∞</div><div class="lbl">обратная связь в чате: комментирую и вкладываюсь</div></div>
+  </div>
+  <p class="muted" style="margin-top:36px;max-width:62ch;font-size:1.02rem;line-height:1.65">Работаем международно: участники из России, Израиля, Норвегии, Испании, Аргентины, Португалии. Ниши — психологи, терапевты, коучи по деньгам, бизнесу и отношениям, эксперты-практики.</p>
+</div></section>
+
+<!-- PRICING (dark) -->
+<section class="dark pad" id="apply"><div class="wrap">
+  <div class="kick">Участие</div>
+  <h2 style="margin-top:18px;font-size:3rem;color:#fff">Выбери формат</h2>
+  <div class="plans">
+    <div class="plan"><div class="pn">Зритель</div><div class="pp">80 000 ₽</div>
+      <ul><li>Вся теория и лекции на 3 месяца</li><li>Библиотека готовых скиллов-промптов</li><li>Самостоятельное прохождение</li><li>Без групповых и личных зумов</li></ul>
+      <div class="pcta">Выбрать</div></div>
+    <div class="plan feat"><div class="pn">Мастер-группа</div><div class="pp">165 000 ₽ <small>/ при единовременной</small></div>
+      <ul><li>Мини-группа 6–8 человек</li><li>3 групповых + 2 личных зума</li><li>Настройка всей системы под тебя</li><li>Обратная связь в чате от Андрея</li><li>Рассрочка и оплата в 2 платежа</li></ul>
+      <div class="pcta">Оставить заявку</div></div>
+    <div class="plan"><div class="pn">Под ключ · с командой</div><div class="pp">750 000 ₽</div>
+      <ul><li>Собираем систему за тебя</li><li>Доводим до первых 70–100К дохода</li><li>Срок ~3 месяца</li><li>Всего 3 места</li></ul>
+      <div class="pcta">Написать лично</div></div>
+  </div>
+  <p class="muted" style="margin-top:30px;font-size:.86rem;color:var(--on-dark-muted)">Оплата для РФ — рассрочка на 3/6/12 месяцев. Для иностранных карт и юрлиц — Stripe, PayPal, Revolut. Бонусом во всех тарифах — настройка платного продвижения уже сработавших постов.</p>
+</div></section>
+
+<!-- HONEST -->
+<section class="pad-s"><div class="wrap">
+  <div class="kick">Честно, до того как ты оставишь заявку</div>
+  <div class="honest">
+    <div class="q"><div class="qh">Волшебной таблетки нет</div><div class="qa">Результат приходит примерно через 8–10 недель — тебе нужно пройти свой этап экспериментов. Алгоритм начинает приводить нужную аудиторию в среднем через 2–2,5 месяца. Быстро и «в один клик» — не сюда.</div></div>
+    <div class="q"><div class="qh">Чужое не копируется</div><div class="qa">Нельзя взять мои рубрики и повторить — у тебя другая ниша и другие смыслы. Мы ищем именно твои форматы. 90% экспериментов не сработают, 10% принесут результат — это нормально.</div></div>
+    <div class="q"><div class="qh">Нужны AI-инструменты</div><div class="qa">Claude, Manus, Notion. Из России бывают барьеры с доступом и оплатой — на группе помогаем это обойти, но заложи, что настройка требует внимания.</div></div>
+    <div class="q"><div class="qh">Голос остаётся твой</div><div class="qa">AI ускоряет, но не пишет за тебя. Все тексты — в твоём tone of voice, с ручной доводкой. Люди чувствуют фальшь, поэтому мы её убираем.</div></div>
+  </div>
+</div></section>
+
+<!-- FINAL -->
+<section class="final">
+  <div class="kick">Make Blog Great Again</div>
+  <h2 style="margin-top:16px">Настрой систему <em>один раз</em>.</h2>
+  <a href="#" class="fcta">Оставить заявку <span class="arrow">↘</span></a>
+  <p class="sub">Ближайший поток — старт 20 июля. Мест в группе — 6–8.</p>
+</section>
+
+<footer><div class="wrap">
+  <span>Андрей Андреев · Make Blog Great Again</span>
+  <span>2026</span>
+</div></footer>
+
+</body>
+</html>
