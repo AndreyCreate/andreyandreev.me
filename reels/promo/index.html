@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reels Covers — обложки для Reels как афиши кино</title>
+<meta name="description" content="Кино-постеры для обложек Instagram Reels и Stories. Шесть арт-хаус шаблонов, двенадцать грейдов, ваше фото — готовый постер 1080×1920 за минуту. Бесплатно, в браузере.">
+<meta property="og:title" content="Reels Covers — обложки для Reels как афиши кино">
+<meta property="og:description" content="Шесть арт-хаус шаблонов, двенадцать грейдов, ваше фото — готовый постер за минуту. Бесплатно, в браузере.">
+<style>
+@font-face{font-family:'Cormorant Garamond';src:url('../fonts/CormorantGaramond-normal-500-latin.woff2') format('woff2');font-weight:500;font-style:normal;unicode-range:U+0000-00FF}
+@font-face{font-family:'Cormorant Garamond';src:url('../fonts/CormorantGaramond-normal-500-cyrillic.woff2') format('woff2');font-weight:500;font-style:normal;unicode-range:U+0400-04FF}
+@font-face{font-family:'Cormorant Garamond';src:url('../fonts/CormorantGaramond-italic-500-latin.woff2') format('woff2');font-weight:500;font-style:italic;unicode-range:U+0000-00FF}
+@font-face{font-family:'Cormorant Garamond';src:url('../fonts/CormorantGaramond-italic-500-cyrillic.woff2') format('woff2');font-weight:500;font-style:italic;unicode-range:U+0400-04FF}
+@font-face{font-family:'Forum';src:url('../fonts/Forum-normal-400-latin.woff2') format('woff2');font-weight:400;unicode-range:U+0000-00FF}
+@font-face{font-family:'Forum';src:url('../fonts/Forum-normal-400-cyrillic.woff2') format('woff2');font-weight:400;unicode-range:U+0400-04FF}
+@font-face{font-family:'Oswald';src:url('../fonts/Oswald-normal-300-latin.woff2') format('woff2');font-weight:300;unicode-range:U+0000-00FF}
+@font-face{font-family:'Oswald';src:url('../fonts/Oswald-normal-300-cyrillic.woff2') format('woff2');font-weight:300;unicode-range:U+0400-04FF}
+@font-face{font-family:'Oswald';src:url('../fonts/Oswald-normal-500-latin.woff2') format('woff2');font-weight:500;unicode-range:U+0000-00FF}
+@font-face{font-family:'Oswald';src:url('../fonts/Oswald-normal-500-cyrillic.woff2') format('woff2');font-weight:500;unicode-range:U+0400-04FF}
+@font-face{font-family:'Oswald';src:url('../fonts/Oswald-normal-600-latin.woff2') format('woff2');font-weight:600;unicode-range:U+0000-00FF}
+@font-face{font-family:'Oswald';src:url('../fonts/Oswald-normal-600-cyrillic.woff2') format('woff2');font-weight:600;unicode-range:U+0400-04FF}
+:root{
+--ink-black:#0A0A0B;--ink-charcoal:#16171A;
+--text-bone:#EDE9E0;--text-smoke:rgba(237,233,224,.74);--text-faint:rgba(237,233,224,.52);
+--grade-amber:#C8923D;--grade-oxblood:#7A2E27;--grade-midnight:#1B2838;
+--duo-hot:#E5267F;--duo-warm:#F5A623;
+--scrim-bottom:linear-gradient(to top,rgba(8,8,9,.88) 0%,rgba(8,8,9,.55) 22%,rgba(8,8,9,0) 52%);
+--track-whisper:.62em;--track-wide:.34em;--track-billing:.18em;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--ink-black);color:var(--text-bone);font-family:'Oswald',sans-serif;font-weight:300;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.grain{position:fixed;inset:0;pointer-events:none;opacity:.4;mix-blend-mode:overlay;z-index:50;
+background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* ---------- shared ---------- */
+.poster{position:relative;overflow:hidden;background:#111;border-radius:6px;flex:none}
+.poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.poster .scrim{position:absolute;inset:0;background:var(--scrim-bottom)}
+.poster .pt{position:absolute;left:0;right:0;bottom:9%;text-align:center;color:var(--text-bone);z-index:2}
+.poster .pt .t{font-family:'Cormorant Garamond',serif;font-weight:500;line-height:1.02}
+.poster .pt .s{font-family:'Oswald',sans-serif;font-weight:300;letter-spacing:var(--track-wide);text-transform:uppercase;color:var(--text-smoke);margin-top:.5em}
+.btn{display:inline-block;background:var(--text-bone);color:var(--ink-black);font-family:'Oswald',sans-serif;font-weight:500;letter-spacing:.14em;text-transform:uppercase;font-size:.85rem;padding:1.05rem 2.2rem;border-radius:3px;text-decoration:none}
+.btn-ghost{display:inline-block;border:1px solid rgba(237,233,224,.45);color:var(--text-bone);font-weight:400;letter-spacing:.16em;text-transform:uppercase;font-size:.8rem;padding:1rem 2.2rem;border-radius:3px;text-decoration:none}
+.kicker{font-weight:300;letter-spacing:var(--track-wide);text-transform:uppercase;font-size:.75rem;color:var(--text-faint)}
+h2{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:2.9rem;line-height:1.08;margin-top:1rem}
+section{padding:7rem 0}
+.wrap{max-width:72rem;margin:0 auto;padding:0 2.4rem}
+
+/* ---------- hero (variant A) ---------- */
+.hero{display:grid;grid-template-columns:46% 54%;min-height:100vh;position:relative;overflow:hidden}
+.hero .copy{padding:0 4.5rem;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2}
+.brand{font-family:'Forum',serif;font-size:.95rem;letter-spacing:var(--track-billing);text-transform:uppercase;color:var(--text-faint);position:absolute;top:2.4rem}
+.hero h1{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:4.4rem;line-height:1.04;letter-spacing:.01em}
+.hero h1 em{font-style:italic;color:var(--grade-amber)}
+.hero .sub{margin-top:1.6rem;line-height:1.6;color:var(--text-smoke);max-width:30rem;font-family:'Cormorant Garamond',serif;font-size:1.35rem}
+.hero .cta{margin-top:2.6rem;display:flex;gap:1.4rem;align-items:center;flex-wrap:wrap}
+.ghost-note{color:var(--text-faint);font-weight:300;letter-spacing:.1em;font-size:.8rem;text-transform:uppercase}
+.wall{position:relative;overflow:hidden}
+.wall .row{position:absolute;display:flex;gap:1.1rem}
+.wall .poster{width:15.5rem;height:27.5rem;box-shadow:0 30px 60px rgba(0,0,0,.55)}
+.r1{top:-6rem;left:1rem;transform:rotate(-3.5deg)}
+.r2{bottom:-7rem;left:4.5rem;transform:rotate(-3.5deg)}
+.fade{position:absolute;inset:0;background:linear-gradient(to right,var(--ink-black) 0%,rgba(10,10,11,0) 26%)}
+.wall .pt .t{font-size:1.7rem}.wall .pt .s{font-size:.5rem}
+.hero .scroll-hint{position:absolute;bottom:2.2rem;left:4.5rem;z-index:2;font-size:.68rem;letter-spacing:var(--track-billing);text-transform:uppercase;color:var(--text-faint)}
+
+/* ---------- templates showcase ---------- */
+.tpl-row{margin-top:3.4rem;display:flex;gap:1.1rem;justify-content:center;flex-wrap:wrap}
+.tpl{text-align:center}
+.tpl .poster{width:10.2rem;height:18.1rem;box-shadow:0 22px 44px rgba(0,0,0,.5)}
+.tpl .name{margin-top:1rem;font-size:.68rem;letter-spacing:var(--track-billing);text-transform:uppercase;color:var(--text-faint)}
+.duo-ov{position:absolute;inset:0;background:linear-gradient(135deg,var(--duo-hot),var(--duo-warm));mix-blend-mode:color;opacity:.85}
+.spine-t{position:absolute;left:8%;top:50%;transform:translateY(-50%) rotate(180deg);writing-mode:vertical-rl;font-family:'Oswald';font-weight:500;letter-spacing:.3em;text-transform:uppercase;font-size:1rem;color:var(--text-bone);z-index:2}
+
+/* ---------- steps ---------- */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:3rem;margin-top:3.6rem}
+.step .num{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:2.6rem;color:var(--grade-amber)}
+.step h3{font-family:'Oswald';font-weight:500;letter-spacing:.12em;text-transform:uppercase;font-size:.95rem;margin-top:.8rem}
+.step p{margin-top:.9rem;line-height:1.65;color:var(--text-smoke);font-size:.95rem;max-width:20rem}
+.phone-note{margin-top:3rem;font-size:.75rem;letter-spacing:var(--track-billing);text-transform:uppercase;color:var(--text-faint)}
+
+/* ---------- pricing ---------- */
+.plans{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:3.4rem;max-width:56rem}
+.plan{border:1px solid rgba(237,233,224,.14);border-radius:8px;padding:2.6rem 2.4rem;background:var(--ink-charcoal)}
+.plan.pro{border-color:rgba(200,146,61,.5)}
+.plan .p-name{font-family:'Oswald';font-weight:500;letter-spacing:.16em;text-transform:uppercase;font-size:.85rem;color:var(--text-smoke)}
+.plan .p-price{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:2.5rem;margin-top:1rem}
+.plan .p-price small{font-size:1.15rem;color:var(--text-smoke);font-style:italic}
+.plan ul{list-style:none;margin-top:1.6rem}
+.plan li{padding:.5rem 0;line-height:1.5;color:var(--text-smoke);font-size:.94rem;border-bottom:1px solid rgba(237,233,224,.07)}
+.plan li:last-child{border-bottom:none}
+.plan .p-cta{margin-top:2rem}
+.pro .p-price{color:var(--grade-amber)}
+
+/* ---------- final cta ---------- */
+.final{text-align:center;padding:8rem 2.4rem 9rem}
+.final h2{font-size:3.4rem}
+.final .btn{margin-top:2.6rem}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid rgba(237,233,224,.1);padding:2.4rem;text-align:center;font-size:.72rem;letter-spacing:var(--track-billing);text-transform:uppercase;color:var(--text-faint)}
+footer a{text-decoration:none}
+
+/* ---------- mobile ---------- */
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .hero .copy{padding:7rem 2rem 3rem}
+  .brand{position:static;margin-bottom:2.4rem}
+  .hero h1{font-size:2.9rem}
+  .hero .sub{font-size:1.2rem}
+  .wall{height:30rem}
+  .wall .poster{width:11rem;height:19.5rem}
+  .r1{top:-3rem}.r2{bottom:-4rem;left:3rem}
+  .fade{background:linear-gradient(to bottom,var(--ink-black) 0%,rgba(10,10,11,0) 22%)}
+  .hero .scroll-hint{display:none}
+  section{padding:4.5rem 0}
+  .wrap{padding:0 1.6rem}
+  h2{font-size:2.2rem}
+  .steps{grid-template-columns:1fr;gap:2.2rem}
+  .plans{grid-template-columns:1fr}
+  .final h2{font-size:2.4rem}
+  .tpl .poster{width:9.2rem;height:16.3rem}
+}
+</style>
+</head>
+<body>
+
+<section class="hero" style="padding:0">
+  <div class="copy">
+    <div class="brand">Reels Covers</div>
+    <h1>Обложки для Reels —<br>как афиши <em>кино</em>.</h1>
+    <p class="sub">Кино-постеры для обложек Reels и Stories. Шесть арт-хаус шаблонов, двенадцать грейдов, ваше фото — готовый постер 1080×1920 за минуту. В браузере, без установки.</p>
+    <div class="cta"><a class="btn" href="https://andreyandreev.me/reels/">Начать бесплатно</a><span class="ghost-note">Без регистрации</span></div>
+    <div class="scroll-hint">Листайте вниз ↓</div>
+  </div>
+  <div class="wall">
+    <div class="row r1">
+      <div class="poster"><img src="../demo/clean-joker.jpg" alt=""><div class="scrim"></div><div class="pt"><div class="t">Золотой час</div><div class="s">фильм о тебе</div></div></div>
+      <div class="poster"><img src="../demo/clean-drivemycar.jpg" alt=""><div class="scrim"></div><div class="pt"><div class="t" style="font-family:'Forum';letter-spacing:.2em;font-size:1.25rem">MIDNIGHT</div><div class="s">episode four</div></div></div>
+      <div class="poster"><img src="../demo/clean-atonement.jpg" alt=""><div class="scrim"></div><div class="pt"><div class="t" style="font-style:italic">The Quiet Part</div><div class="s">new reel</div></div></div>
+    </div>
+    <div class="row r2">
+      <div class="poster"><img src="../demo/clean-worstperson.jpg" alt=""><div class="scrim"></div><div class="pt"><div class="t">Вторые акты</div><div class="s">уже в ленте</div></div></div>
+      <div class="poster"><img src="../demo/clean-mid90s.jpg" alt=""><div class="scrim"></div><div class="pt"><div class="t" style="font-family:'Oswald';font-weight:600;text-transform:uppercase;font-size:1.4rem">SUMMER TAPES</div><div class="s">vol. 2</div></div></div>
+      <div class="poster"><img src="../demo/clean-ainumosir.jpg" alt=""><div class="scrim"></div><div class="pt"><div class="t" style="font-family:'Forum';letter-spacing:.14em;font-size:1.3rem">NORTH</div><div class="s">a short story</div></div></div>
+    </div>
+    <div class="fade"></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap" style="text-align:center">
+    <div class="kicker">Шаблоны</div>
+    <h2>Шесть шаблонов — шесть настроений</h2>
+    <div class="tpl-row">
+      <div class="tpl">
+        <div class="poster"><img src="../demo/clean-ainumosir.jpg" alt=""><div class="scrim"></div><div class="pt"><div class="t" style="font-family:'Oswald';font-weight:300;letter-spacing:var(--track-whisper);text-transform:uppercase;font-size:.8rem;text-indent:.62em">Тишина</div><div class="s" style="font-size:.42rem">севернее города</div></div></div>
+        <div class="name">Whisper</div>
+      </div>
+      <div class="tpl">
+        <div class="poster"><img src="../demo/clean-joker.jpg" alt=""><div class="scrim"></div><div class="pt"><div class="t" style="font-size:1.5rem">Золотой час</div><div class="s" style="font-size:.42rem">фильм о тебе</div></div></div>
+        <div class="name">Centerpiece</div>
+      </div>
+      <div class="tpl">
+        <div class="poster"><img src="../demo/clean-mid90s.jpg" alt=""><div class="scrim"></div><div class="pt"><div class="t" style="font-family:'Oswald';font-weight:600;text-transform:uppercase;font-size:1.2rem;line-height:1.1">Лето<br>рядом</div><div class="s" style="font-size:.42rem">vol. 2</div></div></div>
+        <div class="name">Monolith</div>
+      </div>
+      <div class="tpl">
+        <div class="poster"><img src="../demo/clean-drivemycar.jpg" alt=""><div class="scrim"></div><div class="pt"><div class="t" style="font-family:'Forum';letter-spacing:.18em;font-size:1rem">ПОЛНОЧЬ</div><div class="s" style="font-size:.42rem">эпизод четвёртый</div></div></div>
+        <div class="name">Billing</div>
+      </div>
+      <div class="tpl">
+        <div class="poster"><img src="../demo/clean-worstperson.jpg" alt=""><div class="duo-ov"></div><div class="scrim"></div><div class="pt"><div class="t" style="font-size:1.35rem">Вторые акты</div><div class="s" style="font-size:.42rem">уже в ленте</div></div></div>
+        <div class="name">Duotone</div>
+      </div>
+      <div class="tpl">
+        <div class="poster"><img src="../demo/clean-atonement.jpg" alt=""><div class="spine-t">Наблюдения</div><div class="scrim"></div></div>
+        <div class="name">Spine</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--ink-charcoal)">
+  <div class="wrap">
+    <div class="kicker">Как это работает</div>
+    <h2>Три шага до постера</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="num">01</div>
+        <h3>Выберите шаблон и грейд</h3>
+        <p>Шесть композиций в духе A24 и Criterion, двенадцать цветовых грейдов — от янтарного до полуночного.</p>
+      </div>
+      <div class="step">
+        <div class="num">02</div>
+        <h3>Фото и заголовок</h3>
+        <p>Загрузите своё фото, впишите название. Кадр двигается пальцем, текст встаёт по направляющим. Кириллица — без сюрпризов.</p>
+      </div>
+      <div class="step">
+        <div class="num">03</div>
+        <h3>Скачайте PNG</h3>
+        <p>Готовый постер 1080×1920 — сразу обложкой в Reels или Stories. С телефона тоже работает.</p>
+      </div>
+    </div>
+    <div class="phone-note">Браузер на телефоне или компьютере · Ничего устанавливать не нужно</div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">Цена</div>
+    <h2>Бесплатно — навсегда.<br>Pro — один раз.</h2>
+    <div class="plans">
+      <div class="plan">
+        <div class="p-name">Бесплатно</div>
+        <div class="p-price">0 ₽</div>
+        <ul>
+          <li>Все 6 шаблонов и 12 грейдов</li>
+          <li>Экспорт 1080×1920 PNG без лимитов</li>
+          <li>3 обложки в облаке — доступ с любого устройства</li>
+          <li>Небольшая подпись andreyandreev.me/reels на экспорте</li>
+        </ul>
+        <div class="p-cta"><a class="btn-ghost" href="https://andreyandreev.me/reels/">Начать</a></div>
+      </div>
+      <div class="plan pro">
+        <div class="p-name" style="color:var(--grade-amber)">Pro</div>
+        <div class="p-price">1 990 ₽ <small>/ $29 · навсегда, не подписка</small></div>
+        <ul>
+          <li>Обложки в облаке — без лимита</li>
+          <li>Экспорт без подписи</li>
+          <li>Премиум-стили — витрина пополняется</li>
+          <li>Оплата картой РФ или зарубежной</li>
+        </ul>
+        <div class="p-cta"><a class="btn" href="https://t.me/andrey_andreev">Получить Pro</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final" style="background:var(--ink-charcoal)">
+  <div class="kicker">Reels Covers</div>
+  <h2>Первая обложка —<br>за минуту.</h2>
+  <a class="btn" href="https://andreyandreev.me/reels/">Открыть редактор</a>
+</section>
+
+<footer>
+  <a href="https://andreyandreev.me">Андрей Андреев</a> &nbsp;·&nbsp; Reels Covers &nbsp;·&nbsp; <a href="https://andreyandreev.me/reels/">редактор</a>
+</footer>
+
+<div class="grain"></div>
+</body>
+</html>
