@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Коучинг · Андрей Андреев</title>
-<meta name="description" content="Коучинг для тех, кто уже всё сделал «правильно». ICF + IFS + Экспоненциальный. 20+ лет в бизнесе. Сессия-знакомство в Zoom." />
-
+<meta name="description" content="Коучинг Андрея Андреева — для тех, кто уже всё сделал «правильно». ICF, IFS, экспоненциальный коучинг." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=Cormorant:ital,wght@1,400;1,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
@@ -21,445 +20,314 @@
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/109255989" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
-
 <style>
 :root{
-  --ink:#0E0E0E;--ink-2:#2A2A2A;--ink-3:#555;--ink-mute:#8A8A8A;
-  --line:#E6E3DD;--line-2:#D6D2C9;
-  --paper:#F4F0E8;--paper-2:#ECE6DA;--paper-3:#E1DACB;--white:#fff;
-  --coral:#E86F4D;--coral-soft:#F4A48A;--coral-bg:#EE8A6B;
-  --sky:#A9C2DD;--sky-soft:#C9D8E8;
-  --citrus:#F4D24A;--sage:#9FBE9D;--rose:#E8C7BC;
-  --font-sans:'Manrope',system-ui,-apple-system,sans-serif;
-  --font-serif:'Instrument Serif','Times New Roman',serif;
-  --font-mono:'JetBrains Mono',ui-monospace,monospace;
-  --t-display:clamp(56px,7.2vw,112px);
-  --t-h1:clamp(40px,4.6vw,72px);
-  --t-h2:clamp(28px,2.8vw,44px);
-  --t-h3:22px;--t-body:17px;--t-small:14px;--t-micro:12px;
-  --r-sm:6px;--r-md:12px;--r-lg:20px;--r-xl:28px;--r-pill:999px;
-  --shadow-sm:0 1px 2px rgba(14,14,14,.06),0 1px 1px rgba(14,14,14,.04);
-  --shadow-md:0 8px 24px rgba(14,14,14,.08),0 2px 6px rgba(14,14,14,.05);
-  --shadow-lg:0 24px 48px rgba(14,14,14,.12),0 6px 14px rgba(14,14,14,.06);
-  --maxw:1240px;--gutter:32px;
+  --paper:#F3F0E8; --ink:#16150F; --ink-soft:#57544A; --ink-faint:#8B877A;
+  --line-soft:rgba(22,21,15,0.16); --wash-coral:#F96858;
+  --font-grotesk:'Golos Text','Helvetica Neue',Arial,sans-serif;
+  --font-serif-display:'Cormorant',Georgia,serif;
+  --font-mono:'IBM Plex Mono','SF Mono',Menlo,monospace;
+  --type-body:17px; --type-small:14px; --type-caption:12px;
+  --tracking-caps:0.14em;
+  --text-paragraph:400 var(--type-body)/1.55 var(--font-grotesk);
+  --text-annotation:400 var(--type-caption)/1.5 var(--font-mono);
+  --text-muted:var(--ink-soft); --text-faint:var(--ink-faint); --text-body:var(--ink);
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:24px; --space-6:32px; --space-7:48px; --space-8:64px; --space-9:96px;
+  --page-pad:clamp(24px,5vw,72px);
+  --ease-out:cubic-bezier(0.22,1,0.36,1); --duration-fast:160ms;
 }
-*{box-sizing:border-box}
-html,body{margin:0;padding:0;font-family:var(--font-sans);font-size:var(--t-body);line-height:1.5;color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
-a{color:inherit;text-decoration:none}
-img{display:block;max-width:100%}
+</style>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--text-body); font: var(--text-paragraph); }
+  a { color: inherit; text-decoration: none; }
+  .page { max-width: 1240px; margin: 0 auto; padding: 0 var(--page-pad); }
+  em { font-family: var(--font-serif-display); font-style: italic; font-weight: 500; letter-spacing: 0; text-transform: none; }
 
-/* Nav */
-.nav{position:sticky;top:0;z-index:50;background:color-mix(in oklab,var(--paper) 92%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-.nav__inner{max-width:var(--maxw);margin:0 auto;padding:14px var(--gutter);display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:64px}
-.nav__brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:16px;letter-spacing:-.01em;white-space:nowrap;min-width:0;overflow:hidden;text-overflow:ellipsis;flex:1 1 auto}
-.nav__brand .mark{width:32px;height:32px;border-radius:50%;background:var(--ink);color:var(--paper);display:grid;place-items:center;font-family:var(--font-serif);font-style:italic;font-size:18px;font-weight:700;flex:0 0 auto}
-.nav__brand .muted{color:var(--ink-mute);font-weight:400;font-family:var(--font-mono);font-size:13px}
-@media(max-width:720px){.nav__brand .muted{display:none}}
-@media(max-width:380px){.nav__brand{font-size:14px}}
-.nav__links{display:flex;gap:4px;font-size:14px;font-weight:500;flex:0 0 auto}
-.nav__links a{padding:8px 14px;border-radius:var(--r-pill);color:var(--ink-3);transition:all .15s ease;white-space:nowrap}
-.nav__links a:hover{color:var(--ink);background:var(--paper-2)}
-@media(max-width:820px){.nav__links a:not(.cta){display:none}}
-.nav__links a.cta{background:var(--coral);color:var(--white);padding:10px 18px;line-height:1.2}
-.nav__links a.cta:hover{background:var(--ink);color:var(--paper)}
-@media(max-width:480px){.nav__links a.cta{padding:9px 14px;font-size:13px}}
+  .topbar { display: flex; justify-content: space-between; align-items: center; gap: var(--space-5); padding-top: var(--space-5); font: var(--text-annotation); letter-spacing: var(--tracking-caps); text-transform: uppercase; color: var(--text-faint); }
+  .topbar a:hover { color: var(--ink); }
+  .topbar nav { display: flex; gap: var(--space-5); }
+  .cta-mini { color: var(--wash-coral); }
 
-/* Hero */
-.hero{max-width:var(--maxw);margin:0 auto;padding:88px var(--gutter) 56px}
-.hero__eyebrow{display:inline-block;font-family:var(--font-mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:24px}
-.hero h1{font-size:var(--t-h1);font-weight:600;letter-spacing:-.028em;margin:0 0 24px;line-height:1.05;max-width:1100px}
-.hero h1 em{font-family:var(--font-serif);font-weight:400;font-style:italic;font-size:1.12em;letter-spacing:-.01em}
-.hero__sub{font-size:24px;color:var(--ink-2);max-width:820px;line-height:1.4;margin:0 0 32px;font-weight:500;letter-spacing:-.01em}
-.hero__sub em{font-family:var(--font-serif);font-style:italic;font-weight:400;font-size:1.1em}
-.hero__lede{font-size:18px;color:var(--ink-3);max-width:780px;line-height:1.6;margin:0 0 32px}
-.hero__creds{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px 32px;font-family:var(--font-mono);font-size:13px;color:var(--ink-mute);letter-spacing:.04em;padding-top:28px;border-top:1px solid var(--line)}
-@media(max-width:560px){.hero__creds{grid-template-columns:1fr 1fr;gap:14px 20px;font-size:12px}}
-.hero__creds span{display:flex;align-items:center;gap:10px;line-height:1.3}
-.hero__creds span::before{content:"";flex:0 0 auto;width:5px;height:5px;border-radius:50%;background:var(--coral)}
+  .masthead { padding: var(--space-8) 0 var(--space-6); max-width: 880px; }
+  .masthead .rule { width: 72px; height: 5px; background: var(--wash-coral); margin-bottom: var(--space-4); }
+  .masthead h1 { margin: 0; font: 600 clamp(40px, 5.5vw, 76px)/1.02 var(--font-grotesk); letter-spacing: 0.03em; text-transform: uppercase; }
+  .masthead h1 em { font-size: 0.85em; }
+  .masthead .sub { margin: var(--space-5) 0 0; font: 500 21px/1.4 var(--font-grotesk); }
+  .masthead p { margin: var(--space-4) 0 0; color: var(--text-muted); max-width: 58ch; }
+  .creds { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); margin-top: var(--space-5); font: var(--text-annotation); letter-spacing: var(--tracking-caps); text-transform: uppercase; color: var(--text-faint); }
+  .creds span { border: 1px solid var(--line-soft); padding: 3px 10px; }
 
-/* Section */
-.section{max-width:var(--maxw);margin:0 auto;padding:72px var(--gutter);border-top:1px solid var(--line)}
-.section__head{display:grid;grid-template-columns:280px 1fr;gap:48px;margin-bottom:40px}
-@media(max-width:800px){.section__head{grid-template-columns:1fr;gap:16px}}
-.section__num{font-family:var(--font-mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute)}
-.section__title{font-size:var(--t-h2);font-weight:600;letter-spacing:-.022em;margin:8px 0 0;line-height:1.05}
-.section__title em{font-family:var(--font-serif);font-weight:400;font-style:italic;font-size:1.12em;letter-spacing:-.01em}
-.section__lede{font-size:18px;color:var(--ink-3);margin:0;max-width:580px;line-height:1.5}
+  .sechead { display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid var(--line-soft); padding: var(--space-4) 0 0; margin-top: var(--space-7); font: var(--text-annotation); letter-spacing: var(--tracking-caps); text-transform: uppercase; color: var(--text-faint); }
+  h2 { margin: var(--space-4) 0 var(--space-6); font: 600 clamp(30px, 3.4vw, 46px)/1.08 var(--font-grotesk); letter-spacing: 0.02em; text-transform: uppercase; }
+  h2 em { font-size: 0.9em; }
 
-/* Pain cards */
-.pains{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px}
-.pain{padding:32px 28px;background:var(--white);border:1px solid var(--line);border-radius:var(--r-lg);position:relative;overflow:hidden}
-.pain::before{content:"";position:absolute;top:-30px;right:-30px;width:120px;height:120px;background:var(--coral-soft);border-radius:50%;opacity:.3;filter:blur(20px)}
-.pain__h{font-family:var(--font-serif);font-style:italic;font-size:24px;line-height:1.2;margin:0 0 16px;position:relative;z-index:1}
-.pain__h::before{content:"«";color:var(--coral);font-size:32px;line-height:0;margin-right:4px}
-.pain__h::after{content:"»";color:var(--coral);font-size:32px;line-height:0;margin-left:4px}
-.pain__t{font-size:16px;color:var(--ink-2);line-height:1.55;margin:0;position:relative;z-index:1}
-.pain__t strong{color:var(--ink);font-weight:600}
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6) var(--space-8); }
+  .pain h3 { margin: 0 0 var(--space-3); font: 500 21px/1.3 var(--font-grotesk); letter-spacing: 0.05em; text-transform: uppercase; }
+  .pain p { margin: 0; color: var(--text-muted); font-size: var(--type-small); line-height: 1.6; }
+  .pain { border-top: 1px solid var(--line-soft); padding-top: var(--space-4); }
 
-/* CTA inline */
-.cta-inline{margin-top:48px;text-align:center;padding:32px;background:var(--paper-2);border-radius:var(--r-lg);border:1px solid var(--line)}
-.cta-inline .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:18px 36px;background:var(--coral);color:var(--white);border-radius:var(--r-pill);font-size:17px;font-weight:600;letter-spacing:-.005em;transition:all .2s ease}
-.cta-inline .btn:hover{background:var(--ink);color:var(--paper);transform:translateY(-1px);box-shadow:var(--shadow-md)}
-.cta-inline .btn .arrow{font-family:var(--font-serif);font-style:italic;font-size:20px}
+  .btn { display: inline-block; margin-top: var(--space-6); background: var(--wash-coral); color: #fff; font: 500 16px/1 var(--font-grotesk); letter-spacing: 0.06em; text-transform: uppercase; padding: 18px 32px; transition: background var(--duration-fast) var(--ease-out); }
+  .btn:hover { background: var(--ink); }
 
-/* Method 3-col */
-.method{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-bottom:36px}
-.method__item{padding:32px 28px;background:var(--white);border:1px solid var(--line);border-radius:var(--r-lg)}
-.method__icon{display:inline-flex;width:48px;height:48px;border-radius:50%;background:var(--paper-3);align-items:center;justify-content:center;font-family:var(--font-serif);font-style:italic;font-size:24px;font-weight:600;margin-bottom:18px;color:var(--ink)}
-.method__h{font-size:22px;font-weight:600;margin:0 0 10px;letter-spacing:-.01em}
-.method__d{font-size:15px;color:var(--ink-3);margin:0;line-height:1.55}
-.method__quote{font-family:var(--font-serif);font-style:italic;font-size:24px;line-height:1.35;color:var(--ink);text-align:center;margin:0 auto;max-width:760px}
-.method__quote strong{font-family:var(--font-sans);font-style:normal;font-weight:700}
+  .methods { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
+  .method { border: 1px solid var(--line-soft); padding: var(--space-5); }
+  .method .idx { font: 500 italic 34px/1 var(--font-serif-display); color: var(--wash-coral); }
+  .method h3 { margin: var(--space-3) 0; font: 500 19px/1.3 var(--font-grotesk); letter-spacing: 0.08em; text-transform: uppercase; }
+  .method p { margin: 0; color: var(--text-muted); font-size: var(--type-small); line-height: 1.6; }
+  .result { margin-top: var(--space-6); font: 500 24px/1.35 var(--font-grotesk); max-width: 30ch; }
+  .result strong { border-bottom: 3px solid var(--wash-coral); }
 
-/* Author */
-.author{display:grid;grid-template-columns:1fr 1.4fr;gap:64px;align-items:start}
-@media(max-width:820px){.author{grid-template-columns:1fr;gap:32px}}
-.author__portrait{aspect-ratio:4/5;border-radius:var(--r-xl);overflow:hidden;background:var(--paper-3);box-shadow:var(--shadow-md)}
-.author__portrait img{width:100%;height:100%;object-fit:cover;object-position:center}
-.author__bio{font-size:17px;color:var(--ink-2);line-height:1.6;margin:0 0 16px}
-.author__bio strong{color:var(--ink);font-weight:600}
-.author__stats{display:grid;grid-template-columns:repeat(2,1fr);gap:0;margin-top:32px;border-top:1px solid var(--line)}
-@media(max-width:480px){.author__stats{grid-template-columns:1fr}}
-.author__stat{padding:20px 0;border-bottom:1px solid var(--line)}
-.author__stat:nth-child(2),.author__stat:nth-child(4){padding-left:24px;border-left:1px solid var(--line)}
-@media(max-width:480px){.author__stat:nth-child(n){padding-left:0;border-left:none}}
-.author__stat__n{font-size:36px;font-weight:700;letter-spacing:-.02em;line-height:1;margin-bottom:6px}
-.author__stat__l{font-size:13px;color:var(--ink-mute);font-family:var(--font-mono)}
+  .about { display: grid; grid-template-columns: 320px 1fr; gap: var(--space-8); align-items: start; }
+  .about .photo { width: 320px; aspect-ratio: 3 / 4; overflow: hidden; }
+  .about .photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; filter: saturate(0.75); display: block; }
+  .about p { margin: 0 0 var(--space-4); color: var(--text-muted); line-height: 1.6; max-width: 62ch; }
+  .about p strong { color: var(--ink); }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-5); margin-top: var(--space-7); border-top: 1px solid var(--line-soft); padding-top: var(--space-5); }
+  .stat .n { font: 600 40px/1 var(--font-grotesk); letter-spacing: -0.01em; }
+  .stat .l { display: block; margin-top: var(--space-2); font: var(--text-annotation); letter-spacing: var(--tracking-caps); text-transform: uppercase; color: var(--text-faint); }
 
-/* Pricing */
-.pricing-intro{font-size:17px;color:var(--ink-3);line-height:1.6;max-width:820px;margin:0 0 36px;padding:24px 28px;background:var(--paper-2);border-left:3px solid var(--coral);border-radius:0 var(--r-md) var(--r-md) 0}
-.pricing-intro strong{color:var(--ink)}
-.pricing-intro em{font-family:var(--font-serif);font-style:italic}
-.pricing{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
-.price{padding:36px 32px;background:var(--white);border:1px solid var(--line);border-radius:var(--r-xl);display:flex;flex-direction:column;position:relative;overflow:hidden}
-.price--featured{background:var(--ink);color:var(--paper);border-color:var(--ink)}
-.price--featured::before{content:"";position:absolute;top:-40px;right:-40px;width:200px;height:200px;background:radial-gradient(circle,var(--coral) 0%,transparent 70%);opacity:.4}
-.price__badge{position:absolute;top:20px;right:20px;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;background:var(--coral);color:var(--white);padding:6px 12px;border-radius:var(--r-pill);z-index:2}
-.price__name{font-family:var(--font-mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:12px;position:relative;z-index:1}
-.price--featured .price__name{color:rgba(244,240,232,.7)}
-.price__num{font-size:48px;font-weight:700;letter-spacing:-.025em;line-height:1;margin:0 0 16px;position:relative;z-index:1}
-.price__d{font-size:15px;color:var(--ink-3);margin:0 0 24px;line-height:1.5;position:relative;z-index:1}
-.price--featured .price__d{color:rgba(244,240,232,.75)}
-.price__list{flex:1;list-style:none;padding:0;margin:0 0 28px;position:relative;z-index:1}
-.price__list li{padding:10px 0;border-top:1px solid var(--line);font-size:14px;display:flex;align-items:flex-start;gap:8px;line-height:1.4}
-.price__list li::before{content:"✓";color:var(--coral);font-weight:700;flex:0 0 auto;margin-top:1px}
-.price--featured .price__list li{border-color:rgba(244,240,232,.15)}
-.price__list li:first-child{border-top:none}
-.price__btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 20px;background:var(--ink);color:var(--paper);border-radius:var(--r-pill);font-size:15px;font-weight:600;transition:all .2s ease;position:relative;z-index:1;text-align:center}
-.price__btn:hover{background:var(--coral)}
-.price--featured .price__btn{background:var(--coral);color:var(--white)}
-.price--featured .price__btn:hover{background:var(--paper);color:var(--ink)}
+  .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
+  .plan { border: 1px solid var(--line-soft); padding: var(--space-5); display: flex; flex-direction: column; }
+  .plan.hot { border: 2px solid var(--wash-coral); }
+  .plan .ptag { align-self: flex-start; font: var(--text-annotation); letter-spacing: var(--tracking-caps); text-transform: uppercase; background: var(--wash-coral); color: #fff; padding: 2px 8px; margin-bottom: var(--space-3); }
+  .plan h3 { margin: 0; font: 500 19px/1.3 var(--font-grotesk); letter-spacing: 0.08em; text-transform: uppercase; }
+  .plan .price { margin: var(--space-3) 0; font: 600 34px/1 var(--font-grotesk); }
+  .plan .pdesc { margin: 0 0 var(--space-4); color: var(--text-muted); font-size: var(--type-small); line-height: 1.6; }
+  .plan ul { margin: 0 0 var(--space-5); padding: 0; list-style: none; color: var(--text-muted); font-size: var(--type-small); line-height: 1.5; display: flex; flex-direction: column; gap: var(--space-2); flex: 1; }
+  .plan li::before { content: "→ "; color: var(--wash-coral); }
+  .plan .pbtn { display: block; text-align: center; border: 1px solid var(--ink); font: 500 15px/1 var(--font-grotesk); letter-spacing: 0.06em; text-transform: uppercase; padding: 14px; transition: background var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out); }
+  .plan .pbtn:hover { background: var(--ink); color: var(--paper); }
+  .plan.hot .pbtn { background: var(--wash-coral); border-color: var(--wash-coral); color: #fff; }
+  .plan.hot .pbtn:hover { background: var(--ink); border-color: var(--ink); }
+  .note { margin-top: var(--space-4); color: var(--text-muted); font-size: var(--type-small); }
 
-/* FAQ */
-.faq{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden}
-.faq details{background:var(--white);transition:background .2s ease}
-.faq details[open]{background:var(--paper-2)}
-.faq summary{padding:24px 28px;font-weight:600;font-size:17px;letter-spacing:-.005em;cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:16px}
-.faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";font-family:var(--font-serif);font-style:italic;font-size:28px;color:var(--coral);transition:transform .2s ease;line-height:1;flex:0 0 auto}
-.faq details[open] summary::after{content:"−"}
-.faq .answer{padding:0 28px 24px;font-size:16px;color:var(--ink-3);line-height:1.6}
+  .faq { max-width: 880px; }
+  .faq details { border-top: 1px solid var(--line-soft); }
+  .faq summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); padding: var(--space-4) 0; font: 500 19px/1.3 var(--font-grotesk); }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; font: 400 26px/1 var(--font-grotesk); color: var(--wash-coral); flex: none; }
+  .faq details[open] summary::after { content: "−"; }
+  .faq details p { margin: 0 0 var(--space-4); color: var(--text-muted); line-height: 1.6; max-width: 68ch; }
 
-/* Not for you */
-.notfor{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden}
-.notfor__item{background:var(--paper-2);padding:32px 28px}
-.notfor__h{font-size:18px;font-weight:600;margin:0 0 12px;color:var(--ink);display:flex;align-items:center;gap:8px}
-.notfor__h::before{content:"●";color:#C44438;font-size:12px}
-.notfor__d{font-size:15px;color:var(--ink-3);margin:0;line-height:1.55}
+  .not4u { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6) var(--space-8); }
+  .not4u .item { border-top: 3px solid var(--ink); padding-top: var(--space-4); }
+  .not4u h3 { margin: 0 0 var(--space-3); font: 500 19px/1.3 var(--font-grotesk); letter-spacing: 0.05em; text-transform: uppercase; }
+  .not4u p { margin: 0; color: var(--text-muted); font-size: var(--type-small); line-height: 1.6; }
 
-/* Read/listen channels */
-.channels{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
-.channel{display:flex;flex-direction:column;padding:32px 28px;background:var(--white);border:1px solid var(--line);border-radius:var(--r-lg);text-decoration:none;color:var(--ink);transition:all .2s ease;position:relative;overflow:hidden}
-.channel:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--coral-soft)}
-.channel__platform{font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:10px}
-.channel__handle{font-size:22px;font-weight:600;letter-spacing:-.015em;margin:0 0 8px;line-height:1.15}
-.channel__handle em{font-family:var(--font-serif);font-style:italic;font-weight:400}
-.channel__desc{font-size:14px;color:var(--ink-3);line-height:1.5;margin:0 0 20px;flex:1}
-.channel__cta{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:12px;color:var(--coral);letter-spacing:.04em}
-.channel__cta::after{content:"→";font-family:var(--font-serif);font-style:italic;font-size:16px}
+  .finale { border-top: 1px solid var(--line-soft); margin-top: var(--space-8); padding: var(--space-7) 0 var(--space-4); max-width: 780px; }
+  .finale p { margin: var(--space-4) 0 0; color: var(--text-muted); line-height: 1.6; }
 
-/* Final CTA section */
-.final-cta{background:var(--ink);color:var(--paper);border-radius:var(--r-xl);padding:80px 56px;margin:32px auto 64px;max-width:calc(var(--maxw) - var(--gutter) * 2);position:relative;overflow:hidden;text-align:center}
-@media(max-width:720px){.final-cta{padding:56px 28px;border-radius:var(--r-lg)}}
-.final-cta::before{content:"";position:absolute;top:-100px;left:-100px;width:400px;height:400px;background:radial-gradient(circle,var(--coral) 0%,transparent 70%);opacity:.35}
-.final-cta__eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:rgba(244,240,232,.55);margin-bottom:20px;position:relative;z-index:1}
-.final-cta__h{font-size:var(--t-h2);font-weight:600;letter-spacing:-.022em;margin:0 0 20px;line-height:1.1;position:relative;z-index:1}
-.final-cta__h em{font-family:var(--font-serif);font-weight:400;font-style:italic;font-size:1.12em;letter-spacing:-.01em}
-.final-cta__t{font-size:18px;color:rgba(244,240,232,.78);line-height:1.6;margin:0 auto 36px;max-width:680px;position:relative;z-index:1}
-.final-cta__btn{display:inline-flex;align-items:center;gap:10px;padding:20px 40px;background:var(--coral);color:var(--white);border-radius:var(--r-pill);font-size:17px;font-weight:600;transition:all .25s ease;position:relative;z-index:1}
-.final-cta__btn:hover{background:var(--paper);color:var(--ink);transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,0,0,.25)}
-.final-cta__btn .arrow{font-family:var(--font-serif);font-style:italic;font-size:22px}
+  .pagefoot { display: flex; justify-content: space-between; border-top: 1px solid var(--line-soft); margin-top: var(--space-7); padding: var(--space-4) 0 var(--space-6); font: var(--text-annotation); letter-spacing: var(--tracking-caps); text-transform: uppercase; color: var(--text-faint); }
+  .pagefoot .links { display: flex; gap: var(--space-4); }
+  .pagefoot a:hover { color: var(--ink); }
 
-/* Foot */
-.foot{max-width:var(--maxw);margin:0 auto;padding:48px var(--gutter);border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:24px;font-size:13px;color:var(--ink-mute);font-family:var(--font-mono);flex-wrap:wrap}
-.foot__socials{display:flex;gap:20px}
-.foot__socials a{color:var(--ink-3);transition:color .2s ease}
-.foot__socials a:hover{color:var(--coral)}
+  @media (max-width: 900px) {
+    .grid2, .not4u { grid-template-columns: 1fr; }
+    .methods, .plans { grid-template-columns: 1fr; }
+    .about { grid-template-columns: 1fr; }
+    .stats { grid-template-columns: 1fr 1fr; }
+    .topbar nav { display: none; }
+  }
 </style>
 </head>
 <body>
-
-<nav class="nav">
-  <div class="nav__inner">
-    <div class="nav__brand">
-      <span class="mark">А</span>
-      Андрей Андреев <span class="muted">— коучинг</span>
-    </div>
-    <div class="nav__links">
+<div class="page">
+  <div class="topbar">
+    <a href="/">← andreyandreev.me</a>
+    <nav>
       <a href="#pains">Запросы</a>
       <a href="#method">Подход</a>
-      <a href="#pricing">Формат</a>
       <a href="#author">Обо мне</a>
-      <a href="https://cal.com/andrei-andreev/first" onclick="ym(109255989,'reachGoal','cta_cal_click')" class="cta">Поговорить с Андреем</a>
-    </div>
-  </div>
-</nav>
-
-<header class="hero">
-  <span class="hero__eyebrow">Коучинг · Андрей Андреев</span>
-  <h1>Коучинг для тех, кто уже всё сделал <em>«правильно»</em></h1>
-  <p class="hero__sub">Бизнес есть. Семья есть. Дом есть. <em>А внутри — будто не моё.</em></p>
-  <p class="hero__lede">Снаружи — всё, чего хотели десять лет назад: компания, репутация, отпуск три раза в год, дети в хорошей школе, машина, на которую раньше засматривались в салоне. Внутри — тише, чем должно быть в этой точке.</p>
-  <div class="hero__creds">
-    <span>ICF-коучинг</span>
-    <span>IFS</span>
-    <span>Экспоненциальный коучинг</span>
-    <span>20+ лет в бизнесе</span>
-    <span>7 лет личной терапии</span>
-  </div>
-</header>
-
-<section class="section" id="pains">
-  <div class="section__head">
-    <div class="section__num">01 — Запросы</div>
-    <div>
-      <h2 class="section__title">С чем <em>обычно приходят</em></h2>
-    </div>
+      <a href="#pricing">Формат</a>
+      <a class="cta-mini" href="https://cal.com/andrei-andreev/first" onclick="ym(109255989,'reachGoal','cta_cal_click')" target="_blank" rel="noopener">Поговорить с Андреем ↗︎</a>
+    </nav>
   </div>
 
-  <div class="pains">
-    <div class="pain">
-      <h3 class="pain__h">Знаю — но не делаю</h3>
-      <p class="pain__t">Всё ведь понятно — вот цель, вот шаги, вот человек, которого пора нанять, вот разговор, который пора провести. Понятно — третий месяц. Пятый. Год. А делаем то же, что и раньше — звоним тем же клиентам, читаем те же книги, обещаем себе понедельник. И каждый вечер — короткое такое противное чувство, которое мы научились называть «устал» и не называть никак больше.</p>
+  <header class="masthead">
+    <div class="rule"></div>
+    <h1>Коучинг для тех, кто уже всё сделал <em>«правильно»</em></h1>
+    <p class="sub">Бизнес есть. Семья есть. Дом есть. <em>А внутри — будто не моё.</em></p>
+    <p>Снаружи — всё, чего хотели десять лет назад: компания, репутация, отпуск три раза в год, дети в хорошей школе. Внутри — тише, чем должно быть в этой точке.</p>
+    <div class="creds">
+      <span>ICF-коучинг</span><span>IFS</span><span>Экспоненциальный коучинг</span><span>20+ лет в бизнесе</span><span>7 лет личной терапии</span>
     </div>
-    <div class="pain">
-      <h3 class="pain__h">Хочу проявляться — но страшно</h3>
-      <p class="pain__t">Идея сидит давно — в заметках, в черновиках, в разговорах с женой за ужином, в голове по дороге в офис. Готовый запуск, готовый блог, готовое выступление — лежат и ждут. А наружу выходит — никогда. Страшно потерять то, что есть (а есть много). <strong>Страшно начать и оказаться обычным.</strong></p>
-    </div>
-    <div class="pain">
-      <h3 class="pain__h">Достиг — но не чувствую</h3>
-      <p class="pain__t">Галочки расставлены — дом, машина, бизнес, дети в хорошей школе, отпуск три раза в год, инстаграм, в который смотришь и узнаёшь себя только по фоткам. Картинка — как у тех, на кого мы смотрели в тридцать. <strong>Внутри — никак. Не плохо, не хорошо — просто никак.</strong></p>
-    </div>
-    <div class="pain">
-      <h3 class="pain__h">Вроде всё, а зачем — не помню</h3>
-      <p class="pain__t">Десять лет назад был список — построить, заработать, успеть, вывезти семью, доказать. Список закрыт, галочки стоят. А вопрос <strong>«ради чего следующие десять»</strong> — повисает. И не уходит, сколько бы новых проектов и поездок мы в него не вкладывали.</p>
-    </div>
-  </div>
+  </header>
 
-  <div class="cta-inline">
-    <a href="https://cal.com/andrei-andreev/first" onclick="ym(109255989,'reachGoal','cta_cal_click')" class="btn">Поговорить с Андреем <span class="arrow">→</span></a>
-  </div>
-</section>
-
-<section class="section" id="method">
-  <div class="section__head">
-    <div class="section__num">02 — Как я работаю</div>
-    <div>
-      <h2 class="section__title"><em>Не</em> с целями. С тем, что <em>мешает</em>.</h2>
-      <p class="section__lede">Цели мы и так умеем ставить, тут коуч не нужен. Работаю с тем, что мешает делать то, что уже знаем — с тем, что в кабинете кризис-менеджмента и в спальне в три ночи звучит одним и тем же голосом.</p>
-    </div>
-  </div>
-
-  <div class="method">
-    <div class="method__item">
-      <div class="method__icon">a</div>
-      <h3 class="method__h">ICF-коучинг</h3>
-      <p class="method__d">Структура и фокус. Где мы на самом деле, чего на самом деле хотим, и почему до сих пор не сделали — без круговых разговоров и красивых формулировок, за которыми нет движения.</p>
-    </div>
-    <div class="method__item">
-      <div class="method__icon">b</div>
-      <h3 class="method__h">Экспоненциальный коучинг</h3>
-      <p class="method__d">Работа с внутренними конфликтами — теми, из-за которых одна часть нас хочет, а другая упирается ногами в пол. Не «поверь в себя», не уговоры — а понимание, кто там внутри упирается и почему у него есть на это право.</p>
-    </div>
-    <div class="method__item">
-      <div class="method__icon">c</div>
-      <h3 class="method__h">IFS</h3>
-      <p class="method__d">Работа с частями: с той, что боится, с той, что защищает, с той, что молчит третий год. Не воевать с собой — договариваться. Внутри у нас сидит вполне взрослый совет директоров, пора пообщаться с ними.</p>
-    </div>
-  </div>
-
-  <p class="method__quote">Результат — не «заставить себя».<br><strong>Результат — перестать мешать.</strong></p>
-</section>
-
-<section class="section" id="author">
-  <div class="section__head">
-    <div class="section__num">03 — Обо мне</div>
-    <div>
-      <h2 class="section__title">Андрей <em>Андреев</em></h2>
-    </div>
-  </div>
-
-  <div class="author">
-    <div class="author__portrait">
-      <img src="assets/andrey-portrait.jpg" alt="Андрей Андреев" />
-    </div>
-    <div>
-      <p class="author__bio">Двадцать с лишним лет в бизнесе — и не одном, а нескольких: одни выходили на миллиард рублей выручки в год со штатом семьдесят человек (e-commerce, FMCG), другие — те, где я был и финдиректором, и CEO, и ткани на производство отвозил сам. Поднимал инвестиции на стартапы в США — и в те же годы был по уши в долгах. Женат двадцать с лишним лет, у нас три дочки.</p>
-      <p class="author__bio"><strong>Я не про «успешный успех»</strong> — я видел, как он выглядит изнутри, и могу рассказать, что внутри там бывает довольно тихо. Я про жизнь — разную, неровную, иногда смешную, чаще честную.</p>
-      <p class="author__bio">Прошёл свой кризис тридцати и свой кризис сорока — известная территория. 8 лет в спортивной гимнастике — три, четыре, пять тренировок в неделю, потому что тело знает то, чего голова уже забыла. 10 лет тантры, 7 лет личной терапии, годы медитаций — таких, о которых не пишут карусели в инстаграме.</p>
-
-      <div class="author__stats">
-        <div class="author__stat">
-          <div class="author__stat__n">20+</div>
-          <div class="author__stat__l">лет в операционном бизнесе</div>
-        </div>
-        <div class="author__stat">
-          <div class="author__stat__n">1 млрд ₽</div>
-          <div class="author__stat__l">выручка в год — одна из компаний</div>
-        </div>
-        <div class="author__stat">
-          <div class="author__stat__n">200</div>
-          <div class="author__stat__l">часов коучинговой практики</div>
-        </div>
-        <div class="author__stat">
-          <div class="author__stat__n">ICF · IFS</div>
-          <div class="author__stat__l">+ Экспоненциальный коучинг</div>
-        </div>
+  <section id="pains">
+    <div class="sechead"><span>01 — Запросы</span><span>4 сюжета</span></div>
+    <h2>С чем <em>обычно приходят</em></h2>
+    <div class="grid2">
+      <div class="pain">
+        <h3>Знаю — но не делаю</h3>
+        <p>Всё ведь понятно — вот цель, вот шаги, вот разговор, который пора провести. Понятно — третий месяц. Пятый. Год. А делаем то же, что и раньше — и каждый вечер короткое противное чувство, которое мы научились называть «устал».</p>
+      </div>
+      <div class="pain">
+        <h3>Хочу проявляться — но страшно</h3>
+        <p>Готовый запуск, готовый блог, готовое выступление — лежат и ждут. А наружу выходит — никогда. Страшно потерять то, что есть (а есть много). Страшно начать и оказаться обычным.</p>
+      </div>
+      <div class="pain">
+        <h3>Достиг — но не чувствую</h3>
+        <p>Галочки расставлены — дом, машина, бизнес, инстаграм, в который смотришь и узнаёшь себя только по фоткам. Картинка — как у тех, на кого мы смотрели в тридцать. Внутри — никак. Не плохо, не хорошо — просто никак.</p>
+      </div>
+      <div class="pain">
+        <h3>Вроде всё, а зачем — не помню</h3>
+        <p>Десять лет назад был список — построить, заработать, успеть, доказать. Список закрыт. А вопрос «ради чего следующие десять» — повисает. И не уходит, сколько бы новых проектов мы в него не вкладывали.</p>
       </div>
     </div>
-  </div>
-</section>
+    <a class="btn" href="https://cal.com/andrei-andreev/first" onclick="ym(109255989,'reachGoal','cta_cal_click')" target="_blank" rel="noopener">Поговорить с Андреем →</a>
+  </section>
 
-<section class="section" id="pricing">
-  <div class="section__head">
-    <div class="section__num">04 — Формат и стоимость</div>
-    <div>
-      <h2 class="section__title">Сессия — <em>60–90 минут</em> в Zoom</h2>
+  <section id="method">
+    <div class="sechead"><span>02 — Как я работаю</span><span>3 метода</span></div>
+    <h2><em>Не</em> с целями. С тем, что <em>мешает</em>.</h2>
+    <div class="methods">
+      <div class="method">
+        <span class="idx">a</span>
+        <h3>ICF-коучинг</h3>
+        <p>Структура и фокус. Где мы на самом деле, чего на самом деле хотим, и почему до сих пор не сделали — без круговых разговоров и красивых формулировок, за которыми нет движения.</p>
+      </div>
+      <div class="method">
+        <span class="idx">b</span>
+        <h3>Экспоненциальный коучинг</h3>
+        <p>Работа с внутренними конфликтами — теми, из-за которых одна часть нас хочет, а другая упирается ногами в пол. Не «поверь в себя» — а понимание, кто там внутри упирается и почему у него есть на это право.</p>
+      </div>
+      <div class="method">
+        <span class="idx">c</span>
+        <h3>IFS</h3>
+        <p>Работа с частями: с той, что боится, с той, что защищает, с той, что молчит третий год. Не воевать с собой — договариваться. Внутри у нас сидит вполне взрослый совет директоров, пора пообщаться с ними.</p>
+      </div>
     </div>
-  </div>
+    <p class="result">Результат — не «заставить себя». <strong>Результат — перестать мешать.</strong></p>
+  </section>
 
-  <p class="pricing-intro">Начинаем всегда с <strong>сессии-знакомства</strong>. Это не «созвон на 15 минут познакомиться» — это <strong>60–90 минут полноценной работы</strong> с конкретным запросом. После неё у вас на руках план действий и понимание, есть ли смысл идти в долгую. <strong>Если решите, что не моё — расходимся.</strong></p>
-
-  <div class="pricing">
-    <div class="price">
-      <div class="price__name">Сессия-знакомство</div>
-      <div class="price__num">Бесплатно</div>
-      <p class="price__d">Стартовая встреча с конкретным запросом. После неё — выбор пакета или работа по одной.</p>
-      <ul class="price__list">
-        <li>60–90 минут в Zoom</li>
-        <li>Работа с конкретным запросом</li>
-        <li>План действий после сессии</li>
-      </ul>
-      <a href="https://cal.com/andrei-andreev/first" onclick="ym(109255989,'reachGoal','price_btn_click')" class="price__btn">Записаться</a>
+  <section id="author">
+    <div class="sechead"><span>03 — Обо мне</span><span>Андрей Андреев</span></div>
+    <h2>Андрей <em>Андреев</em></h2>
+    <div class="about">
+      <div class="photo"><img src="/assets/andrey-portrait.jpg" alt="Андрей Андреев — портрет"></div>
+      <div>
+        <p>Двадцать с лишним лет в бизнесе — и не одном, а нескольких: одни выходили на миллиард рублей выручки в год со штатом семьдесят человек (e-commerce, FMCG), другие — те, где я был и финдиректором, и CEO, и ткани на производство отвозил сам. Поднимал инвестиции на стартапы в США — и в те же годы был по уши в долгах. Женат двадцать с лишним лет, у нас три дочки.</p>
+        <p><strong>Я не про «успешный успех»</strong> — я видел, как он выглядит изнутри, и могу рассказать, что внутри там бывает довольно тихо. Я про жизнь — разную, неровную, иногда смешную, чаще честную.</p>
+        <p>Прошёл свой кризис тридцати и свой кризис сорока — известная территория. 8 лет в спортивной гимнастике, 10 лет тантры, 7 лет личной терапии, годы медитаций — таких, о которых не пишут карусели в инстаграме.</p>
+      </div>
     </div>
-
-    <div class="price price--featured">
-      <span class="price__badge">Стабильные изменения</span>
-      <div class="price__name">Пакет 7 сессий</div>
-      <div class="price__num">210 000 ₽</div>
-      <p class="price__d">Достаточно, чтобы первые сдвиги стали устойчивыми, а не вернулись через месяц к тем же проблемам.</p>
-      <ul class="price__list">
-        <li>7 сессий по 60–90 минут</li>
-        <li>Диагностика внутренних блоков</li>
-        <li>Индивидуальная стратегия работы</li>
-        <li>Поддержка между сессиями</li>
-        <li>Гибкий график (раз в 2 недели)</li>
-      </ul>
-      <a href="https://cal.com/andrei-andreev/first" onclick="ym(109255989,'reachGoal','price_btn_click')" class="price__btn">Обсудить</a>
+    <div class="stats">
+      <div class="stat"><span class="n">20+</span><span class="l">лет в операционном бизнесе</span></div>
+      <div class="stat"><span class="n">1 млрд ₽</span><span class="l">выручка в год — одна из компаний</span></div>
+      <div class="stat"><span class="n">200</span><span class="l">часов коучинговой практики</span></div>
+      <div class="stat"><span class="n">ICF · IFS</span><span class="l">+ экспоненциальный коучинг</span></div>
     </div>
+  </section>
 
-    <div class="price">
-      <div class="price__name">Пакет 15 сессий</div>
-      <div class="price__num">400 000 ₽</div>
-      <p class="price__d">Глубокая работа — для тех, кто пришёл не примеряться, а двигаться.</p>
-      <ul class="price__list">
-        <li>15 сессий по 60–90 минут</li>
-        <li>Полная диагностика и проработка</li>
-        <li>Индивидуальная стратегия работы</li>
-        <li>Поддержка между сессиями</li>
-        <li>Гибкий график (раз в 2 недели)</li>
-      </ul>
-      <a href="https://cal.com/andrei-andreev/first" onclick="ym(109255989,'reachGoal','price_btn_click')" class="price__btn">Обсудить</a>
+  <section id="pricing">
+    <div class="sechead"><span>04 — Формат и стоимость</span><span>Zoom</span></div>
+    <h2>Сессия — <em>60–90 минут</em> в Zoom</h2>
+    <div class="plans">
+      <div class="plan">
+        <h3>Сессия-знакомство</h3>
+        <div class="price">Бесплатно</div>
+        <p class="pdesc">Это не «созвон на 15 минут» — это 60–90 минут полноценной работы с конкретным запросом. Если решите, что не моё — расходимся.</p>
+        <ul>
+          <li>60–90 минут в Zoom</li>
+          <li>Работа с конкретным запросом</li>
+          <li>План действий после сессии</li>
+        </ul>
+        <a class="pbtn" href="https://cal.com/andrei-andreev/first" onclick="ym(109255989,'reachGoal','price_btn_click')" target="_blank" rel="noopener">Записаться</a>
+      </div>
+      <div class="plan hot">
+        <span class="ptag">Стабильные изменения</span>
+        <h3>Пакет 7 сессий</h3>
+        <div class="price">210 000 ₽</div>
+        <p class="pdesc">Достаточно, чтобы первые сдвиги стали устойчивыми, а не вернулись через месяц к тем же проблемам.</p>
+        <ul>
+          <li>7 сессий по 60–90 минут</li>
+          <li>Диагностика внутренних блоков</li>
+          <li>Индивидуальная стратегия работы</li>
+          <li>Поддержка между сессиями</li>
+          <li>Гибкий график (раз в 2 недели)</li>
+        </ul>
+        <a class="pbtn" onclick="ym(109255989,'reachGoal','price_btn_click')" href="https://andreyandreev.createtoday.ru/hero/get/of_K-n4pn3M5Ycc" target="_blank" rel="noopener">Оплатить</a>
+      </div>
+      <div class="plan">
+        <h3>Пакет 15 сессий</h3>
+        <div class="price">400 000 ₽</div>
+        <p class="pdesc">Глубокая работа — для тех, кто пришёл не примеряться, а двигаться.</p>
+        <ul>
+          <li>15 сессий по 60–90 минут</li>
+          <li>Полная диагностика и проработка</li>
+          <li>Индивидуальная стратегия работы</li>
+          <li>Поддержка между сессиями</li>
+          <li>Гибкий график (раз в 2 недели)</li>
+        </ul>
+        <a class="pbtn" onclick="ym(109255989,'reachGoal','price_btn_click')" href="https://andreyandreev.createtoday.ru/hero/get/of_fihgL3OY1uBq" target="_blank" rel="noopener">Оплатить</a>
+      </div>
     </div>
-  </div>
-</section>
+    <p class="note">Можно и без пакета: после знакомства — 30 000 ₽ за сессию.</p>
+  </section>
 
-<section class="section" id="faq">
-  <div class="section__head">
-    <div class="section__num">05 — Частые вопросы</div>
-    <div>
-      <h2 class="section__title">Что обычно <em>спрашивают</em></h2>
+  <section id="faq">
+    <div class="sechead"><span>05 — Частые вопросы</span><span>5 ответов</span></div>
+    <h2>Что обычно <em>спрашивают</em></h2>
+    <div class="faq">
+      <details>
+        <summary>Чем это отличается от психотерапии?</summary>
+        <p>Терапия идёт назад — к тому, откуда выросло. Коучинг идёт вперёд — к тому, что мы хотим сделать сейчас и почему не делаем. Я не лечу — помогаю двигаться. Но границы держу аккуратно: если в процессе вылезает то, что нужно проработать с психологом — скажу прямо.</p>
+      </details>
+      <details>
+        <summary>Что если после сессии-знакомства мы не подойдём друг другу?</summary>
+        <p>Тогда у вас на руках — 90 минут разбора и план действий, которые работают независимо от того, продолжаем мы дальше или нет. Расходимся друзьями, никто никого не уговаривает.</p>
+      </details>
+      <details>
+        <summary>Я уже был у коуча — не помогло.</summary>
+        <p>Бывает. Коучинг — это контакт двух конкретных людей. Иногда не совпадает подход, иногда — химия, иногда — момент в жизни. Поэтому есть сессия-знакомство: посмотреть друг на друга и понять, есть ли смысл начинать.</p>
+      </details>
+      <details>
+        <summary>Сколько нужно времени, чтобы увидеть результат?</summary>
+        <p>Первые сдвиги — обычно к третьей-четвёртой сессии. Устойчивые изменения — от трёх месяцев. Это не магия и не «восемь шагов к лучшей версии себя», а нормальная работа — последовательная, иногда скучная, иногда неудобная.</p>
+      </details>
+      <details>
+        <summary>Можно ли без пакета?</summary>
+        <p>Да, после знакомства можно работать по одной — 30 000 ₽ за сессию.</p>
+      </details>
     </div>
-  </div>
+  </section>
 
-  <div class="faq">
-    <details>
-      <summary>Чем это отличается от психотерапии?</summary>
-      <div class="answer">Терапия идёт назад — к тому, откуда выросло. Коучинг идёт вперёд — к тому, что мы хотим сделать сейчас и почему не делаем. Я не лечу — помогаю двигаться. Но границы держу аккуратно: если в процессе вылезает то, что нужно проработать с психологом — скажу прямо.</div>
-    </details>
-    <details>
-      <summary>Что если после сессии-знакомства мы не подойдём друг другу?</summary>
-      <div class="answer">Тогда у вас на руках — 90 минут разбора и план действий, которые работают независимо от того, продолжаем мы дальше или нет. Расходимся друзьями, никто никого не уговаривает.</div>
-    </details>
-    <details>
-      <summary>Я уже был у коуча — не помогло.</summary>
-      <div class="answer">Бывает. Коучинг — это контакт двух конкретных людей. Иногда не совпадает подход, иногда — химия, иногда — момент в жизни. Поэтому есть сессия-знакомство: посмотреть друг на друга и понять, есть ли смысл начинать. Если нет — спокойно расходимся, никого не уговариваю.</div>
-    </details>
-    <details>
-      <summary>Сколько нужно времени, чтобы увидеть результат?</summary>
-      <div class="answer">Первые сдвиги — обычно к третьей-четвёртой сессии. Устойчивые изменения — от трёх месяцев. Это не магия и не «восемь шагов к лучшей версии себя», а нормальная работа — последовательная, иногда скучная, иногда неудобная.</div>
-    </details>
-    <details>
-      <summary>Можно ли без пакета?</summary>
-      <div class="answer">Да, после знакомства можно работать по одной — 30 000 ₽ за сессию.</div>
-    </details>
-  </div>
-</section>
-
-<section class="section" id="not-for">
-  <div class="section__head">
-    <div class="section__num">06 — Кому точно не сюда</div>
-    <div>
-      <h2 class="section__title">Это <em>не</em> магазин универсальных решений</h2>
-      <p class="section__lede">Коучинг — про движение вперёд. Не про разбор прошлого, не про терапию, не про «просто поговорить». Если узнаёте себя ниже — скорее всего, нужен другой специалист.</p>
+  <section id="notforyou">
+    <div class="sechead"><span>06 — Кому точно не сюда</span><span>2 случая</span></div>
+    <h2>Это <em>не</em> магазин универсальных решений</h2>
+    <div class="not4u">
+      <div class="item">
+        <h3>Запрос на терапию</h3>
+        <p>Панические атаки, травмы, длительная тревога, «хочу вернуться в то состояние, которое было раньше». Здесь нужен психотерапевт — и обращение к нему будет лучшим, что можно для себя сделать.</p>
+      </div>
+      <div class="item">
+        <h3>Нет готовности к действиям</h3>
+        <p>Если ищете кого-то, кто будет мотивировать и контролировать. Я даю направление и инструменты — но делать всё равно вам. Между сессиями будут задания, и они требуют усилий.</p>
+      </div>
     </div>
+  </section>
+
+  <section class="finale">
+    <div class="rule" style="width: 72px; height: 5px; background: var(--wash-coral); margin-bottom: var(--space-4);"></div>
+    <h2 style="margin-top: 0;">Поговорим, что <em>давно сидит занозой</em></h2>
+    <p>Записывайтесь — расскажете, что не отпускает, с чем хотите поработать. С меня — план действий и честная обратная связь, без «у вас огромный потенциал» и других вежливых формулировок. Если будет контакт — позову в долгую работу. Если нет — разойдёмся друзьями.</p>
+    <a class="btn" href="https://cal.com/andrei-andreev/first" onclick="ym(109255989,'reachGoal','cta_cal_click')" target="_blank" rel="noopener">Поговорить с Андреем →</a>
+  </section>
+
+  <div class="pagefoot">
+    <span>© 2026 Андрей Андреев · коучинг</span>
+    <span class="links">
+      <a href="https://instagram.com/andreyandreev.me" target="_blank" rel="noopener">Instagram ↗︎</a>
+      <a href="https://cal.com/andrei-andreev/first" target="_blank" rel="noopener">Cal.com ↗︎</a>
+      <a href="/">На главную →</a>
+    </span>
   </div>
-
-  <div class="notfor">
-    <div class="notfor__item">
-      <h3 class="notfor__h">Запрос на терапию</h3>
-      <p class="notfor__d">Панические атаки, травмы, длительная тревога, «хочу вернуться в то состояние, которое было раньше». Здесь нужен психотерапевт — и обращение к нему будет лучшим, что можно для себя сделать.</p>
-    </div>
-    <div class="notfor__item">
-      <h3 class="notfor__h">Нет готовности к действиям</h3>
-      <p class="notfor__d">Если ищете кого-то, кто будет мотивировать и контролировать. Я даю направление и инструменты — но делать всё равно вам. Между сессиями будут задания, и они требуют усилий.</p>
-    </div>
-  </div>
-</section>
-
-<!-- Channels section («Где почитать и послушать») hidden by Andrey's request 2026-05-16 -->
-
-<section style="padding:0 var(--gutter)">
-  <div class="final-cta">
-    <div class="final-cta__eyebrow">Сессия-знакомство</div>
-    <h2 class="final-cta__h">Поговорим, что <em>давно сидит занозой</em></h2>
-    <p class="final-cta__t">Записывайтесь — расскажете, что не отпускает, с чем хотите поработать, что давно сидит занозой и никуда не делось. С меня — план действий и честная обратная связь, без «у вас огромный потенциал» и других вежливых формулировок.<br><br>Если будет контакт — позову в долгую работу. Если нет — разойдёмся друзьями.</p>
-    <a href="https://cal.com/andrei-andreev/first" onclick="ym(109255989,'reachGoal','cta_cal_click')" class="final-cta__btn">Поговорить с Андреем <span class="arrow">→</span></a>
-  </div>
-</section>
-
-<footer class="foot">
-  <div>© 2026 Андрей Андреев · коучинг</div>
-  <div class="foot__socials">
-    <a href="https://instagram.com/andreyandreev.me">Instagram</a>
-    <a href="https://cal.com/andrei-andreev/first" onclick="ym(109255989,'reachGoal','cta_cal_click')">Cal.com</a>
-  </div>
-</footer>
-
+</div>
 <script>
-  // Yandex.Metrika: fire scroll-reach goal when final CTA enters viewport
+  // Yandex.Metrika: scroll-reach goal на финальный CTA
   (function(){
-    var target = document.querySelector('.final-cta');
+    var target = document.querySelector('.finale');
     if (!target || typeof IntersectionObserver === 'undefined') return;
     var fired = false;
     new IntersectionObserver(function(entries){
