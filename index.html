@@ -4,10 +4,10 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Андрей Андреев</title>
-<meta name="description" content="Андрей Андреев — личный сайт." />
+<meta name="description" content="Андрей Андреев — предприниматель, автор образовательных проектов, фотограф, коуч. Фотопроекты, коучинг, курсы, Hey, Sash!, Create Today." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
@@ -21,68 +21,104 @@
 <noscript><div><img src="https://mc.yandex.ru/watch/109255989" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
 <style>
-:root{--ink:#0E0E0E;--ink-3:#555;--ink-mute:#8A8A8A;--paper:#F4F0E8;--paper-2:#ECE6DA;--coral:#E86F4D;--line:#E6E3DD;}
+:root{
+  --paper:#F3F0E8; --ink:#16150F; --ink-soft:#57544A; --ink-faint:#8B877A;
+  --line-soft:rgba(22,21,15,0.16);
+  --font-grotesk:'Golos Text','Helvetica Neue',Arial,sans-serif;
+  --font-mono:'IBM Plex Mono','SF Mono',Menlo,monospace;
+  --type-body:17px; --type-small:14px; --type-caption:12px;
+  --tracking-caps:0.14em;
+  --text-paragraph:400 var(--type-body)/1.55 var(--font-grotesk);
+  --text-annotation:400 var(--type-caption)/1.5 var(--font-mono);
+  --text-muted:var(--ink-soft); --text-faint:var(--ink-faint);
+  --space-3:12px; --space-4:16px; --space-5:24px; --space-6:32px; --space-7:48px; --space-8:64px; --space-9:96px;
+  --page-pad:clamp(24px,5vw,72px);
+  --ease-out:cubic-bezier(0.22,1,0.36,1); --duration-fast:160ms;
+}
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;font-family:'Manrope',system-ui,sans-serif;color:var(--ink);background:var(--paper);min-height:100vh;-webkit-font-smoothing:antialiased}
-.wrap{max-width:720px;margin:0 auto;padding:96px 32px;min-height:100vh;display:flex;flex-direction:column;justify-content:center}
-.eyebrow{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:24px}
-h1{font-size:clamp(48px,7vw,88px);font-weight:600;letter-spacing:-.03em;line-height:1.02;margin:0 0 24px}
-h1 em{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400}
-.lede{font-size:20px;color:var(--ink-3);line-height:1.5;margin:0 0 48px;max-width:520px}
-.links{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden}
-.link{display:flex;align-items:center;justify-content:space-between;padding:24px 28px;background:#fff;text-decoration:none;color:var(--ink);transition:all .2s ease}
-.link:hover{background:var(--paper-2)}
-.link__title{font-size:18px;font-weight:600;letter-spacing:-.005em}
-.link__desc{font-size:14px;color:var(--ink-mute);margin-top:2px}
-.link__arrow{font-size:24px;color:var(--coral);font-family:'Instrument Serif',serif;font-style:italic}
-.foot{margin-top:64px;font-size:13px;color:var(--ink-mute);font-family:'JetBrains Mono',monospace}
+body{margin:0;background:var(--paper);color:var(--ink);font:var(--text-paragraph);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.page{max-width:1240px;margin:0 auto;padding:0 var(--page-pad);position:relative}
+
+.topbar{display:flex;justify-content:space-between;padding-top:var(--space-5);font:var(--text-annotation);letter-spacing:var(--tracking-caps);text-transform:uppercase;color:var(--text-faint)}
+
+.masthead{padding:var(--space-8) 0 var(--space-6);display:grid;grid-template-columns:1fr 320px;gap:var(--space-8);align-items:end}
+.masthead .rule{width:72px;height:5px;background:var(--ink);margin-bottom:var(--space-4)}
+.masthead h1{margin:0;font:600 clamp(56px,7.5vw,104px)/0.98 var(--font-grotesk);letter-spacing:0.06em;text-transform:uppercase}
+.masthead .roles{margin:var(--space-5) 0 0;font:500 19px/1.45 var(--font-grotesk);letter-spacing:-0.01em;max-width:40ch}
+.masthead .roles span{display:block}
+.masthead p.about{margin:var(--space-3) 0 0;color:var(--text-muted);max-width:44ch}
+.masthead .photo{width:320px;aspect-ratio:3/4;overflow:hidden}
+.masthead .photo img{width:100%;height:100%;object-fit:cover;object-position:50% 20%;filter:saturate(0.75);display:block}
+
+.toc{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-6) var(--space-9);padding:var(--space-6) 0 var(--space-7)}
+.entry{display:grid;grid-template-columns:84px 1fr;align-items:start;gap:var(--space-4)}
+.entry .num{font:600 44px/0.9 var(--font-grotesk);letter-spacing:-0.01em}
+.entry .trow{display:flex;align-items:center;gap:var(--space-3);padding-top:6px}
+.entry .appico{width:34px;height:34px;flex:none}
+.entry .appico img{width:34px;height:34px;display:block;border-radius:8px}
+.entry .title{font:500 19px/1.25 var(--font-grotesk);letter-spacing:0.1em;text-transform:uppercase}
+.entry .ext{font:400 17px/1 var(--font-grotesk);color:var(--text-faint);transition:transform var(--duration-fast) var(--ease-out),color var(--duration-fast) var(--ease-out)}
+.entry:hover .ext{color:var(--ink);transform:translate(2px,-2px)}
+.entry .desc{display:block;margin-top:4px;font:400 var(--type-small)/1.5 var(--font-grotesk);letter-spacing:0.04em;color:var(--text-muted);text-transform:none}
+.entry:hover .title{text-decoration:underline;text-underline-offset:4px}
+
+.pagefoot{display:flex;justify-content:space-between;border-top:1px solid var(--line-soft);margin-top:var(--space-7);padding:var(--space-4) 0 var(--space-6);font:var(--text-annotation);letter-spacing:var(--tracking-caps);text-transform:uppercase;color:var(--text-faint)}
+
+@media (max-width:860px){
+  .toc{grid-template-columns:1fr}
+  .masthead{grid-template-columns:1fr;align-items:start}
+  .masthead .photo{width:100%;max-width:380px}
+}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <span class="eyebrow">andreyandreev.me</span>
-  <h1>Андрей <em>Андреев</em></h1>
-  <p class="lede">Коуч предпринимателей. Автор курсов и практик. Создатель приложения Hey, Sash!</p>
+<div class="page">
+  <div class="topbar">
+    <span>andreyandreev.me</span>
+    <span>Оглавление · 2026</span>
+  </div>
 
-  <nav class="links">
-    <a href="/photo/" class="link">
-      <div>
-        <div class="link__title">Фотопроекты</div>
-        <div class="link__desc">Авторские фотосерии — зримое и незримое</div>
+  <header class="masthead">
+    <div>
+      <div class="rule"></div>
+      <h1>Андрей<br>Андреев</h1>
+      <div class="roles">
+        <span>CEO платформы Create Today</span>
+        <span>Co-founder приложения Hey,&nbsp;Sash!</span>
       </div>
-      <span class="link__arrow">→</span>
+      <p class="about">Предприниматель, автор образовательных проектов, фотограф, коуч</p>
+    </div>
+    <div class="photo"><img src="assets/andrey-portrait.jpg" alt="Андрей Андреев — портрет"></div>
+  </header>
+
+  <nav class="toc">
+    <a class="entry" href="/photo/">
+      <span class="num">01</span>
+      <span><span class="trow"><span class="title">Фотопроекты</span></span><span class="desc">Авторские фотосерии — зримое и незримое</span></span>
     </a>
-    <a href="/coaching/" class="link">
-      <div>
-        <div class="link__title">Коучинг</div>
-        <div class="link__desc">Клиентские страницы и направления</div>
-      </div>
-      <span class="link__arrow">→</span>
+    <a class="entry" href="/coaching/">
+      <span class="num">02</span>
+      <span><span class="trow"><span class="title">Коучинг</span></span><span class="desc">Клиентские страницы и направления</span></span>
     </a>
-    <a href="https://apps.apple.com/app/id6758863959" class="link" target="_blank" rel="noopener">
-      <div>
-        <div class="link__title">Hey, Sash!</div>
-        <div class="link__desc">Приложение для каруселей — в App Store</div>
-      </div>
-      <span class="link__arrow">→</span>
+    <a class="entry" href="https://apps.apple.com/ru/app/id6758863959" target="_blank" rel="noopener">
+      <span class="num">03</span>
+      <span><span class="trow"><span class="appico"><img src="assets/heysash-icon.png" alt="Иконка Hey, Sash!"></span><span class="title">Hey, Sash!</span><span class="ext">↗</span></span><span class="desc">Приложение для каруселей — в App Store</span></span>
     </a>
-    <a href="/kursy/" class="link">
-      <div>
-        <div class="link__title">Курсы</div>
-        <div class="link__desc">Все продукты: курс про деньги, распродажа, гайды</div>
-      </div>
-      <span class="link__arrow">→</span>
+    <a class="entry" href="/kursy/">
+      <span class="num">04</span>
+      <span><span class="trow"><span class="title">Курсы</span></span><span class="desc">Курс про деньги, распродажа, гайды</span></span>
     </a>
-    <a href="https://createtoday.ru" class="link" target="_blank" rel="noopener">
-      <div>
-        <div class="link__title">Create Today</div>
-        <div class="link__desc">Платформа для создателей курсов</div>
-      </div>
-      <span class="link__arrow">→</span>
+    <a class="entry" href="https://createtoday.ru" target="_blank" rel="noopener">
+      <span class="num">05</span>
+      <span><span class="trow"><span class="title">Create Today</span><span class="ext">↗</span></span><span class="desc">Платформа для создателей курсов</span></span>
     </a>
   </nav>
 
-  <div class="foot">© 2026 · больше разделов скоро</div>
+  <div class="pagefoot">
+    <span>© 2026</span>
+    <span>Больше разделов скоро</span>
+  </div>
 </div>
 </body>
 </html>
