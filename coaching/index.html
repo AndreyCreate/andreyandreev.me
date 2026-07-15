@@ -422,7 +422,19 @@
   })();
 </script>
 <!-- Instagram dashboard tracker (ig-dashboard) -->
-<script>window.CT_CONFIG={endpoint:'https://ig-dashboard-seven.vercel.app/api/track',landing_id:3};</script>
+<script>
+  window.CT_CONFIG={endpoint:'https://ig-dashboard-seven.vercel.app/api/track',landing_id:3};
+  // sendBeacon шлёт запрос с credentials, а /api/track отвечает ACAO:* — браузер режет его по CORS.
+  // Возвращаем false для этого endpoint, чтобы tracker.js ушёл на свой fetch-фолбэк без credentials.
+  (function(){
+    if (!navigator.sendBeacon) return;
+    var orig = navigator.sendBeacon.bind(navigator);
+    navigator.sendBeacon = function(url, data){
+      if (String(url).indexOf('ig-dashboard-seven.vercel.app') > -1) return false;
+      return orig(url, data);
+    };
+  })();
+</script>
 <script src="https://ig-dashboard-seven.vercel.app/tracker.js" defer></script>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
