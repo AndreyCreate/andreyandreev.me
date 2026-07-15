@@ -84,6 +84,7 @@
   .btn { display: inline-block; margin-top: var(--space-6); background: var(--wash-coral); color: #fff; font: 500 16px/1 var(--font-grotesk); letter-spacing: 0.06em; text-transform: uppercase; padding: 18px 32px; transition: background var(--duration-fast) var(--ease-out); }
   .btn:hover { background: var(--ink); }
   .btn-note { margin-top: var(--space-3); font-size: 15px; color: var(--ink-soft); }
+  .btn-note.pnote { text-align: center; font-size: 14px; margin-top: 10px; }
   .btn-note a { color: var(--wash-coral); text-decoration: underline; text-underline-offset: 3px; }
   .btn-note a:hover { color: var(--ink); }
 
@@ -157,7 +158,7 @@
       <a href="#method">Подход</a>
       <a href="#author">Обо мне</a>
       <a href="#pricing">Формат</a>
-      <a class="cta-mini" href="https://cal.com/andrei-andreev/first" onclick="ym(109255989,'reachGoal','cta_cal_click')" target="_blank" rel="noopener">Поговорить с Андреем ↗︎</a>
+      <a class="cta-mini" href="https://t.me/andrey_andreev" onclick="ym(109255989,'reachGoal','cta_tg_click')" target="_blank" rel="noopener">Написать в Telegram ↗︎</a>
     </nav>
   </div>
 
@@ -192,8 +193,8 @@
         <p>Десять лет назад был список — построить, заработать, успеть, доказать. Список закрыт. А вопрос «ради чего следующие десять» — повисает. И не уходит, сколько бы новых проектов мы в него не вкладывали.</p>
       </div>
     </div>
-    <a class="btn" href="https://cal.com/andrei-andreev/first" onclick="ym(109255989,'reachGoal','cta_cal_click')" target="_blank" rel="noopener">Поговорить с Андреем →</a>
-    <p class="btn-note">Или просто напишите мне в Telegram — <a href="https://t.me/andrey_andreev" onclick="ym(109255989,'reachGoal','cta_tg_click')" target="_blank" rel="noopener">@andrey_andreev</a></p>
+    <a class="btn" href="https://t.me/andrey_andreev" onclick="ym(109255989,'reachGoal','cta_tg_click')" target="_blank" rel="noopener">Написать мне в Telegram →</a>
+    <p class="btn-note">Или сразу выберите время в календаре — <a href="https://cal.com/andrei-andreev/first" onclick="ym(109255989,'reachGoal','cta_cal_click')" target="_blank" rel="noopener">cal.com ↗︎</a></p>
   </section>
 
   <section id="method">
@@ -251,7 +252,8 @@
           <li>Работа с конкретным запросом</li>
           <li>План действий после сессии</li>
         </ul>
-        <a class="pbtn" href="https://cal.com/andrei-andreev/first" onclick="ym(109255989,'reachGoal','price_btn_click')" target="_blank" rel="noopener">Записаться</a>
+        <a class="pbtn" href="https://t.me/andrey_andreev" onclick="ym(109255989,'reachGoal','price_btn_click');ym(109255989,'reachGoal','cta_tg_click')" target="_blank" rel="noopener">Написать в Telegram</a>
+        <p class="btn-note pnote">Или сразу <a href="https://cal.com/andrei-andreev/first" onclick="ym(109255989,'reachGoal','cta_cal_click')" target="_blank" rel="noopener">выберите время ↗︎</a></p>
       </div>
       <div class="plan hot">
         <span class="ptag">Стабильные изменения</span>
@@ -330,8 +332,8 @@
     <div class="rule" style="width: 72px; height: 5px; background: var(--wash-coral); margin-bottom: var(--space-4);"></div>
     <h2 style="margin-top: 0;">Поговорим, что <em>давно сидит занозой</em></h2>
     <p>Записывайтесь — расскажете, что не отпускает, с чем хотите поработать. С меня — план действий и честная обратная связь, без «у вас огромный потенциал» и других вежливых формулировок. Если будет контакт — позову в долгую работу. Если нет — разойдёмся друзьями.</p>
-    <a class="btn" href="https://cal.com/andrei-andreev/first" onclick="ym(109255989,'reachGoal','cta_cal_click')" target="_blank" rel="noopener">Поговорить с Андреем →</a>
-    <p class="btn-note">Или просто напишите мне в Telegram — <a href="https://t.me/andrey_andreev" onclick="ym(109255989,'reachGoal','cta_tg_click')" target="_blank" rel="noopener">@andrey_andreev</a></p>
+    <a class="btn" href="https://t.me/andrey_andreev" onclick="ym(109255989,'reachGoal','cta_tg_click')" target="_blank" rel="noopener">Написать мне в Telegram →</a>
+    <p class="btn-note">Или сразу выберите время в календаре — <a href="https://cal.com/andrei-andreev/first" onclick="ym(109255989,'reachGoal','cta_cal_click')" target="_blank" rel="noopener">cal.com ↗︎</a></p>
   </section>
 
   <div class="pagefoot">
@@ -364,10 +366,10 @@
 <script src="https://ig-dashboard-seven.vercel.app/tracker.js" defer></script>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    var cta = document.querySelectorAll('a[href*="cal.com/andrei-andreev"]');
+    var cta = document.querySelectorAll('a[href*="cal.com/andrei-andreev"], a[href*="t.me/andrey_andreev"]');
     for (var i = 0; i < cta.length; i++) {
       cta[i].addEventListener('click', function () {
-        if (window.ctTrack) window.ctTrack('target_action', { step: 'cal_booking_click' });
+        if (window.ctTrack) window.ctTrack('target_action', { step: this.href.indexOf('t.me/') > -1 ? 'tg_click' : 'cal_booking_click' });
       });
     }
   });
