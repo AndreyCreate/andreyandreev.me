@@ -85,6 +85,22 @@
   .btn:hover { background: var(--ink); }
   .btn-note { margin-top: var(--space-3); font-size: 15px; color: var(--ink-soft); }
   .btn-note.pnote { text-align: center; font-size: 14px; margin-top: 10px; }
+  .quotes { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); margin-top: var(--space-6); }
+  .quote { border-top: 1px solid var(--line-soft); padding-top: var(--space-4); display: flex; flex-direction: column; }
+  .quote p { margin: 0; flex: 1; font-family: var(--font-serif-display); font-style: italic; font-size: 19px; line-height: 1.55; }
+  .quote p::before, .quote p::after { content: '"'; color: var(--wash-coral); font-style: normal; font-weight: 600; }
+  .quote-who { margin-top: var(--space-4); padding-top: var(--space-3); border-top: 1px solid var(--line-soft); color: var(--text-muted); font-size: 14px; }
+  .quote-who strong { color: var(--ink); }
+  .sticky-cta { position: fixed; bottom: 24px; right: 24px; z-index: 60; opacity: 0; visibility: hidden; transform: translateY(16px); transition: opacity .35s, transform .35s, visibility .35s; }
+  .sticky-cta.show { opacity: 1; visibility: visible; transform: translateY(0); }
+  .sticky-cta .btn { margin-top: 0; padding: 14px 24px; font-size: 14px; box-shadow: 0 12px 28px rgba(22,21,15,0.22); }
+  .mobile-cta { display: none; position: fixed; bottom: 12px; left: 12px; right: 12px; z-index: 60; background: var(--wash-coral); color: #fff; text-align: center; font: 500 15px/1 var(--font-grotesk); letter-spacing: 0.06em; text-transform: uppercase; padding: 16px; box-shadow: 0 10px 30px rgba(22,21,15,0.3); }
+  @media (max-width: 640px) {
+    .quotes { grid-template-columns: 1fr; }
+    .mobile-cta { display: block; }
+    .sticky-cta { display: none; }
+    .page { padding-bottom: 64px; }
+  }
   .btn-note a { color: var(--wash-coral); text-decoration: underline; text-underline-offset: 3px; }
   .btn-note a:hover { color: var(--ink); }
 
@@ -157,6 +173,7 @@
       <a href="#pains">Запросы</a>
       <a href="#method">Подход</a>
       <a href="#author">Обо мне</a>
+      <a href="#cases">Кейсы</a>
       <a href="#pricing">Формат</a>
       <a class="cta-mini" href="https://t.me/andrey_andreev" onclick="ym(109255989,'reachGoal','cta_tg_click')" target="_blank" rel="noopener">Написать в Telegram ↗︎</a>
     </nav>
@@ -239,8 +256,27 @@
     </div>
   </section>
 
+  <section id="cases">
+    <div class="sechead"><span>04 — Что говорят клиенты</span><span>3 кейса</span></div>
+    <h2>Не «жизнь изменилась». <em>Конкретные сдвиги</em></h2>
+    <div class="quotes">
+      <div class="quote">
+        <p>Пришла с «хочу консультации по менеджменту, но соцсети — не моё, и страшно». Через две сессии — первые публикации, запись на подкаст и первое своё видео: забронированная студия, сценарий, дедлайн.</p>
+        <div class="quote-who"><strong>PM в международной IT-компании</strong> · 27 лет</div>
+      </div>
+      <div class="quote">
+        <p>Пришла с «запускаю свой бренд после корпорации — тону в задачах и фрустрирую». Разобрали, что её «хаотичность» — рабочий стиль, а не дефект; страх блога оказался не про хейтеров. Через месяц — первые ролики и переговоры с производствами.</p>
+        <div class="quote-who"><strong>Ex-TikTok</strong> · фаундер FMCG-бренда, 27 лет</div>
+      </div>
+      <div class="quote">
+        <p>Пришла со словами «я выгоревшая и машу белым флагом». Через три сессии приняла решение, которое откладывала год, — ушла из корпорации, сохранив подушку и план.</p>
+        <div class="quote-who"><strong>Фотограф</strong> · релокация в Европу</div>
+      </div>
+    </div>
+  </section>
+
   <section id="pricing">
-    <div class="sechead"><span>04 — Формат и стоимость</span><span>Zoom</span></div>
+    <div class="sechead"><span>05 — Формат и стоимость</span><span>Zoom</span></div>
     <h2>Сессия — <em>60–90 минут</em> в Zoom</h2>
     <div class="plans">
       <div class="plan">
@@ -287,7 +323,7 @@
   </section>
 
   <section id="faq">
-    <div class="sechead"><span>05 — Частые вопросы</span><span>5 ответов</span></div>
+    <div class="sechead"><span>06 — Частые вопросы</span><span>5 ответов</span></div>
     <h2>Что обычно <em>спрашивают</em></h2>
     <div class="faq">
       <details>
@@ -314,7 +350,7 @@
   </section>
 
   <section id="notforyou">
-    <div class="sechead"><span>06 — Кому точно не сюда</span><span>2 случая</span></div>
+    <div class="sechead"><span>07 — Кому точно не сюда</span><span>2 случая</span></div>
     <h2>Это <em>не</em> магазин универсальных решений</h2>
     <div class="not4u">
       <div class="item">
@@ -345,6 +381,10 @@
     </span>
   </div>
 </div>
+<a class="mobile-cta" href="https://t.me/andrey_andreev" onclick="ym(109255989,'reachGoal','cta_tg_click')" target="_blank" rel="noopener">Поговорить с Андреем →</a>
+<div class="sticky-cta">
+  <a class="btn" href="https://t.me/andrey_andreev" onclick="ym(109255989,'reachGoal','cta_tg_click')" target="_blank" rel="noopener">Поговорить с Андреем →</a>
+</div>
 <script>
   // Yandex.Metrika: scroll-reach goal на финальный CTA
   (function(){
@@ -359,6 +399,15 @@
         }
       });
     }, {threshold: 0.5}).observe(target);
+  })();
+  // Sticky CTA — появляется после прокрутки hero (десктоп)
+  (function(){
+    var sticky = document.querySelector('.sticky-cta');
+    var hero = document.querySelector('.masthead');
+    if (!sticky || !hero || typeof IntersectionObserver === 'undefined') return;
+    new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ sticky.classList.toggle('show', !e.isIntersecting); });
+    }, {threshold: 0}).observe(hero);
   })();
 </script>
 <!-- Instagram dashboard tracker (ig-dashboard) -->
