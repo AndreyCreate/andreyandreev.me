@@ -176,7 +176,7 @@
       <a href="#author">Обо мне</a>
       <a href="#cases">Кейсы</a>
       <a href="#pricing">Формат</a>
-      <a class="cta-mini" href="https://t.me/andrey_andreev" onclick="ym(109255989,'reachGoal','cta_tg_click')" target="_blank" rel="noopener">Написать в Telegram ↗︎</a>
+      <a class="cta-mini js-discuss" href="#" data-src="nav">Обсудить ↗︎</a>
     </nav>
   </div>
 
@@ -211,8 +211,7 @@
         <p>День расписан на чужое: команда, клиенты, семья. А в точке, где пора вложиться в собственную историю, — ни сил, ни часа. И глухая злость на себя за это.</p>
       </div>
     </div>
-    <a class="btn" href="https://t.me/andrey_andreev" onclick="ym(109255989,'reachGoal','cta_tg_click')" target="_blank" rel="noopener">Написать мне в Telegram →</a>
-    <p class="btn-note">Или сразу выберите время в календаре — <a href="https://cal.com/andrei-andreev/first" onclick="ym(109255989,'reachGoal','cta_cal_click')" target="_blank" rel="noopener">cal.com ↗︎</a></p>
+    <a class="btn js-discuss" href="#" data-src="pains">Обсудить с Андреем →</a>
   </section>
 
     <section id="author">
@@ -291,8 +290,7 @@
           <li>Работа с конкретным запросом</li>
           <li>План действий после сессии</li>
         </ul>
-        <a class="pbtn" href="https://t.me/andrey_andreev" onclick="ym(109255989,'reachGoal','price_btn_click');ym(109255989,'reachGoal','cta_tg_click')" target="_blank" rel="noopener">Написать в Telegram</a>
-        <p class="btn-note pnote">Или сразу <a href="https://cal.com/andrei-andreev/first" onclick="ym(109255989,'reachGoal','cta_cal_click')" target="_blank" rel="noopener">выберите время ↗︎</a></p>
+        <a class="pbtn js-discuss" href="#" data-src="price" onclick="ym(109255989,'reachGoal','price_btn_click')">Обсудить</a>
       </div>
       <div class="plan hot">
         <span class="ptag">Стабильные изменения</span>
@@ -382,8 +380,7 @@
     <div class="rule" style="width: 72px; height: 5px; background: var(--wash-coral); margin-bottom: var(--space-4);"></div>
     <h2 style="margin-top: 0;">Поговорим, что <em>давно сидит занозой</em></h2>
     <p>Записывайтесь — расскажете, что не отпускает, с чем хотите поработать. С меня — план действий и честная обратная связь, без «у вас огромный потенциал» и других вежливых формулировок. Если будет контакт — позову в долгую работу. Если нет — разойдёмся друзьями.</p>
-    <a class="btn" href="https://t.me/andrey_andreev" onclick="ym(109255989,'reachGoal','cta_tg_click')" target="_blank" rel="noopener">Написать мне в Telegram →</a>
-    <p class="btn-note">Или сразу выберите время в календаре — <a href="https://cal.com/andrei-andreev/first" onclick="ym(109255989,'reachGoal','cta_cal_click')" target="_blank" rel="noopener">cal.com ↗︎</a></p>
+    <a class="btn js-discuss" href="#" data-src="final">Обсудить с Андреем →</a>
   </section>
 
   <div class="pagefoot">
@@ -395,9 +392,9 @@
     </span>
   </div>
 </div>
-<a class="mobile-cta" href="https://t.me/andrey_andreev" onclick="ym(109255989,'reachGoal','cta_tg_click')" target="_blank" rel="noopener">Поговорить с Андреем →</a>
+<a class="mobile-cta js-discuss" href="#" data-src="mobile">Обсудить с Андреем →</a>
 <div class="sticky-cta">
-  <a class="btn" href="https://t.me/andrey_andreev" onclick="ym(109255989,'reachGoal','cta_tg_click')" target="_blank" rel="noopener">Поговорить с Андреем →</a>
+  <a class="btn js-discuss" href="#" data-src="sticky">Обсудить с Андреем →</a>
 </div>
 <script>
   // Yandex.Metrika: scroll-reach goal на финальный CTA
@@ -450,5 +447,52 @@
   });
 </script>
 <!-- /Instagram dashboard tracker -->
+
+<!-- Модалка «Обсудить» → бот записи -->
+<style>
+  .dmodal-overlay { position: fixed; inset: 0; z-index: 100; background: rgba(22,21,15,0.55); opacity: 0; visibility: hidden; transition: opacity .25s, visibility .25s; }
+  .dmodal-overlay.open { opacity: 1; visibility: visible; }
+  .dmodal { position: fixed; z-index: 101; left: 50%; top: 50%; transform: translate(-50%, -46%) scale(.98); opacity: 0; visibility: hidden; transition: opacity .25s, transform .25s, visibility .25s; background: var(--paper, #faf7f0); max-width: 420px; width: calc(100% - 40px); padding: 36px 32px 32px; box-shadow: 0 24px 64px rgba(22,21,15,0.35); }
+  .dmodal.open { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); }
+  .dmodal h4 { font: 600 22px/1.25 var(--font-grotesk, sans-serif); margin: 0 0 12px; color: var(--ink, #16150f); }
+  .dmodal p { font-size: 16px; line-height: 1.55; color: var(--ink-soft, #4c4a42); margin: 0 0 24px; }
+  .dmodal .btn { margin-top: 0; width: 100%; text-align: center; box-sizing: border-box; }
+  .dmodal-close { position: absolute; top: 10px; right: 14px; border: 0; background: none; font-size: 26px; line-height: 1; color: var(--ink-soft, #4c4a42); cursor: pointer; padding: 6px; }
+  .dmodal-note { font-size: 13px !important; color: var(--ink-soft, #4c4a42); margin: 14px 0 0 !important; text-align: center; }
+</style>
+<div class="dmodal-overlay" id="dmodalOverlay"></div>
+<div class="dmodal" id="dmodal" role="dialog" aria-modal="true" aria-labelledby="dmodalTitle">
+  <button class="dmodal-close" id="dmodalClose" aria-label="Закрыть">×</button>
+  <h4 id="dmodalTitle">Обсудить работу с Андреем</h4>
+  <p>Сейчас откроется Telegram. Бот нужен для двух вещей: выбрать удобное для вас время и задать вопрос напрямую Андрею. Отвечает он сам.</p>
+  <a class="btn" id="dmodalGo" href="https://t.me/BOT_USERNAME_PLACEHOLDER" target="_blank" rel="noopener">Продолжить в Telegram →</a>
+  <p class="dmodal-note">Обычно Андрей отвечает в течение дня</p>
+</div>
+<script>
+  (function(){
+    var BOT = 'BOT_USERNAME_PLACEHOLDER'; // username бота записи без @
+    var overlay = document.getElementById('dmodalOverlay');
+    var modal = document.getElementById('dmodal');
+    var go = document.getElementById('dmodalGo');
+    function openModal(src){
+      go.href = 'https://t.me/' + BOT + '?start=coach_' + (src || 'site');
+      overlay.classList.add('open'); modal.classList.add('open');
+      if (typeof ym === 'function') ym(109255989, 'reachGoal', 'discuss_open');
+    }
+    function closeModal(){ overlay.classList.remove('open'); modal.classList.remove('open'); }
+    document.addEventListener('click', function(e){
+      var t = e.target.closest && e.target.closest('.js-discuss');
+      if (t) { e.preventDefault(); openModal(t.getAttribute('data-src')); }
+    });
+    overlay.addEventListener('click', closeModal);
+    document.getElementById('dmodalClose').addEventListener('click', closeModal);
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeModal(); });
+    go.addEventListener('click', function(){
+      if (typeof ym === 'function') ym(109255989, 'reachGoal', 'cta_tg_click');
+      if (window.ctTrack) window.ctTrack('target_action', { step: 'bot_go' });
+      closeModal();
+    });
+  })();
+</script>
 </body>
 </html>
