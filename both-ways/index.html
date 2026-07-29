@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Both Ways — a photographic project for Banyan Tree Shanghai On The Bund</title>
+<meta name="description" content="A photographic project about the ground the North Bund stands on — the wharf that worked as a door for 150 years. By Andrey Andreev.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f6f2ea; --ink:#211d15; --body:#3d3830; --muted:#8a8172; --line:#e0d8c8;
+    --serif:'EB Garamond',Georgia,serif;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background:var(--paper);color:var(--body);
+    font-family:var(--serif);font-size:21px;line-height:1.72;
+    font-weight:400;letter-spacing:.002em;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  }
+  .col{max-width:660px;margin:0 auto;padding:0 24px}
+
+  header.cover{
+    min-height:74vh;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;text-align:center;
+    padding:12vh 24px 10vh;
+    background:linear-gradient(160deg,#14100a 0%,#241c10 55%,#0e1420 100%);
+    color:#f4f0e6;
+  }
+  header.cover .kicker{
+    font-family:var(--sans);font-size:12px;letter-spacing:.32em;
+    text-transform:uppercase;color:#cfc6b4;margin:0 0 26px;max-width:44ch;line-height:2}
+  header.cover h1{
+    font-family:var(--serif);font-weight:500;font-size:clamp(44px,7.5vw,80px);
+    line-height:1.04;margin:0;letter-spacing:-.01em}
+  header.cover .sub{
+    font-style:italic;color:#e0d8c8;font-size:clamp(18px,2.4vw,24px);
+    margin:22px auto 0;max-width:38ch}
+
+  section.block{padding:9vh 0 2vh}
+  section.block + section.block{border-top:1px solid var(--line);margin-top:9vh}
+  .num{
+    display:block;font-family:var(--sans);font-size:11px;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--muted);text-align:center;margin:0 0 10px}
+  h2{
+    font-family:var(--serif);font-weight:500;font-size:clamp(28px,3.6vw,38px);
+    line-height:1.2;color:var(--ink);margin:0 0 34px;text-align:center;letter-spacing:-.01em}
+  p.para{margin:0 auto}
+  .col p.para + p.para{margin-top:1.4em}
+  .firstletter::first-letter{
+    font-size:3.1em;line-height:.86;float:left;padding:.04em .09em 0 0;
+    font-weight:500;color:var(--ink)}
+  em{font-style:italic;color:var(--ink)}
+  a{color:var(--ink);text-decoration:none;border-bottom:1px solid #c8bda6}
+  a:hover{border-bottom-color:var(--ink)}
+
+  ul.plan{margin:1.6em 0 0;padding:0;list-style:none}
+  ul.plan li{margin:0 0 1.2em;padding-left:1.6em;position:relative}
+  ul.plan li::before{content:"—";position:absolute;left:0;color:var(--muted)}
+  ul.plan b{font-weight:500;color:var(--ink)}
+
+  .interlude{
+    max-width:540px;margin:6vh auto;padding:0 24px;text-align:center}
+  .interlude p{
+    font-family:var(--serif);font-style:italic;font-weight:400;
+    font-size:clamp(19px,2.4vw,24px);line-height:1.6;color:#6d654a;margin:0}
+  .interlude cite{
+    display:block;margin-top:18px;font-family:var(--sans);font-style:normal;
+    font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+
+  .contact{
+    margin:12vh auto 0;padding:8vh 24px 12vh;text-align:center;
+    border-top:1px solid var(--line)}
+  .contact .lead-in{font-family:var(--serif);font-style:italic;font-size:clamp(19px,2.4vw,24px);color:#6d654a;margin:0 0 26px}
+  .contact .mail{
+    font-family:var(--serif);font-size:clamp(22px,3vw,30px);font-weight:500}
+  .contact .who{margin-top:26px;font-family:var(--sans);font-size:12.5px;letter-spacing:.06em;color:var(--muted);line-height:2.1}
+
+  @media(max-width:640px){
+    body{font-size:19px}
+    header.cover{padding:10vh 18px 8vh}
+    section.block{padding:7vh 0 2vh}
+  }
+</style>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=109255989', 'ym');
+   ym(109255989, 'init', {ssr:true, webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true, trackHash:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/109255989" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+</head>
+<body>
+
+<header class="cover">
+  <p class="kicker">A photographic project · Banyan Tree Shanghai On The Bund</p>
+  <h1>Both Ways</h1>
+  <p class="sub">One shore. Departures and arrivals. A door that worked for a hundred and fifty years.</p>
+</header>
+
+<main>
+
+  <section class="block">
+    <div class="col">
+      <p class="para firstletter">Every hotel on the Huangpu sells the same argument: the view of Lujiazui. It is a true argument, and it is identical from every window on this river. But the ground on the North Bund side has a story that no hotel has claimed. The west bank packaged its history long ago — the banking facades of the 1920s, the Peace Hotel, the Waldorf Astoria. The northern bank still reads as «a working shore with a good view», although it is one of the most densely storied waterfronts in Asia. This project gives that ground a voice — and gives the hotel standing on it an answer to «how are you different from the hotel across the water» that has nothing to do with the view.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <span class="num">01</span>
+    <h2>The ground</h2>
+    <div class="col">
+      <p class="para">A block from the hotel's entrance was Huishan Wharf (汇山码头, Wayside Wharf), built by the British firm McBean in 1872: 259 metres of quay between Gongping Road and Qinhuangdao Road. Two opposite currents ran through it.</p>
+      <p class="para"><em>People left from here.</em> In 1872 the first group of Chinese students sailed from this wharf to study in America. In 1919–1920 it was the main departure point of the work-study movement to France.</p>
+    </div>
+
+    <div class="interlude">
+      <p>On 11 September 1920 a sixteen-year-old Deng Xiaoping boarded the André Lebon at this wharf and sailed for Marseille.</p>
+      <cite>Departures · 1920</cite>
+    </div>
+
+    <div class="col">
+      <p class="para"><em>People arrived here.</em> Between 1938 and 1941 some twenty thousand European Jews came ashore on this bank — Shanghai was the only port in the world that asked for no visa. Their lives then continued fifteen minutes' walk away: Zhoushan Road became «Little Vienna», with pavement cafés, bakeries, German signage and newspapers in Yiddish. The Ohel Moshe synagogue of 1927 still stands there, a museum since 2007. Among the children of that quarter were W. Michael Blumenthal, later U.S. Secretary of the Treasury and director of the Jewish Museum Berlin, and the artist Peter Max.</p>
+      <p class="para">Before all of that, this was Hongkou's «Little Tokyo». And a few lanes north, on the 550 metres of Duolun Road, lived Lu Xun, Mao Dun and Guo Moruo; the League of Left-Wing Writers gathered here.</p>
+    </div>
+
+    <div class="interlude">
+      <p>There are shores people leave from, and shores people arrive to. The North Bund was both at once — a door that worked in both directions, in both eras, for those who sailed out towards a future and for those who ran in to survive.</p>
+      <cite>The premise of the project</cite>
+    </div>
+
+    <div class="col">
+      <p class="para">Today this frontage holds an international cruise terminal and four thousand shipping companies. The door still works; the entrance has simply become glass. The hotel belongs to this new layer, and in the project it takes its honest place: the point from which this shore can be seen whole.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <span class="num">02</span>
+    <h2>Three chapters</h2>
+    <div class="col">
+      <ul class="plan">
+        <li><b>I. Departures.</b> The water's edge, the mooring bollards, the cruise terminal at dawn, the ferry across the Huangpu with its everyday passengers, the gates of the old wharves on Gongping Road. The empty frame of water as a genre: what a person sees when this shore is the last thing they see.</li>
+        <li><b>II. Arrivals.</b> Tilanqiao as a living quarter, not a museum: Zhoushan Road and the preserved signage of «Little Vienna», shikumen courtyards, laundry on lines between the houses, the Ohel Moshe synagogue, Changyang Road. People still live and dry their washing where the Viennese café tables stood eighty years ago.</li>
+        <li><b>III. The Shore That Watches.</b> Duolun Road, Lu Xun Park, the Japanese facades. And the hotel — photographed not as a hotel: the window as an optical instrument, the frame through which this bank observes the other; the reflection of the historic Bund in a facade of 2012. The only chapter where the hotel appears directly — and in it, it is not a room with a view but a vantage point.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block">
+    <span class="num">03</span>
+    <h2>The way it is photographed</h2>
+    <div class="col">
+      <p class="para">In colour: dense, muted, natural light. No gloss and no styled models. The people in the frame are real — residents of the quarter, ferry passengers, staff. This is a matter of principle: the moment a posed couple with glasses appears on a balcony, the project becomes an advertisement and loses everything it was made for.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <span class="num">04</span>
+    <h2>What the hotel receives</h2>
+    <div class="col">
+      <ul class="plan">
+        <li><b>30 selected images</b> in colour, ready for print and digital</li>
+        <li><b>An essay of 800–1,000 words</b> in English — a standalone piece for a travel title, not a caption</li>
+        <li><b>A vertical set of 8–10 images</b> for social channels</li>
+        <li><b>A 12-month licence</b> for the hotel's and Banyan Group's brand channels</li>
+        <li><b>A positioning argument</b> no lifestyle content can provide — a ready story for the website, the lobby, the in-room folder and press conversations</li>
+      </ul>
+      <p class="para">Production: four full shooting days across five nights at the hotel, August 2026. Research is complete; the shooting plan follows the three chapters.</p>
+    </div>
+  </section>
+
+  <div class="contact">
+    <p class="lead-in">The west bank sold its history long ago. Yours is still untold.</p>
+    <div class="mail"><a href="mailto:andreycreatetoday@gmail.com">andreycreatetoday@gmail.com</a></div>
+    <p class="who">
+      Andrey Andreev · creative director and photographer<br>
+      <a href="https://www.behance.net/andreiandreev7">Portfolio on Behance</a> · <a href="https://andreyandreev.me/the-same-water/">A concept written for another hotel</a>
+    </p>
+  </div>
+
+</main>
+
+</body>
+</html>
