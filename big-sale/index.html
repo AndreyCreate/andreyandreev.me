@@ -23,8 +23,10 @@ body{background:var(--cream);color:var(--ink);font-family:'Inter',sans-serif;-we
 .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
 section{padding:clamp(64px,9vw,120px) 0}
 .kicker{font-size:clamp(12px,1.4vw,15px);font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:26px}
-h1{font-size:clamp(31px,4.1vw,53px);font-weight:400;line-height:1.2;letter-spacing:-.02em;max-width:20em}
-@media(max-width:720px){h1 br{display:none}}
+h1{font-size:clamp(29px,3.75vw,48px);font-weight:400;line-height:1.22;letter-spacing:-.02em;max-width:21em}
+.nb{white-space:nowrap}
+.nbp{white-space:nowrap}
+@media(max-width:900px){h1 br{display:none}.nb{white-space:normal}}
 h2{font-size:clamp(28px,4vw,48px);font-weight:400;line-height:1.18;letter-spacing:-.015em;max-width:17em}
 .b{color:var(--blue)}
 .brace{color:var(--blue);font-weight:300}
@@ -125,8 +127,8 @@ footer a:hover{color:var(--ink)}
 <section>
   <div class="wrap">
     <div class="kicker">Big Sale в честь 65 000 подписчиков</div>
-    <h1>Соберите блог, который помогает<br>стать заметнее, привлекать аудиторию<br>и <span class="brace">{</span><span class="b"> продавать свои продукты </span><span class="brace">}</span></h1>
-    <p class="lead" style="margin-top:28px">11 продуктов Create Today о позиционировании, контенте, Reels и продажах собраны в один пакет за <span class="brace">{</span><span class="b"> 19 900 ₽ </span><span class="brace">}</span>. Полная стоимость — 419 400 ₽.</p>
+    <h1>Соберите блог, который помогает <br><span class="nb"><span class="brace">{</span><span class="b"> стать заметнее </span><span class="brace">}</span></span>, привлекать аудиторию <br>и <span class="nb"><span class="brace">{</span><span class="b"> продавать свои продукты </span><span class="brace">}</span></span></h1>
+    <p class="lead" style="margin-top:28px">11 продуктов Create Today о позиционировании, контенте, Reels и продажах собраны в один пакет за <span class="nbp"><span class="brace">{</span><span class="b"> 19 900 ₽ </span><span class="brace">}</span></span>. Полная стоимость — 419 400 ₽.</p>
     <p class="lead" style="margin-top:16px">Вы разберётесь, как уверенно говорить о себе, выпускать контент без постоянных поисков темы, привлекать новую аудиторию и вести её к своим продуктам.</p>
     <div class="chips">
       <span class="chip">Понятное позиционирование</span>
@@ -253,7 +255,7 @@ footer a:hover{color:var(--ink)}
 <section>
   <div class="wrap">
     <div class="kicker">Цена Big Sale 65K</div>
-    <h2>Соберите свою систему из 11 продуктов за <span class="brace">{</span><span class="b"> 19 900 ₽ </span><span class="brace">}</span></h2>
+    <h2>Соберите свою систему из 11 продуктов за <span class="nbp"><span class="brace">{</span><span class="b"> 19 900 ₽ </span><span class="brace">}</span></span></h2>
     <div class="offer">
       <div class="rays"></div>
       <span class="pill">11 продуктов Create Today в одном пакете</span>
