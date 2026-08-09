@@ -1,0 +1,323 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>10 красных флагов, из-за которых тексты психолога не приводят клиентов</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+:root{--cream:#F5F2EA;--ink:#2B2B2B;--ink2:#4A4A4A;--mute:#8F8F8F;--line:#DDD9CF;
+  --blue:#3766C8;--bluebg:#8FB1E0;--darkbg:#6A665D;--marker:#F5C445;--skylight:#E9F1FB}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:var(--ink);background:var(--cream);-webkit-font-smoothing:antialiased;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding:0 22px}
+.brace{color:var(--blue);font-weight:300}
+.b{color:var(--blue)}
+.mark{background:linear-gradient(transparent 12%,var(--marker) 12%,var(--marker) 95%,transparent 95%);padding:1px 6px;border-radius:2px}
+.kicker{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+h1{font-size:clamp(30px,6vw,44px);font-weight:400;line-height:1.18;letter-spacing:-0.02em}
+h2.flag{font-size:clamp(24px,4.5vw,30px);font-weight:600;line-height:1.16;letter-spacing:-0.01em;margin:10px 0 18px}
+.flagno{display:inline-block;font-size:13px;font-weight:700;color:#fff;background:var(--blue);
+  letter-spacing:.08em;padding:5px 12px;border-radius:999px}
+.lbl{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin:24px 0 10px}
+.quote{font-style:italic}
+.why,.how{font-size:16px;line-height:1.6}
+/* IG-пост вставки */
+.igpost{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 2px 10px rgba(43,43,43,.09);max-width:560px}
+.igpost .ph{display:flex;align-items:center;gap:10px;padding:11px 16px;border-bottom:1px solid #F0EDE6}
+.av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:13px;font-weight:700;flex:0 0 30px}
+.avbad{background:#C7C2B6}.avgood{background:var(--blue)}
+.un{font-size:13.5px;font-weight:600;color:var(--ink)}
+.dots{margin-left:auto;color:#B9B4A8;font-weight:700;letter-spacing:1px}
+.pbody{padding:16px 18px;font-size:15.5px;line-height:1.55;color:var(--ink)}
+.igpost.bad .pbody{color:var(--ink2)}
+.ft{display:flex;gap:16px;padding:10px 16px;border-top:1px solid #F0EDE6;color:#A9A499;font-size:13.5px}
+.ft .sv{margin-left:auto}
+.igpost.good{border:2px solid var(--blue)}
+.pair{display:flex;gap:14px;margin-top:10px;flex-wrap:wrap}
+.pair .igpost{flex:1 1 260px}
+/* sticky nav */
+nav.flagnav{position:sticky;top:0;z-index:20;background:rgba(245,242,234,.94);backdrop-filter:blur(6px);
+  border-bottom:1px solid var(--line)}
+nav.flagnav .inner{max-width:760px;margin:0 auto;padding:10px 22px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+nav.flagnav .inner::-webkit-scrollbar{display:none}
+nav.flagnav a{flex:0 0 auto;width:34px;height:34px;display:flex;align-items:center;justify-content:center;
+  border-radius:50%;border:1.5px solid var(--line);color:var(--ink2);font-size:13px;font-weight:600;text-decoration:none;background:#fff}
+nav.flagnav a:hover{border-color:var(--blue);color:var(--blue)}
+/* TOC */
+.toc{background:#fff;border-radius:16px;padding:26px 28px;margin:10px 0 44px;box-shadow:0 1px 0 rgba(43,43,43,.07)}
+.toc .kicker{color:var(--blue)}
+.toc ol{list-style:none;margin-top:14px}
+@media(min-width:640px){.toc ol{columns:2;column-gap:36px}}
+.toc li{break-inside:avoid;margin:7px 0}
+.toc a{color:var(--ink);text-decoration:none;font-size:15.5px;display:flex;gap:10px;align-items:baseline}
+.toc a:hover{color:var(--blue)}
+.toc .n{color:var(--blue);font-weight:700;font-size:13px;min-width:22px}
+header.cover{padding:64px 0 40px}
+.lead{font-size:18px;color:var(--ink2);margin-top:26px;max-width:620px}
+.intro{padding:8px 0 34px}
+.intro p{font-size:17px;margin:14px 0;max-width:660px}
+/* rotating bands: cream / dark / blue */
+.band{padding:50px 0}
+.band-cream{background:var(--cream)}
+.band-dark{background:var(--darkbg)}
+.band-blue{background:var(--bluebg)}
+.band-dark h2.flag,.band-dark .why,.band-dark .how{color:#fff}
+.band-dark .lbl{color:#CFCABE}
+.band-dark .brace{color:var(--skylight)}
+.band-blue h2.flag,.band-blue .why,.band-blue .how{color:#1E2A3D}
+.band-blue .lbl{color:#33507C}
+.band-dark .flagno{background:var(--marker);color:var(--ink)}
+.band-blue .flagno{background:#fff;color:var(--blue)}
+.toplink{display:inline-block;margin-top:22px;font-size:13px;text-decoration:none;color:var(--mute)}
+.band-dark .toplink{color:#CFCABE}.band-blue .toplink{color:#33507C}
+.toplink:hover{color:var(--blue)}
+.final{padding:48px 0 80px;background:var(--cream)}
+.cta{margin-top:34px;padding:28px 30px;border:2px solid var(--blue);border-radius:14px;background:#fff}
+.cta a.btn{display:inline-block;margin-top:16px;background:var(--blue);color:#fff;font-weight:600;font-size:16px;
+  padding:13px 26px;border-radius:10px;text-decoration:none}
+.cta a.btn:hover{opacity:.92}
+footer{padding:26px 0 44px;font-size:13px;color:var(--mute);background:var(--cream)}
+/* как использовать гайд */
+.howto{margin:34px 0 10px}
+.howto .cards{display:grid;gap:14px;margin-top:14px}
+@media(min-width:640px){.howto .cards{grid-template-columns:1fr 1fr 1fr}}
+.ucard{background:#fff;border-radius:16px;padding:22px 22px 24px;box-shadow:0 1px 0 rgba(43,43,43,.07);display:flex;flex-direction:column}
+.ucard .n{font-size:13px;font-weight:700;color:var(--blue);letter-spacing:.08em}
+.ucard h3{font-size:17px;font-weight:600;margin:8px 0 8px;line-height:1.3}
+.ucard p{font-size:14.5px;line-height:1.55;color:var(--ink2);flex:1}
+.ucard .dl{display:inline-block;margin-top:14px;font-size:14px;font-weight:600;color:#fff;background:var(--blue);
+  text-decoration:none;border:1.5px solid var(--blue);border-radius:9px;padding:9px 16px;text-align:center}
+.ucard .dl:hover{opacity:.9}
+.ucard.hero{background:var(--blue)}
+.ucard.hero .n{color:var(--marker)}
+.ucard.hero h3{color:#fff}
+.ucard.hero p{color:#E4EDFA}
+.ucard.hero .dl{background:#fff;color:var(--blue);border-color:#fff}
+.promptbox{margin-top:14px;background:#fff;border-radius:16px;padding:20px 22px;box-shadow:0 1px 0 rgba(43,43,43,.07)}
+.promptbox .lbl{margin:0 0 10px}
+.promptbox pre{white-space:pre-wrap;font-family:'Inter',sans-serif;font-size:14px;line-height:1.55;color:var(--ink2);
+  background:var(--skylight);border-radius:10px;padding:14px 16px}
+.copybtn{margin-top:12px;font-size:13.5px;font-weight:600;color:var(--blue);background:none;border:1.5px solid var(--blue);
+  border-radius:9px;padding:8px 16px;cursor:pointer;font-family:'Inter',sans-serif}
+.copybtn:hover{background:var(--blue);color:#fff}
+/* компактные офферы по ходу страницы */
+.offerstrip{padding:26px 0;background:var(--cream)}
+.offerstrip .card{background:#fff;border-radius:14px;border-left:4px solid var(--blue);
+  padding:18px 22px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;box-shadow:0 1px 0 rgba(43,43,43,.07)}
+.offerstrip .txt{flex:1 1 340px;font-size:15px;line-height:1.5;color:var(--ink2)}
+.offerstrip .txt b{color:var(--ink);font-weight:600}
+.offerstrip a.go{flex:0 0 auto;background:var(--blue);color:#fff;font-weight:600;font-size:14.5px;
+  padding:11px 20px;border-radius:9px;text-decoration:none;white-space:nowrap}
+.offerstrip a.go:hover{opacity:.9}
+/* что получите в финальном CTA */
+.cta .gets{margin-top:14px;display:grid;gap:8px}
+.cta .gets div{font-size:15px;line-height:1.5;color:var(--ink2);padding-left:24px;position:relative}
+.cta .gets div::before{content:"✓";position:absolute;left:0;color:var(--blue);font-weight:700}
+</style></head><body id="top">
+<nav class="flagnav"><div class="inner"><a href="#flag-1" title="Заголовок-лозунг вместо мысли клиента">1</a><a href="#flag-2" title="Первый абзац-разогрев">2</a><a href="#flag-3" title="Абстракции вместо конкретики">3</a><a href="#flag-4" title="Профессиональный жаргон без перевода">4</a><a href="#flag-5" title="Текст рассказывает, но не показывает">5</a><a href="#flag-6" title="Непонятно, про что текст">6</a><a href="#flag-7" title="Совет и поучение вместо наблюдения">7</a><a href="#flag-8" title="Рубленые ИИ-предложения">8</a><a href="#flag-9" title="Вывод раньше пути">9</a><a href="#flag-10" title="Финал-инфобизнес">10</a></div></nav>
+<div class="wrap">
+<header class="cover">
+  <div class="kicker">@andreyandreev.me · гайд для помогающих практиков</div>
+  <h1 style="margin-top:26px">10 красных флагов, из-за которых тексты психолога <span class="brace">{</span>&nbsp;<span class="b">не приводят клиентов</span>&nbsp;<span class="brace">}</span></h1>
+  <div class="lead">Проверьте свои три последних поста по этому списку — скорее всего, найдёте
+    <span class="mark">два-три флага</span>, которые повторяются из текста в текст.</div>
+</header>
+<section class="intro">
+  <div class="kicker">зачем этот гайд</div>
+  <p>Вы пишете посты, тратите на них вечера — а в директ приходит тишина. Знакомые лайкают, коллеги пишут «как точно», а клиентов нет.</p>
+  <p>Обычно дело не в алгоритмах и не в том, что «нужно чаще выходить в сторис». Дело в самих текстах: они написаны для коллег или для себя — но не для человека, который сейчас лежит на диване, третий час листает ленту и думает: «Я просто ленивая жопа, всё знаю, но ничего не делаю».</p>
+  <p>Я разбираю тексты помогающих практиков каждую неделю. Ошибки повторяются — одни и те же, у всех. Вот десять самых дорогих.</p>
+  <div class="howto">
+    <div class="kicker">как использовать этот гайд <span class="brace">{</span>&nbsp;<span class="b">три способа</span>&nbsp;<span class="brace">}</span></div>
+    <div class="cards">
+      <div class="ucard">
+        <div class="n">01</div>
+        <h3>Прочитать и применить самим</h3>
+        <p>Откройте три своих последних поста рядом с гайдом и пройдитесь по флагам. Два-три будут повторяться из текста в текст — это ваш почерк ошибки. Перепишите один пост, убрав только их.</p>
+      </div>
+      <div class="ucard">
+        <div class="n">02</div>
+        <h3>Скачать PDF</h3>
+        <p>Та же версия гайда одним файлом — чтобы держать под рукой в телефоне и сверяться перед публикацией каждого поста.</p>
+        <a class="dl" href="10-flagov.pdf" download>Скачать PDF →</a>
+      </div>
+      <div class="ucard hero">
+        <div class="n">03</div>
+        <h3>Отдать нейросети вместе с постом</h3>
+        <p>Скачайте версию для нейросетей, прикрепите её в чат с ChatGPT или Claude вместе со своим постом — и получите разбор поста по всем десяти флагам с конкретными правками.</p>
+        <a class="dl" href="10-flagov.md" download>Скачать файл для нейросети →</a>
+      </div>
+    </div>
+    <div class="promptbox">
+      <div class="lbl">Промпт для третьего способа — скопируйте и вставьте вместе с файлом</div>
+      <pre id="aiprompt">Прикрепляю гайд «10 красных флагов» о том, почему тексты помогающих практиков не приводят клиентов, и свой пост. Проверь пост по каждому из десяти флагов: укажи, какие флаги в нём есть, процитируй конкретные места, объясни, почему это флаг, и перепиши эти места так, чтобы флаг ушёл. Мой голос и факты сохрани, ничего не выдумывай от себя. В конце покажи итоговую версию поста целиком.
+
+Вот мой пост:
+[вставьте текст поста]</pre>
+      <button class="copybtn" onclick="navigator.clipboard.writeText(document.getElementById('aiprompt').textContent).then(()=>{this.textContent='Скопировано ✓';setTimeout(()=>this.textContent='Скопировать промпт',2000)})">Скопировать промпт</button>
+    </div>
+  </div>
+  <div class="toc">
+    <div class="kicker">содержание</div>
+    <ol>
+      <li><a href="#flag-1"><span class="n">01</span> Заголовок-лозунг вместо мысли клиента</a></li>
+      <li><a href="#flag-2"><span class="n">02</span> Первый абзац-разогрев</a></li>
+      <li><a href="#flag-3"><span class="n">03</span> Абстракции вместо конкретики</a></li>
+      <li><a href="#flag-4"><span class="n">04</span> Профессиональный жаргон без перевода</a></li>
+      <li><a href="#flag-5"><span class="n">05</span> Текст рассказывает, но не показывает</a></li>
+      <li><a href="#flag-6"><span class="n">06</span> Непонятно, про что текст</a></li>
+      <li><a href="#flag-7"><span class="n">07</span> Совет и поучение вместо наблюдения</a></li>
+      <li><a href="#flag-8"><span class="n">08</span> Рубленые ИИ-предложения</a></li>
+      <li><a href="#flag-9"><span class="n">09</span> Вывод раньше пути</a></li>
+      <li><a href="#flag-10"><span class="n">10</span> Финал-инфобизнес</a></li>
+    </ol>
+  </div>
+</section>
+</div>
+<section class="band band-cream" id="flag-1"><div class="wrap">
+<span class="flagno">ФЛАГ 1 / 10</span>
+      <h2 class="flag">Заголовок-лозунг вместо мысли клиента</h2>
+      <div class="lbl">Как пишут</div>
+      <div class="igpost bad"><div class="ph"><div class="av avbad">✕</div><span class="un">типичный пост в ленте</span><span class="dots">···</span></div><div class="pbody"><span class="quote">«Мужество быть собой»<br>«Путь к внутренней гармонии»</span></div><div class="ft"><span>♡ 3</span><span>💬 0</span><span class="sv">🔖</span></div></div>
+      <div class="lbl">Почему не работает</div>
+      <div class="why">Лозунг не произносит никто и никогда. Ни один ваш клиент не лежит ночью без сна с мыслью «мне не хватает мужества быть собой». Он думает другими словами — и если заголовок не совпадает с его внутренней речью, палец листает дальше. У вас есть одна-две секунды.</div>
+      <div class="lbl">Как надо</div>
+      <div class="how">Выносите в заголовок реальную цитату клиента или мысль, которую человек говорит сам себе.</div>
+      <div class="pair"><div class="igpost bad"><div class="ph"><div class="av avbad">✕</div><span class="un">типичный пост в ленте</span><span class="dots">···</span></div><div class="pbody">«О прокрастинации и её причинах»</div><div class="ft"><span>♡ 2</span><span>💬 0</span><span class="sv">🔖</span></div></div><div class="igpost good"><div class="ph"><div class="av avgood">✓</div><span class="un">пост, который читают</span><span class="dots">···</span></div><div class="pbody">«Знаю, что делать. Не делаю»</div><div class="ft"><span>♡ 128</span><span>💬 14</span><span class="sv">🔖</span></div></div></div><div class="pair"><div class="igpost bad"><div class="ph"><div class="av avbad">✕</div><span class="un">типичный пост в ленте</span><span class="dots">···</span></div><div class="pbody">«Про выгорание»</div><div class="ft"><span>♡ 2</span><span>💬 0</span><span class="sv">🔖</span></div></div><div class="igpost good"><div class="ph"><div class="av avgood">✓</div><span class="un">пост, который читают</span><span class="dots">···</span></div><div class="pbody">«Такими темпами я уволюсь примерно никогда»</div><div class="ft"><span>♡ 128</span><span>💬 14</span><span class="sv">🔖</span></div></div></div>
+<a class="toplink" href="#top">↑ к содержанию</a>
+</div></section>
+<section class="band band-dark" id="flag-2"><div class="wrap">
+<span class="flagno">ФЛАГ 2 / 10</span>
+      <h2 class="flag">Первый абзац-разогрев</h2>
+      <div class="lbl">Как пишут</div>
+      <div class="igpost bad"><div class="ph"><div class="av avbad">✕</div><span class="un">типичный пост в ленте</span><span class="dots">···</span></div><div class="pbody"><span class="quote">«Сегодня хочу поговорить о важной теме, которая касается каждого из нас. В современном мире мы всё чаще сталкиваемся с тревогой…»</span></div><div class="ft"><span>♡ 3</span><span>💬 0</span><span class="sv">🔖</span></div></div>
+      <div class="lbl">Почему не работает</div>
+      <div class="why">Это разминка перед текстом, а не текст. Читатель ещё ничего не получил, а уже потратил десять секунд. В 99% случаев первый абзац можно вычеркнуть — и текст станет только лучше.</div>
+      <div class="lbl">Как надо</div>
+      <div class="how">Начинайте с того места, где начинается жизнь: со сцены, цитаты, конкретного момента.</div>
+      <div class="pair"><div class="igpost bad"><div class="ph"><div class="av avbad">✕</div><span class="un">типичный пост в ленте</span><span class="dots">···</span></div><div class="pbody">«Сегодня был непростой день, и он натолкнул меня на размышления…»</div><div class="ft"><span>♡ 2</span><span>💬 0</span><span class="sv">🔖</span></div></div><div class="igpost good"><div class="ph"><div class="av avgood">✓</div><span class="un">пост, который читают</span><span class="dots">···</span></div><div class="pbody">«Клиентка молчала сорок секунд. Я засекла»</div><div class="ft"><span>♡ 128</span><span>💬 14</span><span class="sv">🔖</span></div></div></div>
+<a class="toplink" href="#top">↑ к содержанию</a>
+</div></section>
+<section class="band band-blue" id="flag-3"><div class="wrap">
+<span class="flagno">ФЛАГ 3 / 10</span>
+      <h2 class="flag">Абстракции вместо конкретики</h2>
+      <div class="lbl">Как пишут</div>
+      <div class="igpost bad"><div class="ph"><div class="av avbad">✕</div><span class="un">типичный пост в ленте</span><span class="dots">···</span></div><div class="pbody"><span class="quote">«Важно работать над собой и выстраивать баланс между работой и личной жизнью, чтобы выйти на новый уровень»</span></div><div class="ft"><span>♡ 3</span><span>💬 0</span><span class="sv">🔖</span></div></div>
+      <div class="lbl">Почему не работает</div>
+      <div class="why">«Баланс», «ресурс», «работать над собой», «новый уровень» — слова, в которых человек не может узнать себя. Проверочный вопрос к каждой фразе: «Какой? Какая? Где это? Про что конкретно?» Если ответа в тексте нет — читатель его тоже не найдёт.</div>
+      <div class="lbl">Как надо</div>
+      <div class="how">Цифры, предметы, имена, места.</div>
+      <div class="pair"><div class="igpost bad"><div class="ph"><div class="av avbad">✕</div><span class="un">типичный пост в ленте</span><span class="dots">···</span></div><div class="pbody">«Клиентка научилась заботиться о себе»</div><div class="ft"><span>♡ 2</span><span>💬 0</span><span class="sv">🔖</span></div></div><div class="igpost good"><div class="ph"><div class="av avgood">✓</div><span class="un">пост, который читают</span><span class="dots">···</span></div><div class="pbody">«Клиентка впервые за два года ушла с работы в шесть — и не открыла ноутбук после ужина»</div><div class="ft"><span>♡ 128</span><span>💬 14</span><span class="sv">🔖</span></div></div></div><div class="pair"><div class="igpost bad"><div class="ph"><div class="av avbad">✕</div><span class="un">типичный пост в ленте</span><span class="dots">···</span></div><div class="pbody">«Тревога мешает жить»</div><div class="ft"><span>♡ 2</span><span>💬 0</span><span class="sv">🔖</span></div></div><div class="igpost good"><div class="ph"><div class="av avgood">✓</div><span class="un">пост, который читают</span><span class="dots">···</span></div><div class="pbody">«Перечитала сообщение начальнику четыре раза. Потом ещё раз — уже отправленное»</div><div class="ft"><span>♡ 128</span><span>💬 14</span><span class="sv">🔖</span></div></div></div>
+<a class="toplink" href="#top">↑ к содержанию</a>
+</div></section>
+<section class="band band-cream" id="flag-4"><div class="wrap">
+<span class="flagno">ФЛАГ 4 / 10</span>
+      <h2 class="flag">Профессиональный жаргон без перевода</h2>
+      <div class="lbl">Как пишут</div>
+      <div class="igpost bad"><div class="ph"><div class="av avbad">✕</div><span class="un">типичный пост в ленте</span><span class="dots">···</span></div><div class="pbody"><span class="quote">«Когда у вас нет опоры на себя, границы размываются, и вы проваливаетесь в слияние»</span></div><div class="ft"><span>♡ 3</span><span>💬 0</span><span class="sv">🔖</span></div></div>
+      <div class="lbl">Почему не работает</div>
+      <div class="why">«Опора», «границы», «слияние», «сепарация», «контейнирование» — для вас это рабочие инструменты, для читателя — иностранный язык. Термин без объяснения выключает человека из текста: он спотыкается об это слово и дальше читает через силу или не читает.</div>
+      <div class="lbl">Как надо</div>
+      <div class="how">Либо объясняйте термин через сцену, либо выкидывайте. Каждое понятие — постепенно, как будто объясняете гравитацию человеку, который о ней никогда не слышал.</div>
+      <div class="pair"><div class="igpost bad"><div class="ph"><div class="av avbad">✕</div><span class="un">типичный пост в ленте</span><span class="dots">···</span></div><div class="pbody">«У вас нарушены личные границы»</div><div class="ft"><span>♡ 2</span><span>💬 0</span><span class="sv">🔖</span></div></div><div class="igpost good"><div class="ph"><div class="av avgood">✓</div><span class="un">пост, который читают</span><span class="dots">···</span></div><div class="pbody">«Свекровь заходит без звонка. Вы злитесь — и наливаете ей чай»</div><div class="ft"><span>♡ 128</span><span>💬 14</span><span class="sv">🔖</span></div></div></div>
+<a class="toplink" href="#top">↑ к содержанию</a>
+</div></section>
+<section class="band band-dark" id="flag-5"><div class="wrap">
+<span class="flagno">ФЛАГ 5 / 10</span>
+      <h2 class="flag">Текст рассказывает, но не показывает</h2>
+      <div class="lbl">Как пишут</div>
+      <div class="igpost bad"><div class="ph"><div class="av avbad">✕</div><span class="un">типичный пост в ленте</span><span class="dots">···</span></div><div class="pbody"><span class="quote">«После терапии клиентка почувствовала облегчение и стала спокойнее»</span></div><div class="ft"><span>♡ 3</span><span>💬 0</span><span class="sv">🔖</span></div></div>
+      <div class="lbl">Почему не работает</div>
+      <div class="why">«Почувствовала облегчение» — это отчёт. В отчёте нечего узнавать, нечему сопереживать. Читатель верит не выводам, а деталям, которые невозможно выдумать.</div>
+      <div class="lbl">Как надо</div>
+      <div class="how">Показывайте телом и бытом: что человек сделал, что сказал, что изменилось в его вечере.</div>
+      <div class="pair"><div class="igpost bad"><div class="ph"><div class="av avbad">✕</div><span class="un">типичный пост в ленте</span><span class="dots">···</span></div><div class="pbody">«Ей стало легче»</div><div class="ft"><span>♡ 2</span><span>💬 0</span><span class="sv">🔖</span></div></div><div class="igpost good"><div class="ph"><div class="av avgood">✓</div><span class="un">пост, который читают</span><span class="dots">···</span></div><div class="pbody">«Плечи наконец вспомнили, что умеют опускаться вниз»</div><div class="ft"><span>♡ 128</span><span>💬 14</span><span class="sv">🔖</span></div></div></div><div class="pair"><div class="igpost bad"><div class="ph"><div class="av avbad">✕</div><span class="un">типичный пост в ленте</span><span class="dots">···</span></div><div class="pbody">«Он стал спокойнее реагировать на детей»</div><div class="ft"><span>♡ 2</span><span>💬 0</span><span class="sv">🔖</span></div></div><div class="igpost good"><div class="ph"><div class="av avgood">✓</div><span class="un">пост, который читают</span><span class="dots">···</span></div><div class="pbody">«Сын разлил какао на клавиатуру. Он сказал: „Неси тряпку“ — и всё. Впервые без крика»</div><div class="ft"><span>♡ 128</span><span>💬 14</span><span class="sv">🔖</span></div></div></div>
+<a class="toplink" href="#top">↑ к содержанию</a>
+</div></section>
+<section class="offerstrip"><div class="wrap"><div class="card">
+  <div class="txt"><b>Эти флаги чинятся по шаблонам.</b> В практикуме «Личный бренд для помогающего практика» — 5 модулей в записи и рабочий шаблон после каждого. До старта 12 августа — <span style="white-space:nowrap">4 900 ₽</span>.</div>
+  <a class="go" href="https://andreyandreev.createtoday.ru/hero/get/of_wbSuHtcEF-JY">Получить доступ →</a>
+</div></div></section>
+<section class="band band-blue" id="flag-6"><div class="wrap">
+<span class="flagno">ФЛАГ 6 / 10</span>
+      <h2 class="flag">Непонятно, про что текст</h2>
+      <div class="lbl">Как пишут</div>
+      <div class="igpost bad"><div class="ph"><div class="av avbad">✕</div><span class="un">типичный пост в ленте</span><span class="dots">···</span></div><div class="pbody"><span class="quote">Пост, где в первых трёх абзацах — детство, потом про клиентов, потом «осень — время перемен», и в конце приглашение на консультацию.</span></div><div class="ft"><span>♡ 3</span><span>💬 0</span><span class="sv">🔖</span></div></div>
+      <div class="lbl">Почему не работает</div>
+      <div class="why">Это диагноз номер один, всё остальное вторично. Если после прочтения нельзя одной фразой сказать, про что был текст и зачем он написан — текста нет. Есть поток. Писать тексты ради текстов — нет.</div>
+      <div class="lbl">Как надо</div>
+      <div class="how">Перед тем как писать, ответьте на один вопрос: «Что читатель должен понять или почувствовать в конце?» Одна мысль — один пост. Всё, что не ведёт к этой мысли, — под нож. Если мыслей две — это два поста.</div>
+<a class="toplink" href="#top">↑ к содержанию</a>
+</div></section>
+<section class="band band-cream" id="flag-7"><div class="wrap">
+<span class="flagno">ФЛАГ 7 / 10</span>
+      <h2 class="flag">Совет и поучение вместо наблюдения</h2>
+      <div class="lbl">Как пишут</div>
+      <div class="igpost bad"><div class="ph"><div class="av avbad">✕</div><span class="un">типичный пост в ленте</span><span class="dots">···</span></div><div class="pbody"><span class="quote">«Заведите дневник благодарности. Дышите по квадрату 4-4-4-4. Разрешите себе отдыхать»</span></div><div class="ft"><span>♡ 3</span><span>💬 0</span><span class="sv">🔖</span></div></div>
+      <div class="lbl">Почему не работает</div>
+      <div class="why">Непрошеные советы никому не нужны. Совет тычет пальцем и говорит «делай так» — читатель слышал это сто раз, и литературная обёртка не спасает: под ней всё равно инструкция. Текст, который начинает учить, перестаёт быть текстом, в котором себя узнают.</div>
+      <div class="lbl">Как надо</div>
+      <div class="how">Вместо совета — точное, чуть странное наблюдение. Тогда вывод читатель делает сам, и это его вывод, а не ваш.</div>
+      <div class="pair"><div class="igpost bad"><div class="ph"><div class="av avbad">✕</div><span class="un">типичный пост в ленте</span><span class="dots">···</span></div><div class="pbody">«Разрешите себе просить о помощи»</div><div class="ft"><span>♡ 2</span><span>💬 0</span><span class="sv">🔖</span></div></div><div class="igpost good"><div class="ph"><div class="av avgood">✓</div><span class="un">пост, который читают</span><span class="dots">···</span></div><div class="pbody">«Заметила: клиенты, которые „со всем справляются сами“, записываются ко мне в среднем на четвёртый год такой жизни»</div><div class="ft"><span>♡ 128</span><span>💬 14</span><span class="sv">🔖</span></div></div></div>
+<a class="toplink" href="#top">↑ к содержанию</a>
+</div></section>
+<section class="band band-dark" id="flag-8"><div class="wrap">
+<span class="flagno">ФЛАГ 8 / 10</span>
+      <h2 class="flag">Рубленые ИИ-предложения</h2>
+      <div class="lbl">Как пишут</div>
+      <div class="igpost bad"><div class="ph"><div class="av avbad">✕</div><span class="un">типичный пост в ленте</span><span class="dots">···</span></div><div class="pbody"><span class="quote">«Тревога — это сигнал. Она говорит о важном. Не игнорируйте её. Прислушайтесь к себе. Самое забавное — ответ уже внутри вас»</span></div><div class="ft"><span>♡ 3</span><span>💬 0</span><span class="sv">🔖</span></div></div>
+      <div class="lbl">Почему не работает</div>
+      <div class="why">Так не говорит ни один живой человек. Это ритм нейросети: короткие рубленые фразы, сжатый смысл, потерянные детали. Читатель может не понять, что писала машина, но почувствует: голоса нет. А маркеры вроде «самое забавное» выдают ИИ с головой.</div>
+      <div class="lbl">Как надо</div>
+      <div class="how">Длинные живые предложения — как вы рассказали бы подруге на кухне. Если в жизни вы так не говорите — в тексте этому тоже делать нечего. ИИ использовать можно, но не давать ему резать ваши предложения: голос живёт именно в них.</div>
+<a class="toplink" href="#top">↑ к содержанию</a>
+</div></section>
+<section class="offerstrip"><div class="wrap"><div class="card">
+  <div class="txt"><b>Модуль 03 практикума — эти 10 флагов с разборами «до/после»</b> и чек-лист самопроверки текста перед публикацией. До 12 августа — <span style="white-space:nowrap">4 900 ₽</span>, после — <span style="white-space:nowrap">9 900 ₽</span>.</div>
+  <a class="go" href="https://andreyandreev.createtoday.ru/hero/get/of_wbSuHtcEF-JY">Забрать за 4 900 ₽ →</a>
+</div></div></section>
+<section class="band band-blue" id="flag-9"><div class="wrap">
+<span class="flagno">ФЛАГ 9 / 10</span>
+      <h2 class="flag">Вывод раньше пути</h2>
+      <div class="lbl">Как пишут</div>
+      <div class="igpost bad"><div class="ph"><div class="av avbad">✕</div><span class="un">типичный пост в ленте</span><span class="dots">···</span></div><div class="pbody"><span class="quote">Первый абзац: «Ваша усталость — это непрожитая злость». И дальше десять абзацев доказательств.</span></div><div class="ft"><span>♡ 3</span><span>💬 0</span><span class="sv">🔖</span></div></div>
+      <div class="lbl">Почему не работает</div>
+      <div class="why">Читатель ещё не прошёл логику, по которой вы к этому пришли, — формула падает в пустоту. Он не спорит с вашим выводом, он его просто не присваивает: не заработал.</div>
+      <div class="lbl">Как надо</div>
+      <div class="how">Стройте текст как путь: сцена → узнавание → поворот → и только потом мысль, к которой всё вело. В момент вывода читатель уже сам его сформулировал — вы лишь произнесли вслух.</div>
+<a class="toplink" href="#top">↑ к содержанию</a>
+</div></section>
+<section class="band band-cream" id="flag-10"><div class="wrap">
+<span class="flagno">ФЛАГ 10 / 10</span>
+      <h2 class="flag">Финал-инфобизнес</h2>
+      <div class="lbl">Как пишут</div>
+      <div class="igpost bad"><div class="ph"><div class="av avbad">✕</div><span class="un">типичный пост в ленте</span><span class="dots">···</span></div><div class="pbody"><span class="quote">«Приходите на консультацию, и мы вместе разберёмся с вашими запросами. Пишите в директ»</span></div><div class="ft"><span>♡ 3</span><span>💬 0</span><span class="sv">🔖</span></div></div>
+      <div class="lbl">Почему не работает</div>
+      <div class="why">После интимного, честного текста такой финал звучит как продавец, ворвавшийся в кабинет терапевта. Он ломает тон и обесценивает всё, что было выше. «Пишите в директ» без причины писать — это просьба, а не приглашение.</div>
+      <div class="lbl">Как надо</div>
+      <div class="how">Финал — наблюдение, вопрос к себе или конкретный следующий шаг с конкретным словом.</div>
+      <div class="pair"><div class="igpost bad"><div class="ph"><div class="av avbad">✕</div><span class="un">типичный пост в ленте</span><span class="dots">···</span></div><div class="pbody">«Записывайтесь на консультацию в директ»</div><div class="ft"><span>♡ 2</span><span>💬 0</span><span class="sv">🔖</span></div></div><div class="igpost good"><div class="ph"><div class="av avgood">✓</div><span class="un">пост, который читают</span><span class="dots">···</span></div><div class="pbody">Финал-наблюдение без морали + отдельной строкой конкретный шаг с кодовым словом</div><div class="ft"><span>♡ 128</span><span>💬 14</span><span class="sv">🔖</span></div></div></div>
+<a class="toplink" href="#top">↑ к содержанию</a>
+</div></section>
+<section class="final"><div class="wrap">
+  <div class="kicker">что с этим делать</div>
+  <p style="font-size:17px;margin-top:16px;max-width:660px">Откройте три своих последних поста и пройдитесь по списку. Скорее всего, найдёте два-три флага,
+    которые повторяются из текста в текст — это и есть ваш почерк ошибки. Чинить нужно не всё сразу, а именно его.</p>
+  <div class="cta">
+    <div class="kicker" style="color:var(--blue)">практикум · старт 12 августа</div>
+    <div style="font-size:24px;font-weight:600;margin-top:12px;line-height:1.25">Личный бренд для помогающего практика</div>
+    <div style="font-size:16px;line-height:1.6;margin-top:12px;color:var(--ink2)">
+      5 модулей: позиционирование → профиль → тексты → кейсы и цена → система на 1 час в день.</div>
+    <div class="gets">
+      <div>Все модули в записи, доступ остаётся навсегда — проходите в своём темпе</div>
+      <div>Рабочий шаблон после каждого модуля: карта позиционирования, чек-лист профиля из 12 пунктов, чек-лист самопроверки текста, скрипт ответа на «сколько стоит», недельный контент-план</div>
+      <div>Промпт «ИИ вашим голосом» — чтобы нейросеть писала ваши тексты, а не свои</div>
+      <div>Эти 10 флагов — внутри модуля 03, с разборами «до/после» на текстах психологов</div>
+    </div>
+    <div style="font-size:17px;margin-top:14px">До старта — <b>4 900 ₽</b> <span style="color:var(--mute)">(после — 9 900 ₽)</span></div>
+    <a class="btn" href="https://andreyandreev.createtoday.ru/hero/get/of_wbSuHtcEF-JY">Получить доступ за 4 900 ₽ →</a>
+  </div>
+</div></section>
+<footer><div class="wrap">андрей андреев · make blog great again · '26 · <a href="https://www.instagram.com/andreyandreev.me/" style="color:var(--mute)">@andreyandreev.me</a></div></footer>
+</body></html>
