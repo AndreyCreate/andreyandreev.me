@@ -136,7 +136,19 @@ for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src =
 k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
 (window, document, "script", "https://mc.yandex.ru/metrika/tag.js?id=109255989", "ym");
 ym(109255989, "init", {clickmap:true, trackLinks:true, accurateTrackBounce:true});
-function payClick(){ try{ ym(109255989,'reachGoal','praktikum_pay'); }catch(e){} }
+function flagiTrack(eventName){
+  try{
+    navigator.sendBeacon(
+      'https://funnel.andreyandreev.me/api/flagi/events',
+      new Blob([JSON.stringify({event:eventName})],{type:'text/plain'})
+    );
+  }catch(e){}
+}
+function payClick(){
+  try{ ym(109255989,'reachGoal','praktikum_pay'); }catch(e){}
+  flagiTrack('checkout_clicked');
+}
+window.addEventListener('DOMContentLoaded',function(){flagiTrack('program_clicked');},{once:true});
 </script>
 </head>
 <body>
