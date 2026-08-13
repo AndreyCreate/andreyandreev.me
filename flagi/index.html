@@ -79,16 +79,11 @@ header.cover{padding:64px 0 40px}
 .cta a.btn:hover{opacity:.92}
 .cta-layout{display:grid;gap:26px;align-items:start}
 .cta-copy{min-width:0}
-.cta-visuals{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:144px 126px;gap:10px}
-.cta-visuals figure{overflow:hidden;border-radius:12px;background:var(--cream);border:1px solid var(--line)}
-.cta-visuals figure:first-child{grid-row:1 / 3}
-.cta-visuals img{width:100%;height:100%;display:block;object-fit:cover}
-.cta-visuals figure:first-child img{object-position:center top}
-.cta-visuals figure:nth-child(2) img{object-position:center 28%}
-.cta-visuals figure:nth-child(3) img{object-position:center}
+.cta-visual{overflow:hidden;border-radius:12px;background:var(--cream);border:1px solid var(--line)}
+.cta-visual img{width:100%;height:auto;display:block}
 @media(min-width:700px){.cta{padding:30px}.cta-layout{grid-template-columns:minmax(0,1.15fr) minmax(245px,.85fr)}}
-@media(max-width:699px){.cta-visuals{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:4px;scrollbar-width:none}.cta-visuals::-webkit-scrollbar{display:none}.cta-visuals figure{flex:0 0 72%;height:200px;scroll-snap-align:start}.cta-visuals figure:first-child{grid-row:auto}}
-@media(max-width:480px){.cta{padding:24px 20px}.cta a.btn{font-size:14px;padding:13px 16px;white-space:nowrap}.cta-visuals figure{flex-basis:82%;height:184px}}
+@media(max-width:699px){.cta-visual{margin-top:2px}}
+@media(max-width:480px){.cta{padding:24px 20px}.cta a.btn{font-size:14px;padding:13px 16px;white-space:nowrap}}
 footer{padding:26px 0 44px;font-size:13px;color:var(--mute);background:var(--cream)}
 /* как использовать гайд */
 .howto{margin:34px 0 10px}
@@ -323,11 +318,7 @@ footer{padding:26px 0 44px;font-size:13px;color:var(--mute);background:var(--cre
         </div>
         <a class="btn" href="https://heysash.ai/challenge">Узнать о челлендже →</a>
       </div>
-      <div class="cta-visuals" aria-label="Результаты участников челленджа Hey, Sash!">
-        <figure><img src="assets/heysash-growth.webp" alt="Рост блога Hey, Sash!: более 2 миллионов просмотров и 13 817 подписчиков" loading="lazy"></figure>
-        <figure><img src="assets/heysash-carousel.webp" alt="Пример карусели участника челленджа" loading="lazy"></figure>
-        <figure><img src="assets/heysash-review.webp" alt="Отзыв участницы: после карусели пришла заявка в Direct" loading="lazy"></figure>
-      </div>
+      <figure class="cta-visual"><img src="assets/heysash-challenge.webp" alt="Пример виральной карусели: 1 миллион просмотров, 7 820 подписчиков и 107 тысяч реакций" loading="lazy"></figure>
     </div>
   </div>
 </div></section>
