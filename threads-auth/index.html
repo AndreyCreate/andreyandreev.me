@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Threads — подключение</title>
+<style>
+  body{margin:0;background:#F5F2EA;font-family:Inter,-apple-system,system-ui,sans-serif;color:#2B2B2B;
+       display:flex;min-height:100vh;align-items:center;justify-content:center;padding:24px}
+  .card{max-width:560px;background:#fff;border-radius:20px;padding:40px 36px;box-shadow:0 10px 34px rgba(30,30,30,.08)}
+  h1{font-size:26px;margin:0 0 14px;letter-spacing:-.02em}
+  p{font-size:17px;line-height:1.5;color:#4A4A4A;margin:0 0 18px}
+  code{display:block;background:#F1EEE6;border-radius:10px;padding:16px;font-size:15px;
+       word-break:break-all;margin-bottom:18px;font-family:ui-monospace,monospace}
+  button{background:#3766C8;color:#fff;border:none;border-radius:12px;padding:14px 26px;
+         font-size:17px;font-weight:600;cursor:pointer}
+  button:active{transform:translateY(1px)}
+  .ok{color:#2E7D32;font-weight:600;display:none;margin-top:12px}
+  .err{color:#C62828}
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Подключение Threads</h1>
+  <div id="has-code" style="display:none">
+    <p>Код авторизации получен. Скопируй его и отправь Тони в Telegram:</p>
+    <code id="code"></code>
+    <button onclick="navigator.clipboard.writeText(document.getElementById('code').textContent).then(()=>{document.getElementById('done').style.display='block'})">Скопировать код</button>
+    <p class="ok" id="done">Скопировано — теперь просто вставь в чат с Тони.</p>
+  </div>
+  <div id="no-code" style="display:none">
+    <p class="err">Кода в адресе нет. Эта страница работает только как шаг после кнопки «Разрешить» в Threads — вернись к ссылке от Тони.</p>
+  </div>
+</div>
+<script>
+  const c = new URLSearchParams(location.search).get('code');
+  if (c) { document.getElementById('code').textContent = c; document.getElementById('has-code').style.display='block'; }
+  else { document.getElementById('no-code').style.display='block'; }
+</script>
+</body>
+</html>
