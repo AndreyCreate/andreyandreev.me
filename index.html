@@ -6,7 +6,6 @@
 <title>Андрей Андреев — коуч, предприниматель, фотограф</title>
 <meta name="description" content="Андрей Андреев — предприниматель, автор образовательных проектов, фотограф, коуч. Фотопроекты, коучинг, курсы, Hey, Sash!, Create Today." />
 <link rel="canonical" href="https://andreyandreev.me/">
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Андрей Андреев">
 <meta property="og:locale" content="ru_RU">
@@ -14,15 +13,85 @@
 <meta property="og:title" content="Андрей Андреев — коуч, предприниматель, фотограф">
 <meta property="og:description" content="Андрей Андреев — предприниматель, автор образовательных проектов, фотограф, коуч. Фотопроекты, коучинг, курсы, Hey, Sash!, Create Today.">
 <meta property="og:image" content="https://andreyandreev.me/assets/andrey-portrait.jpg">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Андрей Андреев — коуч, предприниматель, фотограф">
-<meta name="twitter:description" content="Андрей Андреев — предприниматель, автор образовательных проектов, фотограф, коуч. Фотопроекты, коучинг, курсы, Hey, Sash!, Create Today.">
-<meta name="twitter:image" content="https://andreyandreev.me/assets/andrey-portrait.jpg">
-<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Person", "@id": "https://andreyandreev.me/#person", "name": "Андрей Андреев", "alternateName": "Andrey Andreev", "url": "https://andreyandreev.me/", "image": "https://andreyandreev.me/assets/andrey-portrait.jpg", "jobTitle": "Коуч", "description": "Предприниматель, автор образовательных проектов, фотограф, коуч. CEO платформы Create Today, co-founder приложения Hey, Sash!", "sameAs": ["https://instagram.com/andreyandreev.me", "https://www.behance.net/andreiandreev7", "https://t.me/coaching_with_andrey", "https://t.me/mbga_andrey", "https://andreiandreev.substack.com"]}, {"@type": "WebSite", "name": "Андрей Андреев", "url": "https://andreyandreev.me/", "inLanguage": "ru", "publisher": {"@id": "https://andreyandreev.me/#person"}}]}</script>
+<meta name="description" content="Андрей Андреев — предприниматель, автор образовательных проектов, фотограф, коуч. Фотопроекты, коучинг, курсы, Hey, Sash!, Create Today." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F5F2EA; --ink:#2B2B2B; --ink-2:#4A4A4A; --ink-mute:#8F8F8F;
+  --line:#DDD9CF; --white:#FFF;
+  --blue:#3766C8; --sky-card:#BBD7F5;
+  --font-sans:'Inter','Helvetica Neue',Arial,sans-serif;
+  --font-mono:'IBM Plex Mono','SF Mono',Menlo,monospace;
+  --page-pad:clamp(22px,5vw,72px);
+  --ease-out:cubic-bezier(0.22,1,0.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--cream);color:var(--ink);font:400 17px/1.55 var(--font-sans);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.page{max-width:1160px;margin:0 auto;padding:0 var(--page-pad)}
 
+/* topbar */
+.topbar{display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+  padding:26px 0 0;font:400 12px/1.5 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mute)}
+
+/* masthead */
+.masthead{display:grid;grid-template-columns:1fr 340px;gap:clamp(40px,6vw,96px);
+  align-items:end;padding:clamp(56px,9vh,110px) 0 clamp(40px,6vh,72px)}
+.kicker{font:600 12px/1.5 var(--font-sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:28px}
+h1{font:400 clamp(46px,7.6vw,92px)/1.06 var(--font-sans);letter-spacing:-0.02em}
+h1 .brace{color:var(--blue);font-weight:300}
+.roles{margin-top:30px;font:400 18px/1.5 var(--font-sans);color:var(--ink)}
+.roles span{display:block}
+.roles b{font-weight:500}
+.about{margin-top:18px;font:400 16px/1.55 var(--font-sans);color:var(--ink-2);max-width:44ch}
+.about .b{color:var(--blue)}
+.about .brace{color:var(--blue);font-weight:300}
+
+/* портрет — mac-окно из funnel-prezo-v3 */
+.mac{background:var(--white);border-radius:18px;overflow:hidden;box-shadow:0 16px 48px rgba(30,30,30,.14)}
+.mac .bar{display:flex;align-items:center;gap:18px;padding:14px 20px}
+.mac .dots{display:flex;gap:7px}
+.mac .dot{width:12px;height:12px;border-radius:50%}
+.mac .dot.r{background:#EE6A5F}.mac .dot.y{background:#F5BE4F}.mac .dot.g{background:#61C454}
+.mac .cap{font:500 11px/1 var(--font-mono);letter-spacing:.13em;text-transform:uppercase;color:var(--ink-mute)}
+.mac img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;object-position:50% 20%}
+
+/* оглавление */
+.toc-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+  border-top:2px dashed var(--line);padding-top:26px;margin-top:8px}
+.toc-head .cap{font:600 12px/1.5 var(--font-sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute)}
+.toc-head .cnt{font:400 12px/1.5 var(--font-mono);letter-spacing:.1em;color:var(--ink-mute)}
+.toc{display:grid;grid-template-columns:1fr 1fr;gap:0 clamp(48px,7vw,110px);padding:14px 0 8px}
+.entry{display:grid;grid-template-columns:56px 1fr;gap:20px;align-items:start;
+  padding:26px 0;border-bottom:1.5px solid var(--line)}
+.entry .num{font:500 15px/1 var(--font-mono);color:var(--blue);padding-top:5px;letter-spacing:.04em}
+.entry .trow{display:flex;align-items:center;gap:12px}
+.entry .appico{width:30px;height:30px;flex:none}
+.entry .appico img{width:30px;height:30px;display:block;border-radius:7px}
+.entry .title{font:500 19px/1.3 var(--font-sans);letter-spacing:-0.01em;
+  transition:color .16s var(--ease-out)}
+.entry .ext{display:inline-flex;align-items:center;color:var(--ink-mute);
+  transition:transform .16s var(--ease-out),color .16s var(--ease-out)}
+.entry .desc{display:block;margin-top:5px;font:400 14.5px/1.5 var(--font-sans);color:var(--ink-mute)}
+.entry:hover .title{color:var(--blue)}
+.entry:hover .ext{color:var(--blue);transform:translate(2px,-2px)}
+
+/* футер */
+.pagefoot{display:flex;justify-content:space-between;gap:16px;border-top:2px dashed var(--line);
+  margin-top:clamp(40px,7vh,72px);padding:22px 0 44px;
+  font:400 12px/1.5 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mute)}
+
+@media (max-width:880px){
+  .masthead{grid-template-columns:1fr;align-items:start;gap:44px;padding-top:48px}
+  .mac{max-width:340px}
+  .toc{grid-template-columns:1fr}
+  .entry{grid-template-columns:46px 1fr;gap:14px;padding:22px 0}
+}
+</style>
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -33,58 +102,6 @@
    ym(109255989, 'init', {ssr:true, webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true, trackHash:true});
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/109255989" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
-<style>
-:root{
-  --paper:#F3F0E8; --ink:#16150F; --ink-soft:#57544A; --ink-faint:#8B877A;
-  --line-soft:rgba(22,21,15,0.16);
-  --font-grotesk:'Golos Text','Helvetica Neue',Arial,sans-serif;
-  --font-mono:'IBM Plex Mono','SF Mono',Menlo,monospace;
-  --type-body:17px; --type-small:14px; --type-caption:12px;
-  --tracking-caps:0.14em;
-  --text-paragraph:400 var(--type-body)/1.55 var(--font-grotesk);
-  --text-annotation:400 var(--type-caption)/1.5 var(--font-mono);
-  --text-muted:var(--ink-soft); --text-faint:var(--ink-faint);
-  --space-3:12px; --space-4:16px; --space-5:24px; --space-6:32px; --space-7:48px; --space-8:64px; --space-9:96px;
-  --page-pad:clamp(24px,5vw,72px);
-  --ease-out:cubic-bezier(0.22,1,0.36,1); --duration-fast:160ms;
-}
-*{box-sizing:border-box}
-body{margin:0;background:var(--paper);color:var(--ink);font:var(--text-paragraph);-webkit-font-smoothing:antialiased}
-a{color:inherit;text-decoration:none}
-.page{max-width:1240px;margin:0 auto;padding:0 var(--page-pad);position:relative}
-
-.topbar{display:flex;justify-content:space-between;padding-top:var(--space-5);font:var(--text-annotation);letter-spacing:var(--tracking-caps);text-transform:uppercase;color:var(--text-faint)}
-
-.masthead{padding:var(--space-8) 0 var(--space-6);display:grid;grid-template-columns:1fr 320px;gap:var(--space-8);align-items:end}
-.masthead .rule{width:72px;height:5px;background:var(--ink);margin-bottom:var(--space-4)}
-.masthead h1{margin:0;font:600 clamp(56px,7.5vw,104px)/0.98 var(--font-grotesk);letter-spacing:0.06em;text-transform:uppercase}
-.masthead .roles{margin:var(--space-5) 0 0;font:500 19px/1.45 var(--font-grotesk);letter-spacing:-0.01em;max-width:40ch}
-.masthead .roles span{display:block}
-.masthead p.about{margin:var(--space-3) 0 0;color:var(--text-muted);max-width:44ch}
-.masthead .photo{width:320px;aspect-ratio:3/4;overflow:hidden}
-.masthead .photo img{width:100%;height:100%;object-fit:cover;object-position:50% 20%;filter:saturate(0.75);display:block}
-
-.toc{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-6) var(--space-9);padding:var(--space-6) 0 var(--space-7)}
-.entry{display:grid;grid-template-columns:84px 1fr;align-items:start;gap:var(--space-4)}
-.entry .num{font:600 44px/0.9 var(--font-grotesk);letter-spacing:-0.01em}
-.entry .trow{display:flex;align-items:center;gap:var(--space-3);padding-top:6px}
-.entry .appico{width:34px;height:34px;flex:none}
-.entry .appico img{width:34px;height:34px;display:block;border-radius:8px}
-.entry .title{font:500 19px/1.25 var(--font-grotesk);letter-spacing:0.1em;text-transform:uppercase}
-.entry .ext{display:inline-flex;align-items:center;color:var(--text-faint);transition:transform var(--duration-fast) var(--ease-out),color var(--duration-fast) var(--ease-out)}
-.entry:hover .ext{color:var(--ink);transform:translate(2px,-2px)}
-.entry .desc{display:block;margin-top:4px;font:400 var(--type-small)/1.5 var(--font-grotesk);letter-spacing:0.04em;color:var(--text-muted);text-transform:none}
-.entry:hover .title{text-decoration:underline;text-underline-offset:4px}
-
-.pagefoot{display:flex;justify-content:space-between;border-top:1px solid var(--line-soft);margin-top:var(--space-7);padding:var(--space-4) 0 var(--space-6);font:var(--text-annotation);letter-spacing:var(--tracking-caps);text-transform:uppercase;color:var(--text-faint)}
-
-@media (max-width:860px){
-  .toc{grid-template-columns:1fr}
-  .masthead{grid-template-columns:1fr;align-items:start}
-  .masthead .photo{width:100%;max-width:380px}
-}
-</style>
 </head>
 <body>
 <div class="page">
@@ -95,16 +112,27 @@ a{color:inherit;text-decoration:none}
 
   <header class="masthead">
     <div>
-      <div class="rule"></div>
+      <div class="kicker">Личный сайт</div>
       <h1>Андрей<br>Андреев</h1>
       <div class="roles">
-        <span>CEO платформы Create Today</span>
-        <span>Co-founder приложения Hey,&nbsp;Sash!</span>
+        <span>CEO платформы <b>Create Today</b></span>
+        <span>Co-founder приложения <b>Hey,&nbsp;Sash!</b></span>
       </div>
-      <p class="about">Предприниматель, автор образовательных проектов, фотограф, коуч</p>
+      <p class="about">Предприниматель, автор образовательных проектов, фотограф, <span class="brace">{</span>&nbsp;<span class="b">коуч</span>&nbsp;<span class="brace">}</span></p>
     </div>
-    <div class="photo"><img src="assets/andrey-portrait.jpg" alt="Андрей Андреев — портрет"></div>
+    <div class="mac">
+      <div class="bar">
+        <div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
+        <div class="cap">andreyandreev.me · 2026</div>
+      </div>
+      <img src="assets/andrey-portrait.jpg" alt="Андрей Андреев — портрет">
+    </div>
   </header>
+
+  <div class="toc-head">
+    <span class="cap">Оглавление</span>
+    <span class="cnt">01 — 06</span>
+  </div>
 
   <nav class="toc">
     <a class="entry" href="https://createtoday.ru" target="_blank" rel="noopener">
@@ -135,6 +163,7 @@ a{color:inherit;text-decoration:none}
 
   <div class="pagefoot">
     <span>© 2026</span>
+    <span>Андрей Андреев</span>
   </div>
 </div>
 </body>
