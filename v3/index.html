@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Андрей Андреев — коуч, предприниматель, фотограф</title>
+<meta name="description" content="Андрей Андреев — предприниматель, автор образовательных проектов, фотограф, коуч. Фотопроекты, коучинг, курсы, Hey, Sash!, Create Today." />
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F5F2EA; --ink:#2B2B2B; --ink-2:#4A4A4A; --ink-mute:#8F8F8F;
+  --line:#DDD9CF; --white:#FFF;
+  --blue:#3766C8; --sky-card:#BBD7F5;
+  --font-sans:'Inter','Helvetica Neue',Arial,sans-serif;
+  --font-mono:'IBM Plex Mono','SF Mono',Menlo,monospace;
+  --page-pad:clamp(22px,5vw,72px);
+  --ease-out:cubic-bezier(0.22,1,0.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--cream);color:var(--ink);font:400 17px/1.55 var(--font-sans);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.page{max-width:1160px;margin:0 auto;padding:0 var(--page-pad)}
+
+/* topbar */
+.topbar{display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+  padding:26px 0 0;font:400 12px/1.5 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mute)}
+
+/* masthead */
+.masthead{display:grid;grid-template-columns:1fr 340px;gap:clamp(40px,6vw,96px);
+  align-items:end;padding:clamp(56px,9vh,110px) 0 clamp(40px,6vh,72px)}
+.kicker{font:600 12px/1.5 var(--font-sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:28px}
+h1{font:400 clamp(46px,7.6vw,92px)/1.06 var(--font-sans);letter-spacing:-0.02em}
+h1 .brace{color:var(--blue);font-weight:300}
+.roles{margin-top:30px;font:400 18px/1.5 var(--font-sans);color:var(--ink)}
+.roles span{display:block}
+.roles b{font-weight:500}
+.about{margin-top:18px;font:400 16px/1.55 var(--font-sans);color:var(--ink-2);max-width:44ch}
+.about .b{color:var(--blue)}
+.about .brace{color:var(--blue);font-weight:300}
+
+/* портрет — mac-окно из funnel-prezo-v3 */
+.mac{background:var(--white);border-radius:18px;overflow:hidden;box-shadow:0 16px 48px rgba(30,30,30,.14)}
+.mac .bar{display:flex;align-items:center;gap:18px;padding:14px 20px}
+.mac .dots{display:flex;gap:7px}
+.mac .dot{width:12px;height:12px;border-radius:50%}
+.mac .dot.r{background:#EE6A5F}.mac .dot.y{background:#F5BE4F}.mac .dot.g{background:#61C454}
+.mac .cap{font:500 11px/1 var(--font-mono);letter-spacing:.13em;text-transform:uppercase;color:var(--ink-mute)}
+.mac img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;object-position:50% 20%}
+
+/* оглавление */
+.toc-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+  border-top:2px dashed var(--line);padding-top:26px;margin-top:8px}
+.toc-head .cap{font:600 12px/1.5 var(--font-sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute)}
+.toc-head .cnt{font:400 12px/1.5 var(--font-mono);letter-spacing:.1em;color:var(--ink-mute)}
+.toc{display:grid;grid-template-columns:1fr 1fr;gap:0 clamp(48px,7vw,110px);padding:14px 0 8px}
+.entry{display:grid;grid-template-columns:56px 1fr;gap:20px;align-items:start;
+  padding:26px 0;border-bottom:1.5px solid var(--line)}
+.entry .num{font:500 15px/1 var(--font-mono);color:var(--blue);padding-top:5px;letter-spacing:.04em}
+.entry .trow{display:flex;align-items:center;gap:12px}
+.entry .appico{width:30px;height:30px;flex:none}
+.entry .appico img{width:30px;height:30px;display:block;border-radius:7px}
+.entry .title{font:500 19px/1.3 var(--font-sans);letter-spacing:-0.01em;
+  transition:color .16s var(--ease-out)}
+.entry .ext{display:inline-flex;align-items:center;color:var(--ink-mute);
+  transition:transform .16s var(--ease-out),color .16s var(--ease-out)}
+.entry .desc{display:block;margin-top:5px;font:400 14.5px/1.5 var(--font-sans);color:var(--ink-mute)}
+.entry:hover .title{color:var(--blue)}
+.entry:hover .ext{color:var(--blue);transform:translate(2px,-2px)}
+
+/* футер */
+.pagefoot{display:flex;justify-content:space-between;gap:16px;border-top:2px dashed var(--line);
+  margin-top:clamp(40px,7vh,72px);padding:22px 0 44px;
+  font:400 12px/1.5 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mute)}
+
+@media (max-width:880px){
+  .masthead{grid-template-columns:1fr;align-items:start;gap:44px;padding-top:48px}
+  .mac{max-width:340px}
+  .toc{grid-template-columns:1fr}
+  .entry{grid-template-columns:46px 1fr;gap:14px;padding:22px 0}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="topbar">
+    <span>andreyandreev.me</span>
+    <span>Оглавление · 2026</span>
+  </div>
+
+  <header class="masthead">
+    <div>
+      <div class="kicker">Личный сайт</div>
+      <h1>Андрей<br>Андреев</h1>
+      <div class="roles">
+        <span>CEO платформы <b>Create Today</b></span>
+        <span>Co-founder приложения <b>Hey,&nbsp;Sash!</b></span>
+      </div>
+      <p class="about">Предприниматель, автор образовательных проектов, фотограф, <span class="brace">{</span>&nbsp;<span class="b">коуч</span>&nbsp;<span class="brace">}</span></p>
+    </div>
+    <div class="mac">
+      <div class="bar">
+        <div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
+        <div class="cap">andreyandreev.me · 2026</div>
+      </div>
+      <img src="../assets/andrey-portrait.jpg" alt="Андрей Андреев — портрет">
+    </div>
+  </header>
+
+  <div class="toc-head">
+    <span class="cap">Оглавление</span>
+    <span class="cnt">01 — 06</span>
+  </div>
+
+  <nav class="toc">
+    <a class="entry" href="https://createtoday.ru" target="_blank" rel="noopener">
+      <span class="num">01</span>
+      <span><span class="trow"><span class="title">Create Today</span><span class="ext" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M4.2 2.5H9.5V7.8" stroke="currentColor" stroke-width="1.3"/></svg></span></span><span class="desc">Платформа для создателей курсов</span></span>
+    </a>
+    <a class="entry" href="http://r.bothelp.io/tg?domain=heysashlist_bot&start=c1773040231207-ds&utm_source=andreyandreev" target="_blank" rel="noopener">
+      <span class="num">02</span>
+      <span><span class="trow"><span class="appico"><img src="../assets/heysash-icon.png" alt="Иконка Hey, Sash!"></span><span class="title">Hey, Sash!</span><span class="ext" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M4.2 2.5H9.5V7.8" stroke="currentColor" stroke-width="1.3"/></svg></span></span><span class="desc">Приложение для каруселей — в App Store</span></span>
+    </a>
+    <a class="entry" href="/kursy/">
+      <span class="num">03</span>
+      <span><span class="trow"><span class="title">Курсы</span></span><span class="desc">Курс про деньги, распродажа, гайды</span></span>
+    </a>
+    <a class="entry" href="/coaching/">
+      <span class="num">04</span>
+      <span><span class="trow"><span class="title">Коучинг</span></span><span class="desc">Не заставить себя, а перестать мешать</span></span>
+    </a>
+    <a class="entry" href="/photo/">
+      <span class="num">05</span>
+      <span><span class="trow"><span class="title">Фотопроекты</span></span><span class="desc">Авторские фотосерии — зримое и незримое</span></span>
+    </a>
+    <a class="entry" href="https://andreycreate.github.io/ig-analytics/" target="_blank" rel="noopener">
+      <span class="num">06</span>
+      <span><span class="trow"><span class="title">Аналитика Instagram</span><span class="ext" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M4.2 2.5H9.5V7.8" stroke="currentColor" stroke-width="1.3"/></svg></span></span><span class="desc">Открытая статистика блога — обновляется еженедельно</span></span>
+    </a>
+  </nav>
+
+  <div class="pagefoot">
+    <span>© 2026</span>
+    <span>Андрей Андреев</span>
+  </div>
+</div>
+</body>
+</html>
