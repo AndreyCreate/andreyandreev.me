@@ -1,0 +1,149 @@
+/* Лендинг «Два AI-агента за две недели» — site language v3, namespace aial- */
+.aial-landing{
+  --cream:#F5F2EA; --ink:#2B2B2B; --ink-2:#4A4A4A; --ink-mute:#8F8F8F;
+  --line:#DDD9CF; --white:#FFF; --blue:#3766C8; --sky:#85ACD7;
+  --sky-card:#BBD7F5; --sky-row:#CFE2F8; --marker:#F5C445; --dark:#46443F;
+  font-family:'Inter',sans-serif; color:var(--ink); background:var(--cream);
+  -webkit-font-smoothing:antialiased; line-height:1.5;
+}
+.aial-landing *{margin:0;padding:0;box-sizing:border-box}
+.aial-wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+.aial-section{padding:clamp(64px,9vw,120px) 0}
+.aial-kicker{font-size:clamp(15px,1.3vw,19px);font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:28px}
+.aial-h1{font-size:clamp(38px,5.4vw,76px);font-weight:400;line-height:1.14;letter-spacing:-.02em}
+.aial-h2{font-size:clamp(30px,3.6vw,52px);font-weight:400;line-height:1.16;letter-spacing:-.018em}
+.aial-lead{font-size:clamp(17px,1.5vw,22px);color:var(--ink-2);line-height:1.55}
+.aial-brace{color:var(--blue);font-weight:300}
+.aial-accent{color:var(--blue)}
+.aial-mark{background:linear-gradient(transparent 12%, var(--marker) 12%, var(--marker) 95%, transparent 95%);padding:2px 8px;border-radius:3px;white-space:nowrap}
+.aial-btn{display:inline-flex;align-items:center;justify-content:center;min-height:56px;padding:16px 36px;background:var(--dark);color:#fff;font-family:inherit;font-size:18px;font-weight:500;border:none;border-radius:16px;text-decoration:none;cursor:pointer}
+.aial-btn:hover{opacity:.92}
+.aial-btn:focus-visible,.aial-link:focus-visible,.aial-faq summary:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+.aial-btn-ghost{display:inline-flex;align-items:center;justify-content:center;min-height:56px;padding:16px 32px;background:transparent;color:var(--ink);border:1.5px solid var(--ink);border-radius:16px;font-size:18px;font-weight:500;text-decoration:none}
+.aial-dark{background-color:var(--dark);color:#F1EEE6;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='420'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='3' stitchTiles='stitch' seed='7'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='linear' slope='0.3' intercept='0'/></feComponentTransfer></filter><rect width='420' height='420' filter='url(%23g)' fill='white'/></svg>");
+  background-size:420px 420px}
+.aial-dark .aial-kicker{color:rgba(241,238,230,.55)}
+.aial-dark .aial-lead{color:rgba(241,238,230,.82)}
+.aial-dark .aial-brace,.aial-dark .aial-accent{color:var(--sky-card)}
+.aial-sky{background:var(--sky)}
+.aial-sky .aial-kicker{color:rgba(43,43,43,.55)}
+
+/* Hero */
+.aial-hero{padding:clamp(56px,8vw,104px) 0 clamp(64px,9vw,110px)}
+.aial-hero-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:clamp(32px,5vw,72px);align-items:start}
+.aial-hero .aial-lead{margin-top:32px;max-width:560px}
+.aial-hero-format{margin-top:26px;font-size:17px;color:var(--ink-mute);line-height:1.5;max-width:520px}
+.aial-hero-cta{margin-top:40px;display:flex;flex-wrap:wrap;gap:18px;align-items:center}
+.aial-hero-note{margin-top:16px;font-size:15px;color:var(--ink-mute)}
+.aial-facts{display:flex;gap:26px;flex-wrap:wrap;margin-top:34px}
+.aial-fact{border-left:2px solid var(--line);padding-left:16px}
+.aial-fact b{display:block;font-size:21px;font-weight:500}
+.aial-fact span{font-size:14px;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.08em}
+.aial-price-tag{margin-top:30px;font-size:clamp(20px,2vw,26px)}
+.aial-price-tag .aial-next{display:block;margin-top:10px;font-size:16px;color:var(--ink-mute)}
+
+/* Схема агентов */
+.aial-scheme{display:flex;flex-direction:column;gap:0;background:var(--white);border-radius:22px;padding:34px 30px;box-shadow:0 18px 60px rgba(30,30,30,.14)}
+.aial-scheme-step{display:flex;align-items:center;gap:14px;padding:13px 4px;font-size:16.5px;color:var(--ink-2)}
+.aial-scheme-step.aial-agent{background:var(--sky-row);border-radius:12px;padding:15px 16px;color:var(--ink);font-weight:600;font-size:17.5px}
+.aial-scheme-step .aial-num{color:var(--blue);font-weight:600;letter-spacing:.08em;font-size:14px;min-width:26px}
+.aial-scheme-arrow{color:var(--blue);font-weight:300;font-size:20px;padding:2px 0 2px 8px;line-height:1}
+
+/* Result cards */
+.aial-cards2{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:48px}
+.aial-card{background:var(--white);border-radius:22px;padding:clamp(28px,3vw,44px);box-shadow:0 10px 34px rgba(30,30,30,.09)}
+.aial-card h3{font-size:clamp(22px,2.1vw,28px);font-weight:500;line-height:1.25;margin-bottom:18px}
+.aial-card h3 .aial-num{display:block;font-size:15px;color:var(--blue);font-weight:600;letter-spacing:.1em;margin-bottom:12px}
+.aial-card p{color:var(--ink-2);font-size:17px;line-height:1.55}
+.aial-card p+p{margin-top:12px}
+.aial-chips{margin-top:22px;padding-top:8px}
+.aial-chips li{list-style:none;padding:11px 2px;border-top:1.5px solid var(--line);font-size:16px;color:var(--ink);display:flex;gap:12px;align-items:baseline}
+.aial-chips li::before{content:"✓";color:var(--blue);font-weight:600}
+.aial-connect{margin-top:44px;background:var(--sky-card);border-radius:22px;padding:clamp(28px,3vw,42px);position:relative;overflow:hidden}
+.aial-connect .aial-flow{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;font-size:clamp(16px,1.6vw,20px);font-weight:500;position:relative;z-index:1}
+.aial-connect .aial-flow .aial-arr{color:var(--blue);font-weight:300}
+.aial-connect .aial-note{margin-top:20px;color:var(--ink-2);font-size:16.5px;max-width:760px;position:relative;z-index:1}
+.aial-cta-row{margin-top:44px}
+
+/* Timeline */
+.aial-timeline{margin-top:52px;position:relative;padding-left:34px}
+.aial-timeline::before{content:"";position:absolute;left:8px;top:8px;bottom:8px;width:1.5px;background:rgba(241,238,230,.25)}
+.aial-tl-item{position:relative;padding:0 0 40px 12px}
+.aial-tl-item:last-child{padding-bottom:0}
+.aial-tl-item::before{content:"";position:absolute;left:-32px;top:7px;width:13px;height:13px;border-radius:50%;background:var(--sky-card)}
+.aial-tl-when{font-size:15px;letter-spacing:.1em;text-transform:uppercase;color:var(--sky-card);font-weight:600}
+.aial-tl-title{font-size:clamp(20px,2vw,26px);font-weight:500;margin:8px 0 10px}
+.aial-tl-item p{color:rgba(241,238,230,.82);font-size:17px;max-width:640px}
+.aial-tl-note{margin-top:40px;padding-top:26px;border-top:1.5px solid rgba(241,238,230,.18);color:rgba(241,238,230,.82);font-size:16.5px;max-width:720px}
+.aial-tl-note+.aial-tl-note{margin-top:0;padding-top:14px;border-top:none}
+
+/* Week topics */
+.aial-topics{margin-top:44px;display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.aial-topic{background:var(--white);border-radius:20px;padding:26px 28px}
+.aial-topic .aial-num{color:var(--blue);font-weight:600;letter-spacing:.1em;font-size:14.5px}
+.aial-topic h3{font-size:19.5px;font-weight:600;margin:10px 0 8px;line-height:1.3}
+.aial-topic p{color:var(--ink-2);font-size:16px;line-height:1.5}
+.aial-week-result{margin-top:34px;background:var(--white);border-radius:20px;padding:28px 32px;border-left:5px solid var(--blue)}
+.aial-week-result b{font-weight:600}
+.aial-week-extra{margin-top:20px;color:rgba(43,43,43,.75);font-size:16px;max-width:760px}
+
+/* Support / access */
+.aial-note-block{margin-top:36px;max-width:760px}
+.aial-note-block p+p{margin-top:14px}
+
+/* Lists (кому подойдёт) */
+.aial-checklist{margin-top:40px;max-width:800px}
+.aial-checklist li{list-style:none;display:flex;gap:16px;padding:15px 2px;border-top:1.5px solid var(--line);font-size:17.5px;align-items:baseline}
+.aial-checklist li::before{content:"✓";color:var(--blue);font-weight:600}
+.aial-checklist.aial-no li::before{content:"—";color:var(--ink-mute)}
+.aial-dark .aial-checklist li{border-top-color:rgba(241,238,230,.18)}
+
+/* Price */
+.aial-offer{margin-top:48px;background:var(--sky-card);border-radius:26px;padding:clamp(32px,4vw,56px);position:relative;overflow:hidden}
+.aial-rays{position:absolute;right:-130px;top:-130px;width:420px;height:420px;border-radius:50%;background:repeating-conic-gradient(#fff 0deg 7deg, transparent 7deg 22deg);opacity:.5}
+.aial-offer-inner{position:relative;z-index:1;display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(28px,4vw,56px)}
+.aial-pill{display:inline-block;background:var(--white);border-radius:999px;padding:9px 20px;font-size:14.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.aial-price-big{font-size:clamp(46px,5vw,68px);font-weight:500;margin-top:22px;letter-spacing:-.02em}
+.aial-price-next{margin-top:10px;font-size:17px;color:var(--ink-2)}
+.aial-pay-note{margin-top:22px;color:var(--ink-2);font-size:16.5px;max-width:440px}
+.aial-offer-facts{align-self:center}
+.aial-offer-facts li{list-style:none;padding:11px 2px;border-top:1.5px solid rgba(43,43,43,.16);font-size:16.5px;display:flex;gap:12px;align-items:baseline}
+.aial-offer-facts li::before{content:"✓";color:var(--blue);font-weight:600}
+.aial-offer-cta{margin-top:30px;display:flex;flex-wrap:wrap;gap:16px;align-items:center}
+.aial-offer .aial-btn-ghost{border-color:var(--ink)}
+.aial-offer-sign{margin-top:16px;font-size:15px;color:var(--ink-2)}
+
+/* FAQ */
+.aial-faq{margin-top:44px;max-width:820px}
+.aial-faq details{border-top:1.5px solid var(--line)}
+.aial-faq details:last-child{border-bottom:1.5px solid var(--line)}
+.aial-faq summary{cursor:pointer;padding:20px 44px 20px 2px;font-size:18.5px;font-weight:500;list-style:none;position:relative;min-height:44px}
+.aial-faq summary::-webkit-details-marker{display:none}
+.aial-faq summary::after{content:"+";position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--blue);font-weight:300;font-size:26px}
+.aial-faq details[open] summary::after{content:"–"}
+.aial-faq .aial-a{padding:0 2px 22px;color:var(--ink-2);font-size:17px;max-width:720px}
+
+/* Final */
+.aial-final .aial-lead{margin-top:26px;max-width:640px}
+.aial-final-cta{margin-top:38px;display:flex;flex-wrap:wrap;gap:16px;align-items:center}
+.aial-final .aial-btn-ghost{border-color:#F1EEE6;color:#F1EEE6}
+.aial-final-facts{margin-top:30px;display:flex;gap:26px;flex-wrap:wrap;color:rgba(241,238,230,.75);font-size:16px}
+
+/* Footer */
+.aial-footer{padding:34px 0 44px;border-top:1.5px solid var(--line)}
+.aial-footer-row{display:flex;flex-wrap:wrap;gap:14px 34px;align-items:center;justify-content:space-between;font-size:15.5px;color:var(--ink-mute)}
+.aial-footer a{color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--line);padding:12px 0}
+.aial-footer a:hover{color:var(--blue)}
+.aial-footer-links{display:flex;flex-wrap:wrap;gap:26px}
+
+@media (prefers-reduced-motion: no-preference){
+  html{scroll-behavior:smooth}
+}
+@media (max-width:900px){
+  .aial-hero-grid,.aial-cards2,.aial-offer-inner{grid-template-columns:1fr}
+  .aial-topics{grid-template-columns:1fr}
+  .aial-wrap{padding:0 18px}
+  .aial-offer-cta .aial-btn,.aial-offer-cta .aial-btn-ghost{width:100%}
+  .aial-scheme{margin-top:8px}
+}
