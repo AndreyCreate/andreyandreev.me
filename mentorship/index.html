@@ -193,6 +193,16 @@ body{font-family:'Inter','Helvetica Neue',Arial,sans-serif;background:var(--crea
 
 .footer{padding:34px 0 44px;border-top:1.5px solid var(--line);color:var(--ink-mute);font-size:15px}
 </style>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=109255989', 'ym');
+   ym(109255989, 'init', {ssr:true, webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true, trackHash:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/109255989" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 </head>
 <body>
 
@@ -206,7 +216,7 @@ body{font-family:'Inter','Helvetica Neue',Arial,sans-serif;background:var(--crea
       <a href="#personal">Что делает Андрей</a>
       <a href="#fit">Кому подходит</a>
       <a href="#faq">FAQ</a>
-      <a class="btn nav-cta" href="#zayavka">Обсудить сопровождение</a>
+      <a class="btn nav-cta" href="#zayavka" onclick="ym(109255989,'reachGoal','mentorship_cta')">Обсудить сопровождение</a>
     </div>
   </div>
 </nav>
@@ -222,7 +232,7 @@ body{font-family:'Inter','Helvetica Neue',Arial,sans-serif;background:var(--crea
         <h1 class="h1">За 90 дней превратим твой блог в <span class="brace">{</span><span class="accent">систему</span><span class="brace">}</span> контента и продаж</h1>
         <p class="lead">Индивидуальная работа с Андреем Андреевым над позиционированием, контентом, аудиторией, офферами и воронкой. С AI-агентами, настроенными под твой бизнес и твой голос.</p>
         <div class="hero-cta">
-          <a class="btn" href="#zayavka">Обсудить сопровождение</a>
+          <a class="btn" href="#zayavka" onclick="ym(109255989,'reachGoal','mentorship_cta')">Обсудить сопровождение</a>
           <p class="hero-note">Сначала короткая заявка. Затем лично разберём, подходит ли тебе этот формат.</p>
         </div>
       </div>
@@ -602,6 +612,7 @@ body{font-family:'Inter','Helvetica Neue',Arial,sans-serif;background:var(--crea
       else field.classList.remove('err');
     });
     if (!valid) return;
+    if (typeof ym === 'function') ym(109255989, 'reachGoal', 'mentorship_form_submit');
     var btn = document.getElementById('submitbtn');
     btn.disabled = true; btn.textContent = 'Отправляем…';
     setTimeout(function(){
