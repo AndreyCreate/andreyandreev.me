@@ -154,8 +154,11 @@ body{font-family:'Inter','Helvetica Neue',Arial,sans-serif;background:var(--crea
 /* об Андрее */
 .about{display:grid;grid-template-columns:1fr 1.5fr;gap:clamp(32px,5vw,64px);align-items:center;margin-top:20px}
 .about .photo-card{transform:rotate(2deg)}
-.about-txt p{font-size:clamp(17px,1.6vw,21px);color:var(--ink-2);line-height:1.6}
-.about-txt p+p{margin-top:18px}
+.about-title{font-size:clamp(34px,4.2vw,58px);font-weight:400;line-height:1.08;letter-spacing:-.025em}
+.about-lead{margin-top:28px;font-size:clamp(19px,1.8vw,24px);color:var(--ink-2);line-height:1.55}
+.about-facts{margin-top:34px;border-top:1px solid var(--line)}
+.about-facts p{position:relative;padding:18px 0 18px 34px;border-bottom:1px solid var(--line);font-size:clamp(16px,1.35vw,19px);color:var(--ink-2);line-height:1.5}
+.about-facts p::before{content:'—';position:absolute;left:0;color:var(--ink-mute)}
 @media (max-width:820px){.about{grid-template-columns:1fr}}
 
 /* доказательства: аналитика и воронка */
@@ -583,9 +586,14 @@ body{font-family:'Inter','Helvetica Neue',Arial,sans-serif;background:var(--crea
         <figcaption>Андрей Андреев</figcaption>
       </figure>
       <div class="about-txt">
-        <p>Я Андрей Андреев. Я помогаю предпринимателям связывать контент, продукт, аудиторию и продажи в одну систему.</p>
-        <p>Последнее время я почти полностью погрузился в работу с AI-агентами. Сначала собирал их для собственных задач, а теперь помогаю клиентам создавать агентов вокруг их базы знаний, дизайн-системы и правил.</p>
-        <p>Но технология здесь вторична. В центре остаётся предприниматель: его опыт, мышление, продукт и отношения с аудиторией.</p>
+        <h2 class="about-title" id="ab-h">Андрей Андреев.<br>Предприниматель и коуч.</h2>
+        <p class="about-lead">Помогаю предпринимателям связывать контент, продукт, аудиторию и продажи в одну систему.</p>
+        <div class="about-facts">
+          <p>С 1 января по конец июля — 444 поста. Час в день на контент, каждый день.</p>
+          <p>17,6 млн просмотров, +23 000 подписчиков пришли с этих постов.</p>
+          <p>В 35 открыл бренд одежды. В 44 выпустил первое приложение в App Store.</p>
+          <p>Веду закрытые группы по блогу — четвёртый поток стартовал в июле.</p>
+        </div>
       </div>
     </div>
   </div>
