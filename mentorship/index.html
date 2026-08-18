@@ -179,20 +179,14 @@ body{font-family:'Inter','Helvetica Neue',Arial,sans-serif;background:var(--crea
 @media (max-width:900px){.proof-grid,.proof-grid.visual-first{grid-template-columns:1fr}.proof-grid.visual-first .proof-stack{order:2}.proof-grid.visual-first .proof-copy{order:1}}
 @media (max-width:680px){.proof-shot .proof-img-desktop{display:none}.proof-shot .proof-img-mobile{display:block}}
 
-/* финал + форма */
-.final-cta{margin-top:36px}
-.form-card{background:var(--sky-card);border-radius:26px;padding:clamp(30px,4vw,54px);position:relative;overflow:hidden;margin-top:48px}
-.rays{position:absolute;right:-130px;top:-130px;width:420px;height:420px;border-radius:50%;background:repeating-conic-gradient(#fff 0deg 7deg, transparent 7deg 22deg);opacity:.5;pointer-events:none}
-.form-in{position:relative;z-index:1;max-width:640px}
-.field{margin-bottom:20px}
-.field label{display:block;font-size:15px;font-weight:600;margin-bottom:8px}
-.field input,.field textarea{width:100%;min-height:52px;padding:14px 16px;border:1.5px solid transparent;border-radius:14px;background:var(--white);font-family:inherit;font-size:16px;color:var(--ink)}
-.field textarea{min-height:96px;resize:vertical}
-.field.err input,.field.err textarea{border-color:#C0563E}
-.field .errmsg{display:none;color:#8f3a26;font-size:14px;margin-top:6px}
-.field.err .errmsg{display:block}
-.form-ok{display:none;font-size:clamp(19px,2vw,24px);line-height:1.5;padding:30px 0 10px}
-.form-note{margin-top:16px;font-size:14.5px;color:var(--ink-2)}
+/* финал + тарифы */
+.pricing-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:44px;max-width:900px}
+.price-card{background:var(--sky-card);border-radius:24px;padding:clamp(28px,4vw,46px)}
+.price-term{font-size:clamp(20px,2.4vw,28px);font-weight:600}
+.price{margin-top:18px;font-family:'DM Serif Display',Georgia,serif;font-size:clamp(42px,6vw,72px);line-height:1;color:var(--blue);letter-spacing:-.03em}
+.pricing-action{margin-top:30px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.pricing-note{color:var(--ink-2);font-size:15px}
+@media (max-width:680px){.pricing-grid{grid-template-columns:1fr}.pricing-action{align-items:flex-start;flex-direction:column}}
 
 /* faq */
 .faq{margin-top:44px;max-width:840px}
@@ -241,12 +235,12 @@ body{font-family:'Inter','Helvetica Neue',Arial,sans-serif;background:var(--crea
   <div class="wrap">
     <div class="hero-grid">
       <div class="reveal">
-        <div class="kicker">Индивидуальное сопровождение предпринимателя · 3 месяца</div>
+        <div class="kicker">Индивидуальное сопровождение предпринимателя · 3 или 6 месяцев</div>
         <h1 class="h1">За 90 дней превратим твой блог в <span class="brace">{</span><span class="accent">систему</span><span class="brace">}</span> контента и продаж</h1>
         <p class="lead">Индивидуальная работа с Андреем Андреевым над позиционированием, контентом, аудиторией, офферами и воронкой. С AI-агентами, настроенными под твой бизнес и твой голос.</p>
         <div class="hero-cta">
           <a class="btn" href="#zayavka" onclick="ym(109255989,'reachGoal','mentorship_cta')">Обсудить сопровождение</a>
-          <p class="hero-note">Сначала короткая заявка. Затем лично разберём, подходит ли тебе этот формат.</p>
+          <p class="hero-note">Сначала коротко обсудим твою ситуацию и поймём, подходит ли тебе этот формат.</p>
         </div>
       </div>
       <div class="meta-card reveal" role="img" aria-label="Метафора: разрозненные заметки превращаются в упорядоченную систему">
@@ -583,26 +577,25 @@ body{font-family:'Inter','Helvetica Neue',Arial,sans-serif;background:var(--crea
   </div>
 </section>
 
-<!-- 14–15. Финальный оффер + форма -->
+<!-- 14–15. Финальный оффер + тарифы -->
 <section class="section" id="zayavka" aria-labelledby="fin-h" style="padding-top:0">
   <div class="wrap reveal">
-    <div class="kicker">Заявка</div>
+    <div class="kicker">Формат и стоимость</div>
     <h2 class="h2" id="fin-h">Если блог должен стать частью бизнеса, его нужно строить как <span class="accent">систему</span></h2>
-    <p class="lead" style="margin-top:24px;max-width:680px">Оставь короткую заявку. Я посмотрю на твою ситуацию, продукт и текущий блог. Если формат подходит, мы обсудим задачи на три месяца и ожидаемый результат.</p>
-    <div class="form-card">
-      <div class="rays" aria-hidden="true"></div>
-      <form class="form-in" id="leadform" novalidate>
-        <div class="field"><label for="f-name">Имя</label><input id="f-name" name="name" type="text" required autocomplete="name"><p class="errmsg">Напиши, как к тебе обращаться</p></div>
-        <div class="field"><label for="f-tg">Telegram или другой удобный способ связи</label><input id="f-tg" name="contact" type="text" required><p class="errmsg">Нужен способ связаться с тобой</p></div>
-        <div class="field"><label for="f-blog">Ссылка на блог</label><input id="f-blog" name="blog" type="text"></div>
-        <div class="field"><label for="f-biz">Чем занимается бизнес</label><input id="f-biz" name="biz" type="text"></div>
-        <div class="field"><label for="f-prod">Какой продукт или услугу продаёшь</label><input id="f-prod" name="prod" type="text"></div>
-        <div class="field"><label for="f-pain">Что сейчас не получается в работе с блогом</label><textarea id="f-pain" name="pain"></textarea></div>
-        <div class="field"><label for="f-goal">Какого результата хочешь достичь за три месяца</label><textarea id="f-goal" name="goal"></textarea></div>
-        <button class="btn" type="submit" id="submitbtn">Отправить заявку</button>
-        <p class="form-note">Заявка ни к чему не обязывает. Сначала разберём, подходит ли этот формат именно тебе.</p>
-      </form>
-      <div class="form-ok" id="formok">Готово. Андрей посмотрит заявку и напишет тебе лично.</div>
+    <p class="lead" style="margin-top:24px;max-width:680px">Выбери длительность индивидуального сопровождения. Конкретные задачи и фокус работы обсудим лично.</p>
+    <div class="pricing-grid" role="list" aria-label="Тарифы индивидуального сопровождения">
+      <article class="price-card" role="listitem">
+        <p class="price-term">3 месяца</p>
+        <p class="price">350 000 ₽</p>
+      </article>
+      <article class="price-card" role="listitem">
+        <p class="price-term">6 месяцев</p>
+        <p class="price">600 000 ₽</p>
+      </article>
+    </div>
+    <div class="pricing-action">
+      <a class="btn" href="https://t.me/andrey_andreev" target="_blank" rel="noopener" onclick="ym(109255989,'reachGoal','mentorship_cta')">Написать в Telegram</a>
+      <p class="pricing-note">Обсудить сопровождение с Андреем лично.</p>
     </div>
   </div>
 </section>
@@ -625,7 +618,7 @@ body{font-family:'Inter','Helvetica Neue',Arial,sans-serif;background:var(--crea
 </main>
 
 <footer class="footer">
-  <div class="wrap">© Андрей Андреев · Блог предпринимателя — индивидуальное сопровождение на 90 дней</div>
+  <div class="wrap">© Андрей Андреев · Блог предпринимателя — индивидуальное сопровождение на 3 или 6 месяцев</div>
 </footer>
 
 <script>
@@ -651,31 +644,6 @@ body{font-family:'Inter','Helvetica Neue',Arial,sans-serif;background:var(--crea
   } else {
     document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('on'); });
   }
-
-  // демо-форма (без отправки данных наружу)
-  var form = document.getElementById('leadform');
-  var ok = document.getElementById('formok');
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-    var valid = true;
-    ['f-name','f-tg'].forEach(function(id){
-      var input = document.getElementById(id);
-      var field = input.closest('.field');
-      if (!input.value.trim()) { field.classList.add('err'); valid = false; }
-      else field.classList.remove('err');
-    });
-    if (!valid) return;
-    if (typeof ym === 'function') ym(109255989, 'reachGoal', 'mentorship_form_submit');
-    var btn = document.getElementById('submitbtn');
-    btn.disabled = true; btn.textContent = 'Отправляем…';
-    setTimeout(function(){
-      form.style.display = 'none';
-      ok.style.display = 'block';
-    }, 700);
-  });
-  form.querySelectorAll('input,textarea').forEach(function(i){
-    i.addEventListener('input', function(){ i.closest('.field').classList.remove('err'); });
-  });
 })();
 </script>
 </body>
