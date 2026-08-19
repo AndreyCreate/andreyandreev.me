@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Контент-агент — соберите AI-агента на своих знаниях и голосе</title>
+<meta name="description" content="Практическая программа Андрея Андреева: база знаний, Tone of Voice, темы, дизайн-система и первый готовый пост с собственным AI-агентом.">
+<!-- PREVIEW: страница закрыта от индексации до approval. Не добавлять в sitemap. -->
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:title" content="Контент-агент — соберите AI-агента на своих знаниях и голосе">
+<meta property="og:description" content="Практическая программа Андрея Андреева: база знаний, Tone of Voice, темы, дизайн-система и первый готовый пост с собственным AI-агентом.">
+<meta property="og:type" content="website">
+<!-- TODO og:image: реальный визуал продукта после согласования (см. раздел «Что запросить до live») -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="content-agent.css">
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=109255989', 'ym');
+   ym(109255989, 'init', {ssr:true, webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true, trackHash:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/109255989" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+</head>
+<body class="coag-landing">
+
+<div class="coag-preview-badge" aria-hidden="true">Preview · не для публикации</div>
+
+<!-- ============ 5.4 Hero ============ -->
+<header class="coag-hero" id="top">
+  <div class="coag-wrap">
+    <div class="coag-hero-grid">
+      <div>
+        <div class="coag-kicker">Практическая программа</div>
+        <h1 class="coag-h1">Соберите <span class="coag-brace">{</span><span class="coag-accent">AI-агента</span><span class="coag-brace">}</span>, который превращает ваши знания в готовый контент</h1>
+        <p class="coag-lead">Зафиксируйте базу знаний, свой голос и визуальные правила. Затем пройдите полный путь от идеи или голосового до текста и карусели — без обезличенного AI-контента и без начала с пустого листа.</p>
+        <div class="coag-hero-cta">
+          <button class="coag-btn coag-cta" type="button" data-event="content-agent-cta" data-placement="hero">Собрать контент-агента за 9 900 ₽</button>
+        </div>
+        <div class="coag-cta-note" role="status">Это превью страницы. Оплата будет подключена после согласования — кнопка пока никуда не ведёт.</div>
+        <p class="coag-hero-note">Самостоятельное прохождение. Внешние сервисы оплачиваются отдельно. AI предлагает и собирает материал — финальное решение остаётся за автором.</p>
+      </div>
+      <div class="coag-scheme" role="img" aria-label="Схема: голосовое или заметка проходит через базу знаний, голос и правила и превращается в текст и карусель">
+        <div class="coag-scheme-step">Голосовое или заметка</div>
+        <div class="coag-scheme-arrow" aria-hidden="true">↓</div>
+        <div class="coag-scheme-step coag-strong"><span class="coag-num">01</span> База знаний + голос + правила</div>
+        <div class="coag-scheme-arrow" aria-hidden="true">↓</div>
+        <div class="coag-scheme-step"><span class="coag-num">02</span> Текст в вашей подаче</div>
+        <div class="coag-scheme-arrow" aria-hidden="true">↓</div>
+        <div class="coag-scheme-step"><span class="coag-num">03</span> Карусель по вашей дизайн-системе</div>
+        <div class="coag-scheme-note">Сюда встанет коллаж из реального интерфейса агента и готовых слайдов — добавим перед публикацией.</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ 5.5 Что будет готово ============ -->
+<section class="coag-section" id="result" aria-labelledby="result-h">
+  <div class="coag-wrap">
+    <div class="coag-kicker coag-reveal">Что будет готово</div>
+    <h2 class="coag-h2 coag-reveal" id="result-h">Не набор промтов, а <span class="coag-brace">{</span><span class="coag-accent">собранная рабочая система</span><span class="coag-brace">}</span></h2>
+    <div class="coag-topics">
+      <div class="coag-topic coag-reveal"><span class="coag-num">01</span><h3>Ваш агент</h3><p>Запущен и доступен в привычном интерфейсе.</p></div>
+      <div class="coag-topic coag-reveal"><span class="coag-num">02</span><h3>База знаний</h3><p>Материалы, факты, продукты и опыт собраны в понятную структуру.</p></div>
+      <div class="coag-topic coag-reveal"><span class="coag-num">03</span><h3>Ваш голос</h3><p>Зафиксированы словарь, ритм, структура и запреты.</p></div>
+      <div class="coag-topic coag-reveal"><span class="coag-num">04</span><h3>Темы</h3><p>Берутся из реальной экспертизы и вопросов аудитории.</p></div>
+      <div class="coag-topic coag-reveal"><span class="coag-num">05</span><h3>Визуальные правила</h3><p>Референсы и повторяемая дизайн-система.</p></div>
+      <div class="coag-topic coag-reveal"><span class="coag-num">06</span><h3>Первая публикация</h3><p>Пройдена от исходной мысли до финальной версии.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5.6 Как это работает ============ -->
+<section class="coag-section coag-dark" id="how" aria-labelledby="how-h">
+  <div class="coag-wrap">
+    <div class="coag-kicker coag-reveal">Как это работает</div>
+    <h2 class="coag-h2 coag-reveal" id="how-h">Одна мысль проходит через <span class="coag-accent">пять понятных шагов</span></h2>
+    <div class="coag-steps">
+      <div class="coag-step coag-reveal"><span class="coag-num">01</span><div><h3>Передаёте идею, заметку или расшифровку голосового</h3><p>Например: голосовое на прогулке — «есть мысль про то, почему регулярность в блоге важнее вдохновения».</p></div></div>
+      <div class="coag-step coag-reveal"><span class="coag-num">02</span><div><h3>Агент находит связанную фактуру в вашей базе знаний</h3><p>Поднимает ваши заметки, прошлые публикации и примеры по этой теме — не выдумывает из воздуха.</p></div></div>
+      <div class="coag-step coag-reveal"><span class="coag-num">03</span><div><h3>Собирает черновик по правилам вашего голоса</h3><p>Словарь, ритм, структура и запреты зафиксированы заранее — черновик звучит как вы, а не как нейросеть.</p></div></div>
+      <div class="coag-step coag-reveal"><span class="coag-num">04</span><div><h3>Помогает превратить материал в структуру поста или карусели</h3><p>Разбивает текст на слайды по вашим визуальным правилам и референсам.</p></div></div>
+      <div class="coag-step coag-reveal"><span class="coag-num">05</span><div><h3>Вы редактируете и принимаете финальное решение</h3><p>Правки возвращаются агенту — так он постепенно уточняет правила.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5.7 До и после ============ -->
+<section class="coag-section coag-sky" id="example" aria-labelledby="example-h">
+  <div class="coag-wrap">
+    <div class="coag-kicker coag-reveal">До и после</div>
+    <h2 class="coag-h2 coag-reveal" id="example-h">Путь одной публикации</h2>
+    <div class="coag-example">
+      <div class="coag-ex-card coag-reveal">
+        <div class="coag-ex-lbl">На входе</div>
+        <div class="coag-ex-quote coag-voice">Голосовое на 40 секунд: сырая мысль, без структуры и заголовка.</div>
+        <p class="coag-ex-note">Идея может быть заметкой в телефоне, фрагментом расшифровки созвона или одной фразой.</p>
+      </div>
+      <div class="coag-ex-card coag-reveal">
+        <div class="coag-ex-lbl">В процессе</div>
+        <div class="coag-ex-quote">Агент поднимает фактуру из базы знаний и собирает черновик в правилах голоса. Автор правит формулировки — правки сохраняются как новые правила.</div>
+        <p class="coag-ex-note">Фрагмент реального диалога с агентом добавим сюда перед публикацией.</p>
+      </div>
+      <div class="coag-ex-card coag-reveal">
+        <div class="coag-ex-lbl">На выходе</div>
+        <div class="coag-ex-slides" aria-label="Место для 2–3 финальных слайдов">
+          <div class="coag-ex-slide">слайд 1</div>
+          <div class="coag-ex-slide">слайд 2</div>
+          <div class="coag-ex-slide">слайд 3</div>
+        </div>
+        <p class="coag-ex-note">Финальный текст и слайды из реальной публикации — добавим перед live.</p>
+      </div>
+    </div>
+    <p class="coag-ex-caption coag-reveal">Здесь будет один доказуемый пример из практики — без выдуманных кейсов и метрик. Плейсхолдеры заменим реальными скриншотами агента и готовых слайдов.</p>
+  </div>
+</section>
+
+<!-- ============ 5.8 Программа ============ -->
+<section class="coag-section" id="program" aria-labelledby="program-h">
+  <div class="coag-wrap">
+    <div class="coag-kicker coag-reveal">Программа</div>
+    <h2 class="coag-h2 coag-reveal" id="program-h">Последовательно собираем <span class="coag-brace">{</span><span class="coag-accent">одного контент-агента</span><span class="coag-brace">}</span></h2>
+    <div class="coag-modules">
+      <div class="coag-module coag-reveal"><span class="coag-num">01</span><div><h3>Результат и исходные материалы</h3><p>Определяете задачу агента и готовите знания, публикации, заметки и голосовые.</p></div></div>
+      <div class="coag-module coag-reveal"><span class="coag-num">02</span><div><h3>Создание агента</h3><p>Запускаете техническую основу и подключаете Telegram.</p></div></div>
+      <div class="coag-module coag-reveal"><span class="coag-num">03</span><div><h3>База знаний и темы</h3><p>Собираете факты, опыт, продукты и вопросы аудитории. Получаете темы, связанные с реальными материалами.</p></div></div>
+      <div class="coag-module coag-reveal"><span class="coag-num">04</span><div><h3>Голос автора</h3><p>Фиксируете Tone of Voice, антипримеры и правила обратной связи.</p></div></div>
+      <div class="coag-module coag-reveal"><span class="coag-num">05</span><div><h3>Референсы и дизайн-система</h3><p>Собираете визуальное направление и повторяемые правила оформления.</p></div></div>
+      <div class="coag-module coag-reveal"><span class="coag-num">06</span><div><h3>Первый готовый пост</h3><p>Проходите полный путь от мысли до текста и карусели.</p></div></div>
+      <div class="coag-module coag-reveal"><span class="coag-num">07</span><div><h3>Дальнейшая работа</h3><p>Учитесь добавлять знания, исправлять ошибки и обновлять правила агента.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5.9 Позиционирование ============ -->
+<section class="coag-section coag-sky" aria-labelledby="position-h">
+  <div class="coag-wrap">
+    <div class="coag-kicker coag-reveal">Позиция</div>
+    <h2 class="coag-h2 coag-reveal" id="position-h">AI не пишет вместо человека</h2>
+    <div class="coag-position coag-reveal">
+      <p>Агент не заменяет вашу позицию, опыт и ответственность за публикацию. Он работает с вашей базой знаний, дизайн-системой и правилами. Помогает быстрее собрать материал, увидеть пробелы и подготовить рабочую версию. Финальное слово остаётся за автором.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5.10 Кому подойдёт ============ -->
+<section class="coag-section" aria-labelledby="fit-h">
+  <div class="coag-wrap">
+    <div class="coag-kicker coag-reveal">Кому подойдёт</div>
+    <h2 class="coag-h2 coag-reveal" id="fit-h">Для тех, у кого уже есть экспертиза и материалы</h2>
+    <ul class="coag-checklist coag-reveal">
+      <li>У вас есть экспертиза и исходные материалы.</li>
+      <li>Вы хотите выпускать контент регулярнее.</li>
+      <li>Вам важно сохранить собственный голос.</li>
+      <li>Вы готовы самостоятельно собрать агента по урокам.</li>
+      <li>Вам нужен повторяемый процесс, а не случайный удачный промт.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 5.11 Не подойдёт ============ -->
+<section class="coag-section" aria-labelledby="nofit-h" style="padding-top:0">
+  <div class="coag-wrap">
+    <div class="coag-kicker coag-reveal">Границы продукта</div>
+    <h2 class="coag-h2 coag-reveal" id="nofit-h">Кому не подойдёт</h2>
+    <ul class="coag-checklist coag-no coag-reveal">
+      <li>Вы хотите полностью передать авторство AI.</li>
+      <li>Ждёте личной настройки и стратегии от Андрея.</li>
+      <li>Не готовы оплачивать и настраивать внешние сервисы.</li>
+      <li>Вам нужен второй агент для продаж и воронок.</li>
+      <li>Вы ждёте гарантированных охватов или продаж.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 5.12 Технические требования ============ -->
+<section class="coag-section coag-dark" id="requirements" aria-labelledby="req-h">
+  <div class="coag-wrap">
+    <div class="coag-kicker coag-reveal">Что понадобится</div>
+    <h2 class="coag-h2 coag-reveal" id="req-h">Что понадобится <span class="coag-accent">для сборки</span></h2>
+    <ul class="coag-checklist coag-reveal">
+      <li>Компьютер — с телефона пройти не получится.</li>
+      <li>Аккаунт Claude с доступом к Claude Code.</li>
+      <li>Возможность оплачивать нужные внешние сервисы.</li>
+      <li>Сервер для работы агента — если он остаётся частью актуальной сборки.</li>
+      <li>Собственные материалы для базы знаний.</li>
+      <li>Время на самостоятельное прохождение по инструкции.</li>
+    </ul>
+    <div class="coag-note-block coag-reveal">
+      <p class="coag-lead">Подписки и сервер не входят в стоимость программы. Их цена и доступность зависят от поставщиков. Перед покупкой убедитесь, что вы можете использовать необходимые сервисы.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5.13 Формат ============ -->
+<section class="coag-section" aria-labelledby="format-h">
+  <div class="coag-wrap">
+    <div class="coag-kicker coag-reveal">Формат</div>
+    <h2 class="coag-h2 coag-reveal" id="format-h">Самостоятельное прохождение в своём темпе</h2>
+    <ul class="coag-checklist coag-reveal">
+      <li>Самостоятельные видеоуроки.</li>
+      <li>Практические файлы и чек-листы.</li>
+      <li>Доступ на 3 месяца, включая обновления материалов в этот период.</li>
+      <li>Без потока и обязательных дат.</li>
+      <li>Без личных Zoom и индивидуальной настройки.</li>
+      <li>Поддержка — вопросы по доступу и техническим ошибкам платформы.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 5.14 Цена ============ -->
+<section class="coag-section coag-sky" id="price" aria-labelledby="price-h">
+  <div class="coag-wrap">
+    <div class="coag-kicker coag-reveal">Участие</div>
+    <h2 class="coag-h2 coag-reveal" id="price-h">Соберите своего контент-агента</h2>
+    <div class="coag-offer coag-reveal">
+      <div class="coag-rays" aria-hidden="true"></div>
+      <div class="coag-offer-inner">
+        <div>
+          <span class="coag-pill">Практическая программа</span>
+          <div class="coag-price-big"><span class="coag-mark">9 900 ₽</span></div>
+          <p class="coag-pay-note">Цена открытая и единая. Без таймеров, старых цен и искусственных ограничений.</p>
+          <div class="coag-offer-cta">
+            <button class="coag-btn coag-cta" type="button" data-event="content-agent-cta" data-placement="price">Собрать контент-агента за 9 900 ₽</button>
+          </div>
+          <div class="coag-cta-note" role="status">Это превью страницы. Оплата будет подключена после согласования — кнопка пока никуда не ведёт.</div>
+          <p class="coag-offer-sign">Самостоятельное прохождение. Внешние сервисы оплачиваются отдельно.</p>
+        </div>
+        <div class="coag-offer-cols">
+          <div>
+            <h4>Внутри</h4>
+            <ul class="coag-in">
+              <li>Уроки по сборке агента</li>
+              <li>База знаний и темы</li>
+              <li>Tone of Voice</li>
+              <li>Дизайн-система</li>
+              <li>Полный процесс одного поста</li>
+              <li>Правила дальнейшей работы</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Не входит</h4>
+            <ul class="coag-out">
+              <li>Внешние подписки и сервер</li>
+              <li>Личные созвоны</li>
+              <li>Индивидуальное внедрение</li>
+              <li>Второй агент</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5.15 FAQ ============ -->
+<section class="coag-section" id="faq" aria-labelledby="faq-h">
+  <div class="coag-wrap">
+    <div class="coag-kicker coag-reveal">Вопросы</div>
+    <h2 class="coag-h2 coag-reveal" id="faq-h">Коротко о продукте</h2>
+    <div class="coag-faq coag-reveal">
+      <details><summary>Это ChatGPT с набором промтов?</summary><div class="coag-a">Нет. Вы собираете отдельного агента с собственной базой знаний, правилами голоса и визуальной системой.</div></details>
+      <details><summary>AI будет писать и публиковать за меня?</summary><div class="coag-a">Нет. Он помогает находить фактуру, собирать черновики и готовить визуальную структуру. Автор проверяет факты, редактирует и принимает решение о публикации.</div></details>
+      <details><summary>Нужны технические навыки?</summary><div class="coag-a">Программировать не нужно, но понадобится компьютер и готовность последовательно выполнить техническую инструкцию.</div></details>
+      <details><summary>Понадобятся дополнительные расходы?</summary><div class="coag-a">Да. Внешние сервисы и сервер, если он используется в актуальной сборке, оплачиваются отдельно. Их актуальные условия нужно смотреть у поставщиков.</div></details>
+      <details><summary>Можно пройти только с телефона?</summary><div class="coag-a">Нет. Для настройки нужен компьютер.</div></details>
+      <details><summary>Андрей лично настраивает агента?</summary><div class="coag-a">Нет. Это самостоятельная программа без личных Zoom и индивидуального внедрения.</div></details>
+      <details><summary>Будет ли агент знать мой голос сразу?</summary><div class="coag-a">Нет. Вы последовательно соберёте правила Tone of Voice, добавите примеры и дадите агенту обратную связь.</div></details>
+      <details><summary>Подойдёт ли продукт, если у меня пока нет материалов?</summary><div class="coag-a">Скорее нет. Агенту нужны ваши знания, опыт, заметки, голосовые или прошлые публикации. Программа поможет их организовать, но не может создать вашу экспертизу с нуля.</div></details>
+      <details><summary>Входит ли агент для продаж?</summary><div class="coag-a">Нет. В этом продукте вы собираете одного агента для контента.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5.16 Финал ============ -->
+<section class="coag-section coag-dark coag-final" aria-labelledby="final-h">
+  <div class="coag-wrap">
+    <div class="coag-kicker coag-reveal">Контент-агент</div>
+    <h2 class="coag-h2 coag-reveal" id="final-h">Перестаньте каждый раз объяснять AI, <span class="coag-accent">кто вы и как вам писать</span></h2>
+    <p class="coag-lead coag-reveal">Один раз соберите базу знаний, голос и визуальные правила — и используйте их как рабочую систему для следующих публикаций.</p>
+    <div class="coag-final-facts coag-reveal">
+      <span>9 900 ₽</span>
+      <span>Самостоятельное прохождение</span>
+      <span>Доступ на 3 месяца</span>
+    </div>
+    <div class="coag-final-cta coag-reveal">
+      <button class="coag-btn coag-cta" style="background:#F1EEE6;color:var(--dark)" type="button" data-event="content-agent-cta" data-placement="final">Собрать контент-агента за 9 900 ₽</button>
+    </div>
+    <div class="coag-cta-note" role="status" style="border-left-color:var(--sky-card)">Это превью страницы. Оплата будет подключена после согласования — кнопка пока никуда не ведёт.</div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ Footer ============ -->
+<footer class="coag-footer">
+  <div class="coag-wrap">
+    <div class="coag-footer-row">
+      <span>© Create Today</span>
+      <nav class="coag-footer-links" aria-label="Юридические ссылки">
+        <a href="https://createtoday.ru/politica" target="_blank" rel="noreferrer">Политика конфиденциальности</a>
+        <a href="https://createtoday.ru/oferta/challenge" target="_blank" rel="noreferrer">Договор-оферта</a>
+        <a href="https://t.me/Create_today_help" target="_blank" rel="noreferrer">Поддержка</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // Аналитика: отдельный scope content_agent_9900, события не смешиваются с другими воронками.
+  // В превью активны только landing_opened и cta_clicked; checkout_opened и payment_confirmed
+  // зарезервированы и будут подключены вместе с реальным checkout.
+  function goal(name){ if (typeof ym === 'function') ym(109255989, 'reachGoal', name); }
+  goal('content_agent_9900_landing_opened');
+
+  // CTA превью: реального checkout ещё нет — показываем плашку, ничего не открываем.
+  document.querySelectorAll('.coag-cta').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      goal('content_agent_9900_cta_clicked');
+      var note = btn.closest('div').parentNode.querySelector('.coag-cta-note') ||
+                 btn.parentNode.parentNode.querySelector('.coag-cta-note');
+      if (note) note.classList.add('coag-open');
+    });
+  });
+
+  // Аккуратный reveal при скролле; при reduced-motion блоки видимы сразу (CSS не прячет их).
+  if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches && 'IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting){ en.target.classList.add('coag-in'); io.unobserve(en.target); }
+      });
+    }, {rootMargin:'0px 0px -8% 0px', threshold:0.08});
+    document.querySelectorAll('.coag-reveal').forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('.coag-reveal').forEach(function(el){ el.classList.add('coag-in'); });
+  }
+})();
+</script>
+</body>
+</html>
