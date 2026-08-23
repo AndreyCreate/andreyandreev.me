@@ -43,4 +43,5 @@ def test_ai_agents_page_offers_checkout_and_personal_dialogue():
     assert "Оплатить участие" in html
     assert html.count('href="https://t.me/andrey_andreev"') >= 2
     assert "Написать Андрею" in html
-    assert "Можно оплатить сразу" in html
+    assert "Можно оплатить сразу или сначала коротко сверить с Андреем задачу и формат." in html
+    assert "Можно оплатить сразу на странице оплаты или сначала обсудить с Андреем задачу и формат." in html
