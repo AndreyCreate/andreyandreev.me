@@ -18,7 +18,7 @@ def test_ai_agents_page_has_current_september_offer():
     assert "три индивидуальные встречи" in visible.lower()
 
 
-def test_ai_agents_page_has_no_legacy_offer_or_checkout():
+def test_ai_agents_page_has_no_legacy_offer():
     html = PAGE.read_text(encoding="utf-8")
     legacy = (
         "39 900",
@@ -29,14 +29,19 @@ def test_ai_agents_page_has_no_legacy_offer_or_checkout():
         "две недели",
         "три общих Zoom",
         "куратор",
-        "andreyandreev.createtoday.ru/hero/get/",
-        "data-action=\"checkout\"",
     )
     for marker in legacy:
         assert marker.casefold() not in html.casefold(), marker
 
 
-def test_ai_agents_page_primary_conversion_is_personal_dialogue():
+def test_ai_agents_page_offers_checkout_and_personal_dialogue():
     html = PAGE.read_text(encoding="utf-8")
+    checkout_url = "https://andreyandreev.createtoday.ru/hero/get/of_r6-pemaaf45z"
+
+    assert html.count(f'href="{checkout_url}"') >= 2
+    assert html.count('data-action="checkout"') >= 2
+    assert "Оплатить участие" in html
     assert html.count('href="https://t.me/andrey_andreev"') >= 2
     assert "Написать Андрею" in html
+    assert "Можно оплатить сразу или сначала коротко сверить с Андреем задачу и формат." in html
+    assert "Можно оплатить сразу на странице оплаты или сначала обсудить с Андреем задачу и формат." in html
