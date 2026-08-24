@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#F5F2EA">
+<title>Точка сборки — лекция по упаковке профиля для помогающих практиков</title>
+<meta name="description" content="Как помогающим практикам переупаковать профиль, чтобы из подписчиков приходили клиенты. Одна лекция, один вечер, пошаговый алгоритм. В подарок три GPT-бота. 1 900 ₽ вместо 9 900 ₽.">
+<meta property="og:title" content="Точка сборки — лекция по упаковке профиля">
+<meta property="og:description" content="Как помогающим практикам переупаковать профиль, чтобы из подписчиков приходили клиенты. Одна лекция, один вечер. 1 900 ₽ вместо 9 900 ₽.">
+<meta property="og:image" content="https://andreyandreev.me/tochka-sborki/assets/og.jpg">
+<meta property="og:type" content="website">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F5F2EA; --ink:#2B2B2B; --ink-2:#4A4A4A; --ink-mute:#8F8F8F;
+  --line:#DDD9CF; --white:#FFF;
+  --blue:#3766C8; --sky:#85ACD7; --sky-card:#BBD7F5; --sky-row:#CFE2F8;
+  --marker:#F5C445; --dark:#46443F;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+section{padding:clamp(64px,9vw,120px) 0}
+.kicker{font-size:clamp(12px,1.4vw,15px);font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:26px}
+h1{font-size:clamp(44px,7vw,96px);font-weight:400;line-height:1.05;letter-spacing:-.03em}
+h2{font-size:clamp(28px,4vw,48px);font-weight:400;line-height:1.18;letter-spacing:-.015em;max-width:17em}
+.b{color:var(--blue)}
+.brace{color:var(--blue);font-weight:300}
+.nb{white-space:nowrap}
+@media(max-width:700px){.nb{white-space:normal}}
+.lead{font-size:clamp(17px,1.9vw,21px);color:var(--ink-2);max-width:720px}
+.note{font-size:clamp(13px,1.5vw,16px);color:var(--ink-mute)}
+.mark{background:linear-gradient(transparent 12%, var(--marker) 12%, var(--marker) 95%, transparent 95%);padding:1px 6px;border-radius:3px;color:var(--ink);white-space:nowrap}
+.btn{display:inline-block;background:var(--dark);color:#fff;border-radius:14px;padding:20px 40px;font-size:clamp(16px,1.7vw,19px);font-weight:500;text-decoration:none;transition:transform .15s ease, box-shadow .15s ease}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(30,30,30,.25)}
+.btn-blue{background:var(--blue)}
+.btn-light{background:#F1EEE6;color:var(--ink)}
+/* секции-варианты */
+.sec-blue{background:var(--sky)}
+.sec-white{background:var(--white)}
+.sec-dark{background-color:var(--dark);color:#F1EEE6;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='420'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='3' stitchTiles='stitch' seed='7'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='linear' slope='0.3' intercept='0'/></feComponentTransfer></filter><rect width='420' height='420' filter='url(%23g)' fill='white'/></svg>");
+  background-size:420px 420px}
+.sec-dark .kicker{color:rgba(241,238,230,.5)}
+.sec-dark .lead{color:rgba(241,238,230,.85)}
+.sec-dark .note{color:rgba(241,238,230,.55)}
+.sec-dark .b,.sec-dark .brace{color:#BBD7F5}
+.sec-blue .kicker{color:rgba(43,43,43,.55)}
+/* hero */
+.hero{padding-top:clamp(36px,5vw,64px)}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:clamp(48px,7vw,96px);font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute)}
+.topbar a{color:var(--ink-mute);text-decoration:none}
+.hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:48px;align-items:end}
+.hero .lead{margin-top:28px}
+.route{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:34px;font-size:clamp(14px,1.6vw,17px);font-weight:500}
+.route .chip{background:var(--white);border-radius:999px;padding:12px 20px;box-shadow:0 1px 0 rgba(43,43,43,.08)}
+.route .arr{color:var(--blue);font-weight:300;font-size:1.3em}
+.author{display:flex;gap:18px;align-items:center;margin-top:44px}
+.author img{width:64px;height:64px;border-radius:50%;object-fit:cover;flex-shrink:0}
+.author .nm{font-weight:500}
+.author .ds{font-size:clamp(13px,1.5vw,15px);color:var(--ink-2);max-width:32em;line-height:1.45}
+.hero-cta{background:var(--sky-card);border-radius:26px;padding:clamp(28px,4vw,40px);position:relative;overflow:hidden}
+.hero-cta .rays{position:absolute;top:-140px;right:-140px;width:320px;height:320px;border-radius:50%;background:repeating-conic-gradient(#fff 0deg 7deg, transparent 7deg 22deg);opacity:.7}
+.hero-cta .pill{display:inline-block;background:var(--white);border-radius:999px;padding:9px 18px;font-size:14px;font-weight:500;position:relative}
+.hero-cta .price{font-size:clamp(44px,5.5vw,64px);font-weight:500;letter-spacing:-.02em;line-height:1.05;margin-top:22px;position:relative}
+.hero-cta .old{font-size:clamp(15px,1.7vw,18px);color:var(--ink-2);margin-top:8px;position:relative}
+.hero-cta .old s{text-decoration-thickness:2px}
+.hero-cta .btn{display:block;text-align:center;margin-top:26px;position:relative}
+.hero-cta .hn{font-size:13.5px;color:var(--ink-2);margin-top:14px;text-align:center;position:relative}
+/* тёмная секция «зачем» */
+.outcomes{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:52px;align-items:stretch}
+.ocard{background:rgba(255,255,255,.07);border:1.5px solid rgba(241,238,230,.16);border-radius:20px;padding:32px 30px;display:flex;flex-direction:column}
+.ocard .nn{font-size:14px;font-weight:600;letter-spacing:.12em;color:#BBD7F5;margin-bottom:16px}
+.ocard .h{font-size:clamp(19px,2.1vw,24px);font-weight:400;line-height:1.25}
+/* внутри */
+.inside{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;margin-top:44px}
+.quote{background:var(--white);border-radius:22px;padding:clamp(26px,3.5vw,40px)}
+.quote .q{font-size:clamp(18px,2vw,23px);line-height:1.4}
+.quote .q .b{font-weight:500}
+.quote .who{display:flex;gap:16px;align-items:center;margin-top:28px;padding-top:24px;border-top:1.5px solid var(--line)}
+.quote .who img{width:56px;height:56px;border-radius:50%;object-fit:cover}
+.quote .who .nm{font-weight:500}
+.quote .who .ds{font-size:14px;color:var(--ink-2);line-height:1.45}
+.inside .lead .b{font-weight:500}
+/* numgrid */
+.numgrid{display:grid;grid-template-columns:1fr 1fr;margin-top:48px;border-top:1.5px solid rgba(43,43,43,.25)}
+.numgrid .cell{padding:34px 28px 38px 0;border-bottom:1.5px solid rgba(43,43,43,.25)}
+.numgrid .cell:nth-child(odd){border-right:1.5px solid rgba(43,43,43,.25);padding-right:40px}
+.numgrid .cell:nth-child(even){padding-left:40px}
+.numgrid .nn{font-size:14px;font-weight:600;letter-spacing:.12em;color:var(--blue);margin-bottom:46px}
+.numgrid .h{font-size:clamp(19px,2.2vw,26px);line-height:1.25;max-width:14em}
+/* чек-строки */
+.checks{margin-top:44px;max-width:860px}
+.chk{display:flex;gap:18px;padding:20px 0;border-bottom:1.5px solid var(--line);font-size:clamp(16px,1.8vw,20px);line-height:1.4}
+.chk:last-child{border-bottom:none}
+.chk .ic{color:var(--blue);flex-shrink:0;font-weight:500}
+.chk b{font-weight:500}
+/* видео */
+.video{margin-top:56px}
+.video .vk{font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:16px;font-weight:600}
+.video .frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:22px;overflow:hidden;background:#111}
+.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+/* бонус */
+.bonus-h{font-size:clamp(64px,13vw,170px);font-weight:500;letter-spacing:-.04em;line-height:.95;color:var(--ink)}
+.bonus-h .b{font-weight:300}
+.bots{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:48px}
+.bot{background:var(--cream);border-radius:20px;padding:30px 28px 32px;display:flex;flex-direction:column;min-height:220px}
+.bot .nn{font-size:13px;font-weight:600;letter-spacing:.12em;color:var(--blue);margin-bottom:44px}
+.bot .h{font-size:clamp(18px,2vw,22px);font-weight:500;line-height:1.25}
+.bot .l{font-size:clamp(14px,1.6vw,16.5px);color:var(--ink-2);margin-top:10px;line-height:1.45}
+/* оффер */
+.offer{background:var(--white);color:var(--ink);border-radius:26px;padding:clamp(32px,5vw,64px);margin-top:48px}
+.offer .b,.offer .brace{color:var(--blue)}
+.offer .tags{display:flex;flex-wrap:wrap;gap:10px}
+.offer .tag{background:#F1EEE6;border-radius:999px;padding:9px 18px;font-size:14px;font-weight:500}
+.offer .tag.hot{background:var(--sky-card);color:var(--ink)}
+.offer h2{margin-top:30px}
+.steps{display:grid;grid-template-columns:1fr auto 1fr auto 1.3fr;gap:18px;align-items:center;margin-top:40px;font-size:clamp(15px,1.7vw,18px);line-height:1.4}
+.steps .arr{color:var(--blue);font-size:1.6em;font-weight:300}
+.offer .btn{display:block;text-align:center;margin-top:40px}
+.offer .old{margin-top:16px;text-align:center;font-size:clamp(15px,1.7vw,18px);color:var(--ink-2)}
+.offer .old s{text-decoration-thickness:2px}
+/* footer */
+footer{background:var(--cream);border-top:1.5px solid var(--line);padding:44px 0 40px;font-size:14px;color:var(--ink-2)}
+footer .cols{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:28px;align-items:start}
+footer .brand{font-size:26px;letter-spacing:-.02em;color:var(--ink)}
+footer .brand .b{font-weight:300}
+footer a{color:var(--ink-2);text-decoration:none;display:block;margin-bottom:8px}
+footer a:hover{color:var(--ink)}
+footer .req div{margin-bottom:8px}
+footer .disc{margin-top:36px;font-size:12.5px;color:var(--ink-mute);max-width:36em;line-height:1.45}
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr;gap:36px;align-items:start}
+  .outcomes,.bots{grid-template-columns:1fr}
+  .bot{min-height:auto}
+  .bot .nn{margin-bottom:22px}
+  .inside{grid-template-columns:1fr}
+  .numgrid{grid-template-columns:1fr}
+  .numgrid .cell:nth-child(odd){border-right:none;padding-right:0}
+  .numgrid .cell:nth-child(even){padding-left:0}
+  .numgrid .nn{margin-bottom:18px}
+  .steps{grid-template-columns:1fr}
+  .steps .arr{transform:rotate(90deg);justify-self:start;line-height:1}
+  footer .cols{grid-template-columns:1fr}
+}
+</style>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=109255989', 'ym');
+   ym(109255989, 'init', {ssr:true, webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true, trackHash:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/109255989" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+</head>
+<body>
+
+<!-- hero -->
+<section class="hero">
+  <div class="wrap">
+    <div class="topbar"><a href="https://andreyandreev.me/">Андрей Андреев</a><span>Лекция</span></div>
+    <div class="hero-grid">
+      <div>
+        <div class="kicker">Для помогающих практиков</div>
+        <h1>Точка <span class="brace">{</span><span class="b">сборки</span><span class="brace">}</span></h1>
+        <p class="lead">Как помогающим практикам переупаковать профиль, чтобы из подписчиков приходили клиенты? Пошаговый алгоритм.</p>
+        <div class="route">
+          <span class="chip">1 лекция</span><span class="arr">→</span>
+          <span class="chip">1 вечер</span><span class="arr">→</span>
+          <span class="chip">новый профиль, который приводит «своих»</span>
+        </div>
+        <div class="author">
+          <img src="assets/andrey.jpg" alt="Андрей Андреев">
+          <div>
+            <div class="nm">Андрей Андреев</div>
+            <div class="ds">— автор лекции и ваш наставник. Предприниматель, фотограф, блогер с аудиторией больше 47 тысяч человек.</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-cta">
+        <div class="rays"></div>
+        <span class="pill">Лекция + 3 GPT-бота</span>
+        <div class="price">1 900 ₽</div>
+        <div class="old">Вместо <s>9 900 ₽</s></div>
+        <a class="btn js-buy" href="https://andreyandreev.createtoday.ru/hero/get/of_1vY9P2bDWx7W">Купить</a>
+        <div class="hn">Доступ откроется после оплаты</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- зачем -->
+<section class="sec-dark">
+  <div class="wrap">
+    <div class="kicker">Ты — сильный эксперт. Но блог этого не отражает?</div>
+    <h2>Собери профиль, который раскрывает твою глубину и вызывает доверие <span class="nb"><span class="brace">{</span><span class="b"> всего за 1 вечер </span><span class="brace">}</span></span>, чтобы</h2>
+    <div class="outcomes">
+      <div class="ocard"><div class="nn">01</div><div class="h">Видеть сохранения, реакции и заявки без постоянного прогрева</div></div>
+      <div class="ocard"><div class="nn">02</div><div class="h">Продавать услуги экологично и на доверии</div></div>
+      <div class="ocard"><div class="nn">03</div><div class="h">Стабильно привлекать новых клиентов</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- внутри -->
+<section>
+  <div class="wrap">
+    <div class="kicker">Внутри «Точки сборки»</div>
+    <h2>Готовая методика, которую можно <span class="nb"><span class="brace">{</span><span class="b"> применить за 1–2 часа </span><span class="brace">}</span></span></h2>
+    <div class="inside">
+      <p class="lead">Проверенная формула поможет выделиться среди конкурентов и привлекать <b>«ваших»</b> клиентов.</p>
+      <div class="quote">
+        <div class="q">«Я убеждён, что у каждого эксперта есть именно те люди, кому он нужен. Не надо нравиться всем. <span class="b">Главное — быть понятным тем, кто ждёт именно вас</span>».</div>
+        <div class="who">
+          <img src="assets/andrey.jpg" alt="Андрей Андреев">
+          <div>
+            <div class="nm">Андрей Андреев</div>
+            <div class="ds">Провёл 200+ разборов профилей помогающих практиков. Всех объединяет одна проблема — блог не отражал их глубину.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- что получаете -->
+<section class="sec-blue">
+  <div class="wrap">
+    <div class="kicker">Результат</div>
+    <h2>Применяете практику в процессе просмотра — <span class="nb"><span class="brace">{</span><span class="b"> сразу </span><span class="brace">}</span></span> получаете:</h2>
+    <div class="numgrid">
+      <div class="cell"><div class="nn">01</div><div class="h">Чёткое понимание своих ошибок в профиле</div></div>
+      <div class="cell"><div class="nn">02</div><div class="h">Новая шапка профиля, которая работает</div></div>
+      <div class="cell"><div class="nn">03</div><div class="h">Инструменты и шаблоны дизайна для регулярного контента</div></div>
+      <div class="cell"><div class="nn">04</div><div class="h">План действий на 7 дней — что менять пошагово</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- для кого + программа -->
+<section>
+  <div class="wrap">
+    <div class="kicker">Для кого эта лекция?</div>
+    <h2>Для специалистов помогающих профессий — от психологов и коучей до мастеров телесных практик</h2>
+    <p class="lead" style="margin-top:24px">А также для тех, кто хочет привлекать клиентов без агрессивных продаж и работать аутентично.</p>
+    <div class="checks">
+      <div class="chk"><span class="ic">✓</span><span><b>5 главных ошибок профиля</b>, которые отталкивают клиентов (с примерами до/после)</span></div>
+      <div class="chk"><span class="ic">✓</span><span><b>Формула работающей шапки профиля:</b> кому помогаете + что получат + как связаться</span></div>
+      <div class="chk"><span class="ic">✓</span><span><b>Как собрать боли клиентов</b> и говорить про них, сохраняя конфиденциальность</span></div>
+      <div class="chk"><span class="ic">✓</span><span><b>Алгоритм создания безопасности</b> — почему клиенты боятся покупать и как это убрать</span></div>
+      <div class="chk"><span class="ic">✓</span><span><b>Практические техники упрощения текстов</b> (от сложного к простому)</span></div>
+      <div class="chk"><span class="ic">✓</span><span><b>Конкретный план действий</b> — что делать завтра, чтобы изменить профиль</span></div>
+    </div>
+    <div class="video">
+      <div class="vk">Смотреть отрывок из лекции</div>
+      <div class="frame"><iframe src="https://www.youtube.com/embed/h6Pg4qiKxN0?rel=0" title="Отрывок из лекции «Точка сборки»" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+    </div>
+  </div>
+</section>
+
+<!-- бонус -->
+<section class="sec-white">
+  <div class="wrap">
+    <div class="bonus-h">Бонус<span class="b">!</span></div>
+    <p class="lead" style="margin-top:28px">03 GPT-бота в подарок, которых нет в свободном доступе:</p>
+    <div class="bots">
+      <div class="bot"><div class="nn">01</div><div class="h">Бот для клиентских постов</div><div class="l">Создаёт посты, через которые приходят заявки.</div></div>
+      <div class="bot"><div class="nn">02</div><div class="h">Бот-копирайтер</div><div class="l">Помогает писать посты в вашем стиле.</div></div>
+      <div class="bot"><div class="nn">03</div><div class="h">Бот-аналитик профиля</div><div class="l">Загружаете скриншот — получаете разбор с рекомендациями.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- оффер -->
+<section class="sec-dark" id="price">
+  <div class="wrap">
+    <div class="kicker">Цена</div>
+    <div class="offer">
+      <div class="tags"><span class="tag">Лекция</span><span class="tag">Бонусные GPT-боты</span><span class="tag hot">Лучшая цена сейчас</span></div>
+      <h2>Не теория, а твёрдый результат <span class="brace">{</span><span class="b"> сразу </span><span class="brace">}</span>:</h2>
+      <div class="steps">
+        <div>Понять, что мешает тебе сейчас</div><div class="arr">→</div>
+        <div>Собрать работающий профиль за 1 вечер</div><div class="arr">→</div>
+        <div>Начать получать заявки от людей, которым ты можешь помочь</div>
+      </div>
+      <a class="btn btn-blue js-buy" href="https://andreyandreev.createtoday.ru/hero/get/of_1vY9P2bDWx7W">Приобрести за 1 900 ₽</a>
+      <div class="old">Вместо <s>9 900 ₽</s></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <div class="brand">Create <span class="b">Today</span></div>
+      </div>
+      <div class="req">
+        <div>ИП Андреев Андрей Андреевич</div>
+        <div>ИНН 760402862000</div>
+        <div>ОГРН 323784700326772</div>
+      </div>
+      <div>
+        <a href="https://t.me/help_for_heroes">Написать команде поддержки ↗</a>
+        <a href="https://createtoday.ru/politica">Политика конфиденциальности</a>
+        <a href="https://createtoday.ru/oferta/challenge">Договор оферты</a>
+      </div>
+    </div>
+    <div class="disc">*Instagram принадлежит компании Meta, признанной экстремистской и запрещённой на территории РФ.</div>
+  </div>
+</footer>
+
+<script>
+// utm и прочие параметры адреса пробрасываются в ссылки на createtoday.ru (как на исходной странице)
+(function(){
+  var qs = window.location.search;
+  if (!qs || qs === '?') return;
+  var links = document.querySelectorAll('a[href*="createtoday.ru"]');
+  for (var i = 0; i < links.length; i++) {
+    var l = links[i];
+    if (l.href.indexOf('#') > -1) continue;
+    l.href = l.href + (l.href.indexOf('?') > -1 ? '&' + qs.slice(1) : qs);
+  }
+})();
+</script>
+</body>
+</html>
