@@ -1,0 +1,37 @@
+/* ============================================================
+   SPACING / RADIUS / ELEVATION TOKENS — Hey, Sash
+   ============================================================ */
+
+:root {
+  /* Spacing scale (4px base) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+
+  /* Radius — brand is very rounded: pill controls, big soft cards */
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 28px;
+  --radius-xl: 36px;
+  --radius-pill: 999px;
+
+  /* Shadows — soft, low-contrast, warm-tinted (no harsh black shadows in refs) */
+  --shadow-sm: 0 2px 8px rgba(20, 18, 15, 0.06);
+  --shadow-md: 0 6px 20px rgba(20, 18, 15, 0.08);
+  --shadow-lg: 0 16px 40px rgba(20, 18, 15, 0.12);
+  --shadow-orange-glow: 0 8px 24px rgba(255, 81, 13, 0.25);
+
+  /* Motion */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1); /* @kind other */
+  --duration-fast: 120ms; /* @kind other */
+  --duration-base: 200ms; /* @kind other */
+}
