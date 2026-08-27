@@ -1,0 +1,75 @@
+/* ============================================================
+   COLOR TOKENS — Hey, Sash
+   Primary signature color: Orange #FF510D, used at multiple
+   opacity levels (solid CTAs/highlights, soft tint chips,
+   subtle backgrounds) — see brand reference screens.
+   ============================================================ */
+
+:root {
+  /* ---- Brand orange (base) ---- */
+  --orange-50:  #FFF4EF;
+  --orange-100: #FFE4D8;
+  --orange-200: #FFC9B0;
+  --orange-300: #FFA37D;
+  --orange-400: #FF7940;
+  --orange-500: #FF510D; /* signature brand orange */
+  --orange-600: #E0440A;
+  --orange-700: #B93607;
+  --orange-800: #8C2905;
+  --orange-900: #5C1B03;
+
+  /* ---- Orange at opacity (highlighter / tint usage) ---- */
+  --orange-a04: rgba(255, 81, 13, 0.04);
+  --orange-a08: rgba(255, 81, 13, 0.08);
+  --orange-a12: rgba(255, 81, 13, 0.12);
+  --orange-a16: rgba(255, 81, 13, 0.16);
+  --orange-a24: rgba(255, 81, 13, 0.24);
+  --orange-a40: rgba(255, 81, 13, 0.40);
+  --orange-a60: rgba(255, 81, 13, 0.60);
+  --orange-a85: rgba(255, 81, 13, 0.85); /* text-highlighter background, seen behind headline words */
+
+  /* ---- Ink / neutrals (warm-tinted near-black, not pure gray) ---- */
+  --ink-900: #14120F;
+  --ink-800: #221F1B;
+  --ink-700: #3A352E;
+  --ink-600: #59534A;
+  --ink-500: #7A7369;
+  --ink-400: #9C958A;
+  --ink-300: #C2BCAF;
+  --ink-200: #E1DCD1;
+  --ink-100: #F0ECE3;
+
+  /* ---- Warm sage / mint — secondary surface used behind app-preview frames ---- */
+  --sage-50:  #F1F6F3;
+  --sage-100: #E3EEE8;
+  --sage-200: #D2E4DA;
+
+  /* ---- Base ---- */
+  --white: #FFFFFF;
+  --black: #0A0908;
+
+  /* ---- Semantic aliases ---- */
+  --color-bg-page:        var(--white);
+  --color-bg-surface:     var(--sage-100);
+  --color-bg-inverse:     var(--ink-900);
+  --color-text-primary:   var(--ink-900);
+  --color-text-secondary: var(--ink-600);
+  --color-text-muted:     var(--ink-400);
+  --color-text-inverse:   var(--white);
+  --color-text-onorange:  var(--white);
+
+  --color-accent:         var(--orange-500);
+  --color-accent-hover:   var(--orange-600);
+  --color-accent-press:   var(--orange-700);
+  --color-accent-tint:    var(--orange-100);
+  --color-accent-tint-strong: var(--orange-a24);
+  --color-highlight-bg:   var(--orange-500); /* solid highlighter block behind headline text */
+
+  --color-border:         var(--ink-200);
+  --color-border-strong:  var(--ink-300);
+
+  --color-cta-primary-bg:     var(--ink-900);
+  --color-cta-primary-text:   var(--white);
+  --color-cta-secondary-bg:   var(--orange-500);
+  --color-cta-secondary-text: var(--white);
+}
