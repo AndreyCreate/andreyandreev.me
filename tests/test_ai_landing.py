@@ -16,6 +16,10 @@ def test_ai_landing_is_published_with_required_offer():
     assert "69 990 ₽" in html
     assert "https://tadaa.createtoday.ru/hero/get/of_YmE8fLARaB6P" in html
     assert "https://t.me/team_fokina" in html
+    assert "https://peach-bagpipe-497.notion.site/2b51a689ec9e805297f5f125dcc0fd7a" in html
+    assert "https://peach-bagpipe-497.notion.site/2b21a689ec9e80cbb6c7f5bfbeae7e14" in html
+    assert "https://createtoday.ru/politica" not in html
+    assert "https://createtoday.ru/oferta/challenge" not in html
     assert 'href="https://andreyandreev.me/ai/"' in html
 
 
