@@ -3,211 +3,131 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#F5F2EA">
-<title>Big Sale — система для блога, продукта и продаж за 19 900 ₽</title>
-<meta name="description" content="Три маршрута для эксперта: понятное позиционирование, сильный контент и продукт, который проще продавать. 11 архивных программ Create Today за 19 900 ₽ до 6 сентября 2026 года.">
+<meta name="theme-color" content="#FFE01B">
+<title>BIG SALE!!! — 11 программ Create Today за 14 900 ₽ по промокоду МИША</title>
+<meta name="description" content="Трэш-версия Big Sale в честь 45-летия: 11 программ Create Today — 19 900 ₽, по промокоду МИША — 14 900 ₽. С 3 по 6 сентября 2026. Final sale.">
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Caveat&display=swap" rel="stylesheet">
 <style>
-:root{
-  --cream:#F5F2EA;--ink:#292A2D;--ink-2:#4D4E52;--muted:#85868A;--line:#DCD8CE;
-  --white:#FFF;--blue:#3165D4;--sky:#8AAFD8;--sky-light:#C4DCF5;--dark:#46443F;--yellow:#F5C445;
-}
+:root{--acid:#FFE01B;--red:#E8302A;--blue:#2242C8;--ink:#141414;--paper:#FDFCF6}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--cream);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5;overflow-x:hidden}
-.wrap{width:min(1080px,100%);margin:0 auto;padding:0 24px}
-section{padding:clamp(68px,9vw,120px) 0}
-.kicker{font-size:clamp(12px,1.4vw,15px);font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:24px}
-h1{max-width:19em;font-size:clamp(34px,5.1vw,64px);font-weight:400;line-height:1.13;letter-spacing:-.035em}
-h2{max-width:18em;font-size:clamp(30px,4.2vw,50px);font-weight:400;line-height:1.16;letter-spacing:-.025em}
-h3{font-size:clamp(20px,2.25vw,27px);font-weight:500;line-height:1.25}
-.b,.brace{color:var(--blue)}
-.brace{font-weight:300}
-.lead{max-width:760px;font-size:clamp(17px,1.9vw,21px);color:var(--ink-2)}
-.note{font-size:clamp(13px,1.45vw,15px);color:var(--muted)}
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:64px;padding:18px 34px;border-radius:14px;background:var(--dark);color:#fff;font-size:clamp(16px,1.7vw,19px);font-weight:500;text-align:center;text-decoration:none;transition:transform .15s ease,box-shadow .15s ease}
-.btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(30,30,30,.22)}
-.btn-light{background:#F1EEE6;color:var(--ink)}
-.sec-blue{background:var(--sky)}
-.sec-dark{background-color:var(--dark);color:#F1EEE6;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='420'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='3' stitchTiles='stitch' seed='7'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='linear' slope='0.28' intercept='0'/></feComponentTransfer></filter><rect width='420' height='420' filter='url(%23g)' fill='white'/></svg>");background-size:420px 420px}
-.sec-dark .kicker{color:rgba(241,238,230,.55)}
-.sec-dark .lead{color:rgba(241,238,230,.82)}
-.sec-dark .b,.sec-dark .brace{color:var(--sky-light)}
-.hero{padding-top:clamp(74px,10vw,132px)}
-.hero .lead{margin-top:28px}
-.promise{font-size:clamp(18px,2.1vw,24px);max-width:31em;color:var(--ink);margin-top:18px}
-.chips{display:flex;flex-wrap:wrap;gap:10px;margin:34px 0}
-.chip{padding:11px 19px;border:1px solid var(--line);border-radius:999px;background:#fff;font-size:13px;font-weight:500;letter-spacing:.05em;text-transform:uppercase}
-.hero-action{display:flex;align-items:center;flex-wrap:wrap;gap:18px;margin-top:34px}
-.deadline{max-width:410px;color:var(--muted);font-size:14px}
-.routes{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px}
-.route-card{display:flex;flex-direction:column;min-height:340px;padding:30px;border:1.5px solid rgba(241,238,230,.16);border-radius:20px;background:rgba(255,255,255,.07)}
-.route-card .num{color:var(--sky-light);font-size:13px;font-weight:600;letter-spacing:.12em;margin-bottom:18px}
-.route-card p{margin-top:14px;color:rgba(241,238,230,.8);font-size:16px}
-.route-card .route-products{margin-top:auto;padding-top:24px;color:var(--sky-light);font-size:13px;line-height:1.55}
-.flagship-list{display:grid;gap:28px;margin-top:54px}
-.flagship{display:grid;grid-template-columns:minmax(230px,.82fr) 1.35fr;overflow:hidden;border-radius:24px;background:#fff}
-.flagship-media{min-height:100%;background:#E6E3DA}
-.flagship-media img{display:block;width:100%;height:100%;min-height:390px;object-fit:cover;object-position:top}
-.flagship-body{padding:clamp(28px,4vw,48px)}
-.flagship .eyebrow{color:var(--blue);font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
-.flagship h3{margin-top:10px;font-size:clamp(25px,3vw,36px)}
-.flagship .result{margin-top:12px;font-size:clamp(17px,1.9vw,21px);color:var(--ink-2)}
-.volume{display:inline-block;margin-top:22px;padding:8px 13px;border-radius:999px;background:#EDF3FC;color:var(--blue);font-size:13px;font-weight:600}
-.inside{margin-top:22px}
-.inside b{font-size:14px}
-.inside ul{display:grid;gap:7px;margin-top:9px;padding-left:20px;color:var(--ink-2);font-size:15px}
-.review{margin-top:24px;padding:20px 22px;border-left:4px solid var(--blue);border-radius:0 14px 14px 0;background:#F4F2EC;color:var(--ink-2);font-size:15px;font-style:normal}
-.review:before{content:'Из отзыва';display:block;margin-bottom:7px;color:var(--blue);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
-.extras-intro{margin-top:22px}
-.cards{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:44px}
-.pcard{display:flex;align-items:center;gap:20px;padding:22px 24px;border-radius:18px;background:#fff}
-.pcard img{width:76px;height:98px;flex:0 0 auto;object-fit:cover;object-position:top;border-radius:10px;box-shadow:0 5px 16px rgba(30,30,30,.14)}
-.pcard .num{color:var(--blue);font-size:12px;font-weight:700;letter-spacing:.1em}
-.pcard h3{margin-top:5px;font-size:clamp(17px,1.9vw,21px);font-weight:400}
-.pcard p{margin-top:6px;color:var(--ink-2);font-size:14px;line-height:1.45}
-.format-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:42px}
-.checks{display:grid;gap:0}
-.check{display:flex;gap:16px;padding:17px 0;border-bottom:1px solid rgba(241,238,230,.18);font-size:clamp(16px,1.8vw,19px)}
-.check span{color:var(--sky-light)}
-.format-callout{align-self:start;padding:28px;border:1px solid rgba(241,238,230,.18);border-radius:18px;background:rgba(255,255,255,.06)}
-.format-callout h3{color:var(--sky-light)}
-.format-callout p{margin-top:12px;color:rgba(241,238,230,.8)}
-.offer{position:relative;max-width:780px;margin-top:46px;padding:clamp(34px,5vw,62px);overflow:hidden;border-radius:28px;background:var(--sky-light)}
-.offer:after{content:'';position:absolute;top:-155px;right:-155px;width:390px;height:390px;border-radius:50%;background:repeating-conic-gradient(#fff 0deg 7deg,transparent 7deg 22deg);opacity:.72}
-.offer>*{position:relative;z-index:1}
-.offer .pill{display:inline-block;padding:9px 18px;border-radius:999px;background:#fff;font-size:14px;font-weight:600}
-.price{margin-top:24px;font-size:clamp(54px,7vw,84px);font-weight:500;line-height:1.05;letter-spacing:-.04em}
-.old{margin-top:10px;color:var(--ink-2);font-size:18px}
-.old s{text-decoration-thickness:2px}
-.offer .lead{margin-top:21px}
-.offer .btn{display:flex;width:100%;margin-top:28px}
-.offer .deadline{margin:16px auto 0;text-align:center;color:var(--ink-2)}
-.faq{max-width:850px;margin-top:40px}
-.faq details{border-bottom:1px solid rgba(43,43,43,.18)}
-.faq summary{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 0;cursor:pointer;list-style:none;font-size:clamp(17px,1.9vw,21px)}
-.faq summary::-webkit-details-marker{display:none}
-.faq summary:after{content:'+';color:var(--blue);font-size:26px;font-weight:300;transition:transform .2s}
-.faq details[open] summary:after{transform:rotate(45deg)}
-.faq .answer{max-width:720px;padding:0 0 22px;color:var(--ink-2);font-size:17px}
-.final h2{font-size:clamp(32px,4.7vw,56px)}
-.final .lead{margin-top:26px}
-.final .btn{margin-top:30px}
-.final .note{margin-top:14px;color:rgba(241,238,230,.75)}
-footer{padding:34px 0;border-top:1px solid var(--line);background:var(--cream);color:var(--muted);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+body{background:var(--acid);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5;overflow-x:hidden}
+.wrap{width:min(1080px,100%);margin:0 auto;padding:0 22px}
+section{padding:clamp(60px,8vw,110px) 0;position:relative}
+.marq{overflow:hidden;background:var(--ink);color:var(--acid);font-weight:700;letter-spacing:.06em;font-size:clamp(14px,1.6vw,20px);padding:10px 0;white-space:pre}
+.marq span{display:inline-block;animation:run 18s linear infinite}
+@keyframes run{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.hand{font-family:'Caveat',cursive}
+.big{font-weight:700;letter-spacing:-.03em;line-height:.98}
+.stroke{color:var(--acid);-webkit-text-stroke:3px var(--ink);text-shadow:6px 6px 0 var(--red)}
+.wordart{background:linear-gradient(180deg,#FF3CAC 0%,#784BA0 50%,#2B86C5 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(4px 4px 0 rgba(20,20,20,.85))}
+.tag{display:inline-block;background:#fff;border:4px dashed var(--red);padding:12px 22px;font-weight:700}
+.card{background:#fff;border:3px solid var(--ink);box-shadow:10px 12px 0 rgba(20,20,20,.8);padding:clamp(22px,3vw,36px)}
+.card,.win,.fringe,.pcard,.flag{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:64px;padding:18px 30px;background:var(--red);color:#fff;font-size:clamp(16px,1.8vw,20px);font-weight:700;text-decoration:none;border:3px solid var(--ink);box-shadow:6px 6px 0 rgba(20,20,20,.85);transform:rotate(-1deg);transition:transform .12s ease}
+.btn:hover{transform:rotate(-1deg) translateY(-3px)}
+.shu{border-radius:50%;object-fit:cover;object-position:center 12%;border:5px solid #fff;box-shadow:5px 6px 0 rgba(20,20,20,.8)}
+.win{background:#E9E7DE;border:3px solid var(--ink);box-shadow:8px 10px 0 rgba(20,20,20,.85)}
+.win .bar{background:var(--blue);color:#fff;font-weight:700;font-size:17px;padding:10px 16px;display:flex;justify-content:space-between}
+.win .bar .x{background:var(--red);padding:0 10px;border:2px solid #fff}
+.win .body{padding:22px;font-size:17px;line-height:1.5}
+.star{position:absolute;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.star svg{position:absolute;inset:0;width:100%;height:100%}
+.star .t{position:relative;font-weight:700;transform:rotate(-12deg);color:#fff;text-align:center;line-height:1.05}
+h1{font-size:clamp(30px,4.6vw,56px);font-weight:700;line-height:1.12;letter-spacing:-.02em;max-width:20em}
+h2{font-size:clamp(26px,3.8vw,46px);font-weight:700;line-height:1.15;letter-spacing:-.02em;transform:rotate(-.8deg)}
+h3{font-size:clamp(18px,2.1vw,24px);font-weight:700}
+.lead{max-width:760px;font-size:clamp(16px,1.8vw,20px)}
+.sec-red{background:var(--red);color:#fff}
+.sec-paper{background:var(--paper)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:44px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:40px}
+.pcard{display:flex;gap:16px;align-items:flex-start;background:#fff;border:3px solid var(--ink);box-shadow:6px 8px 0 rgba(20,20,20,.8);padding:18px}
+.pcard img{width:70px;height:90px;object-fit:cover;object-position:top;border:2px solid var(--ink);flex:0 0 auto}
+.pcard .num{color:var(--red);font-weight:700;font-size:13px;letter-spacing:.08em}
+.pcard p{font-size:14px;margin-top:6px;line-height:1.45}
+.flag{display:grid;grid-template-columns:minmax(200px,.7fr) 1.3fr;background:#fff;border:3px solid var(--ink);box-shadow:10px 12px 0 rgba(20,20,20,.8);overflow:hidden}
+.flag img{width:100%;height:100%;min-height:280px;object-fit:cover;object-position:top}
+.flag .body{padding:clamp(20px,3vw,36px)}
+.flag .eyebrow{color:var(--red);font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.flag ul{margin-top:12px;padding-left:20px;font-size:15px;display:grid;gap:6px}
+.flag .rev{margin-top:16px;padding:14px 16px;background:var(--acid);border:2px dashed var(--ink);font-size:14px}
+.flag+.flag{margin-top:30px}
+.fringe{display:flex;border-top:3px dashed var(--ink);background:#fff}
+.fringe div{flex:1;border-left:3px dashed var(--ink);padding:14px 4px 12px;font-family:'Caveat',cursive;font-size:22px;writing-mode:vertical-rl;text-align:center;height:110px}
+.fringe div:first-child{border-left:none}
+.price-big{font-size:clamp(64px,10vw,140px);font-weight:700;letter-spacing:-.03em;line-height:1}
+.checkline{display:flex;justify-content:space-between;gap:14px;font-size:clamp(15px,1.7vw,19px);font-weight:600;padding:12px 0;border-bottom:2px solid rgba(20,20,20,.25)}
+footer{padding:30px 0;background:var(--ink);color:rgba(255,255,255,.75);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
 footer .wrap{display:flex;flex-wrap:wrap;gap:12px 26px}
 footer a{color:inherit;text-decoration:none}
-@media(max-width:820px){
-  .routes{grid-template-columns:1fr}.route-card{min-height:0}.route-card .route-products{margin-top:12px}
-  .flagship{grid-template-columns:1fr}.flagship-media img{height:auto;min-height:0;aspect-ratio:16/10}
-  .cards,.format-grid{grid-template-columns:1fr}
-}
-@media(max-width:520px){
-  .wrap{padding:0 18px}.chips{gap:8px}.chip{font-size:11px}.btn{width:100%;padding:17px 20px}
-  .hero-action{align-items:stretch}.pcard{align-items:flex-start;padding:18px}.pcard img{width:64px;height:84px}
-  .flagship-body{padding:26px 22px}.price{font-size:50px}.offer{border-radius:20px}.offer .btn{padding:16px 10px;font-size:15px;line-height:1.25}
-}
+.tilt1{transform:rotate(-1.6deg)}.tilt2{transform:rotate(1.2deg)}
+@media(max-width:820px){.grid3,.grid2{grid-template-columns:1fr}.flag{grid-template-columns:1fr}.flag img{min-height:0;aspect-ratio:16/9}.star{display:none}}
+
+/* --- блоки с живой /sale/ (тесты tests/test_sale_page.py): примеры внутри, отзывы, финальная подпись --- */
+.inside{margin-top:14px;font-size:14px;line-height:1.45}
+.inside b{display:block;color:var(--red);font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+.inside ul{margin:0;padding-left:18px}
+.inside li{margin-top:3px}
+.review{margin:14px 0 0;padding:12px 14px;border-left:6px solid var(--acid);background:#F7F5EC;font-size:14px;line-height:1.5}
+.final .note{margin-top:14px;color:rgba(241,238,230,.75)}
 </style>
-<!-- Yandex.Metrika counter -->
 <script type="text/javascript">
 (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=109255989','ym');
 ym(109255989,'init',{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:true,trackLinks:true,trackHash:true});
 </script>
-<noscript><div><img src="https://mc.yandex.ru/watch/109255989" style="position:absolute;left:-9999px" alt=""></div></noscript>
 </head>
 <body>
 
-<main>
-<section class="hero">
+<div class="marq"><span>★ BIG SALE ★ МНЕ 45 ★ 3–6 СЕНТЯБРЯ ★ ПРОМОКОД МИША ★ FINAL SALE ★ BIG SALE ★ МНЕ 45 ★ 3–6 СЕНТЯБРЯ ★ ПРОМОКОД МИША ★ FINAL SALE ★ BIG SALE ★ МНЕ 45 ★ 3–6 СЕНТЯБРЯ ★ ПРОМОКОД МИША ★ FINAL SALE ★ </span></div>
+
+<section>
   <div class="wrap">
-    <div class="kicker">Big Sale · архив Create Today</div>
-    <h1>Соберите блог, который помогает <span class="brace">{</span><span class="b">стать заметнее</span><span class="brace">}</span>, привлекать аудиторию и продавать свои продукты</h1>
-    <p class="lead">Не библиотека «на потом», а три готовых маршрута: от ясной подачи себя — к контенту, продукту и продажам.</p>
-    <p class="promise">11 программ Create Today доступны одним архивным пакетом за <span class="b">19 900 ₽</span>.</p>
-    <div class="chips" aria-label="Главные результаты">
-      <span class="chip">Понятное позиционирование</span>
-      <span class="chip">Контент, который замечают</span>
-      <span class="chip">Путь от внимания к продаже</span>
+    <div class="star" style="top:30px;right:4%;width:220px;height:220px;transform:rotate(8deg)">
+      <svg viewBox="0 0 200 200"><path d="M100 0 L118 62 L172 28 L142 84 L200 92 L146 118 L186 168 L122 148 L112 200 L88 148 L36 176 L62 120 L0 104 L58 82 L24 24 L84 56 Z" fill="#E8302A" stroke="#141414" stroke-width="5"/></svg>
+      <div class="t" style="font-size:44px">−96%*</div>
     </div>
-    <div class="hero-action">
-      <a class="btn js-buy" data-cta="hero" href="https://andreyandreev.createtoday.ru/hero/get/of_6JnvXPPgT8L5">Получить весь пакет за 19 900 ₽</a>
-      <p class="deadline" data-deadline-status="approved">Продажа закроется 6 сентября 2026 года в 23:59 по московскому времени.</p>
-    </div>
-    <p class="note" style="margin-top:18px">Доступ откроется после подтверждения оплаты и останется без ограничения по времени.</p>
+    <div class="big stroke tilt1" style="font-size:clamp(80px,16vw,220px)">SALE</div>
+    <div class="hand tilt2" style="font-size:clamp(26px,3.4vw,44px);color:var(--blue);margin-top:8px">мне 45 — дизайнер ушёл праздновать, поэтому так</div>
+    <h1 style="margin-top:34px">Соберите блог, который помогает стать заметнее, привлекать аудиторию и продавать свои продукты</h1>
+    <p class="lead" style="margin-top:18px">Не библиотека «на потом», а три готовых маршрута: от ясной подачи себя — к контенту, продукту и продажам. 11 программ Create Today одним архивным пакетом.</p>
+    <div style="margin-top:28px;font-size:clamp(20px,2.6vw,30px);font-weight:700"><s>419 400 ₽</s> → <s>19 900 ₽</s> → <span class="tag">14 900 ₽ по промокоду МИША</span></div>
+    <p style="margin-top:26px"><a class="btn js-buy" data-cta="hero" href="https://andreyandreev.createtoday.ru/hero/get/of_6JnvXPPgT8L5">ЗАБРАТЬ ПАКЕТ — 14 900 ₽ С ПРОМОКОДОМ МИША</a></p>
+    <p class="deadline" style="margin-top:18px;font-size:15px" data-deadline-status="approved">Продажа закроется 6 сентября 2026 года в 23:59 по московскому времени. Это final sale: после — эти программы уходят из продажи. Доступ купившим — без ограничения по времени.</p>
+    <p style="margin-top:10px;font-size:13px;color:rgba(20,20,20,.6)">*скидка от полной стоимости программ. Математика настоящая.</p>
   </div>
 </section>
 
-<section class="sec-dark" id="routes">
+<section class="sec-red">
   <div class="wrap">
-    <div class="kicker">С чего начать</div>
     <h2>Три маршрута — выберите тот, который нужен сейчас</h2>
-    <p class="lead" style="margin-top:22px">Не обязательно проходить всё подряд. Начните со своей текущей задачи, а остальные программы подключайте по мере необходимости.</p>
-    <div class="routes">
-      <article class="route-card" data-route="positioning">
-        <div class="num">Маршрут 01</div>
-        <h3>Стать понятнее и упаковать профиль</h3>
-        <p>Сформулировать свою ценность, увереннее говорить о себе и сделать профиль понятной точкой входа для будущих клиентов.</p>
-        <div class="route-products">Основа: «Сильный личный бренд»<br>Дополнения: «Точка сборки», «Как рассказать о себе?»</div>
-      </article>
-      <article class="route-card" data-route="content">
-        <div class="num">Маршрут 02</div>
-        <h3>Выпускать контент и привлекать аудиторию</h3>
-        <p>Найти свои темы и форматы, создавать Reels быстрее и выстроить узнаваемую визуальную подачу без вечного ожидания вдохновения.</p>
-        <div class="route-products">Основа: «Мастерская Reels»<br>Дополнения: блог с нуля, сторителлинг, визуал и рост</div>
-      </article>
-      <article class="route-card" data-route="product">
-        <div class="num">Маршрут 03</div>
-        <h3>Превратить экспертизу в продукт и продажи</h3>
-        <p>Проверить идею на аудитории, собрать понятный оффер и связать публикации со следующим шагом: диалогом, заявкой или покупкой.</p>
-        <div class="route-products">Основа: «Сигнал в море шума»<br>От идеи и интервью — до продукта, контента и запуска</div>
-      </article>
+    <p class="lead" style="margin-top:16px">Не обязательно проходить всё подряд. Начните со своей текущей задачи, остальное подключайте по мере необходимости.</p>
+    <div class="grid3">
+      <article class="route-card card tilt1" data-route="positioning"><div style="color:var(--red);font-weight:700;font-size:13px;letter-spacing:.1em">МАРШРУТ 01</div><h3 style="margin-top:8px">Стать понятнее и упаковать профиль</h3><p style="font-size:15px;margin-top:10px">Сформулировать свою ценность, увереннее говорить о себе и сделать профиль понятной точкой входа для будущих клиентов.</p><p style="font-size:13px;margin-top:14px;color:#666">Основа: «Сильный личный бренд» + «Точка сборки», «Как рассказать о себе?»</p></article>
+      <article class="route-card card tilt2" data-route="content"><div style="color:var(--red);font-weight:700;font-size:13px;letter-spacing:.1em">МАРШРУТ 02</div><h3 style="margin-top:8px">Выпускать контент и привлекать аудиторию</h3><p style="font-size:15px;margin-top:10px">Найти свои темы и форматы, создавать Reels быстрее и выстроить узнаваемую визуальную подачу.</p><p style="font-size:13px;margin-top:14px;color:#666">Основа: «Мастерская Reels» + блог с нуля, сторителлинг, визуал и рост</p></article>
+      <article class="route-card card tilt1" data-route="product"><div style="color:var(--red);font-weight:700;font-size:13px;letter-spacing:.1em">МАРШРУТ 03</div><h3 style="margin-top:8px">Превратить экспертизу в продукт и продажи</h3><p style="font-size:15px;margin-top:10px">Проверить идею на аудитории, собрать понятный оффер и связать публикации с заявкой или покупкой.</p><p style="font-size:13px;margin-top:14px;color:#666">Основа: «Сигнал в море шума» — от идеи до запуска</p></article>
     </div>
   </div>
 </section>
 
-<section class="sec-blue">
+<section class="sec-paper">
   <div class="wrap">
-    <div class="kicker">Три флагманские программы</div>
     <h2>Основа каждого маршрута — подробно</h2>
-    <p class="lead" style="margin-top:22px">Объём и примеры уроков сверены с текущей структурой программ в Create Today.</p>
-    <div class="flagship-list">
-      <article class="flagship" data-flagship="brand">
-        <div class="flagship-media"><img src="assets/p03_brand.jpg" alt="Сильный личный бренд"></div>
-        <div class="flagship-body">
-          <div class="eyebrow">Маршрут «Позиционирование»</div>
-          <h3>Сильный личный бренд</h3>
-          <p class="result">Собрать внутреннюю опору, сформулировать свою ценность и сделать блог понятным для будущих клиентов — без чужих масок и «успешного успеха».</p>
-          <span class="volume">48 уроков в 6 разделах</span>
-          <div class="inside"><b>Примеры внутри</b><ul><li>Исследование ценностей и основы личного бренда</li><li>Как написать пост «Обо мне» без успешного успеха</li><li>Структура контента, визуальная система и рост аудитории</li></ul></div>
-          <blockquote class="review">В отзыве о программе участник пишет о тысяче новых подписчиков менее чем за две недели после изменения контента и подачи. Это частный результат, а не гарантия.</blockquote>
-        </div>
+    <div style="margin-top:36px">
+      <article class="flagship flag tilt2" data-flagship="brand">
+        <img src="assets/p03_brand.jpg" alt="Сильный личный бренд">
+        <div class="body"><div class="eyebrow">Маршрут «Позиционирование»</div><h3 style="margin-top:6px">Сильный личный бренд</h3><p style="font-size:15px;margin-top:10px">Собрать внутреннюю опору, сформулировать свою ценность и сделать блог понятным для будущих клиентов — без чужих масок и «успешного успеха».</p><p style="margin-top:10px"><span class="tag" style="font-size:14px;padding:6px 12px">48 уроков в 6 разделах</span></p><div class="inside"><b>Примеры внутри</b><ul><li>Исследование ценностей и основы личного бренда</li><li>Как написать пост «Обо мне» без успешного успеха</li><li>Структура контента, визуальная система и рост аудитории</li></ul></div><blockquote class="review">В отзыве о программе участник пишет о тысяче новых подписчиков менее чем за две недели после изменения контента и подачи. Это частный результат, а не гарантия.</blockquote></div>
       </article>
-
-      <article class="flagship" data-flagship="reels">
-        <div class="flagship-media"><img src="assets/p02_reels.jpg" alt="Мастерская Reels"></div>
-        <div class="flagship-body">
-          <div class="eyebrow">Маршрут «Контент»</div>
-          <h3>Мастерская Reels</h3>
-          <p class="result">Освоить процесс создания роликов от идеи и съёмки до монтажа, текста и звука — для своего блога или клиентских проектов.</p>
-          <span class="volume">44 урока в 7 разделах</span>
-          <div class="inside"><b>Примеры внутри</b><ul><li>Talking Head, интервью и базовые навыки монтажа</li><li>Как создавать Reels в формате сторителлингов и видеодневников</li><li>Саунд-дизайн, типографика, съёмка себя и работа с заказчиком</li></ul></div>
-          <blockquote class="review">В отзывах участников: один ролик собрал 17 тысяч просмотров, другой участник сократил монтаж ролика до пяти минут после освоения процесса. Это частные результаты.</blockquote>
-        </div>
+      <article class="flagship flag tilt1" data-flagship="reels">
+        <img src="assets/p02_reels.jpg" alt="Мастерская Reels">
+        <div class="body"><div class="eyebrow">Маршрут «Контент»</div><h3 style="margin-top:6px">Мастерская Reels</h3><p style="font-size:15px;margin-top:10px">Процесс создания роликов от идеи и съёмки до монтажа, текста и звука — для своего блога или клиентских проектов.</p><p style="margin-top:10px"><span class="tag" style="font-size:14px;padding:6px 12px">44 урока в 7 разделах</span></p><div class="inside"><b>Примеры внутри</b><ul><li>Talking Head, интервью и базовые навыки монтажа</li><li>Как создавать Reels в формате сторителлингов и видеодневников</li><li>Саунд-дизайн, типографика, съёмка себя и работа с заказчиком</li></ul></div><blockquote class="review">В отзывах участников: один ролик собрал 17 тысяч просмотров, другой участник сократил монтаж ролика до пяти минут после освоения процесса. Это частные результаты.</blockquote></div>
       </article>
-
-      <article class="flagship" data-flagship="signal">
-        <div class="flagship-media"><img src="assets/p01_signal.png" alt="Сигнал в море шума"></div>
-        <div class="flagship-body">
-          <div class="eyebrow">Маршрут «Продукт и продажи»</div>
-          <h3>Сигнал в море шума</h3>
-          <p class="result">Пройти путь от диагностики и исследования аудитории до продукта, воронки, контента и запуска — без агрессивных прогревов.</p>
-          <span class="volume">40 уроков в 6 блоках</span>
-          <div class="inside"><b>Примеры внутри</b><ul><li>Customer Development и анализ интервью</li><li>Продукт: идея, формат, ценность</li><li>Продуктовая линейка, CJM, лид-магнит и стратегия запуска</li></ul></div>
-          <blockquote class="review">Один из участников написал о запуске на 115 участников после работы над продуктом и продажами. Это частный результат, который зависит от исходной точки и действий автора.</blockquote>
-        </div>
+      <article class="flagship flag tilt2" data-flagship="signal">
+        <img src="assets/p01_signal.png" alt="Сигнал в море шума">
+        <div class="body"><div class="eyebrow">Маршрут «Продукт и продажи»</div><h3 style="margin-top:6px">Сигнал в море шума</h3><p style="font-size:15px;margin-top:10px">Путь от диагностики и исследования аудитории до продукта, воронки, контента и запуска — без агрессивных прогревов.</p><p style="margin-top:10px"><span class="tag" style="font-size:14px;padding:6px 12px">40 уроков в 6 блоках</span></p><div class="inside"><b>Примеры внутри</b><ul><li>Customer Development и анализ интервью</li><li>Продукт: идея, формат, ценность</li><li>Продуктовая линейка, CJM, лид-магнит и стратегия запуска</li></ul></div><blockquote class="review">Один из участников написал о запуске на 115 участников после работы над продуктом и продажами. Это частный результат, который зависит от исходной точки и действий автора.</blockquote></div>
       </article>
     </div>
   </div>
@@ -215,79 +135,72 @@ ym(109255989,'init',{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
 
 <section>
   <div class="wrap">
-    <div class="kicker">Ещё восемь программ</div>
-    <h2>Дополнения для профиля, контента и визуальной подачи</h2>
-    <p class="lead extras-intro">Подключайте их к выбранному маршруту точечно — когда понадобится усилить конкретный навык.</p>
-    <div class="cards">
-      <article class="pcard"><div><div class="num">01</div><h3>Точка сборки</h3><p>Упаковка экспертного профиля, пост про провалы и успехи, версия для хайлайта.</p></div><img src="assets/p04_tochka.png" alt=""></article>
-      <article class="pcard"><div><div class="num">02</div><h3>Blog from zero to hero</h3><p>Понятный старт блога: тема, первые форматы и переход от редких публикаций к процессу.</p></div><img src="assets/p05_blog.png" alt=""></article>
-      <article class="pcard"><div><div class="num">03</div><h3>Create Today Community</h3><p>Материалы о визуальном стиле, шрифтах и цельной подаче контента.</p></div><img src="assets/p06_community.png" alt=""></article>
-      <article class="pcard"><div><div class="num">04</div><h3>Путь от 1 000 подписчиков</h3><p>Кейсы и антикейсы роста: что приводит нужную аудиторию, а что даёт только просмотры.</p></div><img src="assets/p07_path.png" alt=""></article>
-      <article class="pcard"><div><div class="num">05</div><h3>Практики креативности</h3><p>Задания по фотографии, вниманию и развитию собственного взгляда.</p></div><img src="assets/p08_practice.png" alt=""></article>
-      <article class="pcard"><div><div class="num">06</div><h3>Разбор «Дюны»</h3><p>Как устроены сильные истории и какие приёмы можно перенести в контент и продукты.</p></div><img src="assets/p09_dune.jpg" alt=""></article>
-      <article class="pcard"><div><div class="num">07</div><h3>Как рассказать о себе?</h3><p>Три опубликованные лекции и шаблоны: пост, хайлайт и «линия жизни».</p></div><img src="assets/p10_osebe.png" alt=""></article>
-      <article class="pcard"><div><div class="num">08</div><h3>Творческое видение</h3><p>Гид по теории и практике фотографии для развития насмотренности.</p></div><img src="assets/p11_vision.png" alt=""></article>
+    <h2>Ещё восемь программ — дополнения</h2>
+    <p class="lead" style="margin-top:14px">Подключайте к маршруту точечно — когда понадобится усилить конкретный навык.</p>
+    <div class="grid2">
+      <article class="pcard tilt1"><img src="assets/p04_tochka.png" alt=""><div><div class="num">01</div><h3 style="font-size:17px">Точка сборки</h3><p>Упаковка экспертного профиля, пост про провалы и успехи, версия для хайлайта.</p></div></article>
+      <article class="pcard tilt2"><img src="assets/p05_blog.png" alt=""><div><div class="num">02</div><h3 style="font-size:17px">Blog from zero to hero</h3><p>Понятный старт блога: тема, первые форматы и переход к процессу.</p></div></article>
+      <article class="pcard tilt2"><img src="assets/p06_community.png" alt=""><div><div class="num">03</div><h3 style="font-size:17px">Create Today Community</h3><p>Материалы о визуальном стиле, шрифтах и цельной подаче контента.</p></div></article>
+      <article class="pcard tilt1"><img src="assets/p07_path.png" alt=""><div><div class="num">04</div><h3 style="font-size:17px">Путь от 1 000 подписчиков</h3><p>Кейсы и антикейсы роста: что приводит нужную аудиторию.</p></div></article>
+      <article class="pcard tilt1"><img src="assets/p08_practice.png" alt=""><div><div class="num">05</div><h3 style="font-size:17px">Практики креативности</h3><p>Задания по фотографии, вниманию и развитию собственного взгляда.</p></div></article>
+      <article class="pcard tilt2"><img src="assets/p09_dune.jpg" alt=""><div><div class="num">06</div><h3 style="font-size:17px">Разбор «Дюны»</h3><p>Как устроены сильные истории и что перенести в контент и продукты.</p></div></article>
+      <article class="pcard tilt2"><img src="assets/p10_osebe.png" alt=""><div><div class="num">07</div><h3 style="font-size:17px">Как рассказать о себе?</h3><p>Три лекции и шаблоны: пост, хайлайт и «линия жизни».</p></div></article>
+      <article class="pcard tilt1"><img src="assets/p11_vision.png" alt=""><div><div class="num">08</div><h3 style="font-size:17px">Творческое видение</h3><p>Гид по теории и практике фотографии для развития насмотренности.</p></div></article>
     </div>
   </div>
 </section>
 
-<section class="sec-dark">
+<section class="sec-red">
   <div class="wrap">
-    <div class="kicker">Что важно знать до покупки</div>
-    <h2>Это <span class="brace">{</span><span class="b">архивный самостоятельный формат</span><span class="brace">}</span></h2>
-    <div class="format-grid">
-      <div class="checks">
-        <div class="check"><span>✓</span>Все записи и сохранённые материалы останутся у вас без ограничения по времени.</div>
-        <div class="check"><span>✓</span>Вы сами выбираете маршрут, порядок и темп прохождения.</div>
-        <div class="check"><span>✓</span>Новые уроки, живые встречи и личная обратная связь в пакет не входят.</div>
-        <div class="check"><span>✓</span>Если часть программ уже куплена, стоимость пакета не пересчитывается.</div>
-      </div>
-      <div class="format-callout">
-        <h3>Материалы дают систему. Результат даёт применение.</h3>
-        <p>Результат потребует самостоятельной работы: смотреть уроки, применять их к своей ситуации, публиковать, разговаривать с аудиторией и проверять гипотезы.</p>
-      </div>
+    <h2>Что важно знать до покупки: это архивный самостоятельный формат</h2>
+    <div class="card" style="margin-top:34px;max-width:820px">
+      <div class="checkline"><span>Все записи и сохранённые материалы останутся у вас без ограничения по времени</span><span>✓</span></div>
+      <div class="checkline"><span>Вы сами выбираете маршрут, порядок и темп прохождения</span><span>✓</span></div>
+      <div class="checkline"><span>Новые уроки, живые встречи и личная обратная связь в пакет не входят</span><span>—</span></div>
+      <div class="checkline" style="border-bottom:none"><span>Если часть программ уже куплена, стоимость пакета не пересчитывается</span><span>—</span></div>
     </div>
+    <div class="hand" style="font-size:clamp(24px,3vw,38px);margin-top:26px">материалы дают систему. результат даёт применение.</div>
+    <p class="lead" style="margin-top:14px;font-size:15px">Результат потребует самостоятельной работы: смотреть уроки, применять их к своей ситуации, публиковать, разговаривать с аудиторией и проверять гипотезы.</p>
+  </div>
+</section>
+
+<section class="sec-paper">
+  <div class="wrap" style="position:relative">
+    <img class="shu" src="assets/shufut.png" alt="" style="position:absolute;width:150px;height:150px;right:2%;top:-40px;transform:rotate(9deg)">
+    <h2>Цена. Смотрите внимательно:</h2>
+    <div style="margin-top:30px;font-size:clamp(20px,2.6vw,30px);font-weight:700">поштучно: <s>419 400 ₽</s> · пакетом: <s>19 900 ₽</s></div>
+    <div class="price-big wordart" style="margin-top:16px;transform:rotate(-1.5deg)">14 900 ₽</div>
+    <div style="margin-top:14px;font-size:clamp(17px,2vw,22px);font-weight:600">по промокоду <span class="tag" style="font-size:inherit;padding:6px 16px">МИША</span> — вводится при оформлении</div>
+    <div class="hand" style="font-size:clamp(22px,2.8vw,34px);color:var(--blue);margin-top:18px">в 28 раз дешевле. проверяли на калькуляторе. дважды.</div>
+    <p style="margin-top:28px"><a class="btn js-buy" data-cta="offer" href="https://andreyandreev.createtoday.ru/hero/get/of_6JnvXPPgT8L5">ПЕРЕЙТИ К ОФОРМЛЕНИЮ</a></p>
+    <p class="deadline" style="margin-top:16px;font-size:15px" data-deadline-status="approved">До 6 сентября 2026, 23:59 МСК. После — эти программы уходят из продажи насовсем (не как в известных ювелирных сетях — по-настоящему).</p>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <div class="kicker">Цена Big Sale</div>
-    <h2>Выберите свой маршрут и получите все 11 программ</h2>
-    <div class="offer">
-      <span class="pill">Архив Create Today · 11 программ</span>
-      <div class="price">19 900 ₽</div>
-      <div class="old">Полная стоимость программ — <s>419 400 ₽</s></div>
-      <p class="lead">Позиционирование, контент, Reels, визуальная подача, продукт и продажи — в одном самостоятельном доступе.</p>
-      <a class="btn js-buy" data-cta="offer" href="https://andreyandreev.createtoday.ru/hero/get/of_6JnvXPPgT8L5">Получить весь пакет за 19 900 ₽</a>
-      <p class="deadline" data-deadline-status="approved">Продажа закроется 6 сентября 2026 года в 23:59 по московскому времени.</p>
+    <h2>Вопросы? Отвечаю окнами:</h2>
+    <div class="grid2" style="margin-top:34px">
+      <div class="win tilt1"><div class="bar"><span>вопрос_1.txt</span><span class="x">✕</span></div><div class="body">«Что именно я получу?»<br><b>Записи и материалы 11 программ Create Today: три флагмана-маршрута и восемь дополнений. Доступ — без ограничения по времени.</b></div></div>
+      <div class="win tilt2"><div class="bar"><span>вопрос_2.txt</span><span class="x">✕</span></div><div class="body">«Нужно проходить всё подряд?»<br><b>Нет. Начните с флагмана под свою задачу, дополнения — точечно.</b></div></div>
+      <div class="win tilt2"><div class="bar"><span>вопрос_3.txt</span><span class="x">✕</span></div><div class="body">«Будут новые уроки и встречи?»<br><b>Нет. Это архивный самостоятельный пакет — без новых потоков и обратной связи.</b></div></div>
+      <div class="win tilt1"><div class="bar"><span>вопрос_4.txt</span><span class="x">✕</span></div><div class="body">«Как получить 14 900 ₽?»<br><b>Введите промокод МИША при оформлении. Без него — 19 900 ₽.</b></div></div>
     </div>
   </div>
 </section>
 
-<section class="sec-blue">
+<section class="sec-red final">
   <div class="wrap">
-    <div class="kicker">Частые вопросы</div>
-    <h2>Коротко о главном</h2>
-    <div class="faq">
-      <details><summary>Что именно я получу?</summary><div class="answer">Доступ к записям и сохранённым материалам 11 программ Create Today. Три флагманские программы дают маршруты по позиционированию, контенту и продукту; ещё восемь помогают усилить отдельные навыки.</div></details>
-      <details><summary>Нужно ли проходить все программы подряд?</summary><div class="answer">Нет. Выберите текущую задачу и начните с соответствующего флагмана. Дополнительные программы можно подключать точечно.</div></details>
-      <details><summary>Будут ли новые уроки и живые встречи?</summary><div class="answer">Нет. Это архивный самостоятельный пакет: без новых потоков, будущих обновлений и личной обратной связи.</div></details>
-      <details><summary>Изменится ли цена, если часть программ уже куплена?</summary><div class="answer">Нет. Стоимость пакета не пересчитывается, суммы прежних покупок не вычитаются.</div></details>
-    </div>
-  </div>
-</section>
-
-<section class="sec-dark final">
-  <div class="wrap">
-    <div class="kicker">Big Sale</div>
-    <h2>Станьте понятнее для аудитории. Выпускайте контент увереннее. <span class="brace">{</span><span class="b">Свяжите блог со своим продуктом</span><span class="brace">}</span>.</h2>
-    <p class="lead">Все 11 архивных программ Create Today — одним пакетом за 19 900 ₽.</p>
-    <a class="btn btn-light js-buy" data-cta="final" href="https://andreyandreev.createtoday.ru/hero/get/of_6JnvXPPgT8L5">Получить весь пакет за 19 900 ₽</a>
+    <div class="big stroke tilt1" style="font-size:clamp(60px,12vw,160px);-webkit-text-stroke:3px #fff;color:var(--red);text-shadow:6px 6px 0 rgba(20,20,20,.85)">ФИНАЛ</div>
+    <p class="lead" style="margin-top:22px;font-weight:600">Станьте понятнее для аудитории. Выпускайте контент увереннее. Свяжите блог со своим продуктом. Все 11 архивных программ — одним пакетом.</p>
+    <p style="margin-top:26px"><a class="btn js-buy" data-cta="final" style="background:var(--acid);color:var(--ink)" href="https://andreyandreev.createtoday.ru/hero/get/of_6JnvXPPgT8L5">ЗАБРАТЬ ЗА 14 900 ₽ ПО ПРОМОКОДУ МИША</a></p>
     <p class="note" data-deadline-status="approved">Продажа закроется 6 сентября 2026 года в 23:59 по московскому времени.</p>
+    <div class="fringe" style="max-width:560px;margin-top:36px;transform:rotate(1deg)"><div>МИША</div><div>МИША</div><div>МИША</div><div>МИША</div><div>МИША</div><div>МИША</div></div>
+    <p class="hand" style="font-size:clamp(20px,2.6vw,30px);margin-top:14px;color:#fff">язычки отрывать не надо — просто введите МИША на сайте оплаты</p>
   </div>
 </section>
-</main>
+
+<div class="marq"><span>★ ДО 6 СЕНТЯБРЯ ★ ПОТОМ ВСЁ ★ ДО 6 СЕНТЯБРЯ ★ ПОТОМ ВСЁ ★ ДО 6 СЕНТЯБРЯ ★ ПОТОМ ВСЁ ★ ДО 6 СЕНТЯБРЯ ★ ПОТОМ ВСЁ ★ ДО 6 СЕНТЯБРЯ ★ ПОТОМ ВСЁ ★ </span></div>
 
 <footer>
   <div class="wrap">
@@ -295,6 +208,7 @@ ym(109255989,'init',{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
     <a href="https://createtoday.ru/politica">Политика конфиденциальности</a>
     <a href="https://createtoday.ru/oferta/challenge">Договор-оферта</a>
     <a href="https://t.me/Create_today_help">Поддержка</a>
+    <span>фото Шуфутинского: оператор канала Дениса Клявера · Wikimedia · CC BY 3.0</span>
   </div>
 </footer>
 
