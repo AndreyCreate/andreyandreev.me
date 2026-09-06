@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>План недели 7–13 сентября · цель 70 000</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFFFFF;--blue:#BFDDFB;--blue-soft:#DCEBFC;--blue-deep:#2F80ED;--coral:#E8563F;--ink:#111111;--ink-2:#3A3A3A;--mute:#6B6B6B;--line:#E6E6E6;--gray:#F5F5F5;--yellow:#F5C445;--dark:#2B2B2B}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;line-height:1.45;font-size:17px}
+img{display:block;max-width:100%}
+a{color:inherit}
+ul{list-style:none}
+.mono{font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.02em}
+.wrap{max-width:1240px;margin:0 auto;padding:0 40px}
+.sec{padding:clamp(48px,6vw,84px) 0}
+.sec-gray{background:var(--gray)}
+.sec-dark{background:var(--dark);color:#fff}
+.sec-dark .kick{color:rgba(255,255,255,.6)}
+.kick{color:var(--mute);margin-bottom:24px;display:flex;gap:10px;align-items:center}
+.kick .star{color:var(--coral);font-size:15px}
+.h1{font-size:clamp(48px,7vw,104px);line-height:.95;letter-spacing:-.045em;font-weight:500}
+.h1 .u,.h2 .u{position:relative;display:inline-block}
+.h1 .u:after{content:"";position:absolute;left:0;right:0;bottom:-.02em;height:3px;background:var(--blue-deep)}
+.h2{font-size:clamp(28px,3.6vw,48px);line-height:1.1;letter-spacing:-.03em;font-weight:400;max-width:900px}
+.h2 .u:after{content:"";position:absolute;left:0;right:0;bottom:.04em;height:2px;background:var(--blue-deep)}
+.lead{font-size:clamp(17px,1.4vw,20px);line-height:1.5;color:var(--ink-2);max-width:760px}
+.lead .num{font-family:'JetBrains Mono',monospace;color:var(--blue-deep);margin-right:6px}
+.lead b{font-weight:500;color:var(--ink)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:28px 0}
+.nav-l{display:flex;align-items:center;gap:14px;text-decoration:none}
+.nav-l img{width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:top}
+.nav-l .tag{background:var(--gray);border-radius:12px;padding:10px 16px;line-height:1.35}
+.pill{display:inline-flex;align-items:center;gap:10px;min-height:46px;padding:0 24px;border-radius:999px;text-decoration:none;font-size:14px;font-weight:500;font-family:'JetBrains Mono',monospace;background:var(--gray)}
+.pill.blue{background:var(--blue)}
+/* stats */
+.res-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:44px}
+.res-card{background:var(--gray);border-radius:18px;padding:22px 24px;min-height:180px;display:flex;flex-direction:column}
+.res-card:nth-child(even){background:var(--blue)}
+.res-card .n{font-family:'JetBrains Mono',monospace;color:var(--blue-deep);font-size:12.5px}
+.res-card:nth-child(even) .n{color:#1f4f8a}
+.res-card .v{margin-top:auto;font-size:40px;font-weight:500;letter-spacing:-.04em;line-height:1;white-space:nowrap}
+.res-card .c{font-size:14px;color:var(--ink-2);margin-top:8px;line-height:1.35}
+/* day */
+.day{display:grid;grid-template-columns:400px 1fr;gap:56px;align-items:start;padding:clamp(40px,5vw,64px) 0;border-top:1px solid var(--line)}
+.day:first-of-type{border-top:0}
+.day .d{font-family:'JetBrains Mono',monospace;color:var(--blue-deep);font-size:13px}
+.day h3{font-size:clamp(24px,2.6vw,34px);font-weight:500;letter-spacing:-.02em;line-height:1.15;margin:12px 0 18px}
+.day p{color:var(--ink-2);margin-bottom:14px;max-width:640px}
+.day .must{background:var(--blue);border-radius:16px;padding:18px 20px;margin-top:8px;font-size:16px;line-height:1.45}
+.day .must b{font-weight:500}
+.day .must .dd{font-family:'JetBrains Mono',monospace;color:#1f4f8a;margin-right:6px}
+.day .why{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--mute);margin-top:14px;line-height:1.6}
+/* cover mock 4:5 */
+.cov{width:400px;aspect-ratio:4/5;border-radius:16px;overflow:hidden;position:relative;box-shadow:0 20px 50px rgba(0,0,0,.16);background:#fff;border:1px solid var(--line);font-size:10px}
+.cov .in{position:absolute;inset:0;padding:8%;display:flex;flex-direction:column}
+.cov .k{font-family:'JetBrains Mono',monospace;font-size:1.1em;color:var(--mute);display:flex;gap:6px;align-items:center}
+.cov .k .star{color:var(--coral)}
+.cov .pn{position:absolute;right:8%;top:8%;font-family:'JetBrains Mono',monospace;font-size:1.05em;color:var(--mute)}
+.cov .t{font-weight:500;letter-spacing:-.04em;line-height:1.0;font-size:3.2em;margin-top:14%}
+.cov .t .u{position:relative;display:inline-block}
+.cov .t .u:after{content:"";position:absolute;left:0;right:0;bottom:.03em;height:.06em;background:var(--blue-deep)}
+.cov .l{font-size:1.45em;color:var(--ink-2);margin-top:6%;line-height:1.35}
+.cov .l .dd{font-family:'JetBrains Mono',monospace;color:var(--blue-deep)}
+.cov .chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:6%}
+.cov .chips span{font-family:'JetBrains Mono',monospace;font-size:1em;background:var(--gray);border-radius:999px;padding:5px 9px}
+.cov .chips span.b{background:var(--blue)}
+.cov .f{margin-top:auto;border-top:1px solid var(--line);padding-top:6%;display:flex;justify-content:space-between;align-items:center;font-family:'JetBrains Mono',monospace;font-size:1em;color:var(--mute)}
+.cov .f .av{display:flex;gap:6px;align-items:center;color:var(--ink)}
+.cov .f .av img{width:2.2em;height:2.2em;border-radius:50%;object-fit:cover;object-position:top}
+.cov .card{position:absolute;right:8%;bottom:20%;width:34%;aspect-ratio:4/5;border-radius:8px;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.18);transform:rotate(5deg);background:#ddd}
+.cov .card img{width:100%;height:100%;object-fit:cover;object-position:top}
+.cov .chip{position:absolute;background:#fff;border-radius:999px;padding:5px 9px;font-family:'JetBrains Mono',monospace;font-size:1em;box-shadow:0 6px 16px rgba(0,0,0,.14);white-space:nowrap}
+.cov.quote .t{font-size:2.6em;line-height:1.08}
+.cov.quote .q{font-size:1.3em;color:var(--ink-2);margin-top:6%;line-height:1.4;padding-left:4%;border-left:2px solid var(--blue-deep)}
+.cov.dark{background:var(--dark);color:#fff;border-color:#3a3a3a}
+.cov.dark .k,.cov.dark .pn,.cov.dark .f{color:rgba(255,255,255,.6)}
+.cov.dark .f{border-color:rgba(255,255,255,.15)}
+.cov.dark .l{color:rgba(255,255,255,.8)}
+/* b/w story cover (rubric «Истории») */
+.cov.bw{background:#111;border:0;font-family:Inter,sans-serif}
+.cov.bw img.ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 20%;filter:grayscale(1) contrast(1.05)}
+.cov.bw .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,.05) 45%,rgba(0,0,0,.15) 70%,rgba(0,0,0,.85) 100%)}
+.cov.bw .in{color:#fff}
+.cov.bw .qt{font-size:2.3em;font-weight:600;line-height:1.12;letter-spacing:-.02em;max-width:90%}
+.cov.bw .who{margin-top:auto;font-size:1.25em;line-height:1.4;color:rgba(255,255,255,.92);max-width:90%}
+.cov.bw .who b{font-weight:600;color:#fff}
+.cov.bw .br{position:absolute;left:8%;bottom:4%;font-family:'JetBrains Mono',monospace;font-size:.95em;color:rgba(255,255,255,.55)}
+/* photo cover (personal story) */
+.cov.photo img.ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}
+.cov.photo .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 35%,rgba(0,0,0,.78) 100%)}
+.cov.photo .in{color:#fff;justify-content:flex-end}
+.cov.photo .t{font-family:'Playfair Display',serif;font-weight:500;letter-spacing:-.01em;font-size:3em;margin-top:0;line-height:1.05}
+.cov.photo .t i{font-style:italic}
+.cov.photo .sub{font-size:1.25em;margin-top:5%;color:rgba(255,255,255,.85)}
+.cov.photo .note{position:absolute;left:8%;top:8%;font-family:'JetBrains Mono',monospace;font-size:1em;color:#fff;background:rgba(0,0,0,.35);padding:5px 9px;border-radius:999px}
+/* reels */
+.reels{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:40px}
+.reel{background:var(--gray);border-radius:16px;padding:18px 18px 16px;display:flex;flex-direction:column;gap:10px;min-height:250px}
+.reel .n{font-family:'JetBrains Mono',monospace;color:var(--blue-deep);font-size:12px}
+.reel h4{font-size:17px;font-weight:500;line-height:1.25}
+.reel p{font-size:14px;color:var(--ink-2);line-height:1.4}
+.reel .src{margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--mute);line-height:1.5}
+/* checklist */
+.checks{border-top:1px solid var(--line);max-width:760px;margin-top:28px}
+.checks li{display:flex;gap:16px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line);font-size:17px}
+.checks li:before{content:"✓";font-family:'JetBrains Mono',monospace;color:var(--blue-deep);flex:none;margin-top:3px}
+.footer{border-top:1px solid var(--line);padding:30px 0 60px;color:var(--mute);font-family:'JetBrains Mono',monospace;font-size:12.5px}
+@media(max-width:980px){.day{grid-template-columns:1fr}.res-grid{grid-template-columns:1fr 1fr}.reels{grid-template-columns:1fr 1fr}.cov{width:100%;max-width:400px}}
+@media(max-width:640px){.wrap{padding:0 20px}.res-grid,.reels{grid-template-columns:1fr}.nav-l .tag{display:none}}
+</style>
+</head>
+<body>
+
+<nav class="nav"><div class="wrap" style="display:flex;justify-content:space-between;align-items:center">
+ <a class="nav-l" href="#top"><img src="assets/andrey.jpg" alt=""><span class="tag mono">План недели<br>7–13 сентября 2026</span></a>
+ <span class="pill blue">цель · 70 000</span>
+</div></nav>
+
+<header class="sec" id="top" style="padding-top:20px"><div class="wrap">
+ <div class="kick mono"><span class="star">✳</span> Неделя 7–13 сентября · сейчас 68 507</div>
+ <h1 class="h1">Плюс 1 500 за неделю,<br><span class="u">не на удачу</span></h1>
+ <p class="lead" style="margin-top:32px"><span class="num">::</span>За лето три поста в одиночку давали по тысяче подписок, и все три одной породы: анонс потока с кодовым словом «Экскурсия». Бот отдаёт экскурсию только подписчику, и подписка становится платой за вход. Неделя строится на двух таких анонсах, а между ними стоят посты, которые дают охват и репосты, из которых анонсы конвертируют.</p>
+ <div class="res-grid">
+  <div class="res-card"><span class="n">01 · 26 июля · анонс</span><span class="v">1 329</span><span class="c">подписок с охвата 119 441, 1,1 % против обычных 0,2 %</span></div>
+  <div class="res-card"><span class="n">02 · 22 августа · анонс</span><span class="v">1 299</span><span class="c">подписок с охвата 142 195</span></div>
+  <div class="res-card"><span class="n">03 · 3 сентября · история</span><span class="v">263</span><span class="c">подписок, письмо 30-летнему, охват 90 917</span></div>
+  <div class="res-card"><span class="n">04 · план недели</span><span class="v">1 800+</span><span class="c">два анонса при августовском охвате; 900–1 200, если охват просядет вдвое</span></div>
+ </div>
+</div></header>
+
+<section class="sec sec-gray" id="days"><div class="wrap">
+ <div class="kick mono"><span class="star">✳</span> Посты по дням · как выглядит обложка и что обязано быть в заголовке</div>
+ <h2 class="h2">Семь дней, <span class="u">две породы</span> постов, которые приводят людей</h2>
+
+ <div class="day" style="margin-top:20px">
+  <div class="cov">
+   <div class="in">
+    <div class="k"><span class="star">✳</span> Шестой поток · старт 21 сентября</div><div class="pn">1 / 9</div>
+    <div class="t">Закрытая группа по блогу.<br><span class="u">8 мест</span></div>
+    <div class="l"><span class="dd">::</span> Собираем двух AI-агентов для вашего блога. Посты, рилсы и лендинги по голосовому.</div>
+    <div class="chips"><span class="b">30 заявок · 289 000 ₽</span><span>248 000 просмотров</span><span>1 000 000 на посте</span></div>
+    <div class="f"><span class="av"><img src="assets/andrey.jpg">Андрей Андреев</span><span>слово · ЭКСКУРСИЯ</span></div>
+   </div>
+  </div>
+  <div>
+   <div class="d">Понедельник · 7 сентября · анонс № 1 · карусель</div>
+   <h3>Шестой поток закрытой группы по блогу стартует 21 сентября. 8 мест</h3>
+   <p>Внутри карусели: что человек получает (два AI-агента собирают посты, рилсы и лендинги по голосовому), кейсы участниц цифрами (Наталья: 30 заявок и 289 000 прибыли, Галина: 248 000 просмотров за неделю, Маша: миллион на одном посте), на последнем слайде «Напишите слово Экскурсия». Обложка белая, крупный заголовок, одно слово подчёркнуто, как у поста 22 августа. В подписи кодовое слово в первых двух строках, чтобы было видно без «ещё».</p>
+   <div class="must"><span class="dd">::</span><b>В заголовке обязательно:</b> дата старта, число мест, кодовое слово. Три элемента, без которых пост 22 августа не дал бы 1 299.</div>
+   <div class="why">почему: 26.07 — 1 329 подписок / 119 441 охвата · 22.08 — 1 299 / 142 195 · 05.08 — 629 / 65 742</div>
+  </div>
+ </div>
+
+ <div class="day">
+  <div class="cov photo">
+   <img class="ph" src="assets/andrey.jpg" alt="">
+   <div class="veil"></div>
+   <span class="note">фото того времени, не дизайн</span>
+   <div class="in">
+    <div class="t">В 35 я открыл бренд одежды. Через семь лет <i>закрыл.</i></div>
+    <div class="sub">Вот что я понял о деньгах, пока его вёл.</div>
+   </div>
+  </div>
+  <div>
+   <div class="d">Вторник · 8 сентября · личная история · карусель</div>
+   <h3>В 35 я открыл бренд одежды. Через семь лет закрыл. Вот что я понял о деньгах</h3>
+   <p>Не рассказанные ещё истории: 35 и бренд одежды, 44 и первое приложение в App Store. Заголовок повторяет структуру письма 30-летнему, которое дало 263 подписки: год или возраст, конкретная цифра, поворот. Внутри пять-семь слайдов, каждый одна фраза-вывод. Обложка — твоё фото того времени, вуаль снизу и заголовок с курсивом, как у письма.</p>
+   <div class="must"><span class="dd">::</span><b>В заголовке обязательно:</b> год или возраст, конкретная цифра, поворот. «Сегодня мне 45, и я написал себе 30-летнему письмо» держит все три.</div>
+   <div class="why">почему: 03.09 письмо — 263 подписки / 90 917 охвата · история конвертирует в подписку, чужая история в репост</div>
+  </div>
+ </div>
+
+ <div class="day">
+  <div class="cov quote">
+   <div class="in">
+    <div class="k"><span class="star">✳</span> Ну вообще, да · выпуск 3</div><div class="pn">1 / 8</div>
+    <div class="q">«Чтобы расти, надо выкладывать рилсы каждый день. Лента мертва»</div>
+    <div class="t" style="margin-top:8%">Ну вообще, да.<br>Но есть <span class="u">нюанс</span>.</div>
+    <div class="chips" style="margin-top:8%"><span class="b">лента · 99 % охвата недели</span><span>рилсы · 1 %</span></div>
+    <div class="f"><span class="av"><img src="assets/andrey.jpg">Андрей Андреев</span><span>итоги 30.08–05.09</span></div>
+   </div>
+  </div>
+  <div>
+   <div class="d">Среда · 9 сентября · серия «Ну вообще, да. Но есть нюанс» · выпуск 3</div>
+   <h3>«Чтобы расти, надо выкладывать рилсы каждый день». Ну вообще, да. Но есть нюанс</h3>
+   <p>Первые два выпуска 9 и 11 августа при охвате 12–18 тысяч дали 181 и 76 подписок, это 1,0 % и 0,6 %, лучшая конверсия среди неанонсных постов. Формат готов: чужая цитата в кавычках, потом ответ. Нюанс в этот раз про рост: лента дала 99 % охвата недели, и это один скриншот из «Итогов недели».</p>
+   <div class="must"><span class="dd">::</span><b>В заголовке обязательно:</b> чужая цитата в кавычках первой строкой. Это и есть хук серии.</div>
+   <div class="why">почему: 09.08 — 181 подписка / 18 158 охвата (1,0 %) · 11.08 — 76 / 12 313 (0,6 %)</div>
+  </div>
+ </div>
+
+ <div class="day">
+  <div class="cov">
+   <div class="in">
+    <div class="k"><span class="star">✳</span> Деньги · цена</div><div class="pn">1 / 9</div>
+    <div class="t">7 фраз, которые я говорю себе перед тем, как <span class="u">назвать цену</span></div>
+    <div class="l"><span class="dd">::</span> Стоматологу 80 тысяч платим спокойно. Свою цену называем с комом в горле.</div>
+    <div class="f"><span class="av"><img src="assets/andrey.jpg">Андрей Андреев</span><span>7 слайдов · 7 фраз</span></div>
+   </div>
+  </div>
+  <div>
+   <div class="d">Четверг · 10 сентября · хук-список про деньги · карусель</div>
+   <h3>7 фраз, которые я говорю себе перед тем, как назвать цену</h3>
+   <p>Списки конвертируют в подписку в два с половиной раза лучше вопросов (0,51 % против 0,16 %). Тема из самой сильной зоны: пост про стоматолога за 80 тысяч 8 июня дал 237 подписок с 57 тысяч. Каждый слайд одна фраза плюс одна строка, почему она работает.</p>
+   <div class="must"><span class="dd">::</span><b>В заголовке обязательно:</b> число и слово из зоны денег: цена, деньги, тысяч.</div>
+   <div class="why">почему: хук «число_список» — 0,51 % в подписку · 08.06 стоматолог — 237 подписок / 56 892 охвата</div>
+  </div>
+ </div>
+
+ <div class="day">
+  <div class="cov">
+   <div class="in">
+    <div class="k"><span class="star">✳</span> Кейс участницы · поток</div><div class="pn">1 / 9</div>
+    <div class="t" style="font-size:2.7em">Наталья пришла с 5 000 подписчиков и без продукта. Через поток: <span class="u">30 заявок</span> и 289 000</div>
+    <div class="chips" style="margin-top:7%"><span class="b">старт 21 сентября</span><span>осталось N мест</span></div>
+    <div class="chip" style="right:8%;bottom:24%">Наталья · бизнес-психолог</div>
+    <div class="f"><span class="av"><img src="assets/andrey.jpg">Андрей Андреев</span><span>слово · ЭКСКУРСИЯ</span></div>
+   </div>
+  </div>
+  <div>
+   <div class="d">Пятница · 11 сентября · анонс № 2 · карусель</div>
+   <h3>Наталья пришла с 5 000 подписчиков и без продукта. Через поток: 30 заявок и 289 000</h3>
+   <p>Тот же анонс с другого входа. 5 августа второй анонс потока дал 629 подписок, вдвое меньше первого, потому что повторял его дословно. Здесь заголовок строится от результата участницы, дата старта и число мест на первом слайде, кодовое слово на последнем и в подписи. Если к пятнице мест осталось меньше, число в заголовке обновить: это само по себе хук. На обложке в финале — реальная обложка поста Натальи из канала, здесь её место обозначено плашкой.</p>
+   <div class="must"><span class="dd">::</span><b>В заголовке обязательно:</b> результат участницы цифрой, дата старта, число мест; кодовое слово на последнем слайде и в подписи.</div>
+   <div class="why">почему: второй анонс 05.08 — 629 / 65 742, повтор первого дословно; новый вход держит конверсию</div>
+  </div>
+ </div>
+
+ <div class="day">
+  <div class="cov bw">
+   <img class="ph" src="assets/pressfield_bw.jpg" alt="">
+   <div class="veil"></div>
+   <div class="in">
+    <div class="qt">«Семнадцать лет я писал в стол. Семнадцать лет ни одного опубликованного слова»</div>
+    <div class="who"><b>Стивен Прессфилд</b> — автор «Войны за креатив». Жил в фургоне, работал водителем и сборщиком фруктов, первую книгу опубликовал в 52. Восемь цитат о сопротивлении.</div>
+    <div class="br">@andreyandreev.me</div>
+   </div>
+  </div>
+  <div>
+   <div class="d">Суббота · 12 сентября · чужая история · рубрика «Истории», ч/б</div>
+   <h3>Семнадцать лет он писал в стол и жил в фургоне. Первую книгу опубликовал в 52</h3>
+   <p>Порода докторантуры и Allis-Chalmers: реальный человек, поворот судьбы, цитата в конце. Рубрика остаётся чёрно-белой с портретом, как все истории серии. Подписок такой пост даёт 100–150, репостов больше тысячи, и этот охват работает на пятничный анонс, который ещё крутится.</p>
+   <div class="must"><span class="dd">::</span><b>В заголовке обязательно:</b> первое предложение сюжета, без «история о том, как». Цитата на обложке, биография в две строки внизу, счёт цитат.</div>
+   <div class="why">почему: 25.08 докторантура — 118 подписок / 1 207 репостов · 22.08 Allis-Chalmers — 111 / 1 315 репостов</div>
+  </div>
+ </div>
+
+ <div class="day">
+  <div class="cov">
+   <div class="in">
+    <div class="k"><span class="star">✳</span> Итоги недели · 6–12 сентября</div><div class="pn">1 / 9</div>
+    <div class="t">70 000.<br><span class="u">Вот что сработало</span></div>
+    <div class="l"><span class="dd">::</span> Два анонса, одна история, один список. Цифры по дням внутри.</div>
+    <div class="chip" style="left:8%;bottom:26%">⟳ +1 500 за неделю</div>
+    <div class="f"><span class="av"><img src="assets/andrey.jpg">Андрей Андреев</span><span>листайте →</span></div>
+   </div>
+  </div>
+  <div>
+   <div class="d">Воскресенье · 13 сентября · «Итоги недели» в v4 · автомат в 12:00 + видео-обложка</div>
+   <h3>70 000. Вот что сработало</h3>
+   <p>Выпуск собирается сам в 12:00 в новом дизайне. Если неделя вышла на 70 000, обложка так и говорит, и это отдельный повод для репоста. Обложки постов недели едут внизу лентой, как в видео-версии.</p>
+   <div class="must"><span class="dd">::</span><b>В заголовке обязательно:</b> итоговая цифра и слово «сработало». Если 70 000 не вышло, честная цифра и «что дало больше всего».</div>
+   <div class="why">почему: рубрика уже идёт каждое воскресенье; 30.08–05.09 — 10 публикаций, 241 865 охвата, +722</div>
+  </div>
+ </div>
+</div></section>
+
+<section class="sec" id="headline"><div class="wrap">
+ <div class="kick mono"><span class="star">✳</span> Общее правило заголовка</div>
+ <h2 class="h2">Одно подчёркнутое слово, ни одного <span class="u">«в этом посте вы узнаете»</span></h2>
+ <ul class="checks">
+  <li>Анонс: дата старта, число мест, кодовое слово.</li>
+  <li>Личная история: год или возраст, цифра, поворот.</li>
+  <li>Серия «нюанс»: чужая цитата в кавычках первой строкой.</li>
+  <li>Список: число и слово из зоны денег.</li>
+  <li>Чужая история: первое предложение сюжета, ч/б портрет, цитата на обложке.</li>
+  <li>Везде: никаких «не X, а Y», стрелок и восклицаний; одно подчёркнутое слово в дизайне.</li>
+ </ul>
+</div></section>
+
+<section class="sec sec-dark" id="reels"><div class="wrap">
+ <div class="kick mono"><span class="star">✳</span> Рилсы · темы из каруселей, которые уже зашли</div>
+ <h2 class="h2">Говорящая голова на проверенную тему, через 3–4 часа после карусели дня</h2>
+ <div class="reels">
+  <div class="reel"><span class="n">пн · 40 с</span><h4>Эксперимент Лангер, 1981</h4><p>«В 1981-м психолог поместила стариков в дом из 1959 года на неделю». Финал: что это значит для тех, кто говорит «мне поздно начинать блог».</p><span class="src">карусель 01.08 · 1 347 репостов · 47 346 охвата</span></div>
+  <div class="reel"><span class="n">вт · 30 с</span><h4>Письмо 30-летнему</h4><p>Три совета из письма, которые звучат хуже всего вслух и потому запоминаются. В камеру, без монтажа.</p><span class="src">карусель 03.09 · 263 подписки · 90 917 охвата</span></div>
+  <div class="reel"><span class="n">ср · сериал</span><h4>«Ну вообще, да. Но есть нюанс»</h4><p>Чужая фраза текстом на экране, ты отвечаешь. Снимается пачкой за один присест, по одному в неделю.</p><span class="src">карусели 09.08 и 11.08 · 1,0 % и 0,6 % в подписку</span></div>
+  <div class="reel"><span class="n">чт · 30 с</span><h4>Докторантура и такси</h4><p>Сама история за 30 секунд плюс одна фраза, зачем ты её рассказываешь.</p><span class="src">карусель 25.08 · 1 207 репостов · 91 678 охвата</span></div>
+  <div class="reel"><span class="n">пт · 25 с</span><h4>Стоматолог за 80 тысяч</h4><p>Одна сцена узнавания и одна фраза, которую сказать клиенту вместо оправдания цены.</p><span class="src">карусель 08.06 · 237 подписок · 56 892 охвата</span></div>
+ </div>
+ <p class="lead" style="margin-top:36px;color:rgba(255,255,255,.75)">За год Instagram не отдал ни одной отслеживаемой подписки с рилсов, а на прошлой неделе лента дала 99 % охвата. Поэтому рилсы здесь эксперимент, который ты сам хочешь начать, а не источник цифры 1 500. Если за неделю рилсы покажут больше 30–40 тысяч охвата на штуку, в следующем плане они идут как канал.</p>
+</div></section>
+
+<section class="sec" id="todo"><div class="wrap">
+ <div class="kick mono"><span class="star">✳</span> До понедельника</div>
+ <h2 class="h2">Две вещи, без которых анонсы дадут просмотры, <span class="u">а не подписчиков</span></h2>
+ <ul class="checks">
+  <li>Проверить, что бот на слово «Экскурсия» проверяет подписку до выдачи ссылки на экскурсию.</li>
+  <li>Закрепить в профиле письмо 30-летнему первым и анонс потока вторым: зашедший видит лучшее и вход.</li>
+  <li>Тексты постов по этому плану собираются через конвейер по «да» на каждый день; обложки здесь — эскизы в масштабе, финальные рендеры 1080×1350 после текста.</li>
+ </ul>
+</div></section>
+
+<footer class="footer"><div class="wrap">План недели 7–13 сентября 2026 · Андрей Андреев · собрано 6 сентября по данным Instagram Graph API и скоринга 806 постов</div></footer>
+
+</body>
+</html>
