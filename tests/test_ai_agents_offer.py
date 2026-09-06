@@ -62,13 +62,8 @@ def test_approved_v2_preserves_media_noindex_and_tracking():
     assert 'data-placement="hero"' in html
     assert html.count('data-video="https://kinescope.io/embed/') == 3
     videos = re.findall(r'<video\b[^>]*>', html)
-    assert len(videos) == 6
-    modal_video = next(video for video in videos if 'id="modal-video"' in video)
-    for attribute in ("controls", "playsinline", "loop", "hidden"):
-        assert attribute in modal_video
-    assert "muted" not in modal_video
-    assert html.count("data-local-video=") == 3
-    for video in (video for video in videos if video != modal_video):
+    assert len(videos) == 5
+    for video in videos:
         for attribute in ('autoplay', 'muted', 'loop', 'playsinline', 'poster='):
             assert attribute in video
     for asset in re.findall(r'(?:src|poster)="(assets/[^"]+)"', html):
