@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Блог предпринимателя — индивидуальное сопровождение с Андреем Андреевым</title>
+<meta name="description" content="За 90 дней превратим твой блог в систему контента и продаж. Индивидуальная работа с Андреем Андреевым. AI-агенты, настроенные под твой бизнес и твой голос.">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:title" content="Блог предпринимателя — индивидуальное сопровождение">
+<meta property="og:description" content="За 90 дней превратим твой блог в систему контента и продаж. Индивидуальная работа с Андреем Андреевым.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFFFFF;--blue:#BFDDFB;--blue-soft:#DCEBFC;--blue-deep:#2F80ED;--coral:#E8563F;--ink:#111111;--ink-2:#3A3A3A;--mute:#6B6B6B;--line:#E6E6E6;--gray:#F5F5F5;--yellow:#F5C445;--dark:#2B2B2B}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,system-ui,-apple-system,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;line-height:1.45;font-size:17px}
+img,video{display:block;max-width:100%}
+a{color:inherit}
+ul{list-style:none}
+.mono{font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,monospace;font-size:12.5px;letter-spacing:.02em}
+.wrap{max-width:1240px;margin:0 auto;padding:0 40px}
+.sec{padding:clamp(56px,6.5vw,88px) 0}
+.sec-gray{background:var(--gray)}
+.sec-dark{background:var(--dark);color:#fff}
+.sec-dark .kick{color:rgba(255,255,255,.6)}
+.sec-dark .lead{color:rgba(255,255,255,.85)}
+.sec-dark .h2 .u:after{background:var(--blue)}
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:0 34px;border-radius:999px;text-decoration:none;font-size:15px;font-weight:500;font-family:'JetBrains Mono',monospace;letter-spacing:.01em;cursor:pointer;border:0;transition:transform .15s ease,opacity .15s ease}
+.pill:hover{transform:translateY(-1px);opacity:.94}
+.pill:focus-visible{outline:3px solid var(--blue-deep);outline-offset:3px}
+.pill-coral{background:var(--coral);color:#fff}
+.pill-ghost{background:var(--gray);color:var(--ink)}
+.pill-white{background:#fff;color:var(--ink)}
+.kick{color:var(--mute);margin-bottom:28px;display:flex;gap:10px;align-items:center}
+.kick .star{color:var(--coral);font-size:15px}
+.h2{font-size:clamp(32px,4.2vw,58px);line-height:1.1;letter-spacing:-.03em;font-weight:400;max-width:900px}
+.h2 .u,.h1 .u{position:relative;display:inline-block}
+.h2 .u:after{content:"";position:absolute;left:0;right:0;bottom:.04em;height:2px;background:var(--blue-deep)}
+.lead{font-size:clamp(18px,1.5vw,21px);line-height:1.45;color:var(--ink-2);max-width:720px}
+.lead .num{font-family:'JetBrains Mono',monospace;color:var(--blue-deep);margin-right:6px}
+.sub{color:var(--mute)}
+/* nav */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:28px 0}
+.nav-l{display:flex;align-items:center;gap:14px;text-decoration:none}
+.nav-l img{width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:top}
+.nav-l .tag{background:var(--gray);border-radius:12px;padding:10px 16px;line-height:1.35}
+.nav-r{display:flex;gap:12px}
+/* hero */
+.hero{padding:40px 0 80px}
+.hero-top{display:grid;grid-template-columns:1fr;gap:34px}
+.h1{font-size:clamp(52px,8.3vw,120px);line-height:.92;letter-spacing:-.045em;font-weight:500;position:relative;display:block;max-width:100%}
+.h1 .u:after{content:"";position:absolute;left:0;right:0;bottom:-.02em;height:3px;background:var(--blue-deep)}
+.meta{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:760px}
+.meta-row{display:grid;grid-template-columns:96px 1fr;gap:10px;border-bottom:1px solid var(--line);padding-bottom:14px}
+.meta-row .k{color:var(--mute)}
+.meta-row .v{font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.55}
+.hero-mid{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center;margin-top:56px}
+.hero .lead{font-size:20px;max-width:560px}
+.hero-sub{margin-top:18px;color:var(--mute)}
+.cards{position:relative;height:340px}
+.card{position:absolute;width:250px;aspect-ratio:4/3;border-radius:14px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.18);background:#fff;border:1px solid var(--line)}
+.card img{width:100%;height:100%;object-fit:cover;object-position:left top}
+.card.tall{aspect-ratio:4/5;width:200px}
+.card.tall img{object-position:top}
+.card .ic{position:absolute;top:10px;right:10px;width:22px;height:22px;border:2px solid #fff;border-radius:5px;box-shadow:2px 2px 0 #fff}
+.chip{position:absolute;background:#fff;border-radius:999px;padding:9px 16px;font-family:'JetBrains Mono',monospace;font-size:14px;box-shadow:0 8px 24px rgba(0,0,0,.14);white-space:nowrap;display:flex;gap:8px;align-items:center}
+.hero-cta{margin-top:56px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.hero-cta .note{color:var(--mute);font-size:14px;margin-left:8px}
+/* problems */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:44px}
+.prob{background:var(--gray);border-radius:18px;padding:20px 22px;display:flex;gap:16px;align-items:flex-start;font-size:17px;line-height:1.4}
+.prob .n{font-family:'JetBrains Mono',monospace;color:var(--blue-deep);font-size:13px;padding-top:4px;flex:none;min-width:26px}
+.prob.blue{background:var(--blue)}
+.prob.blue .n{color:#1f4f8a}
+/* before / after */
+.check-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;margin-top:56px}
+.check-grid h3{font-size:22px;font-weight:500;margin-bottom:18px}
+.checks{border-top:1px solid var(--line)}
+.checks li{display:flex;gap:16px;align-items:center;padding:15px 0;border-bottom:1px solid var(--line);font-size:17px}
+.checks li:before{content:"✓";font-family:'JetBrains Mono',monospace;color:var(--blue-deep);flex:none}
+.checks.no li:before{content:"✕";color:var(--coral)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-family:'JetBrains Mono',monospace;font-size:12.5px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 13px}
+.chips.gray span{background:var(--gray);border-color:transparent}
+/* analytics */
+.proof{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:56px}
+.shot{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.shot img{width:100%}
+.shot .cap{padding:16px 20px;color:var(--mute);font-size:14px;border-top:1px solid var(--line)}
+.shot.dark{background:#1f1f1f;border-color:#3a3a3a}
+.shot.dark .cap{color:rgba(255,255,255,.65);border-color:#3a3a3a}
+.notes{margin-top:34px;display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.note-card{background:var(--gray);border-radius:18px;padding:22px 24px;font-size:16px;line-height:1.45;color:var(--ink-2)}
+.note-card .n{display:block;font-family:'JetBrains Mono',monospace;color:var(--blue-deep);font-size:12.5px;margin-bottom:10px}
+.sec-dark .note-card{background:rgba(255,255,255,.07);color:rgba(255,255,255,.85)}
+.sec-dark .note-card .n{color:var(--blue)}
+/* principle */
+.sec-blue{background:var(--blue);padding:clamp(64px,8vw,100px) 0}
+.center{text-align:center;max-width:900px;margin:0 auto}
+.center .kick{justify-content:center;color:#3d4b5c}
+.center .sub{margin-top:24px;font-size:19px;color:#2a3542;max-width:720px;margin-left:auto;margin-right:auto}
+.center .chips{justify-content:center;margin-top:34px}
+.center .chips span{background:#fff;border-color:transparent}
+/* months */
+.wks{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:56px}
+.wk{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px 26px 22px;display:flex;flex-direction:column;gap:14px}
+.wk .m{font-family:'JetBrains Mono',monospace;color:var(--blue-deep);font-size:12.5px}
+.wk h3{font-size:22px;font-weight:500;letter-spacing:-.01em}
+.wk .rows{border-top:1px solid var(--line)}
+.wk .row{padding:14px 0;border-bottom:1px solid var(--line)}
+.wk .row b{display:block;font-weight:500;font-size:16px}
+.wk .row span{display:block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--mute);margin-bottom:4px}
+.wk .row p{font-size:14.5px;color:var(--ink-2);margin-top:4px;line-height:1.38}
+.wk .res{margin-top:auto;background:var(--blue);border-radius:14px;padding:16px 18px;font-size:16px;line-height:1.45}
+.wk .res b{font-weight:500}
+/* agents */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:56px}
+.agent{background:var(--gray);border-radius:20px;padding:30px 30px 28px;display:flex;flex-direction:column;gap:18px}
+.agent.blue{background:var(--blue)}
+.agent .head{display:flex;align-items:center;gap:14px}
+.agent .badge{width:48px;height:48px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-size:14px}
+.agent h3{font-size:24px;font-weight:500;letter-spacing:-.01em}
+.agent .checks li{font-size:16px;padding:12px 0}
+.agent.blue .checks{border-color:rgba(20,40,80,.15)}
+.agent.blue .checks li{border-color:rgba(20,40,80,.15)}
+.agent.blue .checks li:before{color:#1f4f8a}
+/* funnel */
+.funnel{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:start;margin-top:56px}
+/* author */
+.author{display:grid;grid-template-columns:1fr 1fr;border-radius:24px;overflow:hidden;margin-top:56px}
+.author .l{background:var(--dark);color:#fff;padding:48px 44px;display:flex;flex-direction:column;gap:22px}
+.author .l .name{font-size:clamp(40px,5vw,72px);font-weight:500;line-height:.95;letter-spacing:-.04em}
+.author .l .name span{display:block}
+.author .l .handle{font-family:'JetBrains Mono',monospace;color:rgba(255,255,255,.6);font-size:13px}
+.author .stats{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:auto}
+.author .stat b{display:block;font-size:36px;font-weight:400;letter-spacing:-.03em;line-height:1}
+.author .stat span{display:block;font-family:'JetBrains Mono',monospace;font-size:12px;color:rgba(255,255,255,.6);margin-top:8px;line-height:1.5}
+.author .r{position:relative;min-height:460px;background:#F3D4C8;background-image:radial-gradient(circle at 20% 15%,#F4B8A0 0,transparent 42%),radial-gradient(circle at 85% 20%,#E8563F 0,transparent 38%),radial-gradient(circle at 75% 85%,#F5D9A8 0,transparent 40%),radial-gradient(circle at 15% 85%,#BFDDFB 0,transparent 45%);min-height:520px}
+.author .r img{position:absolute;left:50%;bottom:0;transform:translateX(-50%);height:100%;width:auto;max-width:none;object-fit:cover;object-position:top}
+.author .r .card-s{position:absolute;right:24px;bottom:24px;background:#fff;border-radius:16px;padding:18px 20px;width:250px;box-shadow:0 16px 40px rgba(0,0,0,.14)}
+.author .r .card-s .t{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--mute);margin-bottom:10px}
+.author .r .card-s .ln{display:flex;justify-content:space-between;font-size:14px;padding:8px 0;border-top:1px solid var(--line)}
+.author .r .card-s .ln b{font-weight:500}
+.does{margin-top:40px;display:grid;grid-template-columns:1fr 1fr;gap:0 60px}
+.does .checks li{font-size:16px}
+/* format / results */
+.fmt{margin-top:40px;border-top:1px solid var(--line)}
+.fmt li{display:flex;gap:16px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);font-family:'JetBrains Mono',monospace;font-size:13.5px;color:var(--ink-2)}
+.fmt li:before{content:"✓";color:var(--blue-deep);flex:none}
+.res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:56px}
+.res-card{background:var(--gray);border-radius:18px;padding:24px 26px;min-height:170px;display:flex;flex-direction:column;gap:12px}
+.res-card:nth-child(even){background:var(--blue)}
+.res-card .n{font-family:'JetBrains Mono',monospace;color:var(--blue-deep);font-size:12.5px}
+.res-card:nth-child(even) .n{color:#1f4f8a}
+.res-card h3{font-size:20px;font-weight:500;letter-spacing:-.01em;line-height:1.25;margin-top:auto}
+/* price */
+.price{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;margin-top:56px}
+.price .name{font-size:clamp(34px,4vw,54px);font-weight:500;letter-spacing:-.03em;line-height:1.05}
+.price .pm{margin-top:24px;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.8;color:var(--ink-2)}
+.price .pm b{color:var(--coral);font-weight:500}
+.tariffs{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px}
+.tariff{border-radius:18px;padding:24px 26px;background:var(--gray)}
+.tariff.blue{background:var(--blue)}
+.tariff .d{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--mute)}
+.tariff.blue .d{color:#1f4f8a}
+.tariff .p{font-size:clamp(30px,3vw,42px);font-weight:500;letter-spacing:-.04em;margin-top:14px;white-space:nowrap}
+.tariff .p .dd{font-family:'JetBrains Mono',monospace;color:var(--blue-deep);font-size:.6em;margin-right:8px;vertical-align:middle}
+.tariff.blue .p .dd{color:#1f4f8a}
+.incl{margin-top:26px}
+.incl .t{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--mute);margin-bottom:8px}
+.incl ul{border-top:1px solid var(--line)}
+.incl li{padding:12px 0;border-bottom:1px solid var(--line);font-size:16px;display:flex;gap:14px}
+.incl li:before{content:"✓";font-family:'JetBrains Mono',monospace;color:var(--blue-deep)}
+.buy{margin-top:28px;display:flex;gap:12px;align-items:center}
+.buy .pill{min-height:64px;padding:0 40px;font-size:16px}
+.buy .circle{width:64px;height:64px;border-radius:50%;background:var(--coral);color:#fff;display:grid;place-items:center;font-size:20px;flex:none}
+.buy-note{margin-top:14px;color:var(--mute);font-size:14px}
+/* faq */
+.faq{margin-top:48px;max-width:900px}
+.faq details{border-top:1px solid var(--line)}
+.faq details:last-child{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:20px;padding:20px 0;font-size:19px;font-weight:500}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:after{content:"+";font-family:'JetBrains Mono',monospace;color:var(--blue-deep);font-size:22px;flex:none}
+.faq details[open] summary:after{content:"–"}
+.faq p{padding:0 0 22px;color:var(--ink-2);max-width:760px}
+/* footer */
+.footer{border-top:1px solid var(--line);padding:36px 0 60px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:var(--mute);font-family:'JetBrains Mono',monospace;font-size:12.5px}
+.footer a{text-decoration:underline;text-underline-offset:3px}
+/* responsive */
+@media(max-width:980px){
+ .hero-top,.hero-mid,.grid2,.check-grid,.proof,.notes,.wks,.two,.funnel,.author,.does,.res-grid,.price{grid-template-columns:1fr}
+ .h1{font-size:clamp(52px,9.5vw,120px)}
+ .cards{height:300px}
+ .author .r{min-height:420px}
+}
+@media(max-width:640px){
+ .wrap{padding:0 20px}
+ .nav-l .tag,.nav-r .pill-ghost{display:none}
+ .h1{font-size:15.5vw}
+ .meta{grid-template-columns:1fr}
+ .hero{padding:16px 0 60px}
+ .cards{transform:scale(.8);transform-origin:left top;height:260px;margin-bottom:-40px}
+ .tariffs{grid-template-columns:1fr}
+ .buy .circle{display:none}
+ .buy .pill{width:100%}
+ .sec{padding:56px 0}
+}
+</style>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=109255989', 'ym');
+   ym(109255989, 'init', {ssr:true, webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true, trackHash:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/109255989" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="nav" aria-label="Основная навигация">
+ <a class="nav-l" href="#top"><img src="andrey.jpg" alt=""><span class="tag mono">Блог предпринимателя<br>индивидуально с Андреем</span></a>
+ <div class="nav-r">
+  <a class="pill pill-ghost" href="#months">Как устроено ➤</a>
+  <a class="pill pill-coral" href="#price" onclick="ym(109255989,'reachGoal','mentorship_pricing_open')">Обсудить сопровождение</a>
+ </div>
+</nav>
+
+<header class="hero" id="top">
+ <div class="hero-top">
+  <h1 class="h1">Блог как система<br><span class="u">контента и продаж</span></h1>
+  <div class="meta" aria-label="Формат">
+   <div class="meta-row"><span class="k mono">формат :</span><span class="v">Индивидуально с Андреем<br>3 или 6 месяцев</span></div>
+   <div class="meta-row"><span class="k mono">ритм :</span><span class="v">Стартовая сессия<br>Одна встреча в неделю<br>Рабочий чат между встречами</span></div>
+  </div>
+ </div>
+ <div class="hero-mid">
+  <div>
+   <p class="lead"><span class="num">::</span>За 90 дней превращаем твой блог в систему: позиционирование, архитектура контента, база знаний, два AI-агента под твой бизнес и твой голос, офферы и путь к продаже.</p>
+   <p class="hero-sub mono">Сначала коротко обсудим твою ситуацию и поймём, подходит ли тебе этот формат.</p>
+  </div>
+  <div class="cards" aria-hidden="true">
+   <div class="card" style="left:0;top:20px;transform:rotate(-5deg)"><img src="assets/instagram-analytics-summary.png" alt=""><span class="ic"></span></div>
+   <div class="card" style="right:0;top:110px;transform:rotate(4deg)"><img src="assets/funnel-os-overview.png" alt=""><span class="ic"></span></div>
+   <div class="chip" style="left:120px;top:0">♡ 17,6 млн просмотров</div>
+   <div class="chip" style="right:10px;bottom:0">⟳ +23 000 подписчиков</div>
+  </div>
+ </div>
+ <div class="hero-cta">
+  <a class="pill pill-coral" href="https://t.me/andrey_andreev" target="_blank" rel="noopener" onclick="ym(109255989,'reachGoal','mentorship_telegram_click')">Обсудить сопровождение</a>
+  <a class="pill pill-ghost" href="#months">Как устроены три месяца</a>
+  <span class="note mono">3 месяца · 600 000 ₽ &nbsp;/&nbsp; 6 месяцев · 1 000 000 ₽</span>
+ </div>
+</header>
+
+<section class="sec" id="system">
+ <div class="kick mono"><span class="star">✳</span> Узнаёшь себя?</div>
+ <h2 class="h2">Блог есть. <span class="u">Системы</span> вокруг него нет.</h2>
+ <div class="grid2">
+  <div class="prob"><span class="n">01</span>В заметках десятки идей, но публикуются единицы.</div>
+  <div class="prob"><span class="n">02</span>Контент появляется только тогда, когда остаются силы.</div>
+  <div class="prob blue"><span class="n">03</span>Непонятно, какие публикации приводят к продажам.</div>
+  <div class="prob"><span class="n">04</span>Продукт существует отдельно, блог отдельно.</div>
+  <div class="prob"><span class="n">05</span>Подрядчики умеют делать контент, но не могут воспроизвести твоё мышление.</div>
+  <div class="prob"><span class="n">06</span>AI генерирует тексты, которые формально правильные, но не похожи на человека.</div>
+  <div class="prob blue"><span class="n">07</span>Аудитория читает, но не понимает, что у тебя можно купить.</div>
+  <div class="prob"><span class="n">08</span>Снова и снова пытаешься начать «вести блог регулярно».</div>
+ </div>
+ <p class="lead" style="margin-top:40px">Проблема обычно не в дисциплине и не в недостатке идей. Не хватает системы, которая связывает знания предпринимателя, контент, аудиторию, продукт и продажи.</p>
+</section>
+
+<section class="sec sec-gray">
+ <div class="kick mono"><span class="star">✳</span> Что должно появиться вместо хаоса</div>
+ <h2 class="h2">Блог как <span class="u">управляемая</span> часть бизнеса</h2>
+ <div class="check-grid">
+  <div>
+   <h3>Сейчас</h3>
+   <div class="chips"><span>каждый пост с пустого листа</span><span>темы наугад</span><span>контент сам по себе, продукт сам по себе</span><span>знания только в голове</span><span>результат меряется лайками</span><span>рывок, пауза, снова тишина</span></div>
+  </div>
+  <div>
+   <h3>Через 90 дней</h3>
+   <ul class="checks">
+    <li>Понятна роль блога в бизнесе</li>
+    <li>Определены аудитория и сегменты</li>
+    <li>Есть смысловая архитектура контента</li>
+    <li>Знания собраны в собственной базе</li>
+    <li>Публикации сохраняют твой голос</li>
+    <li>У сегментов подходящие офферы</li>
+    <li>Виден путь от контента к продаже</li>
+    <li>Система работает и после сопровождения</li>
+   </ul>
+  </div>
+ </div>
+</section>
+
+<section class="sec" id="analytics-proof">
+ <div class="kick mono"><span class="star">✳</span> Проверяем на данных</div>
+ <h2 class="h2">Не угадываем, что работает. Смотрим на <span class="u">динамику.</span></h2>
+ <p class="lead" style="margin-top:24px">Я веду живую недельную аналитику своего Instagram: рост аудитории, охваты среди подписчиков и неподписчиков, сохранения, репосты и комментарии.</p>
+ <div class="proof">
+  <div class="shot"><img src="assets/instagram-analytics-summary.png" alt="Сводные показатели аккаунта"><div class="cap">Сводные показатели аккаунта @andreyandreev.me. Источник Instagram Graph API, данные обновляются еженедельно.</div></div>
+  <div class="shot"><img src="assets/instagram-reach.png" alt="Недельный охват"><div class="cap">Недельный охват показывает не одну красивую цифру, а колебания результата и вклад новой аудитории.</div></div>
+ </div>
+ <div class="notes">
+  <div class="note-card"><span class="n">01 · охват</span>Показывает масштаб контакта с контентом, но сам по себе ещё не доказывает продажу.</div>
+  <div class="note-card"><span class="n">02 · сохранения и репосты</span>Помогают увидеть материалы, к которым люди возвращаются и которыми делятся.</div>
+  <div class="note-card"><span class="n">03 · динамика по неделям</span>Отделяет единичный вирусный всплеск от системы, которую можно повторять и улучшать.</div>
+ </div>
+ <p style="margin-top:30px"><a class="pill pill-ghost" href="https://andreyandreev.me/ig-analytics/" target="_blank" rel="noopener">Посмотреть живую аналитику ↗</a></p>
+</section>
+
+<section class="sec-blue">
+ <div class="wrap center">
+  <div class="kick mono"><span class="star">✳</span> Главный принцип</div>
+  <h2 class="h2" style="max-width:none">AI не пишет вместо тебя. Он помогает работать с тем, что уже есть <span class="u">в твоей голове и бизнесе.</span></h2>
+  <p class="sub">В основе контента остаются знания, опыт, мнение, истории, решения и язык предпринимателя. Финальное слово всегда за автором.</p>
+  <div class="chips"><span>база знаний автора</span><span>продукт</span><span>сегменты аудитории</span><span>правила подачи</span><span>дизайн-система</span><span>редакционные ограничения</span><span>результаты публикаций</span></div>
+ </div>
+</section>
+
+<section class="sec" id="months">
+ <div class="kick mono"><span class="star">✳</span> Как устроены три месяца</div>
+ <h2 class="h2">Три месяца. От стратегии до <span class="u">работающей системы.</span></h2>
+ <div class="wks">
+  <div class="wk">
+   <span class="m">Месяц 01</span>
+   <h3>Собрать основу</h3>
+   <div class="rows">
+    <div class="row"><span>Неделя 1</span><b>Диагностика</b><p>Разбираем бизнес, продукт, текущий блог, продажи, сильные стороны автора и существующую аудиторию.</p></div>
+    <div class="row"><span>Неделя 2</span><b>Позиционирование</b><p>Определяем, что ты хочешь занять в голове аудитории, о чём говоришь и почему тебя должны слушать.</p></div>
+    <div class="row"><span>Неделя 3</span><b>Аудитория и сегменты</b><p>Разделяем аудиторию по ситуациям, задачам и готовности покупать.</p></div>
+    <div class="row"><span>Неделя 4</span><b>Архитектура контента</b><p>Определяем главные смысловые линии блога, типы публикаций и связь каждой линии с продуктом.</p></div>
+   </div>
+   <div class="res"><b>Результат.</b> Понятно, какую роль блог выполняет в бизнесе, для кого он и о чём. Больше не нужно каждый раз придумывать, о чём говорить.</div>
+  </div>
+  <div class="wk">
+   <span class="m">Месяц 02</span>
+   <h3>Запустить контентную систему</h3>
+   <div class="rows">
+    <div class="row"><span>Неделя 5</span><b>База знаний автора</b><p>Собираем опыт, истории, кейсы, решения, принципы, мнение и рабочие материалы.</p></div>
+    <div class="row"><span>Неделя 6</span><b>Контентный AI-агент</b><p>Настраиваем агента, который работает с базой знаний, стилем, дизайн-системой и правилами автора.</p></div>
+    <div class="row"><span>Неделя 7</span><b>Производственный процесс</b><p>Понятный цикл: идея, материал из базы, черновик, редактура автора, дизайн, публикация, аналитика.</p></div>
+    <div class="row"><span>Неделя 8</span><b>Реальные публикации</b><p>Публикуем материалы, смотрим реакцию аудитории и корректируем темы, форматы и подачу.</p></div>
+   </div>
+   <div class="res"><b>Результат.</b> Контент выходит из твоей базы знаний в твоём голосе, по понятному процессу, и проверяется на живой аудитории.</div>
+  </div>
+  <div class="wk">
+   <span class="m">Месяц 03</span>
+   <h3>Связать блог с продажами</h3>
+   <div class="rows">
+    <div class="row"><span>Неделя 9</span><b>Офферы</b><p>Определяем, что предлагать разным сегментам аудитории и в какой момент.</p></div>
+    <div class="row"><span>Неделя 10</span><b>Путь клиента</b><p>Связываем контент, диалог, лид-магнит, квалификацию, предложение и продажу.</p></div>
+    <div class="row"><span>Неделя 11</span><b>Тест</b><p>Проводим одну небольшую кампанию или тест оффера на существующей аудитории.</p></div>
+    <div class="row"><span>Неделя 12</span><b>Закрепление</b><p>Разбираем результаты, исправляем слабые места и формируем план самостоятельной работы на следующие 90 дней.</p></div>
+   </div>
+   <div class="res"><b>Результат.</b> Виден путь от публикации к диалогу и продаже, и есть план, как вести систему самостоятельно дальше.</div>
+  </div>
+ </div>
+ <ul class="fmt">
+  <li>Стартовая стратегическая сессия</li>
+  <li>Одна индивидуальная встреча каждую неделю</li>
+  <li>Рабочий чат между встречами</li>
+  <li>Обратная связь по контенту и разбор результатов публикаций</li>
+  <li>Совместная работа над офферами и воронкой</li>
+  <li>Настройка двух AI-агентов</li>
+  <li>Итоговая сессия и план следующих действий</li>
+ </ul>
+</section>
+
+<section class="sec sec-gray" id="agents">
+ <div class="kick mono"><span class="star">✳</span> AI-инфраструктура</div>
+ <h2 class="h2">Два агента, настроенных под <span class="u">конкретный бизнес</span></h2>
+ <div class="two">
+  <div class="agent">
+   <div class="head"><span class="badge">01</span><h3>Для контента</h3></div>
+   <ul class="checks">
+    <li>Находит темы в базе знаний</li>
+    <li>Превращает разговоры, кейсы и идеи в материалы</li>
+    <li>Сохраняет стиль автора</li>
+    <li>Адаптирует одну мысль под разные форматы</li>
+    <li>Соблюдает правила дизайн-системы</li>
+    <li>Готовит основу публикаций без выдумывания чужого опыта</li>
+   </ul>
+  </div>
+  <div class="agent blue">
+   <div class="head"><span class="badge">02</span><h3>Для продукта и продаж</h3></div>
+   <ul class="checks">
+    <li>Видит сегменты аудитории</li>
+    <li>Сопоставляет запросы с продуктами</li>
+    <li>Формулирует офферы</li>
+    <li>Проектирует путь клиента</li>
+    <li>Связывает публикации, диалоги и продажи</li>
+    <li>Анализирует результаты тестов</li>
+   </ul>
+  </div>
+ </div>
+ <p class="lead" style="margin-top:34px">Агенты остаются рабочими инструментами предпринимателя после завершения сопровождения.</p>
+</section>
+
+<section class="sec sec-dark" id="funnel-proof">
+ <div class="kick mono"><span class="star">✳</span> Контент связан с продажами</div>
+ <h2 class="h2">Видим не только публикацию, но и <span class="u">весь путь человека.</span></h2>
+ <div class="funnel">
+  <div class="shot dark"><img src="assets/funnel-os-overview.png" alt="Фрагмент Funnel OS"><div class="cap">Фрагмент Funnel OS: только агрегированные этапы и конверсии, без имён, переписок и данных клиентов.</div></div>
+  <div>
+   <p class="lead">В Funnel OS я собираю путь от первого действия до подтверждённой оплаты. Поэтому видно не абстрактное «контент не работает», а конкретный этап, на котором теряется движение.</p>
+   <div class="notes" style="grid-template-columns:1fr;margin-top:28px">
+    <div class="note-card"><span class="n">01</span>Вход в Telegram, согласие получить материал, действие после просмотра, квалификация, checkout и оплата считаются отдельно.</div>
+    <div class="note-card"><span class="n">02</span>Клик не считается просмотром, checkout оплатой, а охват продажей.</div>
+    <div class="note-card"><span class="n">03</span>Мы меняем конкретное слабое место: контент, переход, оффер, квалификацию или следующий шаг.</div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="sec" id="personal">
+ <div class="kick mono"><span class="star">✳</span> Главное отличие</div>
+ <h2 class="h2">Это не программа с куратором. Андрей работает с тобой <span class="u">лично.</span></h2>
+ <div class="author">
+  <div class="l">
+   <div class="name"><span>Andrey</span><span>Andreev</span></div>
+   <div class="handle">@andreyandreev.me · предприниматель и коуч</div>
+   <p style="color:rgba(255,255,255,.85);max-width:420px">Помогаю предпринимателям связывать контент, продукт, аудиторию и продажи в одну систему. В 35 открыл бренд одежды. В 44 выпустил первое приложение в App Store. Веду закрытые группы по блогу.</p>
+   <div class="stats">
+    <div class="stat"><b>444</b><span>поста с 1 января по конец июля, час в день на контент</span></div>
+    <div class="stat"><b>17,6 млн</b><span>просмотров и +23 000 подписчиков с этих постов</span></div>
+   </div>
+  </div>
+  <div class="r">
+   <img src="andrey.jpg" alt="Андрей Андреев">
+   <div class="card-s"><div class="t">Статистика · январь–июль</div><div class="ln"><span>Публикаций</span><b>444</b></div><div class="ln"><span>Просмотров</span><b>17,6 млн</b></div><div class="ln"><span>Подписчиков</span><b>+23 000</b></div></div>
+  </div>
+ </div>
+ <div class="does">
+  <ul class="checks">
+   <li>Проводит стартовую стратегическую сессию</li>
+   <li>Каждую неделю разбирает ситуацию и принимает решения вместе с тобой</li>
+   <li>Помогает сформулировать позиционирование</li>
+   <li>Разбирает аудиторию и продукт</li>
+   <li>Участвует в создании архитектуры контента</li>
+   <li>Даёт редакторскую обратную связь</li>
+  </ul>
+  <ul class="checks">
+   <li>Помогает связать блог с офферами и продажами</li>
+   <li>Участвует в настройке AI-агентов</li>
+   <li>Смотрит результаты реальных публикаций</li>
+   <li>Корректирует систему по ходу работы</li>
+   <li>Проводит итоговый разбор и формирует дальнейший план</li>
+   <li>Не становится твоим SMM-отделом: система остаётся у тебя</li>
+  </ul>
+ </div>
+</section>
+
+<section class="sec sec-gray" id="split">
+ <div class="kick mono"><span class="star">✳</span> Разделение ответственности</div>
+ <h2 class="h2">Мы строим систему <span class="u">вместе</span></h2>
+ <div class="check-grid">
+  <div>
+   <h3>Андрей отвечает за</h3>
+   <ul class="checks">
+    <li>Стратегию и структуру</li>
+    <li>Позиционирование</li>
+    <li>Работу с аудиторией</li>
+    <li>Редакторскую обратную связь</li>
+    <li>Настройку агентов</li>
+    <li>Связь контента с продуктом и продажами</li>
+   </ul>
+  </div>
+  <div>
+   <h3>Ты отвечаешь за</h3>
+   <ul class="checks">
+    <li>Собственные знания и мнение</li>
+    <li>Участие в интервью и встречах</li>
+    <li>Финальное решение по публикациям</li>
+    <li>Личное общение с аудиторией</li>
+    <li>Внедрение согласованных решений</li>
+    <li>Сохранение собственного голоса</li>
+   </ul>
+  </div>
+ </div>
+</section>
+
+<section class="sec" id="results">
+ <div class="kick mono"><span class="star">✳</span> Что будет к концу сопровождения</div>
+ <h2 class="h2">Через три месяца у тебя остаётся не папка с материалами, а <span class="u">работающий способ</span> вести блог</h2>
+ <div class="res-grid">
+  <div class="res-card"><span class="n">01</span><h3>Ясное позиционирование и карта сегментов аудитории</h3></div>
+  <div class="res-card"><span class="n">02</span><h3>Смысловая архитектура блога</h3></div>
+  <div class="res-card"><span class="n">03</span><h3>Собственная база знаний</h3></div>
+  <div class="res-card"><span class="n">04</span><h3>Процесс создания и публикации контента</h3></div>
+  <div class="res-card"><span class="n">05</span><h3>Контентный агент и агент для офферов и продаж</h3></div>
+  <div class="res-card"><span class="n">06</span><h3>Опубликованные и проверенные на аудитории материалы</h3></div>
+  <div class="res-card"><span class="n">07</span><h3>Офферы для разных сегментов</h3></div>
+  <div class="res-card"><span class="n">08</span><h3>Связанный путь от контента к диалогу и продаже</h3></div>
+  <div class="res-card"><span class="n">09</span><h3>План самостоятельной работы на следующие 90 дней</h3></div>
+ </div>
+</section>
+
+<section class="sec sec-gray" id="fit">
+ <div class="kick mono"><span class="star">✳</span> Кому подходит формат</div>
+ <h2 class="h2">Своими знаниями и <span class="u">своим голосом</span></h2>
+ <div class="check-grid">
+  <div>
+   <h3>Подходит, если ты</h3>
+   <ul class="checks">
+    <li>Уже ведёшь бизнес или продаёшь экспертный продукт</li>
+    <li>Хочешь использовать блог как канал доверия и продаж</li>
+    <li>Готов лично участвовать в создании контента</li>
+    <li>Хочешь сохранить собственный голос</li>
+    <li>Устал от случайных публикаций и несвязанных подрядчиков</li>
+    <li>Готов тестировать идеи на реальной аудитории</li>
+    <li>Хочешь построить систему, а не получить временный контент-план</li>
+   </ul>
+  </div>
+  <div>
+   <h3>Не подходит, если</h3>
+   <ul class="checks no">
+    <li>Пока нет определённого продукта</li>
+    <li>Хочется полностью передать блог другому человеку</li>
+    <li>Нет готовности участвовать в интервью, встречах и редактуре</li>
+    <li>Ожидаются автоматические продажи без работы с аудиторией</li>
+    <li>Нужен AI, который создаст чужую экспертность вместо твоей</li>
+   </ul>
+  </div>
+ </div>
+</section>
+
+<section class="sec" id="price">
+ <div class="kick mono"><span class="star">✳</span> Формат и стоимость</div>
+ <h2 class="h2">Индивидуальное <span class="u">сопровождение</span></h2>
+ <div class="price">
+  <div>
+   <div class="name">Блог предпринимателя</div>
+   <div class="pm"><b>Длительность:</b> 3 или 6 месяцев<br><b>Формат:</b> индивидуально, с Андреем лично<br><b>Старт:</b> после короткого разговора о твоей ситуации</div>
+   <div class="tariffs">
+    <div class="tariff blue"><div class="d">3 месяца</div><div class="p"><span class="dd">::</span>600 000 ₽</div></div>
+    <div class="tariff"><div class="d">6 месяцев</div><div class="p"><span class="dd">::</span>1 000 000 ₽</div></div>
+   </div>
+  </div>
+  <div>
+   <div class="incl">
+    <div class="t">В каждом формате:</div>
+    <ul>
+     <li>Личная работа с Андреем</li>
+     <li>Позиционирование и архитектура контента</li>
+     <li>База знаний и два AI-агента</li>
+     <li>Офферы, воронка и аналитика</li>
+     <li>План дальнейшей самостоятельной работы</li>
+    </ul>
+   </div>
+   <div class="buy">
+    <a class="pill pill-coral" href="https://t.me/andrey_andreev" target="_blank" rel="noopener" onclick="ym(109255989,'reachGoal','mentorship_telegram_click')">Написать в Telegram</a>
+    <span class="circle">➤</span>
+   </div>
+   <p class="buy-note">Сначала коротко обсудим твою ситуацию и поймём, подходит ли тебе этот формат.</p>
+  </div>
+ </div>
+</section>
+
+<section class="sec sec-gray" id="faq">
+ <div class="kick mono"><span class="star">✳</span> Вопросы</div>
+ <h2 class="h2">Коротко о <span class="u">формате</span></h2>
+ <div class="faq">
+  <details><summary>Это групповая программа?</summary><p>Нет. Вся основная работа проходит индивидуально с Андреем.</p></details>
+  <details><summary>Андрей будет вести блог вместо меня?</summary><p>Нет. Вы вместе строите систему вокруг знаний, продукта и голоса предпринимателя. Андрей отвечает за стратегию, структуру и обратную связь, но автором остаётся сам предприниматель.</p></details>
+  <details><summary>AI будет писать тексты за меня?</summary><p>AI помогает работать с твоей базой знаний, идеями и правилами. Он не придумывает опыт и не принимает финальное решение за автора.</p></details>
+  <details><summary>Нужно ли уже вести блог?</summary><p>Необязательно вести его регулярно, но должен существовать бизнес, продукт и готовность лично участвовать в работе.</p></details>
+  <details><summary>Что произойдёт после трёх месяцев?</summary><p>У тебя останутся база знаний, процессы, настроенные агенты, архитектура контента, офферы и план дальнейшей работы.</p></details>
+ </div>
+</section>
+
+<footer class="footer">
+ <span>© Андрей Андреев · Блог предпринимателя</span>
+ <span><a href="https://t.me/andrey_andreev" target="_blank" rel="noopener">t.me/andrey_andreev</a> · <a href="https://andreyandreev.me/ig-analytics/">аналитика блога</a></span>
+</footer>
+
+</div>
+</body>
+</html>
