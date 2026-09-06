@@ -219,7 +219,9 @@ a{color:inherit}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.82);display:none;place-items:center;z-index:50;padding:20px}
 .modal.on{display:grid}
 .modal .box{width:min(1080px,100%);aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden;position:relative}
-.modal iframe{width:100%;height:100%;border:0}
+.modal iframe,.modal video{width:100%;height:100%;border:0}
+.modal video{object-fit:contain}
+.modal [hidden]{display:none}
 .modal .x{position:absolute;top:-48px;right:0;background:#fff;border:0;border-radius:999px;width:40px;height:40px;cursor:pointer;font-size:18px}
 .modal .wrapx{position:relative;width:min(1080px,100%)}
 @media (max-width:980px){
@@ -387,11 +389,11 @@ a{color:inherit}
   </div>
   <div class="grid3">
    <a class="ex" href="#" data-video="https://kinescope.io/embed/8AvydEWRzFzSm7CapqLEV8" style="background:#fff"><div class="thumb"><img src="assets/excursion.jpg" alt=""><span class="dur">15:02</span><span class="play">▶</span></div><div class="body"><span class="mono">Экскурсия · 23 августа</span><h3>Два AI-агента в моём бизнесе: реальные процессы с экрана</h3><span class="res">пост 31 000 просмотров · рилз 18 000 · карусель из данных</span><span class="more">Смотреть →</span></div></a>
-   <a class="ex blue" href="https://t.me/mbga_materials/109" target="_blank" rel="noreferrer"><div class="thumb"><video src="assets/109.mp4" autoplay muted loop playsinline poster="assets/109.jpg"></video><span class="dur">карусель</span></div><div class="body"><span class="mono">Кейс · 20 августа</span><h3>Пост свёрстан агентом через Telegram — голосом, без дизайнера</h3><span class="res">агент сам нашёл фрагменты и написал текст</span><span class="more">Открыть в канале →</span></div></a>
-   <a class="ex" href="https://t.me/mbga_materials/127" target="_blank" rel="noreferrer" style="background:#fff"><div class="thumb"><video src="assets/125.mp4" autoplay muted loop playsinline poster="assets/125.jpg"></video><span class="dur">10 минут</span></div><div class="body"><span class="mono">Кейс · 22 августа</span><h3>Все цитаты найдены и проверены агентом, слайды свёрстаны им</h3><span class="res">пост летит через 4 часа после публикации</span><span class="more">Открыть в канале →</span></div></a>
+   <a class="ex blue" href="assets/109.mp4" data-local-video="assets/109.mp4"><div class="thumb"><video src="assets/109.mp4" autoplay muted loop playsinline poster="assets/109.jpg"></video><span class="dur">карусель</span></div><div class="body"><span class="mono">Кейс · 20 августа</span><h3>Пост свёрстан агентом через Telegram — голосом, без дизайнера</h3><span class="res">агент сам нашёл фрагменты и написал текст</span><span class="more">Смотреть →</span></div></a>
+   <a class="ex" href="assets/125.mp4" data-local-video="assets/125.mp4" style="background:#fff"><div class="thumb"><video src="assets/125.mp4" autoplay muted loop playsinline poster="assets/125.jpg"></video><span class="dur">10 минут</span></div><div class="body"><span class="mono">Кейс · 22 августа</span><h3>Все цитаты найдены и проверены агентом, слайды свёрстаны им</h3><span class="res">пост летит через 4 часа после публикации</span><span class="more">Смотреть →</span></div></a>
    <a class="ex" href="#" data-video="https://kinescope.io/embed/4RCuyBQwKD8RsRTx5RDBJv" style="background:#fff"><div class="thumb"><img src="assets/poster_landing13.jpg" alt=""><span class="dur">13 минут</span><span class="play">▶</span></div><div class="body"><span class="mono">Видео · 2 сентября</span><h3>Как два AI-агента переделали лендинг и подготовили четыре поста за 13 минут</h3><span class="res">первый агент — три маршрута и посты, второй — публикация в live</span><span class="more">Смотреть →</span></div></a>
    <a class="ex blue" href="#" data-video="https://kinescope.io/embed/8ydpRCkSAUqjKXt1eBgKLV"><div class="thumb"><img src="assets/poster_million.jpg" alt=""><span class="dur">9 минут</span><span class="play">▶</span></div><div class="body"><span class="mono">Кейс · 28 августа</span><h3>Как один пост принёс больше миллиона рублей</h3><span class="res">2 110 комментариев · 900 регистраций · 100+ покупок</span><span class="more">Смотреть →</span></div></a>
-   <a class="ex" href="https://t.me/mbga_materials/119" target="_blank" rel="noreferrer" style="background:#fff"><div class="thumb"><video src="assets/119.mp4" autoplay muted loop playsinline poster="assets/119.jpg"></video><span class="dur">голосовые</span></div><div class="body"><span class="mono">Группа · 21 августа</span><h3>Карусели участниц сделаны через голосовые в Telegram</h3><span class="res">никакого CapCut, дизайнера и часов работы</span><span class="more">Открыть в канале →</span></div></a>
+   <a class="ex" href="assets/119.mp4" data-local-video="assets/119.mp4" style="background:#fff"><div class="thumb"><video src="assets/119.mp4" autoplay muted loop playsinline poster="assets/119.jpg"></video><span class="dur">голосовые</span></div><div class="body"><span class="mono">Группа · 21 августа</span><h3>Карусели участниц сделаны через голосовые в Telegram</h3><span class="res">никакого CapCut, дизайнера и часов работы</span><span class="more">Смотреть →</span></div></a>
   </div>
  </div>
 </section>
@@ -494,14 +496,20 @@ a{color:inherit}
 </footer>
 
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Видео">
- <div class="wrapx"><button class="x" id="modal-x" aria-label="Закрыть">✕</button><div class="box"><iframe id="modal-frame" src="" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" allowfullscreen></iframe></div></div>
+ <div class="wrapx"><button class="x" id="modal-x" aria-label="Закрыть">✕</button><div class="box"><iframe id="modal-frame" src="" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" allowfullscreen></iframe><video id="modal-video" controls playsinline loop hidden></video></div></div>
 </div>
 
 <script>
 (function(){
-  var modal=document.getElementById('modal'),frame=document.getElementById('modal-frame');
-  function open(src){frame.src=src+(src.indexOf('?')>-1?'&':'?')+'autoplay=1';modal.classList.add('on');document.body.style.overflow='hidden'}
-  function close(){modal.classList.remove('on');frame.src='';document.body.style.overflow=''}
+  var modal=document.getElementById('modal'),frame=document.getElementById('modal-frame'),video=document.getElementById('modal-video');
+  function open(src,local){
+    frame.hidden=!!local;video.hidden=!local;
+    modal.classList.add('on');document.body.style.overflow='hidden';
+    if(local){video.src=src;video.play().catch(function(){/* Native controls remain available if autoplay is blocked. */})}
+    else{frame.src=src+(src.indexOf('?')>-1?'&':'?')+'autoplay=1'}
+  }
+  function close(){modal.classList.remove('on');video.pause();video.removeAttribute('src');video.load();frame.src='';document.body.style.overflow=''}
+  document.querySelectorAll('[data-local-video]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();open(a.getAttribute('data-local-video'),true)})});
   document.querySelectorAll('[data-video]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();open(a.getAttribute('data-video'))})});
   document.getElementById('modal-x').addEventListener('click',close);
   modal.addEventListener('click',function(e){if(e.target===modal)close()});
