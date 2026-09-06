@@ -12,7 +12,7 @@ def test_ai_agents_page_has_current_september_offer():
 
     assert "21 сентября" in visible
     assert "до 8 участников" in visible.lower()
-    assert "165 000 ₽" in visible
+    assert "195 000 ₽" in visible
     assert "три недели" in visible.lower()
     assert "два общих zoom" in visible.lower()
     assert "три индивидуальные встречи" in visible.lower()
@@ -62,9 +62,21 @@ def test_approved_v2_preserves_media_noindex_and_tracking():
     assert 'data-placement="hero"' in html
     assert html.count('data-video="https://kinescope.io/embed/') == 3
     videos = re.findall(r'<video\b[^>]*>', html)
-    assert len(videos) == 5
+    assert len(videos) == 2  # Hero loops; five full cases use data-video embeds.
     for video in videos:
         for attribute in ('autoplay', 'muted', 'loop', 'playsinline', 'poster='):
             assert attribute in video
     for asset in re.findall(r'(?:src|poster)="(assets/[^"]+)"', html):
         assert (PAGE.parent / asset).is_file()
+
+
+def test_personal_program_price_on_both_current_pages():
+    for route in ("ai-agents", "ai-agents-v2"):
+        html = (PAGE.parent.parent / route / "index.html").read_text()
+        assert html.count("195 000 ₽") == 2
+        assert not re.search(r"(?:165|190)[\s\u00a0\u202f]*000", html)
+
+
+def test_canonical_retains_five_full_video_cases():
+    html = PAGE.read_text()
+    assert len(re.findall(r'data-video="https://', html)) == 5
