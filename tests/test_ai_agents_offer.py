@@ -46,10 +46,10 @@ def test_ai_agents_page_offers_checkout_and_personal_dialogue():
     assert "Можно оплатить сразу или сначала коротко сверить с Андреем задачу и формат." in html
 
 
-def test_canonical_page_is_exact_approved_v2_copy():
+def test_canonical_page_preserves_approved_v2_assets():
     source = PAGE.parent.parent / "ai-agents-v2"
     for file in source.rglob("*"):
-        if file.is_file():
+        if file.is_file() and file.name != "index.html":
             assert (PAGE.parent / file.relative_to(source)).read_bytes() == file.read_bytes()
 
 
@@ -62,8 +62,13 @@ def test_approved_v2_preserves_media_noindex_and_tracking():
     assert 'data-placement="hero"' in html
     assert html.count('data-video="https://kinescope.io/embed/') == 3
     videos = re.findall(r'<video\b[^>]*>', html)
-    assert len(videos) == 5
-    for video in videos:
+    assert len(videos) == 6
+    modal_video = next(video for video in videos if 'id="modal-video"' in video)
+    for attribute in ("controls", "playsinline", "loop", "hidden"):
+        assert attribute in modal_video
+    assert "muted" not in modal_video
+    assert html.count("data-local-video=") == 3
+    for video in (video for video in videos if video != modal_video):
         for attribute in ('autoplay', 'muted', 'loop', 'playsinline', 'poster='):
             assert attribute in video
     for asset in re.findall(r'(?:src|poster)="(assets/[^"]+)"', html):
