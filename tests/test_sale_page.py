@@ -5,7 +5,7 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 PAGE = ROOT / "sale" / "index.html"
-CHECKOUT = "https://andreyandreev.createtoday.ru/hero/get/of_6JnvXPPgT8L5"
+CHECKOUT = "https://andreyandreev.createtoday.ru/hero/get/of_19NtrnziyOp6"
 
 
 class SalePageParser(HTMLParser):
@@ -101,8 +101,8 @@ def test_sale_page_keeps_active_checkout_and_distinct_cta_measurement():
     assert "sale_checkout_hero" in html
     assert "sale_checkout_offer" in html
     assert "sale_checkout_final" in html
-    assert "window.location.search" in html
-    assert "URLSearchParams" in html
+    assert "window.location.search" not in html
+    assert "target.searchParams" not in html
     assert "white-space:nowrap" not in html
 
 
@@ -115,6 +115,17 @@ def test_sale_page_publishes_the_approved_deadline():
     assert "23:59 по московскому времени" in html
     assert ".deadline:before" not in html
     assert ".final .note{margin-top:14px;color:rgba(241,238,230,.75)}" in html
+
+
+def test_sale_last_day_price_without_promo():
+    import re
+    html, _ = parsed_page()
+    assert "Последний день распродажи" in html
+    assert "9 900 ₽ без промокода" in html
+    assert "419 400 ₽" in html
+    assert not re.search(r"МИША|1[49][\s\u00a0\u202f]*900|of_6JnvXPPgT8L5", html, re.I)
+    assert "в 28 раз" not in html
+    assert "−96%" not in html
 
 
 def test_sale_page_local_assets_exist():
