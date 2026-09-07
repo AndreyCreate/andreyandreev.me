@@ -67,7 +67,13 @@ img{display:block;max-width:100%}
 .h2 .u:after{content:"";position:absolute;left:0;right:0;bottom:.04em;height:2px;background:var(--blue-deep)}
 .toc-head{display:flex;justify-content:space-between;align-items:end;gap:20px}
 .toc-head .cnt{color:var(--mute)}
-.toc{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:48px}
+.toc{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:26px}
+.grp{margin-top:52px}
+.grp:first-of-type{margin-top:44px}
+.grp-head{display:flex;align-items:baseline;gap:14px;border-top:1px solid var(--line);padding-top:18px}
+.grp-head .gnum{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12.5px;color:var(--blue-deep);letter-spacing:.02em}
+.grp-head .gtitle{font-size:clamp(22px,2.4vw,30px);font-weight:400;letter-spacing:-.02em}
+.grp-head .gdesc{color:var(--mute);font-size:15px;margin-left:auto;text-align:right;max-width:340px}
 .entry{background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px 26px 24px;min-height:230px;display:flex;flex-direction:column;gap:14px;transition:transform .15s ease,box-shadow .15s ease}
 .entry:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,0,0,.08)}
 .entry.blue{background:var(--blue);border-color:transparent}
@@ -95,6 +101,8 @@ img{display:block;max-width:100%}
  .h1{font-size:19vw}
  .cards{height:340px}.card{width:240px}
  .toc{grid-template-columns:1fr}
+ .grp-head{flex-wrap:wrap}
+ .grp-head .gdesc{margin-left:0;text-align:left;max-width:none}
  .entry{min-height:0}
  .hero{padding:16px 0 50px}
 }
@@ -113,12 +121,12 @@ img{display:block;max-width:100%}
 <body>
 
 <nav class="nav" aria-label="Шапка"><div class="wrap">
- <div class="nav-l"><img src="assets/andrey-portrait.jpg" alt=""><span class="tag mono">Личный сайт<br>andreyandreev.me · 2026</span></div>
+ <div class="nav-l"><img src="/assets/andrey-portrait.jpg" alt=""><span class="tag mono">Личный сайт<br>andreyandreev.me · 2026</span></div>
  <div class="nav-r"><a class="pill pill-ghost" href="#toc">Оглавление ➤</a><a class="pill pill-coral" href="/coaching/">Коучинг</a></div>
 </div></nav>
 
 <header class="hero"><div class="wrap">
- <div class="kick mono"><span class="star">✳</span> Личный сайт · оглавление 01 — 06</div>
+ <div class="kick mono"><span class="star">✳</span> Личный сайт · оглавление 01 — 07</div>
  <div class="hero-grid">
   <div>
    <h1 class="h1">Андрей<br><span class="u">Андреев</span></h1>
@@ -129,7 +137,7 @@ img{display:block;max-width:100%}
    <p class="lead"><span class="num">::</span>Предприниматель, автор образовательных проектов, фотограф, <span class="u">коуч</span>.</p>
   </div>
   <div class="cards" aria-hidden="true">
-   <div class="card" style="right:0;top:20px;transform:rotate(4deg)"><img src="assets/andrey-portrait.jpg" alt="Андрей Андреев — портрет"><span class="ic"></span></div>
+   <div class="card" style="right:0;top:20px;transform:rotate(4deg)"><img src="/assets/andrey-portrait.jpg" alt="Андрей Андреев — портрет"><span class="ic"></span></div>
    <div class="chip" style="left:0;bottom:40px">✳ andreyandreev.me · 2026</div>
   </div>
  </div>
@@ -141,45 +149,65 @@ img{display:block;max-width:100%}
    <div class="kick mono"><span class="star">✳</span> Личный сайт · 2026</div>
    <h2 class="h2"><span class="u">Оглавление</span></h2>
   </div>
-  <span class="cnt mono">01 — 06</span>
+  <span class="cnt mono">01 — 07</span>
  </div>
- <nav class="toc" aria-label="Оглавление">
+ <div class="grp">
+ <div class="grp-head"><span class="gnum">01 — 03</span><span class="gtitle">Поработать со мной</span><span class="gdesc">Группа, сопровождение или личные сессии</span></div>
+ <nav class="toc" aria-label="Форматы работы">
+  <a class="entry blue" href="/ai-agents/">
+   <span class="num">01 · группа</span>
+   <span class="trow"><span class="title">Make Blog Great Again</span></span>
+   <span class="desc">Закрытая группа по AI-ассистентам. Старт каждый месяц, 8 человек</span>
+  </a>
+  <a class="entry" href="/mentorship/">
+   <span class="num">02 · менторство</span>
+   <span class="trow"><span class="title">Менторство</span></span>
+   <span class="desc">Сопровождение для предпринимателей — максимум полгода</span>
+  </a>
+  <a class="entry" href="/coaching/">
+   <span class="num">03 · коучинг</span>
+   <span class="trow"><span class="title">Коучинг</span></span>
+   <span class="desc">Прийти и поработать со мной как с коучем</span>
+  </a>
+ </nav>
+</div>
+
+<div class="grp">
+ <div class="grp-head"><span class="gnum">04 — 05</span><span class="gtitle">Проекты, которые я создаю</span><span class="gdesc">Продукты, которыми занимаюсь каждый день</span></div>
+ <nav class="toc" aria-label="Проекты">
   <a class="entry" href="https://createtoday.ru" target="_blank" rel="noopener">
-   <span class="num">01 · платформа</span>
+   <span class="num">04 · платформа</span>
    <span class="trow"><span class="title">Create Today</span><span class="ext" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M4.2 2.5H9.5V7.8" stroke="currentColor" stroke-width="1.3"/></svg></span></span>
    <span class="desc">Платформа для создателей курсов</span>
   </a>
-  <a class="entry blue" href="http://r.bothelp.io/tg?domain=heysashlist_bot&start=c1773040231207-ds&utm_source=andreyandreev" target="_blank" rel="noopener">
-   <span class="num">02 · приложение</span>
-   <span class="trow"><span class="appico"><img src="assets/heysash-icon.png" alt="Иконка Hey, Sash!"></span><span class="title">Hey, Sash!</span><span class="ext" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M4.2 2.5H9.5V7.8" stroke="currentColor" stroke-width="1.3"/></svg></span></span>
+  <a class="entry blue" href="http://r.bothelp.io/tg?domain=heysashlist_bot&amp;start=c1773040231207-ds&amp;utm_source=andreyandreev" target="_blank" rel="noopener">
+   <span class="num">05 · приложение</span>
+   <span class="trow"><span class="appico"><img src="/assets/heysash-icon.png" alt="Иконка Hey, Sash!"></span><span class="title">Hey, Sash!</span><span class="ext" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M4.2 2.5H9.5V7.8" stroke="currentColor" stroke-width="1.3"/></svg></span></span>
    <span class="desc">Приложение для каруселей — в App Store</span>
   </a>
-  <a class="entry" href="/kursy/">
-   <span class="num">03 · курсы</span>
-   <span class="trow"><span class="title">Курсы</span></span>
-   <span class="desc">Курс про деньги, распродажа, гайды</span>
-  </a>
-  <a class="entry blue" href="/coaching/">
-   <span class="num">04 · коучинг</span>
-   <span class="trow"><span class="title">Коучинг</span></span>
-   <span class="desc">Не заставить себя, а перестать мешать</span>
-  </a>
+ </nav>
+</div>
+
+<div class="grp">
+ <div class="grp-head"><span class="gnum">06 — 07</span><span class="gtitle">Личное</span><span class="gdesc">Фотография и открытые цифры блога</span></div>
+ <nav class="toc" aria-label="Личное">
   <a class="entry" href="/photo/">
-   <span class="num">05 · фото</span>
+   <span class="num">06 · фото</span>
    <span class="trow"><span class="title">Фотопроекты</span></span>
    <span class="desc">Авторские фотосерии — зримое и незримое</span>
   </a>
   <a class="entry blue" href="https://andreyandreev.me/ig-analytics/">
-   <span class="num">06 · аналитика</span>
+   <span class="num">07 · аналитика</span>
    <span class="trow"><span class="title">Аналитика Instagram</span><span class="ext" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M4.2 2.5H9.5V7.8" stroke="currentColor" stroke-width="1.3"/></svg></span></span>
    <span class="desc">Открытая статистика блога — обновляется еженедельно</span>
   </a>
  </nav>
+</div>
 </div></section>
 
 <footer class="footer"><div class="wrap">
  <span>© 2026 · Андрей Андреев</span>
- <span><a href="https://andreyandreev.me/ig-analytics/">аналитика блога</a> · <a href="/coaching/">коучинг</a> · <a href="/photo/">фотопроекты</a></span>
+ <span><a href="/coaching/">коучинг</a> · <a href="/ai-agents/">группа</a> · <a href="/mentorship/">менторство</a> · <a href="/photo/">фотопроекты</a> · <a href="https://andreyandreev.me/ig-analytics/">аналитика блога</a></span>
 </div></footer>
 
 </body>
