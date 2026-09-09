@@ -14,6 +14,21 @@ def test_offer_and_boundaries():
  assert 'ai-agents-cta' not in s
  assert 'https://andreyandreev.me/ai-business/' in s
 
+def test_community_and_delegation_are_concrete_and_bounded():
+ s=PAGE.read_text()
+ for text in ['Делегируйте подготовку. Сохраняйте управление.', 'Работайте над своим проектом рядом с другими', 'На двух общих Zoom', 'обсуждать задачи', 'черновики контента, слайдов, офферов и сценариев', 'Решения о продукте и финальная проверка остаются у вас']:
+  assert text in s
+ for text in ['клуб предпринимателей', 'доступ к окружению Андрея', 'постоянное сообщество', 'заменит маркетолога']:
+  assert text not in s
+
+def test_business_hero_uses_schemes_not_creator_media():
+ s=PAGE.read_text()
+ hero=s.split('<div class="hero-mid">',1)[1].split('<div class="hero-cta">',1)[0]
+ assert all(tag not in hero for tag in ['<video', '<img', 'карусель участницы'])
+ for label in ['Продуктовая матрица','Делегирование AI','Путь клиента']:
+  assert label in hero
+ assert hero.count('class="business-map"')==2
+
 def test_only_existing_assets_and_video_destinations():
  source=Tags((ROOT/'ai-agents/index.html').read_text()).tags
  new=Tags(PAGE.read_text()).tags
