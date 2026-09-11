@@ -12,7 +12,8 @@ def test_ai_agents_page_has_current_september_offer():
 
     assert "21 сентября" in visible
     assert "до 8 участников" in visible.lower()
-    assert "195 000 ₽" in visible
+    assert "165 000 ₽" in visible
+    assert "35 000 ₽" in visible
     assert "три недели" in visible.lower()
     assert "два общих zoom" in visible.lower()
     assert "три индивидуальные встречи" in visible.lower()
@@ -43,12 +44,13 @@ def test_ai_agents_page_offers_checkout_and_personal_dialogue():
     assert "Оплатить участие" in html
     assert html.count('href="https://t.me/andrey_andreev"') >= 2
     assert "Написать Андрею" in html
-    assert "Можно оплатить сразу или сначала коротко сверить с Андреем задачу и формат." in html
+    assert "Обсудить участие" in html
+    assert 'href="https://andreyandreev.createtoday.ru/hero/get/of_mA3MjbGAuOrv"' in html
 
 
 def test_canonical_page_preserves_approved_v2_assets():
     source = PAGE.parent.parent / "ai-agents-v2"
-    for file in source.rglob("*"):
+    for file in (source / "assets").rglob("*"):
         if file.is_file() and file.name != "index.html":
             assert (PAGE.parent / file.relative_to(source)).read_bytes() == file.read_bytes()
 
@@ -70,11 +72,13 @@ def test_approved_v2_preserves_media_noindex_and_tracking():
         assert (PAGE.parent / asset).is_file()
 
 
-def test_personal_program_price_on_both_current_pages():
-    for route in ("ai-agents", "ai-agents-v2"):
-        html = (PAGE.parent.parent / route / "index.html").read_text()
-        assert html.count("195 000 ₽") == 2
-        assert not re.search(r"(?:165|190)[\s\u00a0\u202f]*000", html)
+def test_canonical_has_approved_viewer_and_mentorship_plans():
+    html = PAGE.read_text()
+    assert html.count("165 000 ₽") == 2
+    assert html.count("35 000 ₽") == 1
+    assert html.count("Агент для Reels") == 2
+    assert "border:2px solid #E8563F" in html
+    assert "195 000 ₽" not in html
 
 
 def test_canonical_retains_five_full_video_cases():
