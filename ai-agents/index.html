@@ -299,6 +299,8 @@ a{color:inherit}
    ym(109255989, 'init', {ssr:true, webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true, trackHash:true});
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/109255989" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<link rel="stylesheet" href="budget-block.css">
+<script src="budget-block.js" defer></script>
 </head>
 <body>
 
@@ -430,6 +432,31 @@ a{color:inherit}
  </div>
 </section>
 
+
+<!-- Approved budget comparison -->
+<section id="mbga-budget" aria-labelledby="mbga-budget-heading"><div class="mbga-inner">
+<div class="mbga-kicker mbga-mono"><span class="mbga-star" aria-hidden="true">✳</span> MakeBlogGreatAgain · бюджет блога</div>
+<h2 id="mbga-budget-heading">Сколько стоит<br><span>вести блог</span></h2>
+<p class="mbga-lead"><b class="mbga-mono">::</b>Сравните расходы до и после программы на своём объёме задач.</p>
+<div class="mbga-comparison">
+<section class="mbga-panel" aria-labelledby="mbga-before-heading"><div class="mbga-panelhead"><h3 id="mbga-before-heading">До программы</h3><span class="mbga-tag mbga-mono">Подрядчики</span></div>
+<dl class="mbga-rows"><div class="mbga-row"><dt>Монтаж Reels<span class="mbga-detail" id="mbga-reels-formula"></span></dt><dd id="mbga-reels-total"></dd></div><div class="mbga-row"><dt>Создание воронок<span class="mbga-detail" id="mbga-funnels-formula"></span></dt><dd id="mbga-funnels-total"></dd></div><div class="mbga-row"><dt>Техническое сопровождение воронок<span class="mbga-detail">Ежемесячно</span></dt><dd>20 000 ₽</dd></div><div class="mbga-row mbga-site-row"><dt>Создание сайта<span class="mbga-detail" id="mbga-site-status">Разово · сейчас не включён</span></dt><dd>50 000 ₽<span class="mbga-detail">только первый месяц</span></dd></div></dl>
+<div class="mbga-total"><span class="mbga-total-label" id="mbga-before-period">Итого в месяц</span><strong><span id="mbga-before-total"></span></strong></div></section>
+<section class="mbga-panel mbga-after" aria-labelledby="mbga-after-heading"><div class="mbga-panelhead"><h3 id="mbga-after-heading">После программы</h3><span class="mbga-tag mbga-mono">AI-подписки</span></div>
+<dl class="mbga-rows"><div class="mbga-row"><dt>Claude Code<span class="mbga-detail">Бюджет на месяц</span></dt><dd>100 €</dd></div><div class="mbga-row"><dt>ChatGPT<span class="mbga-detail">Бюджет на месяц</span></dt><dd>100 €</dd></div></dl>
+<p class="mbga-after-note">Вы работаете с AI самостоятельно. Задачи и проверка результата остаются за вами.</p>
+<div class="mbga-total"><span class="mbga-total-label">Итого в месяц</span><strong><span id="mbga-after-total"></span><small id="mbga-conversion"></small></strong></div></section></div>
+<div class="mbga-settings" aria-label="Настройки бюджета">
+<div class="mbga-control"><label for="mbga-reels">Reels в месяц <output id="mbga-reels-value" for="mbga-reels">12</output></label><input id="mbga-reels" type="range" min="0" max="30" step="1" value="12"><div class="mbga-range-ends mbga-mono"><span>0</span><span>30</span></div></div>
+<div class="mbga-control"><label for="mbga-price">Цена одного Reels <output id="mbga-price-value" for="mbga-price">4 000 ₽</output></label><input id="mbga-price" type="range" min="3000" max="5000" step="100" value="4000"><div class="mbga-range-ends mbga-mono"><span>3 000 ₽</span><span>5 000 ₽</span></div></div>
+<div class="mbga-control"><label for="mbga-funnels">Воронок в месяц <output id="mbga-funnels-value" for="mbga-funnels">1</output></label><input id="mbga-funnels" type="range" min="0" max="3" step="1" value="1"><div class="mbga-range-ends mbga-mono"><span>0</span><span>3</span></div></div>
+<div class="mbga-control"><label for="mbga-fx">Условный курс · редактируемый</label><div class="mbga-fxbox"><span>1 € =</span><input id="mbga-fx" type="number" min="0.01" step="0.01" value="100" inputmode="decimal" aria-describedby="mbga-fxhint mbga-fxerror"><span>₽</span></div><div class="mbga-fxhint" id="mbga-fxhint">Для расчёта, не рыночный курс</div><div class="mbga-error" id="mbga-fxerror" hidden>Введите курс больше нуля.</div></div>
+</div>
+<label class="mbga-switchline" for="mbga-website"><input id="mbga-website" type="checkbox" role="switch"><span>Учесть сайт в первом месяце <span class="mbga-mono">· +50 000 ₽ разово</span></span></label>
+<div class="mbga-result" aria-live="polite" aria-atomic="true"><div><div class="mbga-result-title">Разница бюджетов</div><div class="mbga-result-sub" id="mbga-savings-caption">Расчётная экономия за месяц · до минус после</div></div><output id="mbga-savings"></output></div>
+<p class="mbga-footnote">Пример бюджета. Стоимость программы и ваше время не включены. Подписки — заданный бюджет, не официальный прайс; другие расходы зависят от проекта.</p>
+
+</div></section>
 
 <!-- Price -->
 <section class="sec" id="price" aria-labelledby="price-h">
