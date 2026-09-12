@@ -1,0 +1,94 @@
+#mbga-budget{--ink:#111;--muted:#6b6b6b;--line:#e6e6e6;--gray:#f5f5f5;--blue:#bfddfb;--deep:#2f80ed}
+#mbga-budget *{box-sizing:border-box}
+#mbga-budget{margin:0;background:#fff;color:var(--ink);font:16px/1.45 Inter,sans-serif;-webkit-font-smoothing:antialiased}
+#mbga-budget .mbga-inner{max-width:1280px;margin:auto;padding:52px 48px 36px}
+#mbga-budget .mbga-mono{font-family:'JetBrains Mono',monospace}
+#mbga-budget .mbga-kicker{color:var(--muted);font-size:12px;display:flex;align-items:center;gap:12px}
+#mbga-budget .mbga-star{font:24px Inter;color:#e8563f}
+#mbga-budget h2{font-size:clamp(40px,4.8vw,66px);font-weight:500;line-height:1.02;letter-spacing:-.045em;margin:22px 0 20px}
+#mbga-budget h2 span{text-decoration:underline;text-decoration-color:var(--deep);text-decoration-thickness:3px;text-underline-offset:7px}
+#mbga-budget .mbga-lead{color:#3a3a3a;font-size:18px;margin:0 0 36px}
+#mbga-budget .mbga-lead b{color:var(--deep);font-weight:400;margin-right:10px}
+#mbga-budget .mbga-comparison{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+#mbga-budget .mbga-panel{border:1px solid var(--line);border-radius:20px;padding:26px 28px;display:flex;flex-direction:column}
+#mbga-budget .mbga-panel.mbga-after{background:var(--gray);border-color:var(--gray)}
+#mbga-budget .mbga-panelhead{display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid #dcdcdc;padding-bottom:20px}
+#mbga-budget h3{font-size:24px;letter-spacing:-.035em;line-height:1.15;font-weight:500;margin:0}
+#mbga-budget .mbga-tag{font-size:11px;color:var(--muted);white-space:nowrap}
+#mbga-budget .mbga-rows{margin:0}
+#mbga-budget .mbga-row{display:flex;justify-content:space-between;gap:14px;padding:17px 0;border-bottom:1px solid var(--line);align-items:center;min-height:77px}
+#mbga-budget .mbga-row dt{font-weight:500}
+#mbga-budget .mbga-row dd{margin:0;text-align:right;white-space:nowrap;font-weight:500;font-size:19px;letter-spacing:-.025em}
+#mbga-budget .mbga-detail{display:block;font-size:12px;font-weight:400;color:var(--muted);margin-top:4px;letter-spacing:0}
+#mbga-budget .mbga-site-row{border-bottom:none}
+#mbga-budget .mbga-site-row dd{font-size:17px}
+#mbga-budget .mbga-site-row .mbga-detail{white-space:normal}
+#mbga-budget .mbga-after .mbga-row{border-color:#dedede}
+#mbga-budget .mbga-after-note{color:var(--muted);font-size:14px;max-width:330px;margin:25px 0 28px}
+#mbga-budget .mbga-total{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-top:auto;padding-top:20px;border-top:1px solid #d6d6d6}
+#mbga-budget .mbga-total-label{font-size:13px;color:#3a3a3a}
+#mbga-budget .mbga-total strong{font-size:38px;font-weight:500;letter-spacing:-.045em;white-space:nowrap;line-height:1.1}
+#mbga-budget .mbga-total small{display:block;text-align:right;font-size:12px;font-weight:400;color:var(--muted);margin-top:6px}
+#mbga-budget .mbga-settings{margin-top:28px;display:grid;grid-template-columns:1fr 1fr 1fr 1.1fr;gap:28px}
+#mbga-budget .mbga-control label{font-size:13px;display:flex;justify-content:space-between;gap:8px;align-items:center}
+#mbga-budget .mbga-control output{font-weight:500;white-space:nowrap}
+#mbga-budget input[type=range]{width:100%;height:44px;margin:4px 0 0;accent-color:#1f4f8a;cursor:pointer}
+#mbga-budget .mbga-range-ends{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:-5px}
+#mbga-budget .mbga-fxbox{display:flex;align-items:center;gap:9px;margin-top:8px;font-size:14px}
+#mbga-budget .mbga-fxbox input{min-width:0;width:96px;height:44px;border:1px solid #bcbcbc;border-radius:8px;background:#fff;padding:8px 10px;font:500 16px Inter}
+#mbga-budget .mbga-fxhint{font-size:10px;color:var(--muted);margin-top:5px}
+#mbga-budget .mbga-switchline{display:flex;gap:12px;align-items:center;margin:22px 0;font-size:13px;cursor:pointer;min-height:44px;width:fit-content}
+#mbga-budget .mbga-switchline input{appearance:none;width:42px;height:25px;flex-shrink:0;background:#d6d6d6;border-radius:30px;margin:0;position:relative;cursor:pointer}
+#mbga-budget .mbga-switchline input:before{content:'';position:absolute;left:3px;top:3px;width:19px;height:19px;border-radius:50%;background:white}
+#mbga-budget .mbga-switchline input:checked{background:#1f4f8a}
+#mbga-budget .mbga-switchline input:checked:before{left:20px}
+#mbga-budget :focus-visible{outline:3px solid var(--deep);outline-offset:4px}
+#mbga-budget .mbga-result{background:var(--blue);border-radius:18px;padding:24px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+#mbga-budget .mbga-result-title{font-size:20px;letter-spacing:-.025em;font-weight:500}
+#mbga-budget .mbga-result-sub{color:#24445e;font-size:12px;margin-top:5px}
+#mbga-budget .mbga-result output{font-size:44px;line-height:1.1;letter-spacing:-.045em;font-weight:500;white-space:nowrap}
+#mbga-budget .mbga-footnote{font-size:11px;color:var(--muted);line-height:1.6;max-width:910px;margin:19px 0 0}
+#mbga-budget .mbga-error{color:#8b2c20;font-size:12px;margin-top:6px}
+#mbga-budget .mbga-brandfooter{margin-top:30px;padding-top:16px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:10px;color:var(--muted)}
+
+@media(max-width:900px){#mbga-budget .mbga-inner{padding:36px 28px}
+#mbga-budget .mbga-comparison{gap:18px}
+#mbga-budget .mbga-panel{padding:22px}
+#mbga-budget .mbga-panelhead{align-items:start;flex-direction:column;gap:8px}
+#mbga-budget .mbga-settings{grid-template-columns:1fr 1fr;gap:20px 28px}
+#mbga-budget .mbga-row dd{font-size:17px}
+#mbga-budget .mbga-total strong{font-size:31px}
+#mbga-budget .mbga-total{align-items:start;flex-direction:column}
+#mbga-budget .mbga-total small{text-align:left}
+#mbga-budget .mbga-result output{font-size:38px}
+}
+
+@media(max-width:560px){#mbga-budget .mbga-inner{padding:28px 20px}
+#mbga-budget .mbga-kicker{font-size:10px;gap:8px}
+#mbga-budget h2{font-size:43px;margin-top:18px}
+#mbga-budget .mbga-lead{font-size:16px;margin-bottom:26px}
+#mbga-budget .mbga-comparison{grid-template-columns:1fr;gap:16px}
+#mbga-budget .mbga-panel{padding:22px}
+#mbga-budget .mbga-panelhead{flex-direction:row;align-items:center}
+#mbga-budget h3{font-size:22px}
+#mbga-budget .mbga-tag{font-size:10px}
+#mbga-budget .mbga-total{flex-direction:row;align-items:end}
+#mbga-budget .mbga-total strong{font-size:33px}
+#mbga-budget .mbga-total small{text-align:right}
+#mbga-budget .mbga-row{padding:15px 0;min-height:72px}
+#mbga-budget .mbga-after-note{margin:20px 0}
+#mbga-budget .mbga-settings{gap:20px;grid-template-columns:1fr}
+#mbga-budget .mbga-control label{font-size:14px}
+#mbga-budget .mbga-range-ends, #mbga-budget .mbga-fxhint{font-size:11px}
+#mbga-budget .mbga-switchline{align-items:center;font-size:12px}
+#mbga-budget .mbga-result{align-items:start;flex-direction:column;padding:22px;gap:16px}
+#mbga-budget .mbga-result output{font-size:42px}
+#mbga-budget .mbga-result-title{font-size:19px}
+#mbga-budget .mbga-footnote{font-size:11px}
+#mbga-budget .mbga-brandfooter{gap:12px;flex-direction:column}
+}
+
+
+#mbga-budget {padding:clamp(72px,9vw,120px) 0;}
+#mbga-budget .mbga-inner {max-width:1240px;padding:0 40px;}
+@media(max-width:560px){#mbga-budget .mbga-inner {padding:0 20px;}}

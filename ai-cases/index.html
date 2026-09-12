@@ -1,0 +1,672 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Как перестать тратить время и деньги на контент — Андрей Андреев</title>
+<meta name="description" content="Кейсы Андрея Андреева: как AI-агенты забирают тексты, монтаж, дизайн, сайты и воронки. Три AI-агента за три недели, старт 21 сентября.">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:title" content="Как перестать тратить время и деньги на контент и начать расти в блоге">
+<meta property="og:description" content="Кейсы с экрана: пост за 4 минуты, рилз из поста за 34 минуты, боты 50 000 ₽ → 0 ₽. Старт группы 21 сентября.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="budget-block.css">
+<script src="budget-block.js" defer></script>
+<style>
+:root{--bg:#FFFFFF;--blue:#BFDDFB;--blue-soft:#DCEBFC;--blue-deep:#2F80ED;--coral:#E8563F;--ink:#111111;--ink-2:#3A3A3A;--mute:#6B6B6B;--line:#E6E6E6;--gray:#F5F5F5;--yellow:#F5C445;--dark:#2B2B2B}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,system-ui,-apple-system,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;line-height:1.45;font-size:17px}
+img,video{display:block;max-width:100%}
+a{color:inherit}
+.mono{font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,monospace;font-size:12.5px;letter-spacing:.02em}
+.wrap{max-width:1240px;margin:0 auto;padding:0 40px}
+.sec{padding:clamp(72px,9vw,120px) 0}
+.sec-gray{background:var(--gray)}
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:0 34px;border-radius:999px;text-decoration:none;font-size:15px;font-weight:500;font-family:'JetBrains Mono',monospace;letter-spacing:.01em;cursor:pointer;border:0;transition:transform .15s ease,opacity .15s ease}
+.pill:hover{transform:translateY(-1px);opacity:.94}
+.pill:focus-visible,.vid:focus-visible,.pain:focus-visible{outline:3px solid var(--blue-deep);outline-offset:3px}
+.pill-coral{background:var(--coral);color:#fff}
+.pill-ghost{background:var(--gray);color:var(--ink)}
+.pill-white{background:#fff;color:var(--ink)}
+.pill-dark{background:var(--ink);color:#fff}
+.kick{color:var(--mute);margin-bottom:24px;display:flex;gap:10px;align-items:center}
+.kick .star{color:var(--coral);font-size:15px}
+.h2{font-size:clamp(32px,4.2vw,58px);line-height:1.1;letter-spacing:-.03em;font-weight:400}
+.h2 .u,.h1 .u{position:relative;display:inline-block}
+.h2 .u:after{content:"";position:absolute;left:0;right:0;bottom:.04em;height:2px;background:var(--blue-deep)}
+.lead{font-size:clamp(18px,1.5vw,21px);line-height:1.45;color:var(--ink-2);max-width:720px}
+.lead .num{font-family:'JetBrains Mono',monospace;color:var(--blue-deep);margin-right:6px}
+/* nav */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:28px 0}
+.nav-l{display:flex;align-items:center;gap:14px;text-decoration:none}
+.nav-l img{width:44px;height:44px;border-radius:50%;object-fit:cover}
+.nav-l .tag{background:var(--gray);border-radius:12px;padding:10px 16px;line-height:1.35}
+.nav-r{display:flex;gap:12px}
+/* hero */
+.hero{padding:36px 0 80px}
+.h1{font-size:clamp(40px,5.5vw,84px);line-height:1;letter-spacing:-.045em;font-weight:500;max-width:1180px}
+.h1 .u{display:inline;text-decoration:underline;text-decoration-color:var(--blue-deep);text-decoration-thickness:3px;text-underline-offset:.12em}
+.hero-mid{display:grid;grid-template-columns:1fr 420px;gap:56px;align-items:center;margin-top:48px}
+.hero .lead{font-size:20px;max-width:600px}
+.meta{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:34px;max-width:640px}
+.meta-row{display:grid;grid-template-columns:82px 1fr;gap:10px;border-bottom:1px solid var(--line);padding-bottom:14px}
+.meta-row .k{color:var(--mute)}
+.meta-row .v{font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.55}
+.hero-cta{margin-top:40px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.hero-cta .note{color:var(--mute);font-size:14px;margin-left:8px}
+.cards{position:relative;height:380px}
+.card{position:absolute;width:200px;aspect-ratio:4/5;border-radius:14px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.18);background:#ddd}
+.card.v{aspect-ratio:9/16;width:180px}
+.card img,.card video{width:100%;height:100%;object-fit:cover}
+.chip{position:absolute;background:#fff;border-radius:999px;padding:9px 16px;font-family:'JetBrains Mono',monospace;font-size:14px;box-shadow:0 8px 24px rgba(0,0,0,.14);white-space:nowrap;display:flex;gap:8px;align-items:center}
+.chip i{font-style:normal;color:var(--blue-deep)}
+/* pains index */
+.pains{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:44px}
+.pain{background:var(--gray);border-radius:18px;padding:22px 22px 24px;text-decoration:none;display:flex;flex-direction:column;gap:14px;min-height:190px;transition:transform .15s ease}
+.pain:nth-child(2n){background:var(--blue)}
+.pain:hover{transform:translateY(-3px)}
+.pain .n{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--blue-deep)}
+.pain:nth-child(2n) .n{color:#1f4f8a}
+.pain h3{font-size:20px;line-height:1.25;font-weight:500;letter-spacing:-.01em}
+.pain .res{margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:13px;display:flex;justify-content:space-between;gap:10px;border-top:1px solid rgba(0,0,0,.1);padding-top:12px}
+/* case block */
+.case-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:64px;align-items:start}
+.case .h2{font-size:clamp(30px,3.6vw,50px)}
+.how{margin-top:26px;color:var(--blue-deep);font-size:14px}
+.steps{list-style:none;margin-top:14px;border-top:1px solid var(--line);counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:44px 1fr;gap:10px;padding:14px 0;border-bottom:1px solid var(--line);font-size:17px;color:var(--ink-2)}
+.steps li:before{content:"0" counter(s);font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--blue-deep);padding-top:3px}
+.sec-gray .steps,.sec-gray .steps li{border-color:#e0e0e0}
+.q{margin-top:28px;font-size:clamp(19px,1.7vw,23px);line-height:1.4;letter-spacing:-.01em;padding-left:22px;border-left:3px solid var(--coral)}
+.q cite{display:block;margin-top:10px;font-style:normal;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--mute)}
+.media{display:flex;flex-direction:column;gap:14px;position:sticky;top:24px}
+.vid{position:relative;display:block;border-radius:18px;overflow:hidden;background:#1c1c1c;aspect-ratio:1280/832;text-decoration:none;box-shadow:0 20px 50px rgba(0,0,0,.12)}
+.vid video,.vid img{width:100%;height:100%;object-fit:cover}
+.vid .dur{position:absolute;left:14px;bottom:14px;background:#fff;border-radius:999px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:12px}
+.vid .play{position:absolute;right:14px;bottom:14px;width:48px;height:48px;border-radius:50%;background:var(--coral);display:grid;place-items:center;color:#fff;font-size:15px}
+.vid .live{position:absolute;left:14px;top:14px;background:rgba(0,0,0,.55);color:#fff;border-radius:999px;padding:5px 11px;font-family:'JetBrains Mono',monospace;font-size:11.5px}
+.cap{color:var(--mute);line-height:1.5}
+.more-vids{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.more-vids .vid{border-radius:14px;box-shadow:none}
+.more-vids .vid .play{width:38px;height:38px;font-size:12px}
+.more-vids .cap{margin-top:8px;font-size:11.5px}
+.media.vert{flex-direction:row;align-items:flex-start;gap:18px}
+.media.vert .vid.v{aspect-ratio:9/16;width:46%;flex:none}
+.media.vert .side{display:flex;flex-direction:column;gap:12px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:48px}
+.st{background:var(--blue);border-radius:18px;padding:22px 24px 24px;display:flex;flex-direction:column;gap:6px}
+.sec-gray .st{background:#fff}
+.sec-gray .st:nth-child(2){background:var(--blue)}
+.st:nth-child(2){background:var(--gray)}
+.st .was{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--mute);text-decoration:line-through;text-decoration-color:var(--coral)}
+.st b{font-size:clamp(34px,3.4vw,46px);font-weight:500;letter-spacing:-.04em;line-height:1.05}
+.st span{color:var(--ink-2);font-size:15.5px;line-height:1.4}
+.st .src{margin-top:auto;padding-top:10px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--mute)}
+.member{margin-top:18px;display:grid;grid-template-columns:auto 1fr auto;gap:22px;align-items:center;background:var(--dark);color:#fff;border-radius:18px;padding:22px 26px}
+.member .tag{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--yellow);color:var(--ink);border-radius:999px;padding:6px 12px;white-space:nowrap}
+.member b{font-weight:500;font-size:19px}
+.member p{color:rgba(255,255,255,.75);font-size:14.5px;margin-top:4px}
+.member a{white-space:nowrap}
+/* time savings */
+.times{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:44px}
+.tm{border:1px solid var(--line);border-radius:18px;padding:22px 24px;display:flex;justify-content:space-between;align-items:end;gap:14px}
+.tm b{font-size:44px;font-weight:500;letter-spacing:-.045em;line-height:1}
+.tm span{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--mute);text-align:right;line-height:1.5}
+.sav-quote{margin-top:44px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+/* weeks */
+.weeks{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px}
+.wk{background:#fff;border-radius:18px;padding:26px;border:1px solid var(--line);display:flex;flex-direction:column;gap:14px}
+.wk .n{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--blue-deep)}
+.wk h3{font-size:22px;font-weight:500;letter-spacing:-.01em}
+.wk ul{list-style:none;border-top:1px solid var(--line)}
+.wk li{padding:10px 0;border-bottom:1px solid var(--line);font-size:16px;color:var(--ink-2)}
+.wk .out{margin-top:auto;background:var(--blue);border-radius:12px;padding:14px 16px;font-size:15px;line-height:1.45}
+.wk .out b{font-weight:500}
+.fmt{margin-top:28px;display:flex;flex-wrap:wrap;gap:10px 22px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--mute)}
+.fmt span:before{content:"✓";color:var(--blue-deep);margin-right:8px}
+/* tariffs */
+.tariffs{display:grid;grid-template-columns:1fr 1.15fr;gap:22px;margin-top:48px;align-items:stretch}
+.tf{border-radius:22px;padding:32px;display:flex;flex-direction:column;gap:18px;border:1px solid var(--line)}
+.tf.main{background:var(--blue);border-color:var(--blue)}
+.tf .nm{display:flex;justify-content:space-between;gap:12px;align-items:center}
+.tf .nm span{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--mute)}
+.tf.main .nm span{color:#1f4f8a}
+.tf h3{font-size:26px;font-weight:500;letter-spacing:-.02em}
+.tf .amount{font-size:clamp(40px,4.2vw,58px);letter-spacing:-.035em;font-weight:400;line-height:1}
+.tf .amount .dd{color:var(--blue-deep);font-family:'JetBrains Mono',monospace;font-size:.62em;margin-right:.2em}
+.tf ul{list-style:none;border-top:1px solid rgba(0,0,0,.1)}
+.tf li{padding:12px 0;border-bottom:1px solid rgba(0,0,0,.1);font-size:16px}
+.tf li:before{content:"✓";font-family:'JetBrains Mono',monospace;color:var(--blue-deep);margin-right:12px}
+.tf .pill{margin-top:auto}
+.price-note{margin-top:22px;font-size:14.5px;color:var(--mute);max-width:820px}
+.pay-sub{margin-top:12px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;color:var(--mute);font-size:15px}
+/* author */
+.author{display:grid;grid-template-columns:1fr 1fr;min-height:520px}
+.author .l{background:var(--dark);color:#fff;padding:clamp(48px,6vw,90px) clamp(32px,5vw,80px);display:flex;flex-direction:column;justify-content:space-between;gap:36px}
+.author .who{display:flex;gap:14px;align-items:center;color:rgba(255,255,255,.85)}
+.author .who img{width:44px;height:44px;border-radius:50%;object-fit:cover}
+.author .name{font-size:clamp(48px,6.4vw,104px);line-height:.95;letter-spacing:-.045em;font-weight:500;position:relative;display:inline-block}
+.author .name .handle{position:absolute;right:-8px;bottom:.9em;font-size:13px;letter-spacing:0;font-weight:400;font-family:'JetBrains Mono',monospace;color:rgba(255,255,255,.75)}
+.author .stats2{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.author .stats2 b{display:block;font-size:40px;font-weight:400;letter-spacing:-.02em;margin-bottom:12px}
+.author .stats2 span{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:rgba(255,255,255,.75);line-height:1.6}
+.author .r{position:relative;overflow:hidden;background:radial-gradient(60% 50% at 30% 30%,#F4B8A0 0,transparent 70%),radial-gradient(50% 60% at 80% 20%,#E8563F 0,transparent 70%),radial-gradient(60% 60% at 70% 90%,#F5D9A8 0,transparent 70%),radial-gradient(50% 50% at 10% 90%,#BFDDFB 0,transparent 70%),#F3D4C8;display:grid;place-items:center;padding:40px}
+.stat-card{position:relative;background:#fff;border-radius:12px;padding:22px 24px;width:min(420px,100%);box-shadow:0 30px 80px rgba(0,0,0,.2);font-size:14px}
+.stat-card .hd{display:flex;justify-content:space-between;font-weight:500;margin-bottom:10px}
+.stat-card .hd span{color:var(--mute);font-weight:400;font-family:'JetBrains Mono',monospace;font-size:11.5px}
+.stat-card .rowl{display:flex;justify-content:space-between;padding:10px 0;border-top:1px solid var(--line)}
+.stat-card .rowl b{font-weight:500}
+.stat-card .rowl b i{color:#2fa84f;font-style:normal;margin-right:6px}
+.stat-card .src{color:var(--mute);font-family:'JetBrains Mono',monospace;font-size:11px;margin-top:10px}
+/* faq */
+.faq{margin-top:44px;max-width:860px}
+.faq details{border-top:1px solid var(--line)}
+.faq details:last-child{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;padding:20px 44px 20px 2px;font-size:19px;font-weight:500;list-style:none;position:relative;min-height:44px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--blue-deep);font-weight:300;font-size:26px}
+.faq details[open] summary::after{content:"–"}
+.faq .a{padding:0 2px 22px;color:var(--ink-2);max-width:720px}
+/* final */
+.final{background:var(--dark);color:#fff}
+.final .h2{max-width:980px}
+.final .h2 .u:after{background:var(--blue)}
+.final .facts{margin-top:30px;display:flex;gap:26px;flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:13.5px;color:rgba(255,255,255,.75)}
+.final .cta{margin-top:38px;display:flex;flex-wrap:wrap;gap:14px}
+/* footer */
+.footer{padding:34px 0 44px;border-top:1px solid var(--line)}
+.footer .rowf{display:flex;flex-wrap:wrap;gap:14px 34px;align-items:center;justify-content:space-between;font-size:15px;color:var(--mute)}
+.footer a{color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--line);padding:10px 0}
+.footer nav{display:flex;flex-wrap:wrap;gap:26px}
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.86);display:none;place-items:center;z-index:50;padding:20px}
+.modal.on{display:grid}
+.modal .wrapx{position:relative;width:min(1080px,100%)}
+.modal .box{width:100%;aspect-ratio:1280/832;background:#000;border-radius:12px;overflow:hidden}
+.modal.vert .wrapx{width:min(420px,100%,calc((100vh - 120px)*9/16))}
+.modal.vert .box{aspect-ratio:9/16}
+.modal video{width:100%;height:100%;background:#000}
+.modal .x{position:absolute;top:-48px;right:0;background:#fff;border:0;border-radius:999px;width:40px;height:40px;cursor:pointer;font-size:18px}
+@media (max-width:980px){
+ .hero-mid,.case-grid,.sav-quote{grid-template-columns:1fr;gap:36px}
+ .media{position:static}
+ .pains,.stats,.times,.weeks{grid-template-columns:1fr 1fr}
+ .tariffs{grid-template-columns:1fr}
+ .author{grid-template-columns:1fr}.author .r{min-height:380px}
+ .cards{height:340px;max-width:460px}
+}
+@media (max-width:640px){
+ .wrap{padding:0 20px}.nav-l .tag{display:none}.nav-r .pill-ghost{display:none}
+ .hero{padding:12px 0 56px}.h1{font-size:11.2vw}
+ .meta{grid-template-columns:1fr;gap:14px}
+ .pains,.stats,.times,.weeks,.more-vids{grid-template-columns:1fr}
+ .cards{height:300px;transform:scale(.82);transform-origin:left top;margin-bottom:-54px}
+ .media.vert{flex-direction:column}.media.vert .vid.v{width:78%;margin:0 auto}
+ .member{grid-template-columns:1fr;gap:12px}
+ .author .name .handle{display:none}.author .stats2{grid-template-columns:1fr}
+ .pill{padding:0 24px}
+ .tf{padding:24px}
+ .tf .nm{flex-direction:column;align-items:flex-start;gap:6px}
+ .times{grid-template-columns:1fr 1fr;gap:12px}
+ .tm{flex-direction:column;align-items:flex-start;padding:18px}
+ .tm b{font-size:34px}
+ .tm span{text-align:left}
+}
+</style>
+<script type="text/javascript">
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=109255989', 'ym');
+   ym(109255989, 'init', {ssr:true, webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true, trackHash:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/109255989" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+</head>
+<body>
+
+<div class="wrap">
+ <nav class="nav" aria-label="Навигация">
+  <a class="nav-l" href="#top"><img src="assets/andrey.jpg" alt="Андрей Андреев"><span class="tag mono">Кейсы и группа<br>Андрея Андреева</span></a>
+  <div class="nav-r">
+   <a class="pill pill-ghost" href="#cases">Кейсы ➤</a>
+   <a class="pill pill-coral" href="#price" data-event="ai-cases-cta" data-placement="nav">Участвовать</a>
+  </div>
+ </nav>
+
+ <!-- HERO -->
+ <header class="hero" id="top">
+  <h1 class="h1">Как перестать тратить время и деньги на контент <span class="u">и&nbsp;наконец начать расти в&nbsp;блоге</span></h1>
+  <div class="hero-mid">
+   <div>
+    <p class="lead"><span class="num">::</span><!--T:hero_lead-->Ниже — записи моего экрана. Агенты пишут посты, монтируют рилсы, верстают карусели и сайты, собирают воронки. На каждом кейсе видно, сколько минут и рублей это сэкономило.<!--/T--></p>
+    <div class="meta" aria-label="Когда и формат">
+     <div class="meta-row"><span class="k mono">когда :</span><span class="v">Старт 21 сентября<br>/ три недели</span></div>
+     <div class="meta-row"><span class="k mono">формат :</span><span class="v">Два общих Zoom<br>Три индивидуальные встречи<br>До 8 участников</span></div>
+    </div>
+    <div class="hero-cta">
+     <a class="pill pill-coral" href="#cases" data-event="ai-cases-cta" data-placement="hero">Смотреть кейсы</a>
+     <a class="pill pill-ghost" href="#price" data-event="ai-cases-cta" data-placement="hero">Тарифы и старт</a>
+    </div>
+   </div>
+   <div class="cards" aria-hidden="true">
+    <div class="card v" style="left:10px;top:0;transform:rotate(-5deg)"><video src="clips/c_b3a_reel234.mp4" autoplay muted loop playsinline poster="clips/c_b3a_reel234.jpg"></video></div>
+    <div class="card" style="left:190px;top:40px;transform:rotate(6deg)"><video src="assets/109.mp4" autoplay muted loop playsinline poster="assets/109.jpg"></video></div>
+    <div class="chip" style="left:150px;top:10px"><i>✎</i> пост · 18:00 → 18:04</div>
+    <div class="chip" style="left:-6px;top:300px"><i>▷</i> рилз · 19:16 → 19:50</div>
+    <div class="chip" style="left:210px;top:318px"><i>₽</i> боты 50 000 → 0</div>
+   </div>
+  </div>
+ </header>
+</div>
+
+<main>
+
+<!-- PAINS INDEX -->
+<section class="sec sec-gray" id="cases" aria-labelledby="pains-h" style="padding-block:clamp(64px,7vw,96px)">
+ <div class="wrap">
+  <div class="kick mono"><span class="star">✳</span> Шесть задач, которые съедают время и бюджет</div>
+  <h2 class="h2" id="pains-h">Найдите свою — и посмотрите, <span class="u">как это делает AI</span></h2>
+  <div class="pains">
+   <a class="pain" href="#c1"><span class="n">01 · темы</span><h3>Не знаете, о чём писать сегодня</h3><span class="res"><span>пост из базы</span><b>~10 мин</b></span></a>
+   <a class="pain" href="#c2"><span class="n">02 · тексты</span><h3>Пост занимает полдня и звучит как ChatGPT</h3><span class="res"><span>18:00 → 18:04</span><b>4 мин</b></span></a>
+   <a class="pain" href="#c3"><span class="n">03 · рилсы</span><h3>Монтаж одного рилса отнимает час и больше</h3><span class="res"><span>19:16 → 19:50</span><b>34 мин</b></span></a>
+   <a class="pain" href="#c4"><span class="n">04 · дизайн</span><h3>Нет дизайнера, а карусель в конструкторе — часы</h3><span class="res"><span>карусель голосом</span><b>3 мин</b></span></a>
+   <a class="pain" href="#c5"><span class="n">05 · сайты</span><h3>Сайт под акцию — это ТЗ, дизайнер и неделя</h3><span class="res"><span>лендинг под продукт</span><b>6 мин</b></span></a>
+   <a class="pain" href="#c6"><span class="n">06 · воронки</span><h3>Воронка не продаёт, а команда вокруг стоит дорого</h3><span class="res"><span>боты</span><b>50 000 → 0 ₽</b></span></a>
+  </div>
+ </div>
+</section>
+
+<!-- CASE 1 -->
+<section class="sec case" id="c1" aria-labelledby="c1-h">
+ <div class="wrap">
+  <div class="case-grid">
+   <div>
+    <div class="kick mono"><span class="star">✳</span> 01 · Темы для постов</div>
+    <h2 class="h2" id="c1-h"><!--T:c1_h-->Если вы не знаете, <span class="u">о чём писать</span> сегодня<!--/T--></h2>
+    <p class="how mono">:: <!--T:how-->Вот как это делает AI<!--/T--></p>
+    <ol class="steps"><!--T:c1_steps-->
+     <li>Строит базу знаний из ваших подкастов, эфиров и материалов.</li>
+     <li>Собирает базу запросов и вопросов аудитории — её словами.</li>
+     <li>По ссылке на выпуск или запрос сам находит тему и коротко её исследует.</li>
+     <li>Пишет пост в вашем голосе и вашем дизайне.</li>
+    <!--/T--></ol>
+    <blockquote class="q"><!--T:c1_q-->«Если вы не знаете, о чём писать, то, соответственно, используйте базу знаний»<!--/T--><cite>Андрей · из разбора в Loom</cite></blockquote>
+   </div>
+   <div class="media">
+    <a class="vid" href="#" data-mp4="clips/c_b1a_topics.mp4" aria-label="Смотреть фрагмент: база знаний и первый пост"><video muted loop playsinline preload="none" poster="clips/c_b1a_topics.jpg" data-src="clips/c_b1a_topics.mp4"></video><span class="live">превью без звука</span><span class="dur">0:24</span><span class="play">▶</span></a>
+    <p class="cap mono"><!--T:c1_cap-->База знаний из подкастов и первый пост в голосе — около 10 минут<!--/T--></p>
+    <div class="more-vids">
+     <div><a class="vid" href="#" data-mp4="clips/c_b1b_4h.mp4" aria-label="Смотреть фрагмент: 15 минут на пост"><img src="clips/c_b1b_4h.jpg" alt=""><span class="dur">0:31</span><span class="play">▶</span></a><p class="cap mono">«4 часа в день» → 15 минут на пост</p></div>
+    </div>
+   </div>
+  </div>
+  <div class="stats"><!--T:c1_stats-->
+   <div class="st"><b>~10 мин</b><span>база знаний и первый пост в вашем голосе и дизайне</span></div>
+   <div class="st"><span class="was">4 часа в день на контент</span><b>15 мин</b><span>на пост из базы тем и запросов</span></div>
+   <div class="st"><b>3 поста</b><span>за один час работы с агентом</span></div>
+  <!--/T--></div>
+ </div>
+</section>
+
+<!-- CASE 2 -->
+<section class="sec sec-gray case" id="c2" aria-labelledby="c2-h">
+ <div class="wrap">
+  <div class="case-grid">
+   <div>
+    <div class="kick mono"><span class="star">✳</span> 02 · Тексты в вашем голосе</div>
+    <h2 class="h2" id="c2-h"><!--T:c2_h-->Если пост занимает полдня, а текст всё равно <span class="u">звучит как ChatGPT</span><!--/T--></h2>
+    <p class="how mono">:: Вот как это делает AI</p>
+    <ol class="steps"><!--T:c2_steps-->
+     <li>Получает задачу в Telegram — голосом или текстом.</li>
+     <li>Сам изучает ваши материалы: страницы курсов, прошлые посты.</li>
+     <li>Пишет текст и оффер, верстает в вашей дизайн-системе.</li>
+     <li>Учится на ваших правках — попадание в голос растёт с каждым раундом.</li>
+    <!--/T--></ol>
+    <blockquote class="q"><!--T:c2_q-->«В 18 часов я это послал, в 18:04 я получил полностью свёрстанный пост»<!--/T--><cite>Андрей · из разбора в Loom</cite></blockquote>
+   </div>
+   <div class="media">
+    <a class="vid" href="#" data-mp4="clips/c_b2a_4min.mp4" aria-label="Смотреть фрагмент: пост за 4 минуты"><video muted loop playsinline preload="none" poster="clips/c_b2a_4min.jpg" data-src="clips/c_b2a_4min.mp4"></video><span class="live">превью без звука</span><span class="dur">0:37</span><span class="play">▶</span></a>
+    <p class="cap mono"><!--T:c2_cap-->Задача ушла в 18:00, свёрстанный пост пришёл в 18:04<!--/T--></p>
+    <div class="more-vids">
+     <div><a class="vid" href="#" data-mp4="clips/c_b2b_voice90.mp4" aria-label="Смотреть фрагмент: попадание в голос 90%"><img src="clips/c_b2b_voice90.jpg" alt=""><span class="dur">0:27</span><span class="play">▶</span></a><p class="cap mono">попадание в голос: 10–15 % → 90 %</p></div>
+    </div>
+   </div>
+  </div>
+  <div class="stats"><!--T:c2_stats-->
+   <div class="st"><b>4 мин</b><span>от задачи до свёрстанного поста, 18:00 → 18:04</span></div>
+   <div class="st"><span class="was">10–15 % попадания в голос</span><b>~90 %</b><span>после нескольких раундов правок</span></div>
+   <div class="st"><b>22 000</b><span>просмотров у поста, собранного из голосовых за 40 минут</span></div>
+  <!--/T--></div>
+ </div>
+</section>
+
+<!-- CASE 3 -->
+<section class="sec case" id="c3" aria-labelledby="c3-h">
+ <div class="wrap">
+  <div class="case-grid">
+   <div>
+    <div class="kick mono"><span class="star">✳</span> 03 · Рилсы без монтажа</div>
+    <h2 class="h2" id="c3-h"><!--T:c3_h-->Если монтаж одного рилса отнимает у вас <span class="u">час и больше</span><!--/T--></h2>
+    <p class="how mono">:: Вот как это делает AI</p>
+    <ol class="steps"><!--T:c3_steps-->
+     <li>Вы пишете агенту одну фразу: «Сделай из последнего поста рилз».</li>
+     <li>Агент режет текст поста на фрагменты и делает озвучку.</li>
+     <li>Собирает дизайн кадров в вашем стиле — без CapCut и Figma.</li>
+     <li>Правки вы надиктовываете голосом или коротким видео, агент перемонтирует сам.</li>
+    <!--/T--></ol>
+    <blockquote class="q"><!--T:c3_q-->«Я не открывал ни CapCut, ни Figma»<!--/T--><cite>Андрей · подпись к рилзу, 23 августа</cite></blockquote>
+   </div>
+   <div class="media vert">
+    <a class="vid v" href="#" data-mp4="clips/c_b3a_reel234.mp4" data-vert="1" aria-label="Смотреть рилз: процесс с экрана"><video muted loop playsinline preload="none" poster="clips/c_b3a_reel234.jpg" data-src="clips/c_b3a_reel234.mp4"></video><span class="live">превью без звука</span><span class="dur">0:49</span><span class="play">▶</span></a>
+    <div class="side">
+     <p class="cap mono"><!--T:c3_cap-->Тот самый рилз: процесс с экрана, включая промпт<!--/T--></p>
+     <a class="vid" href="#" data-mp4="clips/c_b3b_reel10min.mp4" aria-label="Смотреть фрагмент: правки рилса за 10 минут"><img src="clips/c_b3b_reel10min.jpg" alt=""><span class="dur">0:36</span><span class="play">▶</span></a>
+     <p class="cap mono">правки рилса: 17:17 → 17:27, без монтажёра</p>
+    </div>
+   </div>
+  </div>
+  <div class="stats"><!--T:c3_stats-->
+   <div class="st"><b>34 мин</b><span>от сообщения агенту до готового видео, 19:16 → 19:50</span></div>
+   <div class="st"><b>234</b><span>репоста за первый день · 18 000 просмотров · 655 сохранений</span></div>
+   <div class="st"><b>10 мин</b><span>на правки рилса вместо переписки с монтажёром</span></div>
+  <!--/T--></div>
+ </div>
+</section>
+
+<!-- CASE 4 -->
+<section class="sec sec-gray case" id="c4" aria-labelledby="c4-h">
+ <div class="wrap">
+  <div class="case-grid">
+   <div>
+    <div class="kick mono"><span class="star">✳</span> 04 · Дизайн без дизайнера</div>
+    <h2 class="h2" id="c4-h"><!--T:c4_h-->Если нет дизайнера, а карусель в конструкторе <span class="u">занимает часы</span><!--/T--></h2>
+    <p class="how mono">:: Вот как это делает AI</p>
+    <ol class="steps"><!--T:c4_steps-->
+     <li>Вы голосом задаёте тему и референс дизайна.</li>
+     <li>Агент пишет текст, сам подбирает и вырезает изображения, рендерит слайды.</li>
+     <li>Правки — тоже голосом: «на пятом слайде нужен человек».</li>
+     <li>Дизайн-систему агент собирает один раз из ваших референсов и дальше верстает в ней.</li>
+    <!--/T--></ol>
+    <blockquote class="q"><!--T:c4_q-->«Мне не нужен дизайнер в данном случае. Мне не нужно руками ничего двигать»<!--/T--><cite>Андрей · из разбора в Loom</cite></blockquote>
+   </div>
+   <div class="media">
+    <a class="vid" href="#" data-mp4="clips/c_b4a_carousel3.mp4" aria-label="Смотреть фрагмент: карусель за 3 минуты"><video muted loop playsinline preload="none" poster="clips/c_b4a_carousel3.jpg" data-src="clips/c_b4a_carousel3.mp4"></video><span class="live">превью без звука</span><span class="dur">0:26</span><span class="play">▶</span></a>
+    <p class="cap mono"><!--T:c4_cap-->Голосовая команда — и слайды рендерятся на глазах<!--/T--></p>
+    <div class="more-vids">
+     <div><a class="vid" href="#" data-mp4="clips/c_b4b_ds.mp4" aria-label="Смотреть фрагмент: дизайн-система за 10 минут"><img src="clips/c_b4b_ds.jpg" alt=""><span class="dur">0:30</span><span class="play">▶</span></a><p class="cap mono">своя дизайн-система за 7–10 минут</p></div>
+    </div>
+   </div>
+  </div>
+  <div class="stats"><!--T:c4_stats-->
+   <div class="st"><b>3 мин</b><span>карусель от темы до готовых слайдов</span></div>
+   <div class="st"><b>7–10 мин</b><span>на свою дизайн-систему, 6 минут на пост в ней</span></div>
+   <div class="st"><b>1 400</b><span>сохранений и 49 268 просмотров у поста, 13 минут до первой версии дизайна</span></div>
+  <!--/T--></div>
+ </div>
+</section>
+
+<!-- CASE 5 -->
+<section class="sec case" id="c5" aria-labelledby="c5-h">
+ <div class="wrap">
+  <div class="case-grid">
+   <div>
+    <div class="kick mono"><span class="star">✳</span> 05 · Сайты и лендинги</div>
+    <h2 class="h2" id="c5-h"><!--T:c5_h-->Если сайт под акцию&nbsp;— это дизайнер, ТЗ и&nbsp;<span class="u">неделя ожидания</span><!--/T--></h2>
+    <p class="how mono">:: Вот как это делает AI</p>
+    <ol class="steps"><!--T:c5_steps-->
+     <li>Получает ссылку на сайт и доступ к платформе.</li>
+     <li>Сам изучает, что внутри ваших продуктов.</li>
+     <li>Предлагает структуру: маршруты, программы, отзывы.</li>
+     <li>После команды «внедряй» пишет код и выкладывает на живой домен.</li>
+    <!--/T--></ol>
+    <blockquote class="q"><!--T:c5_q-->«Для того, чтобы подготовиться к распродаже, не нужна команда, не нужны дизайнеры, не нужны копирайтеры»<!--/T--><cite>Андрей · из разбора в Loom</cite></blockquote>
+   </div>
+   <div class="media">
+    <a class="vid" href="#" data-mp4="clips/c_b5a_site.mp4" aria-label="Смотреть фрагмент: сайт распродажи"><video muted loop playsinline preload="none" poster="clips/c_b5a_site.jpg" data-src="clips/c_b5a_site.mp4"></video><span class="live">превью без звука</span><span class="dur">0:23</span><span class="play">▶</span></a>
+    <p class="cap mono"><!--T:c5_cap-->Финальная версия сайта распродажи и вопрос: сколько бы вы заплатили дизайнеру?<!--/T--></p>
+    <div class="more-vids">
+     <div><a class="vid" href="#" data-mp4="clips/c_b5b_landing6.mp4" aria-label="Смотреть фрагмент: лендинг за 6 минут"><img src="clips/c_b5b_landing6.jpg" alt=""><span class="dur">0:36</span><span class="play">▶</span></a><p class="cap mono">лендинг под новый продукт за 6 минут</p></div>
+     <div><a class="vid" href="#" data-mp4="clips/c_b5c_landing_her.mp4" aria-label="Смотреть фрагмент: лендинг участницы"><img src="clips/c_b5c_landing_her.jpg" alt=""><span class="dur">0:26</span><span class="play">▶</span></a><p class="cap mono">лендинг в стиле участницы: 6 минут, 0 ₽</p></div>
+    </div>
+   </div>
+  </div>
+  <div class="stats"><!--T:c5_stats-->
+   <div class="st"><b>40 → 13 мин</b><span>на итерацию сайта распродажи: каждая следующая быстрее</span></div>
+   <div class="st"><b>6 мин</b><span>лендинг под новый продукт</span></div>
+   <div class="st"><span class="was">неделя у дизайнера</span><b>0 ₽</b><span>кроме токенов: лендинг в стиле участницы за 6 минут</span></div>
+  <!--/T--></div>
+ </div>
+</section>
+
+<!-- CASE 6 -->
+<section class="sec sec-gray case" id="c6" aria-labelledby="c6-h">
+ <div class="wrap">
+  <div class="case-grid">
+   <div>
+    <div class="kick mono"><span class="star">✳</span> 06 · Воронки и продажи</div>
+    <h2 class="h2" id="c6-h"><!--T:c6_h-->Если воронка не продаёт, а команда вокруг неё <span class="u">стоит дорого</span><!--/T--></h2>
+    <p class="how mono">:: Вот как это делает AI</p>
+    <ol class="steps"><!--T:c6_steps-->
+     <li>Собирает воронку голосом: квалификация, персональные сообщения под каждую кнопку.</li>
+     <li>Связывает Instagram и Telegram, считает, где отваливаются люди.</li>
+     <li>Из заметок к уроку делает слайды в вашей дизайн-системе.</li>
+     <li>Подсказывает, что переписать в сообщениях и видео.</li>
+    <!--/T--></ol>
+    <blockquote class="q"><!--T:c6_q-->«Я платил за разработчиков ботов порядка 50 тысяч, сейчас плачу 0. И это реальная экономия денег»<!--/T--><cite>Андрей · из разбора в Loom</cite></blockquote>
+   </div>
+   <div class="media">
+    <a class="vid" href="#" data-mp4="clips/c_b6a_bots0.mp4" aria-label="Смотреть фрагмент: боты 50 000 → 0"><video muted loop playsinline preload="none" poster="clips/c_b6a_bots0.jpg" data-src="clips/c_b6a_bots0.mp4"></video><span class="live">превью без звука</span><span class="dur">0:28</span><span class="play">▶</span></a>
+    <p class="cap mono"><!--T:c6_cap-->Расходы на ботов: 50 000 ₽ → 0 ₽<!--/T--></p>
+    <div class="more-vids">
+     <div><a class="vid" href="#" data-mp4="clips/c_b6b_165k.mp4" aria-label="Смотреть фрагмент: 165 000 одним чеком"><img src="clips/c_b6b_165k.jpg" alt=""><span class="dur">0:22</span><span class="play">▶</span></a><p class="cap mono">165 000 ₽ одним чеком на холодный трафик</p></div>
+     <div><a class="vid" href="#" data-mp4="clips/c_b6d_marketer.mp4" aria-label="Смотреть фрагмент: агент-маркетолог"><img src="clips/c_b6d_marketer.jpg" alt=""><span class="dur">0:27</span><span class="play">▶</span></a><p class="cap mono">агент переписывает сообщения воронки</p></div>
+    </div>
+   </div>
+  </div>
+  <div class="stats"><!--T:c6_stats-->
+   <div class="st"><span class="was">~50 000 ₽ разработчикам ботов</span><b>0 ₽</b><span>воронку собирает и ведёт агент</span></div>
+   <div class="st"><b>1 мин</b><span>на слайды к уроку из заметок</span></div>
+   <div class="st"><b>165 000 ₽</b><span>одним чеком на холодный трафик</span></div>
+  <!--/T--></div>
+  <div class="member"><!--T:c6_member-->
+   <span class="tag">кейс участницы</span>
+   <div><b>Один пост → 2 110 комментариев → 900 регистраций → больше миллиона</b><p>Наташа прошла программу в апреле. Здесь сработали смыслы и воронка, которые собирают на программе.</p></div>
+   <a class="pill pill-white" href="#" data-mp4="clips/c_b6c_million.mp4">Смотреть 0:38</a>
+  <!--/T--></div>
+ </div>
+</section>
+
+<!-- SAVINGS: TIME -->
+<section class="sec" id="savings" aria-labelledby="sav-h">
+ <div class="wrap">
+  <div class="kick mono"><span class="star">✳</span> Итог</div>
+  <h2 class="h2" id="sav-h"><!--T:sav_h-->Агенты, которые экономят вам <span class="u">время и деньги</span><!--/T--></h2>
+  <p class="lead" style="margin-top:20px"><span class="num">::</span><!--T:sav_lead-->Время — по фактам из кейсов выше. Деньги — посчитайте на своём объёме задач.<!--/T--></p>
+  <div class="times"><!--T:sav_times-->
+   <div class="tm"><b>4 мин</b><span>пост<br>от задачи до вёрстки</span></div>
+   <div class="tm"><b>3 мин</b><span>карусель<br>голосом</span></div>
+   <div class="tm"><b>34 мин</b><span>рилз<br>из готового поста</span></div>
+   <div class="tm"><b>6 мин</b><span>лендинг<br>под продукт</span></div>
+   <div class="tm"><b>10 мин</b><span>правки рилса<br>без монтажёра</span></div>
+   <div class="tm"><b>1 мин</b><span>слайды<br>к уроку</span></div>
+  <!--/T--></div>
+  <div class="sav-quote">
+   <a class="vid" href="#" data-mp4="clips/c_sav_costs.mp4" aria-label="Смотреть фрагмент: из чего складываются расходы"><img src="clips/c_sav_costs.jpg" alt=""><span class="dur">0:40</span><span class="play">▶</span></a>
+   <blockquote class="q" style="margin-top:0"><!--T:sav_q-->«Тебе не нужны никакие программисты, дизайнеры сайтов, настройщики воронок, редакторы рилсов»<!--/T--><cite>Андрей · из чего складываются расходы после программы</cite></blockquote>
+  </div>
+ </div>
+</section>
+
+<!-- SAVINGS: MONEY (calculator from /ai-agents/) -->
+<section id="mbga-budget" aria-labelledby="mbga-budget-heading" style="padding-top:0"><div class="mbga-inner">
+<div class="mbga-kicker mbga-mono"><span class="mbga-star" aria-hidden="true">✳</span> Деньги · бюджет блога</div>
+<h2 id="mbga-budget-heading">Сколько стоит<br><span>вести блог</span></h2>
+<p class="mbga-lead"><b class="mbga-mono">::</b>Сравните расходы до и после программы на своём объёме задач.</p>
+<div class="mbga-comparison">
+<section class="mbga-panel" aria-labelledby="mbga-before-heading"><div class="mbga-panelhead"><h3 id="mbga-before-heading">До программы</h3><span class="mbga-tag mbga-mono">Подрядчики</span></div>
+<dl class="mbga-rows"><div class="mbga-row"><dt>Монтаж Reels<span class="mbga-detail" id="mbga-reels-formula"></span></dt><dd id="mbga-reels-total"></dd></div><div class="mbga-row"><dt>Создание воронок<span class="mbga-detail" id="mbga-funnels-formula"></span></dt><dd id="mbga-funnels-total"></dd></div><div class="mbga-row"><dt>Техническое сопровождение воронок<span class="mbga-detail">Ежемесячно</span></dt><dd>20 000 ₽</dd></div><div class="mbga-row mbga-site-row"><dt>Создание сайта<span class="mbga-detail" id="mbga-site-status">Разово · сейчас не включён</span></dt><dd>50 000 ₽<span class="mbga-detail">только первый месяц</span></dd></div></dl>
+<div class="mbga-total"><span class="mbga-total-label" id="mbga-before-period">Итого в месяц</span><strong><span id="mbga-before-total"></span></strong></div></section>
+<section class="mbga-panel mbga-after" aria-labelledby="mbga-after-heading"><div class="mbga-panelhead"><h3 id="mbga-after-heading">После программы</h3><span class="mbga-tag mbga-mono">AI-подписки</span></div>
+<dl class="mbga-rows"><div class="mbga-row"><dt>Claude Code<span class="mbga-detail">Бюджет на месяц</span></dt><dd>100 €</dd></div><div class="mbga-row"><dt>ChatGPT<span class="mbga-detail">Бюджет на месяц</span></dt><dd>100 €</dd></div></dl>
+<p class="mbga-after-note">Вы работаете с AI самостоятельно. Задачи и проверка результата остаются за вами.</p>
+<div class="mbga-total"><span class="mbga-total-label">Итого в месяц</span><strong><span id="mbga-after-total"></span><small id="mbga-conversion"></small></strong></div></section></div>
+<div class="mbga-settings" aria-label="Настройки бюджета">
+<div class="mbga-control"><label for="mbga-reels">Reels в месяц <output id="mbga-reels-value" for="mbga-reels">12</output></label><input id="mbga-reels" type="range" min="0" max="30" step="1" value="12"><div class="mbga-range-ends mbga-mono"><span>0</span><span>30</span></div></div>
+<div class="mbga-control"><label for="mbga-price">Цена одного Reels <output id="mbga-price-value" for="mbga-price">4 000 ₽</output></label><input id="mbga-price" type="range" min="3000" max="5000" step="100" value="4000"><div class="mbga-range-ends mbga-mono"><span>3 000 ₽</span><span>5 000 ₽</span></div></div>
+<div class="mbga-control"><label for="mbga-funnels">Воронок в месяц <output id="mbga-funnels-value" for="mbga-funnels">1</output></label><input id="mbga-funnels" type="range" min="0" max="3" step="1" value="1"><div class="mbga-range-ends mbga-mono"><span>0</span><span>3</span></div></div>
+<div class="mbga-control"><label for="mbga-fx">Условный курс · редактируемый</label><div class="mbga-fxbox"><span>1 € =</span><input id="mbga-fx" type="number" min="0.01" step="0.01" value="100" inputmode="decimal" aria-describedby="mbga-fxhint mbga-fxerror"><span>₽</span></div><div class="mbga-fxhint" id="mbga-fxhint">Для расчёта, не рыночный курс</div><div class="mbga-error" id="mbga-fxerror" hidden>Введите курс больше нуля.</div></div>
+</div>
+<label class="mbga-switchline" for="mbga-website"><input id="mbga-website" type="checkbox" role="switch"><span>Учесть сайт в первом месяце <span class="mbga-mono">· +50 000 ₽ разово</span></span></label>
+<div class="mbga-result" aria-live="polite" aria-atomic="true"><div><div class="mbga-result-title">Разница бюджетов</div><div class="mbga-result-sub" id="mbga-savings-caption">Расчётная экономия за месяц · до минус после</div></div><output id="mbga-savings"></output></div>
+<p class="mbga-footnote">Пример бюджета. Стоимость программы и ваше время не включены. Подписки — заданный бюджет, не официальный прайс; другие расходы зависят от проекта.</p>
+</div></section>
+
+<!-- PROGRAM -->
+<section class="sec sec-gray" id="how" aria-labelledby="how-h">
+ <div class="wrap">
+  <div class="kick mono"><span class="star">✳</span> Программа</div>
+  <h2 class="h2" id="how-h"><!--T:prog_h-->Три AI-агента <span class="u">за три недели</span><!--/T--></h2>
+  <p class="lead" style="margin-top:20px"><span class="num">::</span><!--T:prog_lead-->Всё, что вы видели в кейсах, вы собираете под себя: на своих материалах, в своём голосе и дизайне.<!--/T--></p>
+  <div class="weeks"><!--T:prog_weeks-->
+   <div class="wk"><span class="n">Неделя 1</span><h3>Контентный агент</h3><ul><li>База знаний из ваших материалов</li><li>Голос и дизайн-система</li><li>Посты и карусели голосом</li></ul><div class="out"><b>Результат.</b> Агент пишет и верстает посты в вашем голосе.</div></div>
+   <div class="wk"><span class="n">Неделя 2</span><h3>Продающий агент</h3><ul><li>Оффер и продукт</li><li>Воронка и сообщения</li><li>Лендинг под продукт</li></ul><div class="out"><b>Результат.</b> Путь от поста к заявке собран.</div></div>
+   <div class="wk"><span class="n">Неделя 3</span><h3>Агент для Reels и соединение</h3><ul><li>Монтаж коротких видео агентом</li><li>Три агента в одном процессе</li><li>Финальный Zoom</li></ul><div class="out"><b>Результат.</b> Три агента соединены в один рабочий процесс.</div></div>
+  <!--/T--></div>
+  <div class="fmt"><span>Старт 21 сентября</span><span>Два общих Zoom</span><span>Три индивидуальные встречи</span><span>До 8 участников</span></div>
+ </div>
+</section>
+
+<!-- AUTHOR -->
+<section class="author" aria-labelledby="author-h">
+ <div class="l">
+  <div class="who"><img src="assets/andrey.jpg" alt=""><span class="mono">Автор программы и ваш наставник,<br>предприниматель, фотограф, блогер</span></div>
+  <h2 class="name" id="author-h">Andrey<br>Andreev<span class="handle">@andreyandreev.me</span></h2>
+  <div class="stats2">
+   <div><b>65K+</b><span>подписчиков в блоге. С января по июль 2026 — 444 поста, 17,6 млн просмотров и 23 000 новых подписчиков</span></div>
+   <div><b>&gt;3000</b><span>экспертов и блогеров научились у меня набирать и монетизировать подписчиков</span></div>
+  </div>
+ </div>
+ <div class="r">
+  <div class="stat-card">
+   <div class="hd">Статистика <span>23–29 августа</span></div>
+   <div class="rowl"><span>Публикации</span><b>24</b></div>
+   <div class="rowl"><span>Охват</span><b><i>↗</i>262 933</b></div>
+   <div class="rowl"><span>Новые подписчики</span><b><i>↗</i>+1 364</b></div>
+   <div class="rowl"><span>Рост охвата к прошлой неделе</span><b><i>↗</i>×2,7</b></div>
+   <div class="src">источник: @mbga_materials · «Итоги недели»</div>
+  </div>
+ </div>
+</section>
+
+<!-- PRICE -->
+<section class="sec" id="price" aria-labelledby="price-h">
+ <div class="wrap">
+  <div class="kick mono"><span class="star">✳</span> Тарифы · старт 21 сентября</div>
+  <h2 class="h2" id="price-h">Выберите, <span class="u">как собирать</span></h2>
+  <div class="tariffs">
+   <div class="tf">
+    <div class="nm"><h3>Зритель</h3><span>самостоятельно</span></div>
+    <div class="amount"><span class="dd">::</span>35 000 ₽</div>
+    <ul><!--T:tf1-->
+     <li>Соберёте трёх AI-агентов по материалам программы</li>
+     <li>Контентный агент</li>
+     <li>Продающий агент</li>
+     <li>Агент для Reels — монтаж коротких видео</li>
+     <li>База знаний и дизайн-система</li>
+    <!--/T--></ul>
+    <a class="pill pill-dark" href="https://andreyandreev.createtoday.ru/hero/get/of_mA3MjbGAuOrv" target="_blank" rel="noreferrer" data-event="ai-cases-cta" data-placement="price-viewer" data-action="checkout">Оплатить «Зритель»</a>
+   </div>
+   <div class="tf main">
+    <div class="nm"><h3>С сопровождением</h3><span>вместе с Андреем · до 8 участников</span></div>
+    <div class="amount"><span class="dd">::</span>165 000 ₽</div>
+    <ul><!--T:tf2-->
+     <li>Три недели сопровождения</li>
+     <li>Два общих Zoom с Андреем</li>
+     <li>Три индивидуальные встречи с Андреем</li>
+     <li>Контентный, продающий и агент для Reels на ваших материалах</li>
+     <li>База знаний и дизайн-система</li>
+    <!--/T--></ul>
+    <a class="pill pill-coral" href="https://andreyandreev.createtoday.ru/hero/get/of_r6-pemaaf45z" target="_blank" rel="noreferrer" data-event="ai-cases-cta" data-placement="price-main" data-action="checkout">Оплатить участие</a>
+   </div>
+  </div>
+  <p class="price-note">Подписки ChatGPT и Claude с доступом к Claude Code оплачиваются отдельно. Notion и Manus — по желанию.</p>
+  <div class="pay-sub"><span>Можно оплатить сразу или сначала коротко сверить с Андреем задачу и формат.</span><a href="https://t.me/andrey_andreev" target="_blank" rel="noreferrer" data-event="ai-cases-cta" data-placement="price" data-action="dialog">Написать Андрею →</a></div>
+ </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec sec-gray" id="faq" aria-labelledby="faq-h">
+ <div class="wrap">
+  <div class="kick mono">Вопросы</div>
+  <h2 class="h2" id="faq-h">Что спрашивают <span class="u">перед стартом</span></h2>
+  <div class="faq"><!--T:faq-->
+   <details><summary>Это индивидуальная работа?</summary><div class="a">Смешанный формат: два общих Zoom и три индивидуальные встречи с Андреем. Между встречами вы собираете агентов сами, Андрей помогает держать фокус.</div></details>
+   <details><summary>Нужно ли уже вести блог и иметь продукт?</summary><div class="a">Блог необязателен. Нужны свои знания и тема, о которой вы готовы рассказывать. Для продающего агента понадобится хотя бы черновик продукта.</div></details>
+   <details><summary>Агенты будут писать и продавать за меня?</summary><div class="a">Нет. Они работают на ваших материалах: собирают тексты, офферы и сценарии из вашей базы знаний. Проверяете и решаете вы.</div></details>
+   <details><summary>Что понадобится для работы?</summary><div class="a">Ваши материалы: тексты, голосовые, описания продуктов, примеры визуала. И подписки ChatGPT и Claude с доступом к Claude Code. Notion и Manus по желанию.</div></details>
+   <details><summary>Когда старт и как оплатить?</summary><div class="a">Старт 21 сентября 2026 года. Оплатить можно сразу на странице оплаты или после разговора с Андреем в Telegram.</div></details>
+  <!--/T--></div>
+ </div>
+</section>
+
+<!-- FINAL -->
+<section class="sec final" aria-labelledby="final-h">
+ <div class="wrap">
+  <h2 class="h2" id="final-h"><!--T:final_h-->Время на контент можно вернуть себе. <span class="u">Начнём 21 сентября</span><!--/T--></h2>
+  <div class="facts"><span>три недели</span><span>два общих Zoom</span><span>три индивидуальные встречи</span><span>до 8 участников</span></div>
+  <div class="cta">
+   <a class="pill pill-coral" href="https://andreyandreev.createtoday.ru/hero/get/of_r6-pemaaf45z" target="_blank" rel="noreferrer" data-event="ai-cases-cta" data-placement="final" data-action="checkout">Оплатить участие</a>
+   <a class="pill pill-white" href="https://t.me/andrey_andreev" target="_blank" rel="noreferrer" data-event="ai-cases-cta" data-placement="final" data-action="dialog">Написать Андрею</a>
+  </div>
+ </div>
+</section>
+
+</main>
+
+<footer class="footer">
+ <div class="wrap rowf">
+  <span>© Create Today</span>
+  <nav aria-label="Юридические ссылки">
+   <a href="https://createtoday.ru/politica" target="_blank" rel="noreferrer">Политика конфиденциальности</a>
+   <a href="https://createtoday.ru/oferta/challenge" target="_blank" rel="noreferrer">Договор-оферта</a>
+   <a href="https://t.me/Create_today_help" target="_blank" rel="noreferrer">Поддержка</a>
+  </nav>
+ </div>
+</footer>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Видео">
+ <div class="wrapx"><button class="x" id="modal-x" aria-label="Закрыть">✕</button><div class="box" id="modal-box"></div></div>
+</div>
+
+<script>
+(function(){
+  var modal=document.getElementById('modal'),box=document.getElementById('modal-box');
+  function open(src,vert){
+    box.innerHTML='';var v=document.createElement('video');v.src=src;v.controls=true;v.autoplay=true;v.playsInline=true;box.appendChild(v);
+    modal.classList.toggle('vert',!!vert);modal.classList.add('on');document.body.style.overflow='hidden';
+    var p=v.play();if(p&&p.catch)p.catch(function(){});
+    if(window.ym)ym(109255989,'reachGoal','ai-cases-video',{src:src});
+  }
+  function close(){modal.classList.remove('on');box.innerHTML='';document.body.style.overflow=''}
+  document.querySelectorAll('[data-mp4]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();open(a.getAttribute('data-mp4'),a.getAttribute('data-vert'))})});
+  document.getElementById('modal-x').addEventListener('click',close);
+  modal.addEventListener('click',function(e){if(e.target===modal)close()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+  // muted previews: load and play only while visible
+  var vids=document.querySelectorAll('video[data-src]');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(en){var v=en.target;
+      if(en.isIntersecting){if(!v.src)v.src=v.getAttribute('data-src');var p=v.play();if(p&&p.catch)p.catch(function(){})}else{v.pause()}})},{rootMargin:'120px'});
+    vids.forEach(function(v){io.observe(v)});
+  }else{vids.forEach(function(v){v.src=v.getAttribute('data-src')})}
+  var lock=false;
+  document.querySelectorAll('[data-action="checkout"]').forEach(function(a){a.addEventListener('click',function(e){if(lock){e.preventDefault();return}lock=true;setTimeout(function(){lock=false},1500)})});
+})();
+</script>
+</body>
+</html>
