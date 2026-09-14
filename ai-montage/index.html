@@ -1,0 +1,636 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI-агент для монтажа рилсов и дизайна постов — Андрей Андреев</title>
+<meta name="description" content="Отдельный AI-агент: монтирует рилсы из ваших исходников и собирает посты и карусели в вашем дизайне. Реальные примеры с экрана, время и деньги посчитаны.">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:title" content="AI-агент для монтажа рилсов и дизайна постов">
+<meta property="og:description" content="Раньше 3000 ₽ монтажёру за ролик. Теперь агент делает рилз за 25 минут и пост за 15. Примеры с экрана.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFFFFF;--blue:#BFDDFB;--blue-soft:#DCEBFC;--blue-deep:#2F80ED;--coral:#E8563F;--ink:#111111;--ink-2:#3A3A3A;--mute:#6B6B6B;--line:#E6E6E6;--gray:#F5F5F5;--yellow:#F5C445;--dark:#2B2B2B}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,system-ui,-apple-system,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;line-height:1.45;font-size:17px}
+img,video{display:block;max-width:100%}
+a{color:inherit}
+.mono{font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,monospace;font-size:12.5px;letter-spacing:.02em}
+.wrap{max-width:1240px;margin:0 auto;padding:0 40px}
+.sec{padding:clamp(72px,9vw,120px) 0}
+.sec-gray{background:var(--gray)}
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:0 34px;border-radius:999px;text-decoration:none;font-size:15px;font-weight:500;font-family:'JetBrains Mono',monospace;letter-spacing:.01em;cursor:pointer;border:0;transition:transform .15s ease,opacity .15s ease}
+.pill:hover{transform:translateY(-1px);opacity:.94}
+.pill:focus-visible,.vid:focus-visible,.pain:focus-visible{outline:3px solid var(--blue-deep);outline-offset:3px}
+.pill-coral{background:var(--coral);color:#fff}
+.pill-ghost{background:var(--gray);color:var(--ink)}
+.pill-white{background:#fff;color:var(--ink)}
+.pill-dark{background:var(--ink);color:#fff}
+.kick{color:var(--mute);margin-bottom:24px;display:flex;gap:10px;align-items:center}
+.kick .star{color:var(--coral);font-size:15px}
+.h2{font-size:clamp(32px,4.2vw,58px);line-height:1.1;letter-spacing:-.03em;font-weight:400}
+.h2 .u,.h1 .u{position:relative;display:inline-block}
+.h2 .u:after{content:"";position:absolute;left:0;right:0;bottom:.04em;height:2px;background:var(--blue-deep)}
+.lead{font-size:clamp(18px,1.5vw,21px);line-height:1.45;color:var(--ink-2);max-width:720px}
+.lead .num{font-family:'JetBrains Mono',monospace;color:var(--blue-deep);margin-right:6px}
+/* nav */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:28px 0}
+.nav-l{display:flex;align-items:center;gap:14px;text-decoration:none}
+.nav-l img{width:44px;height:44px;border-radius:50%;object-fit:cover}
+.nav-l .tag{background:var(--gray);border-radius:12px;padding:10px 16px;line-height:1.35}
+.nav-r{display:flex;gap:12px}
+/* hero */
+.hero{padding:36px 0 80px}
+.h1{font-size:clamp(38px,5.1vw,78px);line-height:1.04;letter-spacing:-.04em;font-weight:500;max-width:1080px}
+.h1 .u{display:inline;text-decoration:underline;text-decoration-color:var(--blue-deep);text-decoration-thickness:3px;text-underline-offset:.12em}
+.hero-mid{display:grid;grid-template-columns:1fr 380px;gap:56px;align-items:center;margin-top:44px}
+.hero .lead{font-size:20px;max-width:600px}
+.meta{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:32px;max-width:640px}
+.meta-row{display:grid;grid-template-columns:82px 1fr;gap:10px;border-bottom:1px solid var(--line);padding-bottom:14px}
+.meta-row .k{color:var(--mute)}
+.meta-row .v{font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.55}
+.hero-cta{margin-top:36px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.hero-cta .note{color:var(--mute);font-size:14px;margin-left:8px}
+.cards{position:relative;height:360px}
+.card{position:absolute;width:190px;aspect-ratio:4/5;border-radius:14px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.18);background:#ddd}
+.card.v{aspect-ratio:9/16;width:170px}
+.card img,.card video{width:100%;height:100%;object-fit:cover}
+.chip{position:absolute;background:#fff;border-radius:999px;padding:9px 16px;font-family:'JetBrains Mono',monospace;font-size:14px;box-shadow:0 8px 24px rgba(0,0,0,.14);white-space:nowrap;display:flex;gap:8px;align-items:center}
+.chip i{font-style:normal;color:var(--blue-deep)}
+/* pains index */
+.pains{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:44px}
+.pain{background:var(--gray);border-radius:18px;padding:22px 22px 24px;text-decoration:none;display:flex;flex-direction:column;gap:14px;min-height:190px;transition:transform .15s ease}
+.pain:nth-child(2n){background:var(--blue)}
+.pain:hover{transform:translateY(-3px)}
+.pain .n{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--blue-deep)}
+.pain:nth-child(2n) .n{color:#1f4f8a}
+.pain h3{font-size:20px;line-height:1.25;font-weight:500;letter-spacing:-.01em}
+.pain .res{margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:13px;display:flex;justify-content:space-between;gap:10px;border-top:1px solid rgba(0,0,0,.1);padding-top:12px}
+/* case block */
+.case-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:64px;align-items:start}
+.case .h2{font-size:clamp(28px,3.4vw,46px)}
+.how{margin-top:26px;color:var(--blue-deep);font-size:14px}
+.steps{list-style:none;margin-top:14px;border-top:1px solid var(--line);counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:44px 1fr;gap:10px;padding:14px 0;border-bottom:1px solid var(--line);font-size:17px;color:var(--ink-2)}
+.steps li:before{content:"0" counter(s);font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--blue-deep);padding-top:3px}
+.sec-gray .steps,.sec-gray .steps li{border-color:#e0e0e0}
+.q{margin-top:28px;font-size:clamp(19px,1.7vw,23px);line-height:1.4;letter-spacing:-.01em;padding-left:22px;border-left:3px solid var(--coral)}
+.q cite{display:block;margin-top:10px;font-style:normal;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--mute)}
+.media{display:flex;flex-direction:column;gap:14px;position:sticky;top:24px}
+.vid{position:relative;display:block;border-radius:18px;overflow:hidden;background:#1c1c1c;aspect-ratio:1280/832;text-decoration:none;box-shadow:0 20px 50px rgba(0,0,0,.12)}
+.vid video,.vid img{width:100%;height:100%;object-fit:cover}
+.vid .dur{position:absolute;left:14px;bottom:14px;background:#fff;border-radius:999px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:12px}
+.vid .play{position:absolute;right:14px;bottom:14px;width:48px;height:48px;border-radius:50%;background:var(--coral);display:grid;place-items:center;color:#fff;font-size:15px}
+.vid .live{position:absolute;left:14px;top:14px;background:rgba(0,0,0,.55);color:#fff;border-radius:999px;padding:5px 11px;font-family:'JetBrains Mono',monospace;font-size:11.5px}
+.cap{color:var(--mute);line-height:1.5}
+.more-vids{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.more-vids .vid{border-radius:14px;box-shadow:none}
+.more-vids .vid .play{width:38px;height:38px;font-size:12px}
+.more-vids .cap{margin-top:8px;font-size:11.5px}
+.media.vert{flex-direction:row;align-items:flex-start;gap:18px}
+.media.vert .vid.v{aspect-ratio:9/16;width:46%;flex:none}
+.media.vert .side{display:flex;flex-direction:column;gap:12px}
+.media.imgs{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.media.imgs .shot{border-radius:14px;overflow:hidden;box-shadow:0 12px 34px rgba(0,0,0,.1)}
+.media.imgs .shot.full{grid-column:1/-1}
+.media.imgs .cap2{grid-column:1/-1;color:var(--mute);line-height:1.5;margin-top:2px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:48px}
+.st{background:var(--blue);border-radius:18px;padding:22px 24px 24px;display:flex;flex-direction:column;gap:6px}
+.sec-gray .st{background:#fff}
+.sec-gray .st:nth-child(2){background:var(--blue)}
+.st:nth-child(2){background:var(--gray)}
+.st .was{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--mute);text-decoration:line-through;text-decoration-color:var(--coral)}
+.st b{font-size:clamp(30px,3vw,42px);font-weight:500;letter-spacing:-.04em;line-height:1.05}
+.st span{color:var(--ink-2);font-size:15.5px;line-height:1.4}
+.st .src{margin-top:auto;padding-top:10px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--mute)}
+/* time savings */
+.times{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:44px}
+.tm{border:1px solid var(--line);border-radius:18px;padding:22px 24px;display:flex;justify-content:space-between;align-items:end;gap:14px}
+.tm b{font-size:38px;font-weight:500;letter-spacing:-.045em;line-height:1}
+.tm span{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--mute);text-align:right;line-height:1.5}
+/* how it works */
+.flow{margin-top:48px;display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;font-family:'JetBrains Mono',monospace;font-size:13.5px}
+.flow .arr{color:var(--blue-deep)}
+.flow b{font-weight:500;background:var(--blue);border-radius:999px;padding:8px 14px}
+.topics{border-top:1px solid var(--line);margin-top:20px}
+.topic{display:grid;grid-template-columns:56px 1fr;gap:18px;padding:22px 0;border-bottom:1px solid var(--line)}
+.topic .n{font-family:'JetBrains Mono',monospace;color:var(--blue-deep);font-size:14px;padding-top:4px}
+.topic h3{font-size:20px;font-weight:500;letter-spacing:-.01em}
+.topic p{margin-top:6px;color:var(--ink-2)}
+/* economy calculator */
+#econ{background:var(--dark);color:#fff;border-radius:26px;padding:clamp(28px,4vw,48px);margin-top:8px}
+#econ .kick{color:rgba(255,255,255,.6)}
+#econ h2{font-size:clamp(28px,3.4vw,42px);letter-spacing:-.03em;font-weight:400;line-height:1.1}
+#econ .lead{color:rgba(255,255,255,.8);margin-top:16px}
+.econ-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:40px}
+.econ-panel{background:rgba(255,255,255,.06);border-radius:18px;padding:24px 26px}
+.econ-panel.after{background:var(--blue);color:var(--ink)}
+.econ-panel h3{font-size:19px;font-weight:500}
+.econ-panel .tag{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:rgba(255,255,255,.6);margin-top:4px;display:block}
+.econ-panel.after .tag{color:#1f4f8a}
+.econ-rows{margin-top:18px;border-top:1px solid rgba(255,255,255,.14)}
+.econ-panel.after .econ-rows{border-color:rgba(0,0,0,.12)}
+.econ-row{display:flex;justify-content:space-between;gap:14px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.14);font-size:15px}
+.econ-panel.after .econ-row{border-color:rgba(0,0,0,.12)}
+.econ-row .d{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:rgba(255,255,255,.55);display:block;margin-top:3px}
+.econ-panel.after .econ-row .d{color:#3d5f86}
+.econ-total{margin-top:16px;display:flex;justify-content:space-between;align-items:baseline;font-size:15px}
+.econ-total strong{font-size:26px;font-weight:500;letter-spacing:-.02em}
+.econ-controls{margin-top:26px;display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.econ-ctrl label{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:rgba(255,255,255,.75);display:flex;justify-content:space-between;gap:8px}
+.econ-ctrl input[type=range]{width:100%;margin-top:10px;accent-color:var(--blue-deep)}
+.econ-ctrl input[type=number]{margin-top:10px;width:100%;padding:9px 12px;border-radius:8px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.08);color:#fff;font-family:'JetBrains Mono',monospace}
+.econ-result{margin-top:28px;background:var(--coral);border-radius:16px;padding:22px 26px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.econ-result .lbl{font-size:15px}
+.econ-result .lbl .sub{display:block;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:rgba(255,255,255,.8);margin-top:4px}
+.econ-result output{font-size:clamp(26px,3vw,38px);font-weight:500;letter-spacing:-.03em}
+.econ-foot{margin-top:18px;color:rgba(255,255,255,.55);font-size:13px;line-height:1.6}
+/* needs */
+.needs{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:44px}
+.need{border-radius:18px;padding:26px;background:var(--gray);display:flex;flex-direction:column;gap:14px}
+.need .n{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--blue-deep)}
+.need h3{font-size:21px;font-weight:500;letter-spacing:-.01em}
+.need p{color:var(--ink-2);font-size:15.5px}
+.need:nth-child(2){background:var(--blue)}
+.need:nth-child(2) .n{color:#1f4f8a}
+/* author */
+.author{display:grid;grid-template-columns:1fr 1fr;min-height:480px}
+.author .l{background:var(--dark);color:#fff;padding:clamp(48px,6vw,90px) clamp(32px,5vw,80px);display:flex;flex-direction:column;justify-content:space-between;gap:32px}
+.author .who{display:flex;gap:14px;align-items:center;color:rgba(255,255,255,.85)}
+.author .who img{width:44px;height:44px;border-radius:50%;object-fit:cover}
+.author .name{font-size:clamp(44px,5.6vw,88px);line-height:.98;letter-spacing:-.045em;font-weight:500;position:relative;display:inline-block}
+.author .name .handle{position:absolute;right:-8px;bottom:.9em;font-size:13px;letter-spacing:0;font-weight:400;font-family:'JetBrains Mono',monospace;color:rgba(255,255,255,.75)}
+.author .stats2{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.author .stats2 b{display:block;font-size:36px;font-weight:400;letter-spacing:-.02em;margin-bottom:12px}
+.author .stats2 span{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:rgba(255,255,255,.75);line-height:1.6}
+.author .r{position:relative;overflow:hidden;background:radial-gradient(60% 50% at 30% 30%,#F4B8A0 0,transparent 70%),radial-gradient(50% 60% at 80% 20%,#E8563F 0,transparent 70%),radial-gradient(60% 60% at 70% 90%,#F5D9A8 0,transparent 70%),radial-gradient(50% 50% at 10% 90%,#BFDDFB 0,transparent 70%),#F3D4C8;display:grid;place-items:center;padding:40px}
+.stat-card{position:relative;background:#fff;border-radius:12px;padding:22px 24px;width:min(420px,100%);box-shadow:0 30px 80px rgba(0,0,0,.2);font-size:14px}
+.stat-card .hd{display:flex;justify-content:space-between;font-weight:500;margin-bottom:10px}
+.stat-card .hd span{color:var(--mute);font-weight:400;font-family:'JetBrains Mono',monospace;font-size:11.5px}
+.stat-card .rowl{display:flex;justify-content:space-between;padding:10px 0;border-top:1px solid var(--line)}
+.stat-card .rowl b{font-weight:500}
+.stat-card .rowl b i{color:#2fa84f;font-style:normal;margin-right:6px}
+.stat-card .src{color:var(--mute);font-family:'JetBrains Mono',monospace;font-size:11px;margin-top:10px}
+/* price */
+.price{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.price .title{font-size:clamp(30px,3.6vw,48px);letter-spacing:-.03em;font-weight:400;line-height:1.15}
+.price .amount{font-size:clamp(30px,3.4vw,44px);letter-spacing:-.03em;font-weight:500;margin-top:18px;color:var(--coral)}
+.price .inc{margin-top:22px;color:var(--mute)}
+.incl{margin-top:14px;border-top:1px solid var(--line)}
+.incl li{list-style:none;padding:14px 0;border-bottom:1px solid var(--line);font-size:16.5px}
+.incl li:before{content:"✓";font-family:'JetBrains Mono',monospace;color:var(--blue-deep);margin-right:12px}
+.pay{margin-top:32px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.pay-sub{margin-top:14px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;color:var(--mute);font-size:15px}
+/* faq */
+.faq{margin-top:44px;max-width:860px}
+.faq details{border-top:1px solid var(--line)}
+.faq details:last-child{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;padding:20px 44px 20px 2px;font-size:19px;font-weight:500;list-style:none;position:relative;min-height:44px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--blue-deep);font-weight:300;font-size:26px}
+.faq details[open] summary::after{content:"–"}
+.faq .a{padding:0 2px 22px;color:var(--ink-2);max-width:720px}
+/* final */
+.final{background:var(--dark);color:#fff}
+.final .h2{max-width:900px}
+.final .h2 .u:after{background:var(--blue)}
+.final .facts{margin-top:30px;display:flex;gap:26px;flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:13.5px;color:rgba(255,255,255,.75)}
+.final .cta{margin-top:38px;display:flex;flex-wrap:wrap;gap:14px}
+/* footer */
+.footer{padding:34px 0 44px;border-top:1px solid var(--line)}
+.footer .rowf{display:flex;flex-wrap:wrap;gap:14px 34px;align-items:center;justify-content:space-between;font-size:15px;color:var(--mute)}
+.footer a{color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--line);padding:10px 0}
+.footer nav{display:flex;flex-wrap:wrap;gap:26px}
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.86);display:none;place-items:center;z-index:50;padding:20px}
+.modal.on{display:grid}
+.modal .wrapx{position:relative;width:min(1080px,100%)}
+.modal .box{width:100%;aspect-ratio:1280/832;background:#000;border-radius:12px;overflow:hidden}
+.modal.vert .wrapx{width:min(420px,100%,calc((100vh - 120px)*9/16))}
+.modal.vert .box{aspect-ratio:9/16}
+.modal video{width:100%;height:100%;background:#000}
+.modal .x{position:absolute;top:-48px;right:0;background:#fff;border:0;border-radius:999px;width:40px;height:40px;cursor:pointer;font-size:18px}
+@media (max-width:980px){
+ .hero-mid,.case-grid{grid-template-columns:1fr;gap:36px}
+ .media{position:static}
+ .pains,.stats,.times,.needs{grid-template-columns:1fr 1fr}
+ .econ-grid,.econ-controls{grid-template-columns:1fr}
+ .price{grid-template-columns:1fr;gap:28px}
+ .author{grid-template-columns:1fr}.author .r{min-height:340px}
+ .cards{height:320px;max-width:460px}
+ .media.imgs{grid-template-columns:1fr}
+ .media.imgs .shot.full{grid-column:auto}
+}
+@media (max-width:640px){
+ .wrap{padding:0 20px}.nav-l .tag{display:none}.nav-r .pill-ghost{display:none}
+ .hero{padding:12px 0 56px}.h1{font-size:9.6vw}
+ .meta{grid-template-columns:1fr;gap:14px}
+ .pains,.stats,.times,.more-vids,.needs{grid-template-columns:1fr}
+ .cards{height:280px;transform:scale(.82);transform-origin:left top;margin-bottom:-40px}
+ .media.vert{flex-direction:column}.media.vert .vid.v{width:78%;margin:0 auto}
+ .author .name .handle{display:none}.author .stats2{grid-template-columns:1fr}
+ .pill{padding:0 24px}
+ .times{grid-template-columns:1fr 1fr;gap:12px}
+ .tm{flex-direction:column;align-items:flex-start;padding:18px}
+ .tm b{font-size:30px}
+ .tm span{text-align:left}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+ <nav class="nav" aria-label="Навигация">
+  <a class="nav-l" href="#top"><img src="assets/andrey.jpg" alt="Андрей Андреев"><span class="tag mono">Агент для рилсов и постов<br>Андрея Андреева</span></a>
+  <div class="nav-r">
+   <a class="pill pill-ghost" href="#cases">Примеры ➤</a>
+   <a class="pill pill-coral" href="https://t.me/andrey_andreev" target="_blank" rel="noreferrer" data-event="ai-montage-cta" data-placement="nav">Написать Андрею</a>
+  </div>
+ </nav>
+
+ <!-- HERO -->
+ <header class="hero" id="top">
+  <h1 class="h1">AI-агент, который <span class="u">монтирует рилсы и собирает посты</span> за вас</h1>
+  <div class="hero-mid">
+   <div>
+    <p class="lead"><span class="num">::</span>Отдельный агент под одну задачу, без коучинга и созвонов: вы кидаете исходники видео или тему поста в Telegram, агент монтирует, оформляет и присылает готовое. Ниже — реальные записи с экрана, время и деньги посчитаны, не придуманы.</p>
+    <div class="meta" aria-label="Что нужно и цена">
+     <div class="meta-row"><span class="k mono">нужно :</span><span class="v">Claude Code 20–100 €/мес<br>сервер ~15 €/мес<br>карта другой страны</span></div>
+     <div class="meta-row"><span class="k mono">цена :</span><span class="v">[цена — уточнить]</span></div>
+    </div>
+    <div class="hero-cta">
+     <a class="pill pill-coral" href="https://t.me/andrey_andreev" target="_blank" rel="noreferrer" data-event="ai-montage-cta" data-placement="hero">Написать Андрею</a>
+     <a class="pill pill-ghost" href="#cases" data-event="ai-montage-cta" data-placement="hero">Смотреть примеры</a>
+     <span class="note">«Я раньше платил по 3000 ₽ за ролик монтажёру, теперь я не плачу ничего»</span>
+    </div>
+   </div>
+   <div class="cards" aria-hidden="true">
+    <div class="card v" style="left:20px;top:0;transform:rotate(-5deg)"><video src="clips/montage_vh1.mp4" autoplay muted loop playsinline poster="clips/montage_vh1.jpg"></video></div>
+    <div class="card" style="left:190px;top:60px;transform:rotate(6deg)"><img src="assets/ds_board.jpg" alt=""></div>
+    <div class="chip" style="left:150px;top:20px"><i>▷</i> монтаж · 3000 ₽ → 0</div>
+    <div class="chip" style="left:0px;top:300px"><i>✎</i> дизайн-система · 8 мин 53 с</div>
+   </div>
+  </div>
+ </header>
+</div>
+
+<main>
+
+<!-- PAINS INDEX -->
+<section class="sec sec-gray" id="cases" aria-labelledby="pains-h" style="padding-block:clamp(64px,7vw,96px)">
+ <div class="wrap">
+  <div class="kick mono"><span class="star">✳︎</span> Знакомо?</div>
+  <h2 class="h2" id="pains-h">Найдите свою задачу — и посмотрите, <span class="u">как её решает агент</span></h2>
+  <div class="pains">
+   <a class="pain" href="#c1"><span class="n">01 · идеи</span><h3>Не знаете, что снимать и о чём писать сегодня</h3><span class="res"><span>подбор тем</span><b>ежедневно</b></span></a>
+   <a class="pain" href="#c2"><span class="n">02 · монтаж</span><h3>Долго монтируете рилсы и не хотите этим заниматься</h3><span class="res"><span>исходники → рилз</span><b>~25 мин</b></span></a>
+   <a class="pain" href="#c3"><span class="n">03 · исходники</span><h3>Сняли что попало на бегу — собирать самому неохота</h3><span class="res"><span>11:44 → 12:18</span><b>34 мин</b></span></a>
+   <a class="pain" href="#c4"><span class="n">04 · дизайн</span><h3>Нет дизайнера, а посты должны выглядеть профессионально</h3><span class="res"><span>ДС + пост</span><b>8:53 + 15 мин</b></span></a>
+  </div>
+ </div>
+</section>
+
+<!-- CASE 1: IDEAS -->
+<section class="sec case" id="c1" aria-labelledby="c1-h">
+ <div class="wrap">
+  <div class="case-grid">
+   <div>
+    <div class="kick mono"><span class="star">✳︎</span> 01 · Не знаете, что снимать</div>
+    <h2 class="h2" id="c1-h">Если не знаете, <span class="u">о чём делать ролик сегодня</span></h2>
+    <p class="how mono">:: Вот как это делает агент</p>
+    <ol class="steps">
+     <li>Каждое утро сам сканирует Reels и X по рабочим темам и находит ролики с аномальным охватом относительно размера автора.</li>
+     <li>Отсеивает мусор и нерелевантные темы — раз задано правило, больше не показывает.</li>
+     <li>Присылает карточку: тема, тип хука, почему сработало, как снять похожее.</li>
+     <li>Дальше идею докручиваете голосом в Telegram — агент возвращает готовый план ролика или поста.</li>
+    </ol>
+    <blockquote class="q">Ежедневная карточка «бриллиантов» — примеров, у которых охват сильно выше нормы для автора такого размера<cite>из настройки радара, 13.09.2026</cite></blockquote>
+   </div>
+   <div class="media imgs">
+    <img class="shot full" src="assets/radar_screenshot.jpg" alt="Скриншот страницы с примерами роликов, найденными агентом">
+    <p class="cap2 mono">Живая страница с примерами, которые агент нашёл сам — andreyandreev.me/reels-gems/</p>
+   </div>
+  </div>
+  <div class="stats">
+   <div class="st"><b>16</b><span>рабочих запросов в день по Reels и X — RU и EN аудитория</span></div>
+   <div class="st"><b>~5–8</b><span>карточек с разбором хука проходят фильтр и доходят до вас</span></div>
+   <div class="st"><b>0</b><span>минут вашего времени на поиск — просто читаете карточку утром</span></div>
+  </div>
+ </div>
+</section>
+
+<!-- CASE 2: MONTAGE -->
+<section class="sec sec-gray case" id="c2" aria-labelledby="c2-h">
+ <div class="wrap">
+  <div class="case-grid">
+   <div>
+    <div class="kick mono"><span class="star">✳︎</span> 02 · Монтаж без монтажёра</div>
+    <h2 class="h2" id="c2-h">Если монтаж рилса отнимает час и <span class="u">вы платите за это деньги</span></h2>
+    <p class="how mono">:: Вот как это делает агент</p>
+    <ol class="steps">
+     <li>Вы снимаете хук и тело на телефон и присылаете файлы в Telegram, как есть.</li>
+     <li>Агент сам расшифровывает речь, режет паузы и оговорки, собирает субтитры по словам.</li>
+     <li>Собирает раскладку: сверху вы говорите, снизу — доказательства (кадры, карточки, скрины).</li>
+     <li>Присылает готовое горизонтальное и вертикальное видео — правки принимает голосом.</li>
+    </ol>
+    <blockquote class="q">«Я раньше платил по 3000 рублей за ролик монтажёру, теперь я не плачу ничего»<cite>Андрей · хук рилса, 14.09.2026</cite></blockquote>
+   </div>
+   <div class="media vert">
+    <a class="vid v" href="#" data-mp4="clips/montage_vh1.mp4" data-vert="1" aria-label="Смотреть вертикальную версию"><video muted loop playsinline preload="none" poster="clips/montage_vh1.jpg" data-src="clips/montage_vh1.mp4"></video><span class="live">превью без звука</span><span class="dur">0:16</span><span class="play">▶︎</span></a>
+    <div class="side">
+     <p class="cap mono">Вертикальная версия: «до сих пор монтируете рилс больше 30 минут?»</p>
+     <a class="vid" href="#" data-mp4="clips/montage_h4.mp4" aria-label="Смотреть горизонтальную версию со сплит-экраном"><img src="clips/montage_h4.jpg" alt=""><span class="dur">0:17</span><span class="play">▶︎</span></a>
+     <p class="cap mono">Горизонтальный сплит-экран: сверху Андрей, снизу доказательства</p>
+    </div>
+   </div>
+  </div>
+  <div class="stats">
+   <div class="st"><span class="was">3000 ₽ монтажёру за ролик</span><b>0 ₽</b><span>монтажёру — рилз собирает агент</span></div>
+   <div class="st"><b>~25 мин</b><span>от исходников (09:06) до готового горизонтального видео (09:31)</span></div>
+   <div class="st"><b>2 версии</b><span>горизонталь и вертикаль из тех же исходников, без пересъёмки</span></div>
+  </div>
+ </div>
+</section>
+
+<!-- CASE 3: RAW FOOTAGE -->
+<section class="sec case" id="c3" aria-labelledby="c3-h">
+ <div class="wrap">
+  <div class="case-grid">
+   <div>
+    <div class="kick mono"><span class="star">✳︎</span> 03 · Исходники без системы</div>
+    <h2 class="h2" id="c3-h">Если сняли всё <span class="u">на бегу, вперемешку</span>, и собирать самому неохота</h2>
+    <p class="how mono">:: Вот как это делает агент</p>
+    <ol class="steps">
+     <li>Андрей на ходу — в троллейбусе, автобусе, кафе — прислал 10 сырых видео без всякого порядка.</li>
+     <li>Агент сам разобрал, где что: реплика, экран, переход, сколько по времени и в каком порядке.</li>
+     <li>Нарезал, собрал субтитры и первую версию ролика с раскадровкой процесса.</li>
+     <li>После одной правки — готовое видео в ленте.</li>
+    </ol>
+    <blockquote class="q">«Как сделать офигенный дизайнерский пост, пока едешь в троллейбусе… окей, теперь включаем AI-агента и просим его сделать нам пост… в итоге пост готов, всё уже в ленте»<cite>Андрей · дорожка рилса, 13.09.2026</cite></blockquote>
+   </div>
+   <div class="media">
+    <a class="vid" href="#" data-mp4="clips/materials_v2.mp4" aria-label="Смотреть рилз: 10 сырых видео → готовый пост"><video muted loop playsinline preload="none" poster="clips/materials_v2.jpg" data-src="clips/materials_v2.mp4"></video><span class="live">превью без звука</span><span class="dur">0:52</span><span class="play">▶︎</span></a>
+    <p class="cap mono">10 роликов с телефона на бегу → готовый пост и рилз о процессе, IG DdORHGNRZpx</p>
+   </div>
+  </div>
+  <div class="stats">
+   <div class="st"><b>10 клипов</b><span>трамвай, автобус, кафе — без монтажного плана, без порядка</span></div>
+   <div class="st"><b>34 мин</b><span>от присланных исходников (11:44) до первой версии (12:18)</span></div>
+   <div class="st"><b>1 правка</b><span>и готовое видео в ленте — к 12:45</span></div>
+  </div>
+ </div>
+</section>
+
+<!-- CASE 4: DESIGN -->
+<section class="sec sec-gray case" id="c4" aria-labelledby="c4-h">
+ <div class="wrap">
+  <div class="case-grid">
+   <div>
+    <div class="kick mono"><span class="star">✳︎</span> 04 · Дизайн без дизайнера</div>
+    <h2 class="h2" id="c4-h">Если нет дизайнера, а пост должен выглядеть <span class="u">как у профессионала</span></h2>
+    <p class="how mono">:: Вот как это делает агент</p>
+    <ol class="steps">
+     <li>Изучает чужой профиль в Instagram: посты, обложки, о чём аудитория, что уже работает.</li>
+     <li>Сам собирает дизайн-систему под этого автора — цвета, шрифты, сетку, компоненты.</li>
+     <li>Берёт чужой рилз и превращает его в оформленный пост-карусель в этой системе.</li>
+     <li>Правки — голосом или коротким комментарием, без Figma и без дизайнера.</li>
+    </ol>
+    <blockquote class="q">«Докрутить промпт… шаблончик создать. Это точно можно докручивать!» — реакция клиента на результат<cite>Дима Провоторов · 13.09.2026</cite></blockquote>
+   </div>
+   <div class="media imgs">
+    <img class="shot" src="assets/ds_board.jpg" alt="Собранная дизайн-система: цвета, типографика, компоненты">
+    <img class="shot" src="assets/post_q1.png" alt="Готовый слайд поста в собранной дизайн-системе">
+    <img class="shot full" src="assets/dima_reaction.jpg" alt="Скрин реакции клиента на результат в переписке">
+    <p class="cap2 mono">Слева — дизайн-система с нуля. Справа — пост из чужого рилза в этой системе. Внизу — реакция клиента.</p>
+   </div>
+  </div>
+  <div class="stats">
+   <div class="st"><b>8 мин 53 с</b><span>разбор профиля и готовая дизайн-система</span></div>
+   <div class="st"><b>~15 мин</b><span>пост-карусель из чужого рилза в этой дизайн-системе</span></div>
+   <div class="st"><b>72 мин</b><span>ещё пример: от голосового до готовой карусели с анимацией и текстом («Маленький принц», 13.09, опубликовано)</span></div>
+  </div>
+ </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="sec" id="how" aria-labelledby="how-h">
+ <div class="wrap">
+  <div class="kick mono"><span class="star">✳︎</span> Как это работает</div>
+  <h2 class="h2" id="how-h">Никакого нового приложения — <span class="u">просто Telegram</span></h2>
+  <p class="lead" style="margin-top:20px"><span class="num">::</span>Агент живёт в чате. Вы присылаете исходники или голосовое, он присылает результат туда же.</p>
+  <div class="flow">
+   <b>Голос или видео в Telegram</b><span class="arr">→</span><b>агент считает, режет, верстает</b><span class="arr">→</span><b>черновик приходит вам</b><span class="arr">→</span><b>правка голосом</b><span class="arr">→</span><b>готово</b>
+  </div>
+  <div class="topics">
+   <div class="topic"><span class="n">01</span><div><h3>Вы даёте задачу</h3><p>Присылаете сырые видео с телефона (как есть, без сортировки) или голосом описываете тему поста и референс дизайна.</p></div></div>
+   <div class="topic"><span class="n">02</span><div><h3>Агент делает техническую работу</h3><p>Расшифровка речи, нарезка, субтитры, раскладка кадров, текст и вёрстка — то, на что раньше уходили монтажёр, дизайнер или ваш вечер.</p></div></div>
+   <div class="topic"><span class="n">03</span><div><h3>Вы проверяете и правите голосом</h3><p>Смотрите черновик, говорите, что поправить — агент не спрашивает техническое ТЗ, разбирается сам и присылает новую версию.</p></div></div>
+  </div>
+ </div>
+</section>
+
+<!-- ECONOMY CALCULATOR -->
+<section class="sec sec-gray" id="economy" aria-labelledby="econ-h">
+ <div class="wrap">
+  <div class="kick mono"><span class="star">✳︎</span> Деньги</div>
+  <h2 class="h2" id="econ-h">Посчитайте <span class="u">свою экономию</span></h2>
+  <p class="lead" style="margin-top:20px"><span class="num">::</span>Подставьте свои цифры. Всё, что вы видите — открытая формула, без скрытых допущений.</p>
+  <div id="econ" aria-label="Калькулятор экономии">
+   <div class="econ-grid">
+    <div class="econ-panel">
+     <h3>Сейчас, подрядчикам<span class="tag mono">по факту</span></h3>
+     <div class="econ-rows">
+      <div class="econ-row"><span>Монтаж рилсов<span class="d" id="e-reels-f"></span></span><b id="e-reels-t"></b></div>
+      <div class="econ-row"><span>Дизайн постов/каруселей<span class="d" id="e-design-f"></span></span><b id="e-design-t"></b></div>
+     </div>
+     <div class="econ-total"><span>Итого в месяц</span><strong id="e-before"></strong></div>
+    </div>
+    <div class="econ-panel after">
+     <h3>С агентом<span class="tag mono">подписка + сервер</span></h3>
+     <div class="econ-rows">
+      <div class="econ-row"><span>Подписка Claude Code<span class="d">ежемесячно</span></span><b id="e-sub-t"></b></div>
+      <div class="econ-row"><span>Сервер для агента<span class="d">ежемесячно, фиксировано</span></span><b>15 €</b></div>
+     </div>
+     <div class="econ-total"><span>Итого в месяц</span><strong id="e-after"></strong></div>
+    </div>
+   </div>
+   <div class="econ-controls">
+    <div class="econ-ctrl"><label for="e-reels-n">Рилсов в месяц <output id="e-reels-nv" for="e-reels-n">8</output></label><input id="e-reels-n" type="range" min="0" max="30" step="1" value="8"></div>
+    <div class="econ-ctrl"><label for="e-reels-p">Цена монтажа за рилз <output id="e-reels-pv" for="e-reels-p">3 000 ₽</output></label><input id="e-reels-p" type="range" min="3000" max="6000" step="100" value="3000"></div>
+    <div class="econ-ctrl"><label for="e-design-n">Постов/каруселей в месяц <output id="e-design-nv" for="e-design-n">0</output></label><input id="e-design-n" type="range" min="0" max="20" step="1" value="0"></div>
+    <div class="econ-ctrl"><label for="e-design-p">Цена дизайна за штуку, ₽ <span class="mono" style="opacity:.7">— впишите свою, если платите дизайнеру</span></label><input id="e-design-p" type="number" min="0" step="100" value="0"></div>
+    <div class="econ-ctrl"><label for="e-sub">Подписка Claude Code, €/мес <output id="e-sub-v" for="e-sub">50</output></label><input id="e-sub" type="range" min="20" max="100" step="5" value="50"></div>
+    <div class="econ-ctrl"><label for="e-fx">Курс, ₽ за 1 €</label><input id="e-fx" type="number" min="1" step="1" value="100"></div>
+   </div>
+   <div class="econ-result"><div class="lbl">Разница бюджетов<span class="sub">до минус после, в месяц</span></div><output id="e-savings"></output></div>
+   <p class="econ-foot">Монтаж 3000 ₽/рилз — реальная цифра Андрея. Дизайн — впишите свою цифру, если сейчас платите за него; по умолчанию 0. Подписка Claude Code — вилка 20–100 €/мес в зависимости от тарифа и объёма задач; сервер — фиксированная оценка ~15 €/мес. Курс — условный, для расчёта, не рыночный.</p>
+  </div>
+ </div>
+</section>
+
+<!-- WHAT'S NEEDED -->
+<section class="sec" id="needs" aria-labelledby="needs-h">
+ <div class="wrap">
+  <div class="kick mono"><span class="star">✳︎</span> Что нужно для работы</div>
+  <h2 class="h2" id="needs-h">Честно, <span class="u">без сюрпризов</span></h2>
+  <div class="needs">
+   <div class="need"><span class="n">01</span><h3>Подписка Claude Code</h3><p>Агент работает на этой подписке. Стоимость — от 20 до 100 € в месяц, зависит от тарифа и объёма задач.</p></div>
+   <div class="need"><span class="n">02</span><h3>Карта другой страны</h3><p>Из России подписку и сервер напрямую не оплатить — нужна иностранная карта.</p></div>
+   <div class="need"><span class="n">03</span><h3>Сервер для агента</h3><p>Небольшой сервер, на котором агент постоянно работает и ждёт ваши задачи в Telegram — около 15 € в месяц.</p></div>
+  </div>
+  <p class="lead" style="margin-top:32px;font-size:16px">Агент не пишет и не решает вместо вас, что снимать и о чём говорить. Он забирает техническую работу: монтаж, вёрстку, нарезку. Тему, слова и решение «отправлять или нет» — всегда вы.</p>
+ </div>
+</section>
+
+<!-- AUTHOR -->
+<section class="author" aria-labelledby="author-h">
+ <div class="l">
+  <div class="who"><img src="assets/andrey.jpg" alt=""><span class="mono">Автор агента,<br>предприниматель, фотограф, блогер</span></div>
+  <h2 class="name" id="author-h">Andrey<br>Andreev<span class="handle">@andreyandreev.me</span></h2>
+  <div class="stats2">
+   <div><b>65K+</b><span>подписчиков в блоге. С января по июль 2026 — 444 поста, 17,6 млн просмотров</span></div>
+   <div><b>каждый день</b><span>сам работает с этим же агентом — рилсы и посты на этой странице сделаны им</span></div>
+  </div>
+ </div>
+ <div class="r">
+  <div class="stat-card">
+   <div class="hd">Статистика <span>23–29 августа</span></div>
+   <div class="rowl"><span>Публикации</span><b>24</b></div>
+   <div class="rowl"><span>Охват</span><b><i>↗</i>262 933</b></div>
+   <div class="rowl"><span>Новые подписчики</span><b><i>↗</i>+1 364</b></div>
+   <div class="src">источник: @mbga_materials · «Итоги недели»</div>
+  </div>
+ </div>
+</section>
+
+<!-- PRICE -->
+<section class="sec" id="price" aria-labelledby="price-h">
+ <div class="wrap">
+  <div class="kick mono"><span class="star">✳︎</span> Доступ</div>
+  <div class="price">
+   <div>
+    <h2 class="title" id="price-h">AI-агент для монтажа рилсов<br>и дизайна постов</h2>
+    <p class="lead" style="margin-top:16px;font-size:17px">Отдельный продукт, не программа: без общих Zoom, только агент под вашу задачу.</p>
+    <div class="amount">[цена — уточнить]</div>
+   </div>
+   <div>
+    <p class="inc mono">Что входит:</p>
+    <ul class="incl">
+     <li>Настроенный агент для монтажа рилсов из ваших исходников</li>
+     <li>Настроенный агент для дизайна постов и каруселей</li>
+     <li>Дизайн-система под ваш стиль</li>
+     <li>Работа через Telegram: голос, видео, правки</li>
+    </ul>
+    <div class="pay">
+     <a class="pill pill-coral" href="https://t.me/andrey_andreev" target="_blank" rel="noreferrer" data-event="ai-montage-cta" data-placement="price">Написать Андрею</a>
+    </div>
+    <div class="pay-sub"><span>Подписка Claude Code и сервер — отдельно, см. «Что нужно для работы» выше.</span></div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec sec-gray" id="faq" aria-labelledby="faq-h">
+ <div class="wrap">
+  <div class="kick mono">Вопросы</div>
+  <h2 class="h2" id="faq-h">Коротко о формате</h2>
+  <div class="faq">
+   <details><summary>Чем это отличается от программы «Три AI-агента за три недели»?</summary><div class="a">Там — сопровождение и сборка трёх агентов под весь блог: контент, продажи, Reels, с Zoom-встречами и разбором вашего продукта. Здесь — готовый узкий агент под одну задачу: монтаж рилсов и дизайн постов, без созвонов и без разбора продающей воронки.</div></details>
+   <details><summary>Агент сделает контент полностью сам, без меня?</summary><div class="a">Нет. Вы даёте исходники или тему и решаете, что отправлять. Агент забирает техническую часть — монтаж, нарезку, вёрстку, дизайн.</div></details>
+   <details><summary>Нужно уметь программировать или ставить сервер самому?</summary><div class="a">Нет, работа идёт через обычный Telegram-чат. Сервер и его настройку берёт на себя тот, кто ставит вам агента.</div></details>
+   <details><summary>Что если у меня нет подписки Claude Code?</summary><div class="a">Она обязательна — агент работает на ней. Стоимость 20–100 € в месяц зависит от тарифа и объёма ваших задач.</div></details>
+   <details><summary>Я из России, это проблема?</summary><div class="a">Подписку Claude Code и сервер напрямую из России не оплатить — понадобится карта другой страны.</div></details>
+   <details><summary>Сколько стоит сам продукт и когда старт?</summary><div class="a">Цена уточняется — напишите Андрею в Telegram, обсудим формат и сроки под вашу задачу.</div></details>
+  </div>
+ </div>
+</section>
+
+<!-- FINAL -->
+<section class="sec final" aria-labelledby="final-h">
+ <div class="wrap">
+  <h2 class="h2" id="final-h">3000 ₽ монтажёру → 0. <span class="u">Напишите Андрею</span></h2>
+  <div class="facts"><span>монтаж рилсов</span><span>дизайн постов и каруселей</span><span>работа через Telegram</span><span>[цена — уточнить]</span></div>
+  <div class="cta">
+   <a class="pill pill-coral" href="https://t.me/andrey_andreev" target="_blank" rel="noreferrer" data-event="ai-montage-cta" data-placement="final">Написать Андрею</a>
+   <a class="pill pill-white" href="#cases" data-event="ai-montage-cta" data-placement="final">Смотреть примеры ещё раз</a>
+  </div>
+ </div>
+</section>
+
+</main>
+
+<footer class="footer">
+ <div class="wrap rowf">
+  <span>© Create Today</span>
+  <nav aria-label="Юридические ссылки">
+   <a href="https://createtoday.ru/politica" target="_blank" rel="noreferrer">Политика конфиденциальности</a>
+   <a href="https://createtoday.ru/oferta/challenge" target="_blank" rel="noreferrer">Договор-оферта</a>
+   <a href="https://t.me/Create_today_help" target="_blank" rel="noreferrer">Поддержка</a>
+  </nav>
+ </div>
+</footer>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Видео">
+ <div class="wrapx"><button class="x" id="modal-x" aria-label="Закрыть">✕</button><div class="box" id="modal-box"></div></div>
+</div>
+
+<script>
+(function(){
+  var modal=document.getElementById('modal'),box=document.getElementById('modal-box');
+  function open(src,vert){
+    box.innerHTML='';var v=document.createElement('video');v.src=src;v.controls=true;v.autoplay=true;v.playsInline=true;box.appendChild(v);
+    modal.classList.toggle('vert',!!vert);modal.classList.add('on');document.body.style.overflow='hidden';
+    var p=v.play();if(p&&p.catch)p.catch(function(){});
+  }
+  function close(){modal.classList.remove('on');box.innerHTML='';document.body.style.overflow=''}
+  document.querySelectorAll('[data-mp4]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();open(a.getAttribute('data-mp4'),a.getAttribute('data-vert'))})});
+  document.getElementById('modal-x').addEventListener('click',close);
+  modal.addEventListener('click',function(e){if(e.target===modal)close()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+  var vids=document.querySelectorAll('video[data-src]');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(en){var v=en.target;
+      if(en.isIntersecting){if(!v.src)v.src=v.getAttribute('data-src');var p=v.play();if(p&&p.catch)p.catch(function(){})}else{v.pause()}})},{rootMargin:'120px'});
+    vids.forEach(function(v){io.observe(v)});
+  }else{vids.forEach(function(v){v.src=v.getAttribute('data-src')})}
+})();
+
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var nf=new Intl.NumberFormat('ru-RU',{maximumFractionDigits:0});
+  var rub=function(n){return nf.format(Math.round(n))+' ₽'};
+  function update(){
+    var reelsN=+$('e-reels-n').value, reelsP=+$('e-reels-p').value,
+        designN=+$('e-design-n').value, designP=+$('e-design-p').value,
+        sub=+$('e-sub').value, fx=+$('e-fx').value;
+    var validFx=Number.isFinite(fx)&&fx>0;
+    var reelsTotal=reelsN*reelsP, designTotal=designN*designP;
+    var before=reelsTotal+designTotal;
+    var after=validFx?(sub+15)*fx:null;
+    var savings=validFx?before-after:null;
+    $('e-reels-nv').textContent=reelsN;
+    $('e-reels-pv').textContent=rub(reelsP);
+    $('e-design-nv').textContent=designN;
+    $('e-sub-v').textContent=sub;
+    $('e-reels-f').textContent=reelsN+' × '+rub(reelsP);
+    $('e-design-f').textContent=designN+' × '+rub(designP);
+    $('e-reels-t').textContent=rub(reelsTotal);
+    $('e-design-t').textContent=rub(designTotal);
+    $('e-before').textContent=rub(before);
+    $('e-sub-t').textContent=sub+' €';
+    $('e-after').textContent=validFx?rub(after):'—';
+    $('e-savings').textContent=validFx?rub(savings):'укажите курс';
+  }
+  ['e-reels-n','e-reels-p','e-design-n','e-design-p','e-sub','e-fx'].forEach(function(id){
+    document.getElementById(id).addEventListener('input',update);
+  });
+  update();
+})();
+</script>
+</body>
+</html>
