@@ -7,7 +7,7 @@
 <meta name="description" content="Отдельный AI-агент: монтирует рилсы из ваших исходников и собирает посты и карусели в вашем дизайне. Реальные примеры с экрана, время и деньги посчитаны.">
 <meta name="robots" content="noindex, nofollow">
 <meta property="og:title" content="AI-агент для монтажа рилсов и дизайна постов">
-<meta property="og:description" content="Раньше 3000 ₽ монтажёру за ролик. Теперь агент делает рилз за 25 минут и пост за 15. Примеры с экрана.">
+<meta property="og:description" content="Раньше 3000 ₽ монтажёру за ролик. Теперь агент монтирует рилз за 28 минут. Примеры с экрана.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,6 +26,7 @@ a{color:inherit}
 .pill{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:0 34px;border-radius:999px;text-decoration:none;font-size:15px;font-weight:500;font-family:'JetBrains Mono',monospace;letter-spacing:.01em;cursor:pointer;border:0;transition:transform .15s ease,opacity .15s ease}
 .pill:hover{transform:translateY(-1px);opacity:.94}
 .pill:focus-visible,.vid:focus-visible,.pain:focus-visible{outline:3px solid var(--blue-deep);outline-offset:3px}
+.pill-ask{background:var(--gray);color:var(--ink)}
 .pill-coral{background:var(--coral);color:#fff}
 .pill-ghost{background:var(--gray);color:var(--ink)}
 .pill-white{background:#fff;color:var(--ink)}
@@ -259,20 +260,20 @@ a{color:inherit}
    <div>
     <p class="lead"><span class="num">::</span>Отдельный агент под одну задачу, без коучинга и созвонов: вы кидаете исходники видео или тему поста в Telegram, агент монтирует, оформляет и присылает готовое. Ниже — реальные записи с экрана, время и деньги посчитаны, не придуманы.</p>
     <div class="meta" aria-label="Что нужно и цена">
-     <div class="meta-row"><span class="k mono">нужно :</span><span class="v">Claude Code 20–100 €/мес<br>сервер ~15 €/мес<br>карта другой страны</span></div>
-     <div class="meta-row"><span class="k mono">цена :</span><span class="v">[цена — уточнить]</span></div>
+     <div class="meta-row"><span class="k mono">нужно :</span><span class="v">Claude Code 20–100 €/мес<br>сервер до 15 €/мес<br>карта другой страны</span></div>
+     <div class="meta-row"><span class="k mono">цена :</span><span class="v">9 900 ₽</span></div>
     </div>
     <div class="hero-cta">
-     <a class="pill pill-coral" href="https://t.me/andrey_andreev" target="_blank" rel="noreferrer" data-event="ai-montage-cta" data-placement="hero">Написать Андрею</a>
+     <a class="pill pill-coral" href="https://andreyandreev.createtoday.ru/hero/get/of_-hhYESt42ryS" target="_blank" rel="noreferrer" data-event="ai-montage-pay" data-placement="hero">Купить за 9 900 ₽</a> <a class="pill pill-ask" href="https://t.me/andrey_andreev" target="_blank" rel="noreferrer" data-event="ai-montage-ask" data-placement="hero">Задать вопрос</a>
      <a class="pill pill-ghost" href="#cases" data-event="ai-montage-cta" data-placement="hero">Смотреть примеры</a>
      <span class="note">«Я раньше платил по 3000 ₽ за ролик монтажёру, теперь я не плачу ничего»</span>
     </div>
    </div>
    <div class="cards" aria-hidden="true">
     <div class="card v" style="left:20px;top:0;transform:rotate(-5deg)"><video src="clips/montage_vh1.mp4" autoplay muted loop playsinline poster="clips/montage_vh1.jpg"></video></div>
-    <div class="card" style="left:190px;top:60px;transform:rotate(6deg)"><img src="assets/ds_board.jpg" alt=""></div>
+    <div class="card" style="left:190px;top:60px;transform:rotate(6deg)"><img src="clips/montage_h1.jpg" alt="Кадр рилса: сверху Андрей, снизу доказательства"></div>
     <div class="chip" style="left:150px;top:20px"><i>▷</i> монтаж · 3000 ₽ → 0</div>
-    <div class="chip" style="left:0px;top:300px"><i>✎</i> дизайн-система · 8 мин 53 с</div>
+    <div class="chip" style="left:0px;top:300px"><i>✎</i> 10 сырых видео → рилс · 34 мин</div>
    </div>
   </div>
  </header>
@@ -286,49 +287,18 @@ a{color:inherit}
   <div class="kick mono"><span class="star">✳︎</span> Знакомо?</div>
   <h2 class="h2" id="pains-h">Найдите свою задачу — и посмотрите, <span class="u">как её решает агент</span></h2>
   <div class="pains">
-   <a class="pain" href="#c1"><span class="n">01 · идеи</span><h3>Не знаете, что снимать и о чём писать сегодня</h3><span class="res"><span>подбор тем</span><b>ежедневно</b></span></a>
-   <a class="pain" href="#c2"><span class="n">02 · монтаж</span><h3>Долго монтируете рилсы и не хотите этим заниматься</h3><span class="res"><span>исходники → рилз</span><b>~25 мин</b></span></a>
-   <a class="pain" href="#c3"><span class="n">03 · исходники</span><h3>Сняли что попало на бегу — собирать самому неохота</h3><span class="res"><span>11:44 → 12:18</span><b>34 мин</b></span></a>
-   <a class="pain" href="#c4"><span class="n">04 · дизайн</span><h3>Нет дизайнера, а посты должны выглядеть профессионально</h3><span class="res"><span>ДС + пост</span><b>8:53 + 15 мин</b></span></a>
-  </div>
- </div>
-</section>
-
-<!-- CASE 1: IDEAS -->
-<section class="sec case" id="c1" aria-labelledby="c1-h">
- <div class="wrap">
-  <div class="case-grid">
-   <div>
-    <div class="kick mono"><span class="star">✳︎</span> 01 · Не знаете, что снимать</div>
-    <h2 class="h2" id="c1-h">Если не знаете, <span class="u">о чём делать ролик сегодня</span></h2>
-    <p class="how mono">:: Вот как это делает агент</p>
-    <ol class="steps">
-     <li>Каждое утро сам сканирует Reels и X по рабочим темам и находит ролики с аномальным охватом относительно размера автора.</li>
-     <li>Отсеивает мусор и нерелевантные темы — раз задано правило, больше не показывает.</li>
-     <li>Присылает карточку: тема, тип хука, почему сработало, как снять похожее.</li>
-     <li>Дальше идею докручиваете голосом в Telegram — агент возвращает готовый план ролика или поста.</li>
-    </ol>
-    <blockquote class="q">Ежедневная карточка «бриллиантов» — примеров, у которых охват сильно выше нормы для автора такого размера<cite>из настройки радара, 13.09.2026</cite></blockquote>
-   </div>
-   <div class="media imgs">
-    <img class="shot full" src="assets/radar_screenshot.jpg" alt="Скриншот страницы с примерами роликов, найденными агентом">
-    <p class="cap2 mono">Живая страница с примерами, которые агент нашёл сам — andreyandreev.me/reels-gems/</p>
-   </div>
-  </div>
-  <div class="stats">
-   <div class="st"><b>16</b><span>рабочих запросов в день по Reels и X — RU и EN аудитория</span></div>
-   <div class="st"><b>~5–8</b><span>карточек с разбором хука проходят фильтр и доходят до вас</span></div>
-   <div class="st"><b>0</b><span>минут вашего времени на поиск — просто читаете карточку утром</span></div>
+   <a class="pain" href="#c2"><span class="n">01 · монтаж</span><h3>Долго монтируете рилсы и не хотите этим заниматься</h3><span class="res"><span>исходники → рилз</span><b>~28 мин</b></span></a>
+   <a class="pain" href="#c3"><span class="n">02 · исходники</span><h3>Сняли что попало на бегу — собирать самому неохота</h3><span class="res"><span>11:44 → 12:18</span><b>34 мин</b></span></a>
   </div>
  </div>
 </section>
 
 <!-- CASE 2: MONTAGE -->
-<section class="sec sec-gray case" id="c2" aria-labelledby="c2-h">
+<section class="sec case" id="c2" aria-labelledby="c2-h">
  <div class="wrap">
   <div class="case-grid">
    <div>
-    <div class="kick mono"><span class="star">✳︎</span> 02 · Монтаж без монтажёра</div>
+    <div class="kick mono"><span class="star">✳︎</span> 01 · Монтаж без монтажёра</div>
     <h2 class="h2" id="c2-h">Если монтаж рилса отнимает час и <span class="u">вы платите за это деньги</span></h2>
     <p class="how mono">:: Вот как это делает агент</p>
     <ol class="steps">
@@ -350,18 +320,18 @@ a{color:inherit}
   </div>
   <div class="stats">
    <div class="st"><span class="was">3000 ₽ монтажёру за ролик</span><b>0 ₽</b><span>монтажёру — рилз собирает агент</span></div>
-   <div class="st"><b>~25 мин</b><span>от исходников (09:06) до готового горизонтального видео (09:31)</span></div>
+   <div class="st"><b>~28 мин</b><span>от исходников в Telegram (12:04 МСК) до готового видео у меня (12:32)</span></div>
    <div class="st"><b>2 версии</b><span>горизонталь и вертикаль из тех же исходников, без пересъёмки</span></div>
   </div>
  </div>
 </section>
 
 <!-- CASE 3: RAW FOOTAGE -->
-<section class="sec case" id="c3" aria-labelledby="c3-h">
+<section class="sec sec-gray case" id="c3" aria-labelledby="c3-h">
  <div class="wrap">
   <div class="case-grid">
    <div>
-    <div class="kick mono"><span class="star">✳︎</span> 03 · Исходники без системы</div>
+    <div class="kick mono"><span class="star">✳︎</span> 02 · Исходники без системы</div>
     <h2 class="h2" id="c3-h">Если сняли всё <span class="u">на бегу, вперемешку</span>, и собирать самому неохота</h2>
     <p class="how mono">:: Вот как это делает агент</p>
     <ol class="steps">
@@ -381,37 +351,6 @@ a{color:inherit}
    <div class="st"><b>10 клипов</b><span>трамвай, автобус, кафе — без монтажного плана, без порядка</span></div>
    <div class="st"><b>34 мин</b><span>от присланных исходников (11:44) до первой версии (12:18)</span></div>
    <div class="st"><b>1 правка</b><span>и готовое видео в ленте — к 12:45</span></div>
-  </div>
- </div>
-</section>
-
-<!-- CASE 4: DESIGN -->
-<section class="sec sec-gray case" id="c4" aria-labelledby="c4-h">
- <div class="wrap">
-  <div class="case-grid">
-   <div>
-    <div class="kick mono"><span class="star">✳︎</span> 04 · Дизайн без дизайнера</div>
-    <h2 class="h2" id="c4-h">Если нет дизайнера, а пост должен выглядеть <span class="u">как у профессионала</span></h2>
-    <p class="how mono">:: Вот как это делает агент</p>
-    <ol class="steps">
-     <li>Изучает чужой профиль в Instagram: посты, обложки, о чём аудитория, что уже работает.</li>
-     <li>Сам собирает дизайн-систему под этого автора — цвета, шрифты, сетку, компоненты.</li>
-     <li>Берёт чужой рилз и превращает его в оформленный пост-карусель в этой системе.</li>
-     <li>Правки — голосом или коротким комментарием, без Figma и без дизайнера.</li>
-    </ol>
-    <blockquote class="q">«Докрутить промпт… шаблончик создать. Это точно можно докручивать!» — реакция клиента на результат<cite>Дима Провоторов · 13.09.2026</cite></blockquote>
-   </div>
-   <div class="media imgs">
-    <img class="shot" src="assets/ds_board.jpg" alt="Собранная дизайн-система: цвета, типографика, компоненты">
-    <img class="shot" src="assets/post_q1.png" alt="Готовый слайд поста в собранной дизайн-системе">
-    <img class="shot full" src="assets/dima_reaction.jpg" alt="Скрин реакции клиента на результат в переписке">
-    <p class="cap2 mono">Слева — дизайн-система с нуля. Справа — пост из чужого рилза в этой системе. Внизу — реакция клиента.</p>
-   </div>
-  </div>
-  <div class="stats">
-   <div class="st"><b>8 мин 53 с</b><span>разбор профиля и готовая дизайн-система</span></div>
-   <div class="st"><b>~15 мин</b><span>пост-карусель из чужого рилза в этой дизайн-системе</span></div>
-   <div class="st"><b>72 мин</b><span>ещё пример: от голосового до готовой карусели с анимацией и текстом («Маленький принц», 13.09, опубликовано)</span></div>
   </div>
  </div>
 </section>
@@ -437,37 +376,29 @@ a{color:inherit}
 <section class="sec sec-gray" id="economy" aria-labelledby="econ-h">
  <div class="wrap">
   <div class="kick mono"><span class="star">✳︎</span> Деньги</div>
-  <h2 class="h2" id="econ-h">Посчитайте <span class="u">свою экономию</span></h2>
-  <p class="lead" style="margin-top:20px"><span class="num">::</span>Подставьте свои цифры. Всё, что вы видите — открытая формула, без скрытых допущений.</p>
-  <div id="econ" aria-label="Калькулятор экономии">
+  <h2 class="h2" id="econ-h">Сколько это стоит <span class="u">в месяц</span></h2>
+  <p class="lead" style="margin-top:20px"><span class="num">::</span>Обычный объём: 10 рилсов и 5 каруселей в месяц. Сравниваем подрядчиков и агента.</p>
+  <div id="econ" aria-label="Сравнение бюджетов">
    <div class="econ-grid">
     <div class="econ-panel">
-     <h3>Сейчас, подрядчикам<span class="tag mono">по факту</span></h3>
+     <h3>Подрядчикам<span class="tag mono">монтаж и дизайн</span></h3>
      <div class="econ-rows">
-      <div class="econ-row"><span>Монтаж рилсов<span class="d" id="e-reels-f"></span></span><b id="e-reels-t"></b></div>
-      <div class="econ-row"><span>Дизайн постов/каруселей<span class="d" id="e-design-f"></span></span><b id="e-design-t"></b></div>
+      <div class="econ-row"><span>Монтаж рилсов<span class="d">10 × 3 000 ₽</span></span><b>30 000 ₽</b></div>
+      <div class="econ-row"><span>Дизайн каруселей<span class="d">5 × 3 000 ₽</span></span><b>15 000 ₽</b></div>
      </div>
-     <div class="econ-total"><span>Итого в месяц</span><strong id="e-before"></strong></div>
+     <div class="econ-total"><span>Итого в месяц</span><strong>45 000 ₽</strong></div>
     </div>
     <div class="econ-panel after">
      <h3>С агентом<span class="tag mono">подписка + сервер</span></h3>
      <div class="econ-rows">
-      <div class="econ-row"><span>Подписка Claude Code<span class="d">ежемесячно</span></span><b id="e-sub-t"></b></div>
-      <div class="econ-row"><span>Сервер для агента<span class="d">ежемесячно, фиксировано</span></span><b>15 €</b></div>
+      <div class="econ-row"><span>Подписка Claude Code<span class="d">рекомендуется</span></span><b>100 €</b></div>
+      <div class="econ-row"><span>Сервер для агента<span class="d">ежемесячно</span></span><b>до 15 €</b></div>
      </div>
-     <div class="econ-total"><span>Итого в месяц</span><strong id="e-after"></strong></div>
+     <div class="econ-total"><span>Итого в месяц</span><strong>до 115 €</strong></div>
     </div>
    </div>
-   <div class="econ-controls">
-    <div class="econ-ctrl"><label for="e-reels-n">Рилсов в месяц <output id="e-reels-nv" for="e-reels-n">8</output></label><input id="e-reels-n" type="range" min="0" max="30" step="1" value="8"></div>
-    <div class="econ-ctrl"><label for="e-reels-p">Цена монтажа за рилз <output id="e-reels-pv" for="e-reels-p">3 000 ₽</output></label><input id="e-reels-p" type="range" min="3000" max="6000" step="100" value="3000"></div>
-    <div class="econ-ctrl"><label for="e-design-n">Постов/каруселей в месяц <output id="e-design-nv" for="e-design-n">0</output></label><input id="e-design-n" type="range" min="0" max="20" step="1" value="0"></div>
-    <div class="econ-ctrl"><label for="e-design-p">Цена дизайна за штуку, ₽ <span class="mono" style="opacity:.7">— впишите свою, если платите дизайнеру</span></label><input id="e-design-p" type="number" min="0" step="100" value="0"></div>
-    <div class="econ-ctrl"><label for="e-sub">Подписка Claude Code, €/мес <output id="e-sub-v" for="e-sub">50</output></label><input id="e-sub" type="range" min="20" max="100" step="5" value="50"></div>
-    <div class="econ-ctrl"><label for="e-fx">Курс, ₽ за 1 €</label><input id="e-fx" type="number" min="1" step="1" value="100"></div>
-   </div>
-   <div class="econ-result"><div class="lbl">Разница бюджетов<span class="sub">до минус после, в месяц</span></div><output id="e-savings"></output></div>
-   <p class="econ-foot">Монтаж 3000 ₽/рилз — реальная цифра Андрея. Дизайн — впишите свою цифру, если сейчас платите за него; по умолчанию 0. Подписка Claude Code — вилка 20–100 €/мес в зависимости от тарифа и объёма задач; сервер — фиксированная оценка ~15 €/мес. Курс — условный, для расчёта, не рыночный.</p>
+   <div class="econ-result"><div class="lbl">Разница<span class="sub">в месяц, при курсе 100 ₽ за 1 €</span></div><output>≈ 33 500 ₽</output></div>
+   <p class="econ-foot">Цена монтажа 3 000 ₽ за рилз — реальная цифра Андрея, дизайн карусели взят по той же ставке. С агентом: 100 € подписка + до 15 € сервер = до 115 € в месяц; курс 100 ₽ за 1 € условный, для наглядности.</p>
   </div>
  </div>
 </section>
@@ -478,9 +409,9 @@ a{color:inherit}
   <div class="kick mono"><span class="star">✳︎</span> Что нужно для работы</div>
   <h2 class="h2" id="needs-h">Честно, <span class="u">без сюрпризов</span></h2>
   <div class="needs">
-   <div class="need"><span class="n">01</span><h3>Подписка Claude Code</h3><p>Агент работает на этой подписке. Стоимость — от 20 до 100 € в месяц, зависит от тарифа и объёма задач.</p></div>
-   <div class="need"><span class="n">02</span><h3>Карта другой страны</h3><p>Из России подписку и сервер напрямую не оплатить — нужна иностранная карта.</p></div>
-   <div class="need"><span class="n">03</span><h3>Сервер для агента</h3><p>Небольшой сервер, на котором агент постоянно работает и ждёт ваши задачи в Telegram — около 15 € в месяц.</p></div>
+   <div class="need"><span class="n">01</span><h3>Подписка Claude Code</h3><p>Агент работает на этой подписке. Стоимость — от 20 до 100 € в месяц, зависит от тарифа и объёма задач. Рекомендуем тариф за 100 €.</p></div>
+   <div class="need"><span class="n">02</span><h3>Карта другой страны</h3><p>Из России подписку и сервер напрямую не оплатить — нужна иностранная карта. Сейчас мы гарантируем, что всё работает, если у вас есть карта другой страны для оплаты сервера. Инструкции для России будут доступны с 1 октября.</p></div>
+   <div class="need"><span class="n">03</span><h3>Сервер для агента</h3><p>Небольшой сервер, на котором агент постоянно работает и ждёт ваши задачи в Telegram — до 15 € в месяц.</p></div>
   </div>
   <p class="lead" style="margin-top:32px;font-size:16px">Агент не пишет и не решает вместо вас, что снимать и о чём говорить. Он забирает техническую работу: монтаж, вёрстку, нарезку. Тему, слова и решение «отправлять или нет» — всегда вы.</p>
  </div>
@@ -515,7 +446,7 @@ a{color:inherit}
    <div>
     <h2 class="title" id="price-h">AI-агент для монтажа рилсов<br>и дизайна постов</h2>
     <p class="lead" style="margin-top:16px;font-size:17px">Отдельный продукт, не программа: без общих Zoom, только агент под вашу задачу.</p>
-    <div class="amount">[цена — уточнить]</div>
+    <div class="amount">9 900 ₽</div>
    </div>
    <div>
     <p class="inc mono">Что входит:</p>
@@ -526,7 +457,7 @@ a{color:inherit}
      <li>Работа через Telegram: голос, видео, правки</li>
     </ul>
     <div class="pay">
-     <a class="pill pill-coral" href="https://t.me/andrey_andreev" target="_blank" rel="noreferrer" data-event="ai-montage-cta" data-placement="price">Написать Андрею</a>
+     <a class="pill pill-coral" href="https://andreyandreev.createtoday.ru/hero/get/of_-hhYESt42ryS" target="_blank" rel="noreferrer" data-event="ai-montage-pay" data-placement="price">Купить за 9 900 ₽</a> <a class="pill pill-ask" href="https://t.me/andrey_andreev" target="_blank" rel="noreferrer" data-event="ai-montage-ask" data-placement="price">Задать вопрос</a>
     </div>
     <div class="pay-sub"><span>Подписка Claude Code и сервер — отдельно, см. «Что нужно для работы» выше.</span></div>
    </div>
@@ -554,9 +485,9 @@ a{color:inherit}
 <section class="sec final" aria-labelledby="final-h">
  <div class="wrap">
   <h2 class="h2" id="final-h">3000 ₽ монтажёру → 0. <span class="u">Напишите Андрею</span></h2>
-  <div class="facts"><span>монтаж рилсов</span><span>дизайн постов и каруселей</span><span>работа через Telegram</span><span>[цена — уточнить]</span></div>
+  <div class="facts"><span>монтаж рилсов</span><span>дизайн постов и каруселей</span><span>работа через Telegram</span><span>9 900 ₽</span></div>
   <div class="cta">
-   <a class="pill pill-coral" href="https://t.me/andrey_andreev" target="_blank" rel="noreferrer" data-event="ai-montage-cta" data-placement="final">Написать Андрею</a>
+   <a class="pill pill-coral" href="https://andreyandreev.createtoday.ru/hero/get/of_-hhYESt42ryS" target="_blank" rel="noreferrer" data-event="ai-montage-pay" data-placement="final">Купить за 9 900 ₽</a> <a class="pill pill-ask" href="https://t.me/andrey_andreev" target="_blank" rel="noreferrer" data-event="ai-montage-ask" data-placement="final">Задать вопрос</a>
    <a class="pill pill-white" href="#cases" data-event="ai-montage-cta" data-placement="final">Смотреть примеры ещё раз</a>
   </div>
  </div>
@@ -600,37 +531,6 @@ a{color:inherit}
   }else{vids.forEach(function(v){v.src=v.getAttribute('data-src')})}
 })();
 
-(function(){
-  var $=function(id){return document.getElementById(id)};
-  var nf=new Intl.NumberFormat('ru-RU',{maximumFractionDigits:0});
-  var rub=function(n){return nf.format(Math.round(n))+' ₽'};
-  function update(){
-    var reelsN=+$('e-reels-n').value, reelsP=+$('e-reels-p').value,
-        designN=+$('e-design-n').value, designP=+$('e-design-p').value,
-        sub=+$('e-sub').value, fx=+$('e-fx').value;
-    var validFx=Number.isFinite(fx)&&fx>0;
-    var reelsTotal=reelsN*reelsP, designTotal=designN*designP;
-    var before=reelsTotal+designTotal;
-    var after=validFx?(sub+15)*fx:null;
-    var savings=validFx?before-after:null;
-    $('e-reels-nv').textContent=reelsN;
-    $('e-reels-pv').textContent=rub(reelsP);
-    $('e-design-nv').textContent=designN;
-    $('e-sub-v').textContent=sub;
-    $('e-reels-f').textContent=reelsN+' × '+rub(reelsP);
-    $('e-design-f').textContent=designN+' × '+rub(designP);
-    $('e-reels-t').textContent=rub(reelsTotal);
-    $('e-design-t').textContent=rub(designTotal);
-    $('e-before').textContent=rub(before);
-    $('e-sub-t').textContent=sub+' €';
-    $('e-after').textContent=validFx?rub(after):'—';
-    $('e-savings').textContent=validFx?rub(savings):'укажите курс';
-  }
-  ['e-reels-n','e-reels-p','e-design-n','e-design-p','e-sub','e-fx'].forEach(function(id){
-    document.getElementById(id).addEventListener('input',update);
-  });
-  update();
-})();
 </script>
 </body>
 </html>
