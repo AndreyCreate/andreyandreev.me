@@ -220,6 +220,9 @@ a{color:inherit}
 .modal.on{display:grid}
 .modal .box{width:min(1080px,100%);aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden;position:relative}
 .modal iframe{width:100%;height:100%;border:0}
+.modal video{width:100%;height:100%;object-fit:contain}
+.modal .box.local-video{aspect-ratio:9/16;height:auto;width:min(100%,43.875vh,427.5px);margin:auto}
+.modal [hidden]{display:none}
 .modal .x{position:absolute;top:-48px;right:0;background:#fff;border:0;border-radius:999px;width:40px;height:40px;cursor:pointer;font-size:18px}
 .modal .wrapx{position:relative;width:min(1080px,100%)}
 @media (max-width:980px){
@@ -427,7 +430,7 @@ a{color:inherit}
  <div class="wrap">
   <div class="ex-head">
    <h2 class="h2" id="ex-h">Так это выглядит в работе. Примеры из канала <span class="hl-y">@mbga_materials</span></h2>
-   <p>Пять полных видеокейсов: контент, презентация, сайты и разбор поста. Все видео открываются здесь же.</p>
+   <p>Пять полных видеокейсов, короткая демонстрация работы с Reels и отзывы участниц. Все видео открываются здесь же.</p>
   </div>
   <div class="grid3">
    <a class="ex" href="#" data-video="https://kinescope.io/embed/4RCuyBQwKD8RsRTx5RDBJv" style="background:#fff"><div class="thumb"><img src="assets/case-191.jpg" alt="" loading="lazy"><span class="dur">13:23</span><span class="play">▶</span></div><div class="body"><span class="mono">Видеокейс · 01</span><h3>Два AI-агента: лендинг и четыре поста</h3><span class="res">Первый агент — маршруты и посты, второй — публикация сайта. Весь путь с экрана.</span><span class="more">Смотреть →</span></div></a>
@@ -435,6 +438,8 @@ a{color:inherit}
    <a class="ex" href="#" data-video="https://kinescope.io/embed/vVz53W3W25CjPyiHwe4dkE" style="background:#fff"><div class="thumb"><img src="assets/case-105.jpg" alt="" loading="lazy"><span class="dur">3:00</span><span class="play">▶</span></div><div class="body"><span class="mono">Видеокейс · 03</span><h3>Презентация к уроку за одну минуту</h3><span class="res">От структуры в Markdown до готовых слайдов в дизайн-системе автора.</span><span class="more">Смотреть →</span></div></a>
    <a class="ex" href="#" data-video="https://www.loom.com/embed/8c4836d6170c4f869a129a42ec806fcd" style="background:#fff"><div class="thumb"><img src="assets/case-187.jpg" alt="" loading="lazy"><span class="dur">12:03</span><span class="play">▶</span></div><div class="body"><span class="mono">Видеокейс · 04</span><h3>Сайт психолога, Telegram и рабочая тетрадь</h3><span class="res">Обновлённый сайт, рубрики для Telegram и рабочая тетрадь на семь дней.</span><span class="more">Смотреть →</span></div></a>
    <a class="ex blue" href="#" data-video="https://kinescope.io/embed/8ydpRCkSAUqjKXt1eBgKLV"><div class="thumb"><img src="assets/case-169.jpg" alt="" loading="lazy"><span class="dur">9:16</span><span class="play">▶</span></div><div class="body"><span class="mono">Видеокейс · 05</span><h3>Как один пост принёс больше миллиона рублей</h3><span class="res">Разбор поста Натальи Мальцевой по слайдам: от истории до приглашения на эфир.</span><span class="more">Смотреть →</span></div></a>
+   <a class="ex" href="https://t.me/mbga_materials/251" data-video="assets/case-251.mp4" style="background:#fff"><div class="thumb"><img src="assets/case-251.jpg" alt="" loading="lazy"><span class="dur">0:29</span><span class="play">▶</span></div><div class="body"><span class="mono">Короткая демонстрация · 06</span><h3>Пост из Reels: от видео до готового текста</h3><span class="res">Андрей показывает, как агент разбирает профиль и создаёт пост из Reels, сохраняя смыслы исходного видео.</span><span class="more">Смотреть →</span></div></a>
+   <a class="ex" href="https://t.me/mbga_materials/262" data-video="assets/case-262.mp4" style="background:#fff"><div class="thumb"><img src="assets/case-262.jpg" alt="" loading="lazy"><span class="dur">0:59</span><span class="play">▶</span></div><div class="body"><span class="mono">Отзывы участниц · 07</span><h3>Что говорят участницы пятого потока</h3><span class="res">Короткая подборка фрагментов Zoom-встреч: впечатления участниц от работы с AI-агентами. Опубликовано с их разрешения.</span><span class="more">Смотреть →</span></div></a>
   </div>
  </div>
 </section>
@@ -624,14 +629,21 @@ a{color:inherit}
 </footer>
 
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Видео">
- <div class="wrapx"><button class="x" id="modal-x" aria-label="Закрыть">✕</button><div class="box"><iframe id="modal-frame" src="" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" allowfullscreen></iframe></div></div>
+ <div class="wrapx"><button class="x" id="modal-x" aria-label="Закрыть">✕</button><div class="box"><iframe id="modal-frame" src="" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" allowfullscreen></iframe><video id="modal-video" controls playsinline preload="none" hidden></video></div></div>
 </div>
 
 <script>
 (function(){
   var modal=document.getElementById('modal'),frame=document.getElementById('modal-frame');
-  function open(src){frame.src=src+(src.indexOf('?')>-1?'&':'?')+'autoplay=1';modal.classList.add('on');document.body.style.overflow='hidden'}
-  function close(){modal.classList.remove('on');frame.src='';document.body.style.overflow=''}
+  var video=document.getElementById('modal-video'),box=frame.parentElement;
+  function open(src){
+    var local=/\.mp4$/.test(src);
+    frame.hidden=local;video.hidden=!local;box.classList.toggle('local-video',local);
+    if(local){video.src=src;video.play().catch(function(){})}
+    else{frame.src=src+(src.indexOf('?')>-1?'&':'?')+'autoplay=1'}
+    modal.classList.add('on');document.body.style.overflow='hidden';
+  }
+  function close(){modal.classList.remove('on');frame.src='';video.pause();video.removeAttribute('src');video.load();document.body.style.overflow=''}
   document.querySelectorAll('[data-video]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();open(a.getAttribute('data-video'))})});
   document.getElementById('modal-x').addEventListener('click',close);
   modal.addEventListener('click',function(e){if(e.target===modal)close()});
