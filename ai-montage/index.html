@@ -94,6 +94,7 @@ a{color:inherit}
 .more-vids .cap{margin-top:8px;font-size:11.5px}
 .media.vert{flex-direction:row;align-items:flex-start;gap:18px}
 .media.vert .vid.v{aspect-ratio:9/16;width:46%;flex:none}
+.vid.p{aspect-ratio:4/5}
 .media.vert .side{display:flex;flex-direction:column;gap:12px}
 .media.imgs{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .media.imgs .shot{border-radius:14px;overflow:hidden;box-shadow:0 12px 34px rgba(0,0,0,.1)}
@@ -261,7 +262,7 @@ a{color:inherit}
     <p class="lead"><span class="num">::</span>Отдельный агент под одну задачу, без коучинга и созвонов: вы кидаете исходники видео или тему поста в Telegram, агент монтирует, оформляет и присылает готовое. Ниже — реальные записи с экрана, время и деньги посчитаны, не придуманы.</p>
     <div class="meta" aria-label="Что нужно и цена">
      <div class="meta-row"><span class="k mono">нужно :</span><span class="v">Claude Code 20–100 €/мес<br>сервер до 15 €/мес<br>карта другой страны</span></div>
-     <div class="meta-row"><span class="k mono">цена :</span><span class="v">9 900 ₽</span></div>
+     <div class="meta-row"><span class="k mono">цена :</span><span class="v">9 900 ₽ один раз</span></div>
     </div>
     <div class="hero-cta">
      <a class="pill pill-coral" href="https://andreyandreev.createtoday.ru/hero/get/of_-hhYESt42ryS" target="_blank" rel="noreferrer" data-event="ai-montage-pay" data-placement="hero">Купить за 9 900 ₽</a> <a class="pill pill-ask" href="https://t.me/andrey_andreev" target="_blank" rel="noreferrer" data-event="ai-montage-ask" data-placement="hero">Задать вопрос</a>
@@ -289,6 +290,8 @@ a{color:inherit}
   <div class="pains">
    <a class="pain" href="#c2"><span class="n">01 · монтаж</span><h3>Долго монтируете рилсы и не хотите этим заниматься</h3><span class="res"><span>исходники → рилз</span><b>~28 мин</b></span></a>
    <a class="pain" href="#c3"><span class="n">02 · исходники</span><h3>Сняли что попало на бегу — собирать самому неохота</h3><span class="res"><span>11:44 → 12:18</span><b>34 мин</b></span></a>
+   <a class="pain" href="#c4"><span class="n">03 · дизайн</span><h3>Нет дизайнера, а пост нужен красивый и сегодня</h3><span class="res"><span>голос → готовый пост</span><b>72 мин</b></span></a>
+   <a class="pain" href="#c5"><span class="n">04 · дизайн</span><h3>Не знаете, зайдёт ли дизайн — можно проверить по цифрам</h3><span class="res"><span>идея → первая версия</span><b>13 мин</b></span></a>
   </div>
  </div>
 </section>
@@ -355,6 +358,65 @@ a{color:inherit}
  </div>
 </section>
 
+<!-- CASE 4: DESIGN — LITTLE PRINCE -->
+<section class="sec case" id="c4" aria-labelledby="c4-h">
+ <div class="wrap">
+  <div class="case-grid">
+   <div>
+    <div class="kick mono"><span class="star">✳︎</span> 03 · Дизайн без дизайнера</div>
+    <h2 class="h2" id="c4-h">Если дизайнера рядом нет, а <span class="u">пост нужен сегодня</span></h2>
+    <p class="how mono">:: Вот как это делает агент</p>
+    <ol class="steps">
+     <li>Андрей записал голосовое из автобуса: «Правила жизни Маленького принца — сначала цитаты, потом дизайн».</li>
+     <li>Агент подобрал дословные цитаты по переводу Норы Галь и сразу прислал 20 штук, пронумерованных.</li>
+     <li>Андрей на ходу выбрал 6 номеров и попросил анимацию персонажей — агент взял авторские иллюстрации Экзюпери, ничего не сгенерировал.</li>
+     <li>Через 72 минуты — 7 готовых анимированных роликов и текст поста, всё уже в ленте.</li>
+    </ol>
+    <blockquote class="q">«Берём 5, 6, 7, 16, 19, 20 и делай анимацию персонажей тоже»<cite>Андрей · голосовое из автобуса, 13.09.2026, 10:38</cite></blockquote>
+   </div>
+   <div class="media">
+    <a class="vid p" href="#" data-mp4="clips/prince_fox.mp4" aria-label="Смотреть анимацию: Лис, «Зорко одно лишь сердце»"><video muted loop playsinline preload="none" poster="clips/prince_fox.jpg" data-src="clips/prince_fox.mp4"></video><span class="live">превью без звука</span><span class="dur">0:06</span><span class="play">▶︎</span></a>
+    <p class="cap mono">«Зорко одно лишь сердце» — Лис, авторская иллюстрация Экзюпери, не сгенерированная. Один из 7 роликов поста, IG DdOPAqwkRHh</p>
+   </div>
+  </div>
+  <div class="stats">
+   <div class="st"><b>72 мин</b><span>от голосового в автобусе (10:16) до готового поста и текста (11:28)</span></div>
+   <div class="st"><b>7 роликов</b><span>анимированные сцены — авторские иллюстрации Экзюпери, без генерации</span></div>
+   <div class="st"><b>6 реплик</b><span>Андрей — весь пост собран на ходу, с телефона</span></div>
+  </div>
+ </div>
+</section>
+
+<!-- CASE 5: DESIGN — HOOKS POST -->
+<section class="sec sec-gray case" id="c5" aria-labelledby="c5-h">
+ <div class="wrap">
+  <div class="case-grid">
+   <div>
+    <div class="kick mono"><span class="star">✳︎</span> 04 · Дизайн, который сработал</div>
+    <h2 class="h2" id="c5-h">Если непонятно, зайдёт ли дизайн — <span class="u">можно проверить по цифрам</span></h2>
+    <p class="how mono">:: Вот как это делает агент</p>
+    <ol class="steps">
+     <li>Андрей накидывает тему голосовым сообщением в Telegram.</li>
+     <li>Агент докручивает идею и присылает первую версию дизайна — 13 минут.</li>
+     <li>Андрей даёт референс — агент собирает финальную карусель в его стиле.</li>
+     <li>Пост опубликован — агент достаёт из Instagram API реальные цифры для следующего разбора.</li>
+    </ol>
+    <blockquote class="q">«Берёте идею в аудио, скидываете AI-агенту прямо в чат телеграма, он помогает вам её докрутить… приносит первую версию дизайна, вы даёте референс — и он делает офигенный дизайнерский пост»<cite>Андрей · рилз о процессе, 11.09.2026</cite></blockquote>
+   </div>
+   <div class="media imgs">
+    <div class="shot"><img src="assets/hooks_slide1.jpg" alt="Обложка карусели «Хуки, которые не выглядят как хуки»"></div>
+    <div class="shot"><img src="assets/hooks_slide2.jpg" alt="Слайд карусели с цитатой из книги"></div>
+    <p class="cap2 mono">Готовая карусель, 7 слайдов — финальная версия, без правок дизайна. IG DcWx7UCETp7</p>
+   </div>
+  </div>
+  <div class="stats">
+   <div class="st"><span class="was">хук «13 минут до публикации»</span><b>50 мин</b><span>честно: 13 мин — первая версия дизайна (22:43→22:56), 50 — весь пост опубликован (23:33)</span></div>
+   <div class="st"><b>49 269</b><span>просмотров у готового поста — реальные цифры Instagram API</span></div>
+   <div class="st"><b>73</b><span>новых подписчика с одного этого поста</span></div>
+  </div>
+ </div>
+</section>
+
 <!-- HOW IT WORKS -->
 <section class="sec" id="how" aria-labelledby="how-h">
  <div class="wrap">
@@ -389,7 +451,7 @@ a{color:inherit}
      <div class="econ-total"><span>Итого в месяц</span><strong>45 000 ₽</strong></div>
     </div>
     <div class="econ-panel after">
-     <h3>С агентом<span class="tag mono">подписка + сервер</span></h3>
+     <h3>С агентом<span class="tag mono">оплачиваете сами, напрямую сервисам</span></h3>
      <div class="econ-rows">
       <div class="econ-row"><span>Подписка Claude Code<span class="d">рекомендуется</span></span><b>100 €</b></div>
       <div class="econ-row"><span>Сервер для агента<span class="d">ежемесячно</span></span><b>до 15 €</b></div>
@@ -398,7 +460,7 @@ a{color:inherit}
     </div>
    </div>
    <div class="econ-result"><div class="lbl">Разница<span class="sub">в месяц, при курсе 100 ₽ за 1 €</span></div><output>≈ 33 500 ₽</output></div>
-   <p class="econ-foot">Цена монтажа 3 000 ₽ за рилз — реальная цифра Андрея, дизайн карусели взят по той же ставке. С агентом: 100 € подписка + до 15 € сервер = до 115 € в месяц; курс 100 ₽ за 1 € условный, для наглядности.</p>
+   <p class="econ-foot">Цена монтажа 3 000 ₽ за рилз — реальная цифра Андрея, дизайн карусели взят по той же ставке. С агентом: 100 € подписка + до 15 € сервер = до 115 € в месяц — это вы платите сами, напрямую Anthropic и хостингу, не нам; курс 100 ₽ за 1 € условный, для наглядности.</p>
   </div>
  </div>
 </section>
@@ -446,20 +508,20 @@ a{color:inherit}
    <div>
     <h2 class="title" id="price-h">AI-агент для монтажа рилсов<br>и дизайна постов</h2>
     <p class="lead" style="margin-top:16px;font-size:17px">Отдельный продукт, не программа: без общих Zoom, только агент под вашу задачу.</p>
-    <div class="amount">9 900 ₽</div>
+    <div class="amount">9 900 ₽ один раз</div>
    </div>
    <div>
     <p class="inc mono">Что входит:</p>
     <ul class="incl">
-     <li>Настроенный агент для монтажа рилсов из ваших исходников</li>
-     <li>Настроенный агент для дизайна постов и каруселей</li>
+     <li>Инструкция, как настроить агента для монтажа рилсов из ваших исходников</li>
+     <li>Инструкция, как настроить агента для дизайна постов и каруселей</li>
      <li>Дизайн-система под ваш стиль</li>
      <li>Работа через Telegram: голос, видео, правки</li>
     </ul>
     <div class="pay">
      <a class="pill pill-coral" href="https://andreyandreev.createtoday.ru/hero/get/of_-hhYESt42ryS" target="_blank" rel="noreferrer" data-event="ai-montage-pay" data-placement="price">Купить за 9 900 ₽</a> <a class="pill pill-ask" href="https://t.me/andrey_andreev" target="_blank" rel="noreferrer" data-event="ai-montage-ask" data-placement="price">Задать вопрос</a>
     </div>
-    <div class="pay-sub"><span>Подписка Claude Code и сервер — отдельно, см. «Что нужно для работы» выше.</span></div>
+    <div class="pay-sub"><span>9 900 ₽ — разовый платёж нам, за инструкцию по настройке. Дальше вы сами настраиваете агента и платите за подписку Claude Code и сервер напрямую сервисам — до 115 € в месяц, нам из этого не идёт ничего. Подробности — «Что нужно для работы» выше.</span></div>
    </div>
   </div>
  </div>
@@ -476,6 +538,7 @@ a{color:inherit}
    <details><summary>Нужно уметь программировать или ставить сервер самому?</summary><div class="a">Нет, работа идёт через обычный Telegram-чат. Сервер и его настройку берёт на себя тот, кто ставит вам агента.</div></details>
    <details><summary>Что если у меня нет подписки Claude Code?</summary><div class="a">Она обязательна — агент работает на ней. Стоимость 20–100 € в месяц зависит от тарифа и объёма ваших задач.</div></details>
    <details><summary>Я из России, это проблема?</summary><div class="a">Подписку Claude Code и сервер напрямую из России не оплатить — понадобится карта другой страны.</div></details>
+   <details><summary>Кому я плачу каждый месяц?</summary><div class="a">Нам — ничего. 9 900 ₽ — разовый платёж за инструкцию, как настроить агента себе. Дальше подписку Claude Code и сервер (до 115 € в месяц) вы оплачиваете сами, напрямую сервисам — мы из этого не получаем ни рубля.</div></details>
    <details><summary>Сколько стоит сам продукт и когда старт?</summary><div class="a">Цена уточняется — напишите Андрею в Telegram, обсудим формат и сроки под вашу задачу.</div></details>
   </div>
  </div>
@@ -485,7 +548,7 @@ a{color:inherit}
 <section class="sec final" aria-labelledby="final-h">
  <div class="wrap">
   <h2 class="h2" id="final-h">3000 ₽ монтажёру → 0. <span class="u">Напишите Андрею</span></h2>
-  <div class="facts"><span>монтаж рилсов</span><span>дизайн постов и каруселей</span><span>работа через Telegram</span><span>9 900 ₽</span></div>
+  <div class="facts"><span>монтаж рилсов</span><span>дизайн постов и каруселей</span><span>работа через Telegram</span><span>9 900 ₽ один раз</span></div>
   <div class="cta">
    <a class="pill pill-coral" href="https://andreyandreev.createtoday.ru/hero/get/of_-hhYESt42ryS" target="_blank" rel="noreferrer" data-event="ai-montage-pay" data-placement="final">Купить за 9 900 ₽</a> <a class="pill pill-ask" href="https://t.me/andrey_andreev" target="_blank" rel="noreferrer" data-event="ai-montage-ask" data-placement="final">Задать вопрос</a>
    <a class="pill pill-white" href="#cases" data-event="ai-montage-cta" data-placement="final">Смотреть примеры ещё раз</a>
