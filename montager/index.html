@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Монтажёр рилсов — предзапись</title>
+<meta name="description" content="Агент, который монтирует ваши рилсы: скидываете видео, получаете готовый ролик с субтитрами, врезками и обложкой. Записывайтесь в предзапись.">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:title" content="Монтажёр рилсов — предзапись">
+<meta property="og:description" content="Агент, который монтирует ваши рилсы. Скидываете видео, получаете готовый ролик. Предзапись открыта.">
+<meta property="og:type" content="website">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFFFFF;--blue:#BFDDFB;--blue-soft:#DCEBFC;--blue-deep:#2F80ED;--coral:#E8563F;--ink:#111111;--ink-2:#3A3A3A;--mute:#6B6B6B;--line:#E6E6E6;--gray:#F5F5F5;--dark:#2B2B2B}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,system-ui,-apple-system,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;line-height:1.45;font-size:17px;min-height:100vh;display:flex;flex-direction:column}
+img,video{display:block;max-width:100%}
+a{color:inherit}
+.mono{font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,monospace;font-size:12.5px;letter-spacing:.02em}
+.wrap{width:100%;max-width:1240px;margin:0 auto;padding:0 40px}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0}
+.nav-l{display:flex;align-items:center;gap:14px;text-decoration:none}
+.nav-l img{width:44px;height:44px;border-radius:50%;object-fit:cover}
+.nav-l .tag{background:var(--gray);border-radius:12px;padding:10px 16px;line-height:1.35}
+.nav-r .chip{background:var(--blue);border-radius:999px;padding:10px 16px;font-family:'JetBrains Mono',monospace;font-size:13px;white-space:nowrap}
+main{flex:1;display:flex;align-items:center}
+.hero{width:100%;padding:8px 0 56px}
+.grid{display:grid;grid-template-columns:1.25fr .75fr;gap:56px;align-items:center}
+.kick{color:var(--mute);margin-bottom:22px;display:flex;gap:10px;align-items:center}
+.kick .star{color:var(--coral);font-size:15px}
+.h1{font-size:clamp(36px,4.3vw,62px);line-height:1.04;letter-spacing:-.04em;font-weight:500;max-width:820px}
+.h1 .u{display:inline;text-decoration:underline;text-decoration-color:var(--blue-deep);text-decoration-thickness:3px;text-underline-offset:.12em}
+.lead{font-size:clamp(17px,1.4vw,20px);line-height:1.45;color:var(--ink-2);max-width:620px;margin-top:20px}
+.steps{list-style:none;margin-top:22px;border-top:1px solid var(--line);counter-reset:s;max-width:620px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:44px 1fr;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:16px;color:var(--ink-2)}
+.steps li:before{content:"0" counter(s);font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--blue-deep);padding-top:3px}
+/* form */
+.form{margin-top:26px;max-width:620px}
+.row{display:flex;gap:10px}
+.inp{flex:1;min-width:0;height:56px;border:1.5px solid var(--line);border-radius:999px;padding:0 22px;font:inherit;font-size:17px;color:var(--ink);background:#fff;outline:none;transition:border-color .15s}
+.inp:focus{border-color:var(--blue-deep)}
+.inp.err{border-color:var(--coral)}
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:56px;padding:0 30px;border-radius:999px;border:0;text-decoration:none;font-size:15px;font-weight:500;font-family:'JetBrains Mono',monospace;cursor:pointer;white-space:nowrap;background:var(--coral);color:#fff;transition:transform .15s ease,opacity .15s}
+.pill:hover{transform:translateY(-1px);opacity:.94}
+.pill:disabled{opacity:.6;cursor:default;transform:none}
+.pill:focus-visible,.inp:focus-visible{outline:3px solid var(--blue-deep);outline-offset:3px}
+.hp{position:absolute;left:-9999px;opacity:0;height:0;width:0}
+.count{margin-top:18px;display:flex;align-items:center;gap:12px;font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--ink-2)}
+.count .dot{width:10px;height:10px;border-radius:50%;background:var(--blue-deep);box-shadow:0 0 0 4px var(--blue-soft)}
+.count b{font-weight:500;color:var(--ink)}
+.note{margin-top:12px;color:var(--mute);font-size:14px}
+.msg{margin-top:12px;font-size:15px;color:var(--coral);min-height:1.4em}
+/* done state */
+.done{display:none;margin-top:34px;max-width:620px;background:var(--gray);border-radius:20px;padding:28px 28px 26px}
+.done .num{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--blue-deep);margin-bottom:10px}
+.done h2{font-size:clamp(24px,2.4vw,32px);line-height:1.15;letter-spacing:-.02em;font-weight:500}
+.done p{margin-top:12px;color:var(--ink-2)}
+.done .pos{font-size:clamp(44px,5vw,72px);line-height:1;letter-spacing:-.04em;font-weight:500;color:var(--ink);margin:6px 0 10px}
+.is-done .form{display:none}.is-done .done{display:block}
+/* phone */
+.phone{position:relative;width:min(300px,100%);margin:0 auto;aspect-ratio:9/16;border-radius:28px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.22);background:#ddd}
+.phone video{width:100%;height:100%;object-fit:cover}
+.chip-f{position:absolute;background:#fff;border-radius:999px;padding:9px 16px;font-family:'JetBrains Mono',monospace;font-size:13px;box-shadow:0 8px 24px rgba(0,0,0,.14);white-space:nowrap;display:flex;gap:8px;align-items:center}
+.chip-f i{font-style:normal;color:var(--blue-deep)}
+.c1{left:-22px;top:36px}.c2{right:-18px;bottom:52px}
+.side{position:relative}
+.footer{padding:26px 0 34px;border-top:1px solid var(--line)}
+.footer .rowf{display:flex;flex-wrap:wrap;gap:12px 30px;align-items:center;justify-content:space-between;font-size:14px;color:var(--mute)}
+.footer a{color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--line)}
+.footer nav{display:flex;flex-wrap:wrap;gap:22px}
+@media (max-width:900px){.grid{grid-template-columns:1fr;gap:40px}.side{order:2}.phone{width:min(240px,100%)}}
+@media (max-width:640px){
+ .wrap{padding:0 20px}.nav-l .tag{display:none}
+ .hero{padding:8px 0 48px}.h1{font-size:10vw}
+ .row{flex-direction:column}.pill{width:100%}
+ .c1{left:-6px}.c2{right:-6px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <nav class="nav" aria-label="Навигация">
+  <a class="nav-l" href="https://andreyandreev.me/"><img src="../ai-montage/assets/andrey.jpg" alt="Андрей Андреев"><span class="tag mono">Монтажёр рилсов<br>от Андрея Андреева</span></a>
+  <div class="nav-r"><span class="chip">предзапись открыта</span></div>
+ </nav>
+</div>
+
+<main>
+ <section class="hero wrap" id="top">
+  <div class="grid">
+   <div>
+    <p class="kick mono"><span class="star">✦</span> Продукт в разработке, записываемся заранее</p>
+    <h1 class="h1">Монтажёр рилсов — агент, который <span class="u">монтирует ваши рилсы</span></h1>
+    <p class="lead">Вы записали видео на телефон и скинули агенту. Он вернул готовый ролик: субтитры, врезки, обложка. Без монтажёра, без таймлайна, без «поправьте вот здесь».</p>
+    <ul class="steps">
+     <li>Скидываете исходник в Telegram, как есть, хоть с дублями</li>
+     <li>Агент режет паузы, ставит субтитры и врезки, делает обложку</li>
+     <li>Забираете готовый рилс, минут через тридцать</li>
+    </ul>
+
+    <form class="form" id="form" novalidate>
+     <div class="row">
+      <input class="inp" id="email" type="email" name="email" inputmode="email" autocomplete="email" placeholder="Ваша почта" required aria-label="Ваша почта">
+      <input class="hp" type="text" name="site" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="pill" id="btn" type="submit" data-event="montager-signup">Записаться в предзапись</button>
+     </div>
+     <p class="msg" id="msg" aria-live="polite"></p>
+     <p class="count"><span class="dot"></span><span id="count-text">В предзаписи уже <b id="count">…</b></span></p>
+     <p class="note">Бесплатно и ни к чему не обязывает. Напишу на почту, когда откроем доступ, первым — тем, кто раньше записался.</p>
+    </form>
+
+    <div class="done" id="done" role="status">
+     <div class="num">:: вы в списке</div>
+     <h2>Ваш номер в очереди</h2>
+     <div class="pos" id="pos">#—</div>
+     <p id="done-text">Напишу на почту, как только откроем доступ. Раньше записались — раньше получите.</p>
+    </div>
+   </div>
+
+   <div class="side">
+    <div class="phone">
+     <video src="../ai-montage/clips/montage_vh1.mp4" poster="../ai-montage/clips/montage_vh1.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Пример рилса, смонтированного агентом"></video>
+    </div>
+    <span class="chip-f c1"><i>28 мин</i> от исходника до ролика</span>
+    <span class="chip-f c2">смонтировано <i>агентом</i></span>
+   </div>
+  </div>
+ </section>
+</main>
+
+<footer class="footer">
+ <div class="wrap rowf">
+  <span>© Create Today</span>
+  <nav aria-label="Юридические ссылки">
+   <a href="https://createtoday.ru/politica" target="_blank" rel="noreferrer">Политика конфиденциальности</a>
+   <a href="https://t.me/andrey_andreev" target="_blank" rel="noreferrer">Написать Андрею</a>
+  </nav>
+ </div>
+</footer>
+
+<script>
+(function(){
+ var API='https://montager-waitlist.andreyandreev.workers.dev';
+ var q=new URLSearchParams(location.search);
+ var src=(q.get('src')||q.get('utm_source')||'site').toLowerCase();
+ if(/reel|ig|insta/.test(src))src='reel';else if(src!=='site')src='other';
+ var $=function(id){return document.getElementById(id)};
+ var form=$('form'),email=$('email'),btn=$('btn'),msg=$('msg'),count=$('count'),countText=$('count-text'),pos=$('pos');
+ function plural(n){var a=n%10,b=n%100;if(b>=11&&b<=19)return 'человек';if(a===1)return 'человек';return 'человек'}
+ function showCount(n){
+  n=parseInt(n,10)||0;
+  if(n<=0){countText.textContent='Список только открылся — первые места свободны';return}
+  countText.innerHTML='В предзаписи уже <b>'+n.toLocaleString('ru-RU')+'</b> '+plural(n);
+ }
+ fetch(API+'/count',{cache:'no-store'}).then(function(r){return r.json()}).then(function(d){showCount(d.count)}).catch(function(){countText.textContent='В предзаписи уже есть люди'});
+ var done=false;
+ form.addEventListener('submit',function(e){
+  e.preventDefault();if(done)return;
+  var v=(email.value||'').trim();
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)){email.classList.add('err');msg.textContent='Проверьте адрес почты';email.focus();return}
+  email.classList.remove('err');msg.textContent='';btn.disabled=true;btn.textContent='Записываю…';
+  var hp=form.querySelector('.hp').value||'';
+  fetch(API+'/signup',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:v,src:src,hp:hp})})
+  .then(function(r){return r.json()})
+  .then(function(d){
+   if(!d.ok){throw new Error(d.error||'err')}
+   done=true;pos.textContent='#'+d.position;
+   if(d.already)$('done-text').textContent='Эта почта уже в списке. Напишу на неё, как только откроем доступ.';
+   document.body.classList.add('is-done');
+   try{localStorage.setItem('montager_pos',String(d.position))}catch(_){}
+   try{window.ym&&ym(109255989,'reachGoal','montager_signup',{src:src})}catch(_){}
+  })
+  .catch(function(err){
+   btn.disabled=false;btn.textContent='Записаться в предзапись';
+   msg.textContent=(err&&err.message==='rate_limit')?'Слишком много попыток, попробуйте позже':'Не получилось отправить. Попробуйте ещё раз или напишите Андрею в Telegram';
+  });
+ });
+ try{var saved=localStorage.getItem('montager_pos');if(saved){pos.textContent='#'+saved;$('done-text').textContent='Вы уже в списке. Напишу на почту, как только откроем доступ.';document.body.classList.add('is-done')}}catch(_){}
+})();
+</script>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=109255989', 'ym');
+   ym(109255989, 'init', {ssr:true, webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true, trackHash:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/109255989" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+</body>
+</html>
