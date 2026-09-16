@@ -308,7 +308,7 @@ a{color:inherit}
 /* Approved CT v4 pricing */
 #price{padding:72px 0;background:#fff}
 #price .plan-title{font-weight:500;margin-bottom:36px}
-#price .plan-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;align-items:stretch}
+#price .plan-grid{display:grid;grid-template-columns:minmax(0,1fr);max-width:568px;margin:0 auto;gap:24px;align-items:stretch}
 #price .plan-card{min-width:0;border:1px solid var(--line);border-radius:22px;padding:32px;display:flex;flex-direction:column;background:#fff}
 #price .plan-card.plan-mentor{background:var(--gray);border:2px solid #E8563F;padding:31px}
 @media(max-width:1000px){#price .plan-card.plan-mentor{padding:23px}}
@@ -328,13 +328,13 @@ a{color:inherit}
 #price .rich-base li:before{content:'✓';position:absolute;left:0;top:0;color:var(--blue-deep);font-family:'JetBrains Mono',monospace;font-size:14px}
 #price .rich-support{margin-top:24px;padding:18px 20px;border-radius:14px;background:var(--blue)}
 #price .rich-support-title{color:#1f4f8a;font-size:11px;margin-bottom:7px}
-@media(min-width:681px){#price .plan-viewer .rich-agents li{padding-top:26px;padding-bottom:26px}#price .plan-viewer .rich-base{gap:30px}}
+
 #price .rich-support p{font-size:15px;line-height:1.45;margin-top:5px}
 #price .rich-support b{font-weight:500}
 #price .rich-support span{color:var(--ink-2)}
 #price .plan-footer{margin-top:auto;padding-top:28px}
 #price .plan-footer .pill{width:100%;min-height:56px;padding:14px 18px;font-size:14px}
-#price .viewer-cta{background:var(--blue);color:var(--ink)}
+
 #price .rich-primary{background:var(--ink);color:#fff}
 #price .rich-secondary-row{display:flex;justify-content:center;align-items:center;min-height:44px;margin-top:6px;font-size:13px;color:var(--mute)}
 #price .rich-secondary{display:inline-flex;align-items:center;min-height:44px;color:var(--ink);text-underline-offset:4px}
@@ -577,8 +577,8 @@ a{color:inherit}
 <!-- Price -->
 <section class="sec" id="price" aria-labelledby="price-h"><div class="wrap">
 <div class="kick mono"><span class="star">✳</span> Оплата и доступ</div>
-<h2 class="h2 plan-title" id="price-h">Выберите <span class="u">формат</span> участия</h2><div class="plan-grid"><article class="plan-card plan-viewer" aria-labelledby="viewer-title">
-<header class="plan-head"><span class="plan-format mono">Самостоятельно</span><h3 id="viewer-title">Зритель</h3><div class="plan-amount"><span class="dd">::</span>35 000 ₽</div><p class="rich-intro">Собери трёх AI-агентов самостоятельно — по материалам программы.</p></header>
+<h2 class="h2 plan-title" id="price-h"><span class="u">Формат</span> участия</h2><div class="plan-grid"><article class="plan-card plan-mentor" aria-labelledby="mentor-title">
+<header class="plan-head"><span class="plan-format mono">Вместе с Андреем</span><h3 id="mentor-title">С сопровождением</h3><div class="plan-amount"><span class="dd">::</span>165 000 ₽</div><p class="rich-intro">Собери трёх AI-агентов с моей помощью — под свой продукт и задачи.</p></header>
 <ol class="rich-agents">
 <li><span class="mono">01</span><div><h4>Контентный агент</h4><p>Превращай идеи, знания и голосовые в посты, карусели и слайды в твоём стиле.</p></div></li>
 <li><span class="mono">02</span><div><h4>Продающий агент</h4><p>Предложения, прогревы, сообщения и сценарии воронок под твой продукт.</p></div></li>
@@ -587,17 +587,7 @@ a{color:inherit}
 <li><h4>База знаний и правила работы</h4><p>Свои материалы, задачи и манера общения.</p></li>
 <li><h4>Дизайн-система для контента</h4><p>Единый визуальный стиль слайдов и каруселей.</p></li>
 <li><h4>Доступ ко всем материалам</h4><p>Самостоятельно, в своём темпе.</p></li>
-</ul><footer class="plan-footer"><a class="pill viewer-cta" href="https://andreyandreev.createtoday.ru/hero/get/of_mA3MjbGAuOrv" target="_blank" rel="noreferrer" data-action="checkout" data-event="ai-agents-cta" data-placement="price-viewer">Выбрать «Зритель»</a><div class="rich-secondary-row"><span class="rich-self-note">Самостоятельное прохождение</span></div></footer></article><article class="plan-card plan-mentor" aria-labelledby="mentor-title">
-<header class="plan-head"><span class="plan-format mono">Вместе с Андреем</span><h3 id="mentor-title">С сопровождением</h3><div class="plan-amount"><span class="dd">::</span>165 000 ₽</div><p class="rich-intro">Собери тех же трёх AI-агентов с моей помощью — под свой продукт и задачи.</p></header>
-<ol class="rich-agents">
-<li><span class="mono">01</span><div><h4>Контентный агент</h4><p>Превращай идеи, знания и голосовые в посты, карусели и слайды в твоём стиле.</p></div></li>
-<li><span class="mono">02</span><div><h4>Продающий агент</h4><p>Предложения, прогревы, сообщения и сценарии воронок под твой продукт.</p></div></li>
-<li><span class="mono">03</span><div><h4>Агент для Reels</h4><p>Монтаж коротких видео AI-агентом.</p></div></li>
-</ol><ul class="rich-base">
-<li><h4>База знаний и правила работы</h4><p>Свои материалы, задачи и манера общения.</p></li>
-<li><h4>Дизайн-система для контента</h4><p>Единый визуальный стиль слайдов и каруселей.</p></li>
-<li><h4>Доступ ко всем материалам</h4><p>Самостоятельно, в своём темпе.</p></li>
-</ul><div class="rich-support"><div class="mono rich-support-title">С моей помощью</div><p><b>Три недели сопровождения</b></p><p>Два общих Zoom</p><p>Три индивидуальные встречи с Андреем <span>— разбор задач, настроек и результатов.</span></p></div><footer class="plan-footer"><a class="pill rich-primary" href="https://t.me/andrey_andreev" target="_blank" rel="noreferrer" data-action="dialog" data-event="ai-agents-cta" data-placement="price">Обсудить участие</a><div class="rich-secondary-row"><a class="rich-secondary" href="https://andreyandreev.createtoday.ru/hero/get/of_r6-pemaaf45z" target="_blank" rel="noreferrer" data-action="checkout" data-event="ai-agents-cta" data-placement="price">Оплатить участие</a></div></footer></article></div><p class="rich-shared"><span class="mono">::</span><span>В обоих тарифах — все материалы и сборка трёх агентов. Выбирай, как проходить: самостоятельно или с моим сопровождением.</span></p>
+</ul><div class="rich-support"><div class="mono rich-support-title">С моей помощью</div><p><b>Три недели сопровождения</b></p><p>Два общих Zoom</p><p>Три индивидуальные встречи с Андреем <span>— разбор задач, настроек и результатов.</span></p></div><footer class="plan-footer"><a class="pill rich-primary" href="https://t.me/andrey_andreev" target="_blank" rel="noreferrer" data-action="dialog" data-event="ai-agents-cta" data-placement="price">Обсудить участие</a><div class="rich-secondary-row"><a class="rich-secondary" href="https://andreyandreev.createtoday.ru/hero/get/of_r6-pemaaf45z" target="_blank" rel="noreferrer" data-action="checkout" data-event="ai-agents-cta" data-placement="price">Оплатить участие</a></div></footer></article></div>
 <p class="rich-cost-note">Подписки ChatGPT и Claude с доступом к Claude Code оплачиваются отдельно. Notion и Manus — по желанию.</p></div></section>
 
 <!-- FAQ -->
