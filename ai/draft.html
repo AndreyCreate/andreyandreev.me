@@ -50,14 +50,14 @@ img{display:block;max-width:100%}
 .stage .tag{position:absolute;left:18px;top:18px;background:#fff;border-radius:999px;padding:8px 14px;font:var(--text-mono-sm)}
 .stage .play{position:absolute;right:18px;bottom:18px;background:var(--orange-500);color:#fff;border-radius:999px;padding:14px 22px;font:700 15px/1 var(--font-body);display:flex;gap:10px;align-items:center;box-shadow:0 12px 32px var(--orange-a40)}
 /* sections */
-.sec{padding:90px 0}
+.sec{padding:132px 0}
 .sec.sage{background:var(--sage-50)}
 .sec.dark{background:var(--ink-900);color:#fff}
 .sec.ink{background:var(--ink-100)}
 .kick{font:var(--text-mono-sm);color:var(--ink-500);margin-bottom:18px;display:flex;gap:10px;align-items:center}
 .kick:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--orange-500);flex:none}
 .h2{font:700 clamp(28px,3.4vw,44px)/1.1 var(--font-display);letter-spacing:-.025em;max-width:900px}
-.h2s{font-size:clamp(24px,2.6vw,34px);margin-top:70px}
+.h2s{font-size:clamp(24px,2.6vw,34px);margin-top:104px}
 .sub{font:var(--text-body-lg);color:var(--ink-600);max-width:720px;margin-top:18px}
 .dark .sub{color:var(--ink-300)}.dark .kick{color:var(--ink-400)}
 /* cases */
@@ -108,6 +108,18 @@ img{display:block;max-width:100%}
 .gain b{display:block;font:700 clamp(22px,2vw,28px)/1.1 var(--font-display);letter-spacing:-.02em;margin-bottom:10px}
 .gain p{font:var(--text-body-sm);color:var(--ink-600)}
 .gain.or{background:var(--orange-500);border-color:var(--orange-500);color:#fff}.gain.or p{color:#fff}
+.gains.four{grid-template-columns:repeat(2,1fr);gap:22px}
+.gains.four .gain{padding:32px;display:flex;flex-direction:column}
+.gains.four .gain b{font-size:clamp(20px,1.7vw,24px);margin-bottom:12px}
+.gains.four .gain p{font:var(--text-body-md);color:var(--ink-600)}
+.gains.four .gain.or p{color:#fff}
+/* fear quote */
+.quote{padding:132px 0}
+.quote blockquote{max-width:1000px;margin:0 auto;text-align:center;position:relative}
+.quote .mark{font:700 96px/.8 var(--font-display);color:var(--orange-500);display:block;margin-bottom:18px}
+.quote q{quotes:none;font:700 clamp(28px,4vw,54px)/1.15 var(--font-display);letter-spacing:-.03em;display:block}
+.quote .cap{font:var(--text-body-lg);color:var(--ink-600);margin-top:30px;max-width:640px;margin-left:auto;margin-right:auto}
+.quote .cta{justify-content:center;margin-top:34px}
 /* tech */
 .flow{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:40px}
 .node{background:#fff;border:1px solid var(--ink-200);border-radius:16px;padding:14px 18px;display:flex;flex-direction:column;gap:4px;min-width:150px}
@@ -131,6 +143,19 @@ img{display:block;max-width:100%}
 .rcard .num small{display:block;font:var(--text-mono-sm);color:var(--ink-300);margin-top:8px;letter-spacing:.01em}
 .rcard p{font:var(--text-body-sm);color:var(--ink-200);margin-top:auto}
 .rcard.or{background:var(--orange-500)}.rcard.or .num,.rcard.or .who,.rcard.or p{color:#fff}
+.rcard .person{display:flex;gap:12px;align-items:center}
+.rcard .person img{width:52px;height:52px;border-radius:50%;object-fit:cover;flex:none;background:var(--ink-700)}
+.rcard .person .nm{display:block;font:600 16px/1.2 var(--font-display);letter-spacing:-.01em;color:#fff}
+.rcard .person .ig{display:inline-block;font:var(--text-mono-sm);color:var(--orange-300);margin-top:5px;border-bottom:1px solid rgba(255,255,255,.28)}
+.rcard.or .person .ig{color:#fff}
+.rcard .mono-av{width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.14);display:grid;place-items:center;font:700 17px/1 var(--font-display);color:#fff;flex:none}
+.rcard.or .mono-av{background:rgba(255,255,255,.22)}
+.rcard .role{font:var(--text-mono-sm);color:var(--ink-400)}
+.rcard.or .role{color:#fff;opacity:.85}
+.rcard .say{font:var(--text-body-sm);color:#fff;border-left:2px solid var(--orange-300);padding-left:12px;margin-top:auto}
+.rcard.or .say{border-left-color:#fff}
+.rcard .say i{display:block;font:var(--text-mono-sm);font-style:normal;color:var(--ink-400);margin-top:6px}
+.rcard.or .say i{color:#fff;opacity:.8}
 /* fit */
 .fit{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:44px}
 .fitc{background:#fff;border:1px solid var(--ink-200);border-radius:24px;padding:30px}
@@ -144,13 +169,14 @@ img{display:block;max-width:100%}
 .fitc h3{color:var(--ink-900)}.fitc.dk h3{color:#fff}
 .dark .gain{color:var(--ink-900)}.dark .gain.or{color:#fff}
 .fitc .cta{margin-top:20px}
-#help .fit{margin-top:22px}
+#help .fit{margin-top:22px;grid-template-columns:1fr}
 /* price */
 .pricebox{margin-top:44px;display:grid;grid-template-columns:1.1fr .9fr;gap:22px}
 .pcard{background:var(--ink-900);color:#fff;border-radius:28px;padding:40px}
 .pcard .mono{color:var(--ink-300)}
 .pcard .big{font:700 clamp(40px,5vw,64px)/1 var(--font-display);letter-spacing:-.03em;margin:18px 0 8px}
 .pcard .old{font:500 22px/1 var(--font-display);color:var(--ink-400);text-decoration:line-through}
+.pcard .next{font:600 19px/1.2 var(--font-display);color:var(--orange-300);letter-spacing:-.01em;margin-top:12px}
 .pcard .cond{font:var(--text-body-md);color:var(--ink-300);margin:18px 0 28px}
 .pcard .cta{margin-top:0}
 .incl{background:#fff;border:1px solid var(--ink-200);border-radius:28px;padding:36px}
@@ -174,6 +200,7 @@ img{display:block;max-width:100%}
 /* sticky */
 .sticky{position:fixed;left:0;right:0;bottom:0;z-index:40;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-top:1px solid var(--ink-200);padding:12px 24px;display:flex;gap:20px;align-items:center;justify-content:center}
 .sticky span{font:var(--text-mono-sm);color:var(--ink-600)}
+.sticky s{color:var(--ink-400)}
 /* modal */
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.84);display:none;place-items:center;z-index:50;padding:20px}
 .modal.on{display:grid}
@@ -193,11 +220,16 @@ img{display:block;max-width:100%}
 }
 @media(max-width:600px){
  .wrap{padding:0 18px}
- .sec{padding:64px 0}
+ .sec{padding:92px 0}
+ .h2s{margin-top:72px}
  .nav .right .ghost{display:none}
  .btn{padding:18px 26px;font-size:16px}
  .cases{grid-template-columns:1fr}.case.wide{grid-column:auto}
  .pains,.gains,.res{grid-template-columns:1fr}
+ .gains.four{grid-template-columns:1fr}
+ .gains.four .gain{padding:26px}
+ .quote{padding:92px 0}
+ .quote .mark{font-size:64px}
  .facts{grid-template-columns:1fr 1fr}
  .stage .play{font-size:13px;padding:12px 16px}
  .sticky span{display:none}.sticky .btn{width:100%}
@@ -221,7 +253,7 @@ img{display:block;max-width:100%}
    <div class="cta">
     <a class="btn" href="https://t.me/team_fokina" target="_blank" rel="noopener">Написать нам</a>
     <a class="btn dark" href="#cases">Смотреть кейсы</a>
-    <div class="price-inline"><s>79 900 ₽</s>69 990 ₽<small>спеццена для участников эфира · сутки</small></div>
+    <div class="price-inline"><s>165 000 ₽</s>69 990 ₽<small>спеццена для участников эфира · сутки</small></div>
    </div>
   </div>
   <div class="facts">
@@ -237,6 +269,22 @@ img{display:block;max-width:100%}
   </a>
  </header>
 </div>
+
+<section class="sec sage" id="cases-video">
+ <div class="wrap">
+  <div class="kick">Кейсы · это делает агент, а не команда</div>
+  <h2 class="h2">Пять роликов с экрана: что маркетолог делает по одному голосовому</h2>
+  <p class="sub">Записи реальных задач Андрея в августе, без монтажа процесса. Каждый ролик открывается прямо здесь.</p>
+  <div class="cases">
+   <a class="case wide" href="#" data-video="https://kinescope.io/embed/t2mox7JVmxykg3tUDmZfeh"><div class="thumb"><img src="assets/case_landing_in_bot.jpg" alt=""><span class="dur">2:10</span><span class="pl">▶</span></div><div class="body"><span class="mono">Лендинг · Telegram</span><h3>Как сделать лендинг за 6 минут: ТЗ голосом в бота</h3><p>Агент читает продукты и старую версию сайта, собирает страницу в дизайн-системе и присылает ссылку. Правки тоже голосом.</p></div></a>
+   <a class="case" href="#" data-video="https://kinescope.io/embed/8Q4enQ34xZquBb18AEDiqq"><div class="thumb"><img src="assets/post3.jpg" alt=""><span class="dur">2:18</span><span class="pl">▶</span></div><div class="body"><span class="mono">Воронка · бот</span><h3>Как сделать воронку в боте за 2 минуты</h3><p>Схема сообщений, кнопки и калькулятор собираются в конструкторе по одной задаче.</p></div></a>
+   <a class="case" href="#" data-video="https://kinescope.io/embed/kQfw1rrxJV8SynJB57VBeW"><div class="thumb"><img src="assets/post2.jpg" alt=""><span class="dur">1:28</span><span class="pl">▶</span></div><div class="body"><span class="mono">Контент · Instagram</span><h3>От поста до рилза за 34 минуты</h3><p>Агент берёт текст поста, дизайн и собирает вертикальное видео. Рилзы выходят чаще, чем любым другим способом.</p></div></a>
+   <a class="case" href="#" data-video="https://kinescope.io/embed/gJ8DbWFtt72XuWVao2GgES"><div class="thumb"><img src="assets/post4.jpg" alt=""><span class="dur">1:07</span><span class="pl">▶</span></div><div class="body"><span class="mono">Аналитика · воронка</span><h3>Докручиваем воронку на цифрах, а не наугад</h3><p>Выручка 519 800 ₽ по шагам воронки на одном экране. Раньше такую аналитику Андрей покупал у маркетологов за 100 000 ₽ в месяц.</p></div></a>
+   <a class="case" href="#" data-video="https://kinescope.io/embed/7LdWh1RzrNHdB3KRcGoixw"><div class="thumb"><img src="assets/dozhatie_bota.jpg" alt=""><span class="dur">0:58</span><span class="pl">▶</span></div><div class="body"><span class="mono">Участницы · группа</span><h3>Карусели участниц, собранные голосовыми в Telegram</h3><p>Что происходит на группе: слайды с видео-вставками без CapCut и дизайнера.</p></div></a>
+  </div>
+  <!-- TODO Настя: «докрутить примерами инст участников» — нужны ники аккаунтов и скрины/ссылки на их посты. В ai/assets/ таких материалов нет, новых имён не добавляю. -->
+ </div>
+</section>
 
 <section class="sec" id="why">
  <div class="wrap">
@@ -256,64 +304,10 @@ img{display:block;max-width:100%}
  </div>
 </section>
 
-<section class="sec ink" id="program">
+<section class="sec sage" id="howitworks">
  <div class="wrap">
-  <div class="kick">Программа</div>
-  <h2 class="h2">Три недели работы в группе над системой под ваш бизнес</h2>
-  <p class="sub">Три общих зума: на каждом разбираем задачи участников, их продукт и аудиторию, и настраиваем агентов под них. Между зумами материалы и инструкции по шагам.</p>
-  <div class="weeks">
-   <div class="week"><span class="n">01</span><h3>Собираем контентного AI-агента</h3><ol><li>подключаем сервисы и поднимаем сервер</li><li>собираем базу знаний: материалы, продукты, кейсы</li><li>настраиваем tone of voice на ваших текстах и записях</li><li>описываем аудиторию и её язык</li><li>задаём визуальные правила</li><li>подключаем источники контента и тренды</li><li>проверяем агента на реальных задачах</li></ol><div class="out"><b>итог недели</b>Контентный агент знает ваши материалы, голос, аудиторию и визуал и собирает готовый контент по голосовой задаче.</div></div>
-   <div class="week"><span class="n">02</span><h3>Собираем продающего AI-агента</h3><ol><li>разбираем продуктовую линейку и цены</li><li>собираем аудиторию: сегменты, боли, возражения</li><li>формулируем офферы</li><li>настраиваем алгоритмы продающих текстов</li><li>собираем логику прогрева и воронки</li><li>подключаем сборку лендингов</li><li>проверяем на реальном запуске</li></ol><div class="out"><b>итог недели</b>Продающий агент знает продукты и аудиторию и собирает офферы, прогревы, продающие посты и лендинги.</div></div>
-   <div class="week"><span class="n">03</span><h3>Соединяем двух агентов в рабочий процесс</h3><ol><li>связываем контент и продажи в один цикл: агент 01 приводит внимание, агент 02 превращает его в заявки</li><li>проверяем связку на ваших задачах, с реальными публикациями</li><li>дорабатываем то, что не сработало</li></ol><div class="out"><b>итог программы</b>Два агента в одном телеграм-чате. Надиктовали голосом, получили готовое.</div></div>
-  </div>
-  <div class="needs"><span class="mono">что понадобится</span><div><p>Ваши материалы: тексты, голосовые, записи, продукты, исследования аудитории, примеры визуальной подачи. Чем больше базы, тем сильнее агент. Если материалов нет совсем, качество будет заметно ниже.</p><p>Действующие подписки ChatGPT и Claude с доступом к Claude Code. Стоимость сервисов ниже.</p></div></div>
-
-  <h3 class="h2 h2s" id="result">Результат: готовый AI-агент в телеграме</h3>
-  <p class="sub">Он собирает воронки, лендинги и посты под ваш проект. Вам больше не нужны дизайнеры, копирайтеры и технические специалисты. А если вы сейчас делаете всё сами, сэкономите недели времени.</p>
-  <div class="gains">
-   <div class="gain or"><b>Лендинг за 10–15 минут</b><p>Вместо нескольких недель: без дизайнера, правок, согласований и ожидания подрядчика.</p></div>
-   <div class="gain"><b>Воронки без технического специалиста</b><p>Схема, сообщения, кнопки и калькуляторы собираются по одной задаче.</p></div>
-   <div class="gain"><b>Посты, карусели и рилсы в вашем стиле</b><p>Агент оформляет их сам, в вашей визуальной системе.</p></div>
-   <div class="gain"><b>Лид-магниты, гайды, презентации</b><p>Текст и оформление собираются за минуты.</p></div>
-   <div class="gain"><b>Быстрые тесты продуктов и офферов</b><p>Каждая новая версия стоит несколько минут, а не новый бюджет.</p></div>
-   <div class="gain"><b>Аналитика воронки на цифрах</b><p>Выручка и конверсии по шагам на одном экране, без отчёта от подрядчика.</p></div>
-  </div>
-  <div class="needs"><span class="mono">что даём</span><div><p>Три зума с Андреем. Техподдержка в чате. Видео-уроки и пошаговые инструкции.</p></div></div>
- </div>
-</section>
-
-<section class="sec" id="knowledge">
- <div class="wrap">
-  <div class="kick">База знаний</div>
-  <h2 class="h2">Как насыщаем агентов знаниями о трафике и продажах</h2>
-  <p class="sub">Агент работает на ваших материалах и наших алгоритмах. Собираем базу знаний на первой неделе, дополняем на второй.</p>
-  <div class="gains">
-   <div class="gain or"><b>Ваши материалы</b><p>Уроки, зумы, тексты, голосовые и записи встреч. Чем больше базы, тем точнее агент попадает в ваш стиль и ваш продукт.</p></div>
-   <div class="gain"><b>Ваш продукт и аудитория</b><p>Продуктовая линейка и цены, сегменты, боли и возражения, кейсы, отзывы и цифры проекта.</p></div>
-   <div class="gain"><b>Алгоритмы продающих текстов</b><p>Офферы под сегмент, прогревы, логика воронки и сборка лендингов — вторая неделя программы.</p></div>
-   <div class="gain"><b>Наши кастомные скилы</b><p>Скилы по контенту и продажам, шаблоны базы знаний, воронок и лендингов.</p></div>
-  </div>
-  <!-- TODO Настя: добавить, из чего именно берём знания о ТРАФИКЕ (источники, алгоритмы, чья экспертиза). Сейчас блок собран только из формулировок, уже бывших на странице. -->
- </div>
-</section>
-
-<section class="sec sage" id="tech">
- <div class="wrap">
-  <div class="kick">Технически</div>
-  <h2 class="h2">Технически плохо понимаю, как настраивать ботов. Смогу разобраться?</h2>
-  <p class="sub">Если всё из списка слева есть, настройка занимает один день. Дальше вы работаете с телефона, в телеграме.</p>
-  <div class="fit">
-   <div class="fitc"><h3>Что важно</h3><ul>
-    <li>Ноутбук, на который можно установить приложение Claude Code. Мощность и скорость ноутбука роли не играют: вся настройка происходит на сервере.</li>
-    <li>VPN.</li>
-    <li>Возможность оплатить Claude Code (20 $), ChatGPT (20 $) и сервер Amazon (100–200 $), на котором живёт агент.</li>
-   </ul></div>
-   <div class="fitc dk"><h3>Что не важно</h3><ul>
-    <li>Английский язык. Вся коммуникация с нейронками на русском работает прекрасно.</li>
-    <li>Опыт в ИИ и понимание всех нюансов создания агентов. За этим вы сюда и идёте — научим.</li>
-   </ul></div>
-  </div>
-  <h3 class="h2 h2s">Как это работает и сколько стоит содержать</h3>
+  <div class="kick">Как устроено</div>
+  <h2 class="h2">Как это работает и сколько стоит содержать</h2>
   <p class="sub">AI-маркетолог — это связка из нескольких сервисов, базы знаний и наших кастомных скилов, которую нужно один раз собрать и настроить.</p>
   <div class="flow">
    <div class="node or"><b>Вы</b><span>голосовое в телеграме</span></div><span class="arr">→</span>
@@ -334,25 +328,92 @@ img{display:block;max-width:100%}
  </div>
 </section>
 
+<section class="sec ink" id="program">
+ <div class="wrap">
+  <div class="kick">Программа</div>
+  <h2 class="h2">Три недели работы в группе над системой под ваш бизнес</h2>
+  <p class="sub">3 общих зума: на каждом разбираем задачи участников, их продукт и аудиторию, и настраиваем агентов под них. Между зумами материалы и инструкции по шагам.</p>
+  <div class="weeks">
+   <div class="week"><span class="n">01</span><h3>Собираем контентного AI-агента</h3><ol><li>подключаем сервисы и поднимаем сервер</li><li>собираем базу знаний: материалы, продукты, кейсы</li><li>настраиваем tone of voice на ваших текстах и записях</li><li>описываем аудиторию и её язык</li><li>задаём визуальные правила</li><li>подключаем источники контента и тренды</li><li>проверяем агента на реальных задачах</li></ol><div class="out"><b>итог недели</b>Контентный агент знает ваши материалы, голос, аудиторию и визуал и собирает готовый контент по голосовой задаче.</div></div>
+   <div class="week"><span class="n">02</span><h3>Собираем продающего AI-агента</h3><ol><li>разбираем продуктовую линейку и цены</li><li>собираем аудиторию: сегменты, боли, возражения</li><li>формулируем офферы</li><li>настраиваем алгоритмы продающих текстов</li><li>собираем логику прогрева и воронки</li><li>подключаем сборку лендингов</li><li>проверяем на реальном запуске</li></ol><div class="out"><b>итог недели</b>Продающий агент знает продукты и аудиторию и собирает офферы, прогревы, продающие посты и лендинги.</div></div>
+   <div class="week"><span class="n">03</span><h3>Соединяем двух агентов в рабочий процесс</h3><ol><li>связываем контент и продажи в один цикл: агент 01 приводит внимание, агент 02 превращает его в заявки</li><li>проверяем связку на ваших задачах, с реальными публикациями</li><li>дорабатываем то, что не сработало</li></ol><div class="out"><b>итог программы</b>Два агента в одном телеграм-чате. Надиктовали голосом, получили готовое.</div></div>
+  </div>
+  <h3 class="h2 h2s" id="result">Результат: готовый AI-агент в телеграме</h3>
+  <p class="sub">Он собирает воронки, лендинги и посты под ваш проект. Вам больше не нужны дизайнеры, копирайтеры и технические специалисты. А если вы сейчас делаете всё сами, сэкономите недели времени.</p>
+  <div class="gains">
+   <div class="gain or"><b>Лендинг за 10–15 минут</b><p>Вместо нескольких недель: без дизайнера, правок, согласований и ожидания подрядчика.</p></div>
+   <div class="gain"><b>Воронки без технического специалиста</b><p>Схема, сообщения, кнопки и калькуляторы собираются по одной задаче.</p></div>
+   <div class="gain"><b>Посты, карусели и рилсы в вашем стиле</b><p>Агент оформляет их сам, в вашей визуальной системе.</p></div>
+   <div class="gain"><b>Лид-магниты, гайды, презентации</b><p>Текст и оформление собираются за минуты.</p></div>
+   <div class="gain"><b>Быстрые тесты продуктов и офферов</b><p>Каждая новая версия стоит несколько минут, а не новый бюджет.</p></div>
+   <div class="gain"><b>Аналитика воронки на цифрах</b><p>Выручка и конверсии по шагам на одном экране, без отчёта от подрядчика.</p></div>
+  </div>
+  <div class="needs"><span class="mono">что даём</span><div><p>3 зума с Андреем. Техподдержка в чате. Видео-уроки и пошаговые инструкции.</p></div></div>
+ </div>
+</section>
+
+<section class="sec" id="knowledge">
+ <div class="wrap">
+  <div class="kick">База знаний</div>
+  <h2 class="h2">Как насыщаем агентов знаниями о трафике и продажах</h2>
+  <p class="sub">Агент работает на ваших материалах и наших алгоритмах. Собираем базу знаний на первой неделе, дополняем на второй.</p>
+  <div class="gains four">
+   <div class="gain or"><b>Ваши материалы</b><p>Уроки, зумы, тексты, голосовые и записи встреч. Чем больше базы, тем точнее агент попадает в ваш стиль и ваш продукт.</p></div>
+   <div class="gain"><b>Ваш продукт и аудитория</b><p>Продуктовая линейка и цены, сегменты, боли и возражения, кейсы, отзывы и цифры проекта.</p></div>
+   <div class="gain"><b>Алгоритмы продающих текстов</b><p>Офферы под сегмент, прогревы, логика воронки и сборка лендингов — вторая неделя программы.</p></div>
+   <div class="gain"><b>Наши кастомные скилы</b><p>Скилы по контенту и продажам, шаблоны базы знаний, воронок и лендингов.</p></div>
+  </div>
+  <!-- TODO Настя: добавить, из чего именно берём знания о ТРАФИКЕ (источники, алгоритмы, чья экспертиза). Сейчас блок собран только из формулировок, уже бывших на странице. -->
+ </div>
+</section>
+
+<section class="sec sage" id="tech">
+ <div class="wrap">
+  <div class="kick">Технически</div>
+  <h2 class="h2">Технически плохо понимаю, как настраивать ботов. Смогу разобраться?</h2>
+  <div class="fit">
+   <div class="fitc"><h3>Что важно</h3><ul>
+    <li>Ноутбук, на который можно установить приложение Claude Code. Мощность и скорость ноутбука роли не играют: вся настройка происходит на сервере.</li>
+    <li>VPN.</li>
+    <li>Возможность оплатить Claude Code (20 $), ChatGPT (20 $) и сервер Amazon (100–200 $), на котором живёт агент.</li>
+   </ul></div>
+   <div class="fitc dk"><h3>Что не важно</h3><ul>
+    <li>Английский язык. Вся коммуникация с нейронками на русском работает прекрасно.</li>
+    <li>Опыт в ИИ и понимание всех нюансов создания агентов. За этим вы сюда и идёте — научим.</li>
+   </ul></div>
+  </div>
+ </div>
+</section>
+
 <section class="sec dark" id="help">
  <div class="wrap">
   <div class="kick">Поддержка</div>
   <h2 class="h2">Как мы технически помогаем</h2>
   <p class="sub">Настройку вы проходите не в одиночку. На каждом шаге есть инструкция, видео и живой человек.</p>
-  <div class="gains">
+  <div class="gains four">
    <div class="gain"><b>Пошаговые инструкции</b><p>Каждый шаг настройки описан по порядку: что нажать, что вставить, что проверить.</p></div>
    <div class="gain"><b>Видео-уроки</b><p>Те же шаги с экрана, чтобы сверяться по ходу.</p></div>
    <div class="gain"><b>Зум для устранения ошибок</b><p>Если что-то не сходится, разбираем на общем зуме.</p></div>
    <div class="gain or"><b>Техспециалист в чате</b><p>Пишете в чат группы — помогает, если возникли проблемы.</p></div>
   </div>
+  <!-- ПУСТАЯ КАРТОЧКА СКРЫТА 17.09: ответа на возражение нет, пустой белый блок ломал секцию.
+       TODO Настя/Андрей: дайте ответ — верну карточку.
   <div class="fit">
-   <div class="fitc"><h3>«Страшно, что много заплачу и не освою — будет сложно»</h3>
-    <p class="fitp">На программе уже прошли ребята, которые не были технарями. Вот их отзывы и то, что они делают агентами сейчас.</p>
-    <div class="cta"><a class="btn dark sm" href="#cases">Смотреть кейсы участников</a></div></div>
    <div class="fitc"><h3>«Страшно, что заблокируют Claude Code и я потеряю своего агента»</h3>
-    <!-- TODO Настя/Андрей: нужен ответ на это возражение. На странице и в FAQ ответа нет, сам не придумываю. -->
    </div>
   </div>
+  -->
+ </div>
+</section>
+
+<section class="sec quote" id="fear">
+ <div class="wrap">
+  <blockquote>
+   <span class="mark">«</span>
+   <q>Страшно, что много заплачу и не освою — будет сложно</q>
+   <p class="cap">На программе уже прошли ребята, которые не были технарями. Вот их результаты и то, что они делают агентами сейчас.</p>
+   <div class="cta"><a class="btn" href="#cases">Смотреть результаты участников</a></div>
+  </blockquote>
  </div>
 </section>
 
@@ -362,29 +423,26 @@ img{display:block;max-width:100%}
   <h2 class="h2">Кто уже прошёл программу: не технари, и вот что у них получилось</h2>
   <p class="sub">Цифры из открытых кейсов участниц программ Андрея. Не миллион просмотров сразу, а стабильный рост со своими смыслами.</p>
   <div class="res">
-   <div class="rcard or"><span class="who">Наталья Мальцева · бизнес-психолог</span><span class="num">30 заявок<small>289 000 ₽ прибыли · +2 000 подписчиков</small></span><p>Пришла с 5 000 подписчиков, блог рос медленно, мини-продукта не было.</p></div>
-   <div class="rcard"><span class="who">Галина Фёдорова · психолог</span><span class="num">248 000<small>просмотров за неделю · +1 000 подписчиков · 70 000 ₽</small></span><p>До: «блог вообще не двигался».</p></div>
-   <div class="rcard"><span class="who">Маша Херд · тело, эмоции, ритм</span><span class="num">1 000 000<small>просмотров на одном посте · сотни комментариев</small></span><p>Смелые посты вместо безопасных.</p></div>
+   <div class="rcard or">
+    <div class="person"><span class="mono-av">НМ</span><span><span class="nm">Наталья Мальцева</span><a class="ig" href="https://instagram.com/gde_moy_million" target="_blank" rel="noopener">@gde_moy_million</a></span></div>
+    <span class="role">бизнес-психолог</span>
+    <span class="num">30 заявок<small>289 000 ₽ прибыли · +2 000 подписчиков</small></span>
+    <p>Пришла с 5 000 подписчиков, блог рос медленно, мини-продукта не было.</p></div>
+   <div class="rcard">
+    <div class="person"><img src="assets/people/fedorova.jpg" width="52" height="52" loading="lazy" alt="Галина Фёдорова"><span><span class="nm">Галина Фёдорова</span><a class="ig" href="https://instagram.com/fedorovagalina" target="_blank" rel="noopener">@fedorovagalina</a></span></div>
+    <span class="role">психолог, телесный терапевт</span>
+    <span class="num">248 000<small>просмотров за неделю · +1 000 подписчиков · 70 000 ₽</small></span>
+    <p class="say">«Блог вообще не двигался, сейчас началась жизнь»<i>из опубликованного кейса в @mbga_materials</i></p></div>
+   <div class="rcard">
+    <div class="person"><img src="assets/people/herd.jpg" width="52" height="52" loading="lazy" alt="Маша Херд"><span><span class="nm">Маша Херд</span><a class="ig" href="https://instagram.com/masha_herd" target="_blank" rel="noopener">@masha_herd</a></span></div>
+    <span class="role">про тело, эмоции и ритм женщины</span>
+    <span class="num">1 000 000<small>просмотров на одном посте · сотни комментариев</small></span>
+    <p>Смелые посты вместо безопасных.</p></div>
    <div class="rcard"><span class="who">Клиент под NDA · август</span><span class="num">114 000<small>просмотров за сутки · 2 900 отправок · 142 комментария</small></span><p>Один из первых постов обошёл лучший результат аккаунта в 4,6 раза.</p></div>
   </div>
  </div>
 </section>
 
-<section class="sec sage" id="cases-video">
- <div class="wrap">
-  <div class="kick">Кейсы · это делает агент, а не команда</div>
-  <h2 class="h2">Пять роликов с экрана: что маркетолог делает по одному голосовому</h2>
-  <p class="sub">Записи реальных задач Андрея в августе, без монтажа процесса. Каждый ролик открывается прямо здесь.</p>
-  <div class="cases">
-   <a class="case wide" href="#" data-video="https://kinescope.io/embed/t2mox7JVmxykg3tUDmZfeh"><div class="thumb"><img src="assets/case_landing_in_bot.jpg" alt=""><span class="dur">2:10</span><span class="pl">▶</span></div><div class="body"><span class="mono">Лендинг · Telegram</span><h3>Как сделать лендинг за 6 минут: ТЗ голосом в бота</h3><p>Агент читает продукты и старую версию сайта, собирает страницу в дизайн-системе и присылает ссылку. Правки тоже голосом.</p></div></a>
-   <a class="case" href="#" data-video="https://kinescope.io/embed/8Q4enQ34xZquBb18AEDiqq"><div class="thumb"><img src="assets/post3.jpg" alt=""><span class="dur">2:18</span><span class="pl">▶</span></div><div class="body"><span class="mono">Воронка · бот</span><h3>Как сделать воронку в боте за 2 минуты</h3><p>Схема сообщений, кнопки и калькулятор собираются в конструкторе по одной задаче.</p></div></a>
-   <a class="case" href="#" data-video="https://kinescope.io/embed/kQfw1rrxJV8SynJB57VBeW"><div class="thumb"><img src="assets/post2.jpg" alt=""><span class="dur">1:28</span><span class="pl">▶</span></div><div class="body"><span class="mono">Контент · Instagram</span><h3>От поста до рилза за 34 минуты</h3><p>Агент берёт текст поста, дизайн и собирает вертикальное видео. Рилзы выходят чаще, чем любым другим способом.</p></div></a>
-   <a class="case" href="#" data-video="https://kinescope.io/embed/gJ8DbWFtt72XuWVao2GgES"><div class="thumb"><img src="assets/post4.jpg" alt=""><span class="dur">1:07</span><span class="pl">▶</span></div><div class="body"><span class="mono">Аналитика · воронка</span><h3>Докручиваем воронку на цифрах, а не наугад</h3><p>Выручка 519 800 ₽ по шагам воронки на одном экране. Раньше такую аналитику Андрей покупал у маркетологов за 100 000 ₽ в месяц.</p></div></a>
-   <a class="case" href="#" data-video="https://kinescope.io/embed/7LdWh1RzrNHdB3KRcGoixw"><div class="thumb"><img src="assets/dozhatie_bota.jpg" alt=""><span class="dur">0:58</span><span class="pl">▶</span></div><div class="body"><span class="mono">Участницы · группа</span><h3>Карусели участниц, собранные голосовыми в Telegram</h3><p>Что происходит на группе: слайды с видео-вставками без CapCut и дизайнера.</p></div></a>
-  </div>
-  <!-- TODO Настя: «докрутить примерами инст участников» — нужны ники аккаунтов и скрины/ссылки на их посты. В ai/assets/ таких материалов нет, новых имён не добавляю. -->
- </div>
-</section>
 
 <section class="sec ink" id="price">
  <div class="wrap">
@@ -394,11 +452,12 @@ img{display:block;max-width:100%}
    <div class="pcard">
     <span class="mono">Сентябрьская группа · старт 21 сентября</span>
     <div class="big">69 990 ₽</div>
-    <div class="old">79 900 ₽</div>
+    <div class="old">165 000 ₽</div>
+    <div class="next">цена с завтра — 79 990 ₽</div>
     <p class="cond">Специальная цена для участников эфира, действует сутки. Базовая цена — 165 000 ₽.<br><br>Забронировать место можно предоплатой 5 000 ₽ — напишите нам в телеграм.</p>
     <div class="cta"><a class="btn" href="https://t.me/team_fokina" target="_blank" rel="noopener">Написать нам</a><a class="btn ghost" href="https://tadaa.createtoday.ru/hero/get/of_YmE8fLARaB6P" data-action="checkout">Оплатить участие</a></div>
    </div>
-   <div class="incl"><h3>что входит</h3><ul><li>три общих зума с Андреем и разбором задач участников</li><li>видео-уроки и пошаговые инструкции по сборке обоих агентов</li><li>наши кастомные скилы по контенту и продажам</li><li>шаблоны базы знаний, воронок и лендингов</li><li>техподдержка в чате группы на всё время программы</li></ul></div>
+   <div class="incl"><h3>что входит</h3><ul><li>3 общих зума с Андреем и разбором задач участников</li><li>видео-уроки и пошаговые инструкции по сборке обоих агентов</li><li>наши кастомные скилы по контенту и продажам</li><li>шаблоны базы знаний, воронок и лендингов</li><li>техподдержка в чате группы на всё время программы</li></ul></div>
   </div>
  </div>
 </section>
@@ -408,14 +467,14 @@ img{display:block;max-width:100%}
   <div class="kick">Вопросы</div>
   <h2 class="h2">FAQ</h2>
   <div class="faq">
-   <details><summary>Это индивидуальная работа?</summary><p>Нет. Формат групповой: три общих зума, на которых разбираем задачи участников и настраиваем агентов под конкретные бизнесы.</p></details>
+   <details><summary>Это индивидуальная работа?</summary><p>Нет. Формат групповой: 3 общих зума, на которых разбираем задачи участников и настраиваем агентов под конкретные бизнесы.</p></details>
    <details><summary>Я не технический человек. Справлюсь?</summary><p>Да. Всё собирается по шагам, с материалами и инструкциями, сложные места разбираем на зумах, а техспециалист в чате помогает с ошибками. Если ноутбук, VPN и оплата сервисов есть, настройка занимает один день.</p></details>
    <details><summary>Сколько стоит содержание агента после программы?</summary><p>140–240 $ в месяц: Claude Code 20 $, ChatGPT 20 $ и сервер Amazon 100–200 $. Других обязательных расходов нет.</p></details>
    <details><summary>Что нужно, чтобы агент работал хорошо?</summary><p>Ваши материалы: тексты, голосовые, записи, уроки, наполненный блог. Чем больше базы, тем точнее агент попадает в ваш стиль и ваш продукт.</p></details>
    <details><summary>Почему нельзя собрать это самому по видео из интернета?</summary><p>Можно попробовать. Но агент это связка из нескольких сервисов, базы знаний и логики под ваш бизнес. На программе вы проходите этот путь с готовыми шаблонами, нашими скилами и сопровождением.</p></details>
    <details><summary>Агент будет писать моим голосом?</summary><p>Да, если есть на чём его обучить. Tone of voice настраивается на ваших текстах и записях, это отдельный этап первой недели.</p></details>
-   <details><summary>Сколько времени нужно уделять программе?</summary><p>Три зума плюс работа между ними на своих материалах. Основная нагрузка в первую неделю, дальше легче.</p></details>
-   <details><summary>Что если я не успею за три недели?</summary><p>Материалы и записи остаются у вас ещё три месяца после программы. Догнать можно в своём темпе, вопросы задать в чате группы.</p></details>
+   <details><summary>Сколько времени нужно уделять программе?</summary><p>3 зума плюс работа между ними на своих материалах. Основная нагрузка в первую неделю, дальше легче.</p></details>
+   <details><summary>Что если я не успею за три недели?</summary><p>Материалы и записи остаются у вас ещё 3 месяца после программы. Догнать можно в своём темпе, вопросы задать в чате группы.</p></details>
    <details><summary>Агент публикует сам?</summary><p>Нет. Он собирает готовый материал, публикацию вы подтверждаете сами.</p></details>
    <details><summary>Можно оплатить частями?</summary><p>Да, условия обсуждаются в личных сообщениях по кнопке «Написать нам».</p></details>
   </div>
@@ -429,7 +488,7 @@ img{display:block;max-width:100%}
  </div>
 </footer>
 
-<div class="sticky"><span>старт 21 сентября · осталось 10 мест · 69 990 ₽ для участников эфира</span><a class="btn sm" href="https://t.me/team_fokina" target="_blank" rel="noopener">Написать нам</a></div>
+<div class="sticky"><span>старт 21 сентября · осталось 10 мест · <s>165 000 ₽</s> 69 990 ₽ для участников эфира · с завтра 79 990 ₽</span><a class="btn sm" href="https://t.me/team_fokina" target="_blank" rel="noopener">Написать нам</a></div>
 
 <div class="modal" id="modal"><div class="wrapx"><button class="x" id="modal-x" aria-label="Закрыть">✕</button><div class="box"><iframe id="modal-frame" src="" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" allowfullscreen></iframe></div></div></div>
 
