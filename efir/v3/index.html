@@ -1,0 +1,261 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<title>Как я работаю с агентом — эфир 17.09 · v3</title><link rel="icon" href="/favicon.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,700;0,8..60,900;1,8..60,700;1,8..60,900&family=Manrope:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&family=PT+Mono&family=Oswald:wght@300;400&family=Caveat:wght@600&display=swap" rel="stylesheet"><style>
+:root{--paper:#F4F3EF;--cream:#FBF8F3;--ink:#111111;--ghost:#B7B6B3;--mute:#6F6E6C;--red:#D80809;--marker:#FDC300;--taupe:#BCAA8E;--rule:#DCD6C9}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:'Manrope',system-ui,sans-serif;color:var(--ink);background:var(--paper);line-height:1.45;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,video{max-width:100%}
+.wrap{max-width:1220px;margin:0 auto;padding:0 70px;position:relative;z-index:2}
+.serif{font-family:'Source Serif 4',Georgia,serif}.mono{font-family:'JetBrains Mono',monospace}.cond{font-family:'Oswald',sans-serif;font-weight:300}.script{font-family:'Caveat',cursive;font-weight:600}
+a{color:inherit}
+
+/* ——— шапка поверх фото-обложки ——— */
+.top{position:absolute;left:0;right:0;top:0;z-index:4;display:flex;align-items:center;gap:14px;padding:34px 70px}
+.kick{font-family:'Oswald',sans-serif;font-weight:300;font-size:15px;letter-spacing:.16em;text-transform:uppercase;color:#fff;line-height:1.4}
+.top .sp{flex:1}
+.pill{display:inline-block;font-family:'Manrope';font-weight:600;font-size:14px;text-decoration:none;color:#fff;border:1.5px solid rgba(255,255,255,.65);border-radius:40px;padding:11px 22px;white-space:nowrap;background:rgba(0,0,0,.12)}
+.pill.cta{background:var(--red);border-color:var(--red)}
+
+/* ——— hero: фото-обложка fullbleed ——— */
+.hero{position:relative;min-height:min(92vh,860px);background:#191919;overflow:hidden;display:flex;align-items:flex-end}
+.hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 26%}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.42) 0,rgba(0,0,0,.05) 30%,rgba(0,0,0,.52) 72%,rgba(0,0,0,.78))}
+.hin{position:relative;z-index:3;width:100%;padding:0 70px 56px;max-width:1220px;margin:0 auto}
+h1{font-family:'Manrope';font-weight:800;font-size:clamp(38px,5.4vw,72px);line-height:1.02;letter-spacing:-.02em;color:#fff;max-width:14em}
+.hsub{margin-top:22px;margin-left:auto;max-width:560px;text-align:right;font-weight:600;font-size:clamp(15px,1.35vw,20px);line-height:1.3;color:#fff}
+.hnote{position:absolute;right:76px;top:-54px;font-size:clamp(34px,4vw,56px);color:#fff;transform:rotate(-7deg);z-index:4;text-shadow:0 4px 18px rgba(0,0,0,.45)}
+.hmeta{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:34px;padding-top:20px;border-top:1px solid rgba(255,255,255,.35);font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.03em;color:#fff;text-transform:uppercase}
+
+/* ——— полоса цифр с маркером ——— */
+.figs{background:var(--cream);border-bottom:1px solid var(--rule)}
+.figs .wrap{display:flex;flex-wrap:wrap;gap:26px 44px;padding-top:26px;padding-bottom:26px;align-items:baseline}
+.figs b{font-family:'Oswald',sans-serif;font-weight:300;font-size:clamp(30px,3.4vw,48px);line-height:1;letter-spacing:-.01em}
+.figs span{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--mute);letter-spacing:.04em;text-transform:uppercase;display:block;margin-top:6px}
+.mark{background:linear-gradient(transparent 14%,var(--marker) 14%,var(--marker) 92%,transparent 92%);padding:0 7px;margin:0 -7px}
+
+/* ——— бумажный слайд ——— */
+section{position:relative;padding:92px 0;overflow:hidden}
+section.paper{background:var(--paper)}section.cream{background:var(--cream)}
+.ghostbg{position:absolute;left:0;right:0;top:40px;bottom:0;font-family:'PT Mono',monospace;font-size:19px;line-height:1.85;color:var(--ghost);opacity:.22;letter-spacing:.02em;padding:0 70px;z-index:1;pointer-events:none;user-select:none;overflow:hidden}
+.lab{display:flex;align-items:center;gap:16px;margin-bottom:26px}
+.num{flex:0 0 auto;width:54px;height:54px;border:2px solid #8b8a86;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:500;font-size:20px;color:#6b6a66}
+.lab em{font-style:normal;font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:#8a8985}
+h2{font-family:'Source Serif 4',Georgia,serif;font-weight:700;font-size:clamp(34px,4.4vw,62px);line-height:1.06;letter-spacing:-.005em;margin-bottom:34px;max-width:17em}
+h2 i{font-style:italic;font-weight:900;color:var(--red)}
+h3{font-family:'Source Serif 4',Georgia,serif;font-weight:700;font-size:23px;line-height:1.15;margin:8px 0 8px}
+
+/* ——— строка-реплика ——— */
+.week{display:grid;grid-template-columns:170px 1fr;gap:0;margin:0 0 30px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.week span{padding:16px 0;font-size:16px;line-height:1.35;display:flex;align-items:center}
+.week span:first-child{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--mute);letter-spacing:.03em}
+.week span:last-child{border-left:1px solid var(--rule);padding-left:24px;font-weight:600}
+
+.grid{display:grid;grid-template-columns:auto auto 1fr;gap:34px;align-items:start}
+.grid.two{grid-template-columns:auto 1fr}
+.grid.wide{grid-template-columns:minmax(0,470px) 1fr;gap:48px}
+
+/* ——— «под слайд»: рамка кадра ——— */
+.vid{width:280px}
+.vid video{width:100%;aspect-ratio:9/16;background:#111;display:block;border:1px solid var(--rule)}
+.vid figcaption,.ctl em{font-style:normal;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--mute);text-transform:uppercase;letter-spacing:.05em;margin-top:12px;display:block}
+.story{width:280px}.story img{width:100%;display:block;border:1px solid var(--rule)}
+
+/* ——— большая узкая цифра ——— */
+.price{font-family:'Oswald',sans-serif;font-weight:300;font-size:clamp(46px,5.6vw,84px);line-height:.98;letter-spacing:-.015em;color:var(--red);margin-bottom:10px}
+.sub{font-size:16px;line-height:1.4;color:var(--mute);margin-bottom:26px;max-width:26em}
+.sub b{font-weight:700;color:var(--ink)}
+
+/* ——— нумерованные пункты ——— */
+.rows{border-top:1px solid var(--rule);margin-bottom:24px}
+.rw{display:grid;grid-template-columns:78px 1fr;gap:16px;padding:14px 0;border-bottom:1px solid var(--rule);font-size:16px;line-height:1.4}
+.rw b{font-family:'JetBrains Mono',monospace;font-weight:400;color:#8a8985;font-size:13px;padding-top:4px;letter-spacing:.03em}
+.rw.ok b{color:var(--red)}.rw.ok span{font-weight:700}
+
+.note{font-size:15.5px;line-height:1.5;background:var(--cream);border-left:3px solid var(--taupe);padding:16px 20px}
+section.cream .note{background:#F2EFE7}
+blockquote{font-family:'Source Serif 4',Georgia,serif;font-weight:400;font-style:italic;font-size:25px;line-height:1.3;margin:0 0 24px;padding-left:20px;border-left:3px solid var(--red)}
+
+/* ——— карточки-приёмы ——— */
+.bks{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.bk{border:1px solid var(--rule);padding:22px 22px 26px;background:rgba(255,255,255,.5);min-height:200px}
+.bn{font-family:'Oswald',sans-serif;font-weight:300;font-size:40px;line-height:1;color:var(--taupe)}
+.bk .cap{font-family:'JetBrains Mono',monospace;font-size:11.5px;text-transform:uppercase;color:#8a8985;margin:8px 0 10px;letter-spacing:.04em}
+.bk p{font-size:15px;line-height:1.5}
+
+/* ——— карусели ——— */
+.car{min-width:0}
+.track{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.track::-webkit-scrollbar{display:none}
+.cell{flex:0 0 100%;scroll-snap-align:center}
+.cell img,.cell video{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;border:1px solid var(--rule);background:var(--cream)}
+.ctl{display:flex;align-items:center;gap:10px;margin-top:16px;flex-wrap:wrap}
+.ctl button{width:46px;height:46px;border-radius:50%;border:0;background:var(--red);color:#fff;font-size:18px;cursor:pointer;font-family:'Manrope';line-height:1}
+.ctl button:first-child{background:transparent;border:2px solid var(--taupe);color:var(--ink)}
+.cnt{font-family:'JetBrains Mono',monospace;font-size:13px;min-width:64px;text-align:center}
+.ctl em{margin:0 0 0 6px}
+
+details{margin-top:20px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:14px 0}
+summary{cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--mute)}
+details p{font-size:16.5px;line-height:1.55;margin-top:14px}
+details p+p{margin-top:10px}
+
+.nums{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);margin-bottom:24px}
+.nums div{padding:22px 0}
+.nums div+div{border-left:1px solid var(--rule);padding-left:22px}
+.nums b{display:block;font-family:'Oswald',sans-serif;font-weight:300;font-size:clamp(32px,3.8vw,56px);line-height:1}
+.nums span{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--mute);display:block;margin-top:8px;letter-spacing:.04em;text-transform:uppercase}
+
+.ctaRow{display:inline-flex;align-items:center;gap:16px;margin-top:44px;text-decoration:none}
+.ctaRow span{font-family:'Oswald',sans-serif;font-weight:300;font-size:clamp(30px,3.4vw,46px);letter-spacing:.01em;text-transform:uppercase}
+.ctaRow i{width:52px;height:52px;border:2.5px solid var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-style:normal;font-weight:700;color:var(--red)}
+
+/* ——— финальный слайд ——— */
+.fin-head{display:grid;grid-template-columns:200px 1fr;gap:44px;align-items:center;margin-bottom:46px}
+.ava{width:200px;height:200px;border-radius:50%;overflow:hidden;background:#ddd}
+.ava img{width:100%;height:100%;object-fit:cover;display:block}
+.fin-head h2{font-family:'Manrope';font-weight:800;font-size:clamp(32px,4.4vw,64px);line-height:1.02;color:var(--taupe);margin:0;max-width:none;letter-spacing:-.02em}
+.fin{display:grid;grid-template-columns:repeat(3,1fr);gap:0 40px}
+.big2{font-family:'Source Serif 4',Georgia,serif;font-weight:400;font-size:clamp(21px,2.3vw,31px);line-height:1.32;max-width:23em;margin-top:44px}
+.big2 b{font-weight:900}
+.sign{margin-top:26px}
+footer{background:var(--paper);border-top:1px solid var(--rule);padding:30px 0;font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.7;color:var(--mute)}
+footer .cred{display:block;margin-top:10px;color:#9a9994}
+
+@media(max-width:980px){
+.wrap{padding:0 20px}
+.top{padding:20px}.top .pill:not(.cta){display:none}.kick{font-size:12px;letter-spacing:.1em}
+.hero{min-height:88vh}.hin{padding:0 20px 36px}
+h1{font-size:9.2vw;max-width:none}
+.hsub{text-align:left;margin-left:0;max-width:none;font-size:16px}
+.hnote{right:16px;top:-40px;font-size:34px}
+.hmeta{font-size:10.5px;gap:8px 18px}
+.ghostbg{opacity:.1;font-size:15px;padding:0 20px}
+section{padding:60px 0}
+.grid,.grid.two,.grid.wide,.bks,.fin{grid-template-columns:1fr;gap:26px}
+.vid,.story{width:min(100%,340px)}
+.week{grid-template-columns:1fr}.week span:last-child{border-left:0;padding-left:0;padding-top:0}.week span:first-child{padding-bottom:6px}
+.fin-head{grid-template-columns:1fr;gap:22px}.ava{width:132px;height:132px}
+.nums div+div{padding-left:14px}
+.figs .wrap{gap:20px 26px}
+.rw{grid-template-columns:64px 1fr;gap:10px}
+}
+</style></head><body>
+
+<header class="hero">
+<img src="img/hero.jpg" alt="Кадр из рилса Дмитрия Провоторова">
+<div class="top"><div class="kick">Прямой эфир<br>Андреев × Провоторов</div><div class="sp"></div><a class="pill" href="#reels">Рилсы</a><a class="pill" href="#content">Контент</a><a class="pill cta" href="#bots">Боты и кнопка</a></div>
+<div class="hin">
+<h1>Как я работаю<br>с агентом</h1>
+<p class="hsub"><span class="script hnote">Как?</span>Во сколько написал и во сколько получил результат. Без теории. Видео играют прямо здесь, карусели листаются целиком.</p>
+<div class="hmeta"><div>17 сентября 2026 · прямой эфир</div><div>три акта: рилсы, контент, боты</div><div>живые примеры с часами</div></div>
+</div>
+</header>
+
+<div class="figs"><div class="wrap">
+<div><b class="mark">97 117</b><span>охват карусели за два дня</span></div>
+<div><b>5 190</b><span>лайков</span></div>
+<div><b>49 269</b><span>просмотров рилса</span></div>
+<div><b>10:20 → 10:35</b><span>голосовое → карусель</span></div>
+</div></div>
+
+<section id="reels" class="paper">
+<div class="ghostbg" aria-hidden="true">Лучшая книга про мышление. Если бы меня спросили, это будет не Роберт Сапольски, профессор Стэнфордского университета, и не «Всё решено» или «Биология добра и зла». Это будет не Даниэль Канеман, нобелевский лауреат по экономике и психолог, с «Думай медленно… решай быстро», хотя на него в этой книге будет ссылка. Это будет совершенно другая книга, и вот почему. Эта книга о концепции антихрупкости — о событиях, которые пытаются нас разрушить, нанести нам травму, а таких событий сейчас вокруг хоть отбавляй, и о том, как, пройдя через это, стать лучше, стать менее хрупким, чем ты был до этого. Лучшая книга про мышление. Если бы меня спросили, это будет не Роберт Сапольски, профессор Стэнфордского университета, и не «Всё решено» или «Биология добра и зла». Это будет не Даниэль Канеман, нобелевский лауреат по экономике и психолог, с «Думай медленно… решай быстро», хотя на него в этой книге будет ссылка. Это будет совершенно другая книга, и вот почему.</div>
+<div class="wrap">
+<div class="lab"><div class="num">01</div><em>Акт 01 · рилсы</em></div>
+<h2>Рилс Димы разобран <i>до склеек</i> и собран заново</h2>
+<div class="week"><span>16 сентября</span><span>«Дима выпустил этот рилз, сравни с нашим: звук, монтаж, цвет, эффекты, длительность»</span></div>
+<div class="grid">
+<figure class="vid"><video controls playsinline preload="metadata" poster="../v/dima_orig.jpg" src="../v/dima_orig.mp4"></video><figcaption>оригинал Димы · «Антихрупкость»</figcaption></figure>
+<figure class="vid"><video controls playsinline preload="metadata" poster="../v/dima_ours.jpg" src="../v/dima_ours.mp4"></video><figcaption>наша сборка · версия 13</figcaption></figure>
+<div><div class="price">69 с · 7 склеек</div><div class="sub">тринадцать версий <b>за три дня</b> → «отлично, фиксирую как скилл»</div>
+<div class="rows"><div class="rw"><b>01</b><span>один статичный план, крупности сделаны кропом и работают как склейки</span></div><div class="rw"><b>02</b><span>субтитры печатаются по словам, с курсором</span></div><div class="rw"><b>03</b><span>врезки на имена: обложки книг и карточка «выступление на TED»</span></div><div class="rw"><b>04</b><span>цвет не тронут: у Димы цветокора нет</span></div></div>
+<div class="note">Теперь это рецепт, который собирает рилс из сырого дубля. Сегодня в эфире соберём по нему новый.</div></div>
+</div>
+
+<div class="week" style="margin-top:84px"><span>11 сентября</span><span>Рилс о том, как сделан пост: процесс сам становится контентом</span></div>
+<div class="grid two">
+<figure class="vid"><video controls playsinline preload="metadata" poster="../v/post13.jpg" src="../v/post13.mp4"></video><figcaption>«дизайнерский пост за 13 минут»</figcaption></figure>
+<div><div class="price">49 269 просмотров</div><div class="sub">столько собрал пост, <b>о котором</b> снят рилс</div>
+<div class="bks">
+<div class="bk"><div class="bn">01</div><h3>Сплит-экран</h3><div class="cap">сверху голова, снизу доказательства</div><p>График, обложки постов, шаги процесса. Зритель видит и человека, и экран.</p></div>
+<div class="bk"><div class="bn">02</div><h3>Без пауз</h3><div class="cap">паузы вырезаны, субтитры по словам</div><p>Монтаж по расшифровке: склейки попадают между фразами.</p></div>
+<div class="bk"><div class="bn">03</div><h3>Три хука</h3><div class="cap">один ролик → три начала</div><p>По три версии на хук уходят в пробные рилсы.</p></div>
+<div class="bk"><div class="bn">04</div><h3>Сутки спустя</h3><div class="cap">агент сам снимает цифры</div><p>Где пролистывают, какой хук держит. Следующий раунд по данным.</p></div>
+</div></div>
+</div>
+</div></section>
+
+<section id="content" class="cream">
+<div class="wrap">
+<div class="lab"><div class="num">02</div><em>Акт 02 · контент · сегодня утром</em></div>
+<h2>Карусель по <i>одному сообщению</i></h2>
+<div class="grid wide">
+<div class="car" id="c-hooks"><div class="track"><div class="cell"><img loading="lazy" src="../img/hooks_0.jpg" alt=""></div><div class="cell"><img loading="lazy" src="../img/hooks_1.jpg" alt=""></div><div class="cell"><img loading="lazy" src="../img/hooks_2.jpg" alt=""></div><div class="cell"><img loading="lazy" src="../img/hooks_3.jpg" alt=""></div><div class="cell"><img loading="lazy" src="../img/hooks_4.jpg" alt=""></div><div class="cell"><img loading="lazy" src="../img/hooks_5.jpg" alt=""></div><div class="cell"><img loading="lazy" src="../img/hooks_6.jpg" alt=""></div><div class="cell"><img loading="lazy" src="../img/hooks_7.jpg" alt=""></div></div><div class="ctl"><button data-d="-1" aria-label="назад">←</button><span class="cnt">1 / 8</span><button data-d="1" aria-label="вперёд">→</button><em>белл хукс · обложка + 7 цитат</em></div></div>
+<div><blockquote>«Берём 2, 3, 6, 7, 8, 9, 15. На обложку 5. Верстай»</blockquote>
+<div class="rows"><div class="rw"><b>9:34</b><span>«Хукс, цитаты» — 17 цитат со страницами книги</span></div><div class="rw"><b>9:41</b><span>выбрал номера</span></div><div class="rw ok"><b>9:43</b><span>8 слайдов готовы</span></div><div class="rw ok"><b>9:59</b><span>текст поста, факты сверены по источникам</span></div></div>
+<div class="note">Одну цитату агент снял сам: на 60-й странице это оказались слова Терренса Рила, а не автора. Скорость без проверки фактов не нужна.</div>
+<details><summary>Текст поста целиком →</summary><p>Ей четыре или пять лет. Отец разрешил брату достать жестянку с шариками, она захотела играть, брат сказал — девочки в шарики не играют. Она настояла. Отец отломал доску от сетчатой двери и бил её, приговаривая: «Ты всего лишь маленькая девочка. Когда я говорю тебе что-то сделать — делай».</p><p>Девочку звали Глория Джин Уоткинс. Родилась в 1952 году в Хопкинсвилле, Кентукки, четвёртая из семи детей, ходила в сегрегированные школы округа Кристиан.</p><p>Псевдоним белл хукс — имя её прабабки по матери, Белл Блэр Хукс. Она писала его строчными буквами, чтобы внимание шло на написанное, а не на автора. В девятнадцать, студенткой Стэнфорда, начала «Ain&#x27;t I a Woman»; книга вышла в 1981-м. Всего книг у неё больше тридцати.</p><p>В 2004-м вышла «The Will to Change» — книга о мужчинах. В предисловии она вспоминает: ребёнком лежала в детской кровати, ждала, когда в голосе отца появится злость, и думала: «Если бы он умер, мы могли бы жить».</p><p>В книге есть сцена парной терапии. Ей двадцать с чем-то, они ходят вдвоём с мужчиной, с которым она прожила больше десяти лет. Он объясняет: она просит его говорить о чувствах, а когда он говорит — она срывается. «Он был прав», — пишет она.</p><p>Незадолго до книги она позвонила домой. Отцу за восемьдесят, он сказал про неё и сестру: «Я вас обеих очень люблю». Она была поражена, хотела поговорить и не нашла слов: «Страх заставил меня замолчать». Взрослыми и она, и её братья с сёстрами всё ещё боялись спросить отца: «Почему, папа? Почему ты всегда был таким злым?»</p><p>В том же 2004-м она вернулась в Кентукки — профессором в Berea College. «Я хотела вернуть что-то миру, из которого вышла». Там, в Берии, она умерла 15 декабря 2021 года, в шестьдесят девять — почечная недостаточность, со слов сестры.</p><p>Семь цитат — в карусели.</p></details></div>
+</div>
+
+<h2 style="margin-top:96px">От голосового до <i>анимированной</i> карусели</h2>
+<div class="grid wide">
+<div class="car" id="c-sm"><div class="track"><div class="cell"><video muted loop playsinline preload="none" poster="../img/sm_0.jpg" data-src="../v/sm_0.mp4"></video></div><div class="cell"><video muted loop playsinline preload="none" poster="../img/sm_1.jpg" data-src="../v/sm_1.mp4"></video></div><div class="cell"><video muted loop playsinline preload="none" poster="../img/sm_2.jpg" data-src="../v/sm_2.mp4"></video></div><div class="cell"><video muted loop playsinline preload="none" poster="../img/sm_3.jpg" data-src="../v/sm_3.mp4"></video></div><div class="cell"><video muted loop playsinline preload="none" poster="../img/sm_4.jpg" data-src="../v/sm_4.mp4"></video></div><div class="cell"><video muted loop playsinline preload="none" poster="../img/sm_5.jpg" data-src="../v/sm_5.mp4"></video></div><div class="cell"><video muted loop playsinline preload="none" poster="../img/sm_6.jpg" data-src="../v/sm_6.mp4"></video></div><div class="cell"><video muted loop playsinline preload="none" poster="../img/sm_7.jpg" data-src="../v/sm_7.mp4"></video></div><div class="cell"><video muted loop playsinline preload="none" poster="../img/sm_8.jpg" data-src="../v/sm_8.mp4"></video></div><div class="cell"><video muted loop playsinline preload="none" poster="../img/sm_9.jpg" data-src="../v/sm_9.mp4"></video></div><div class="cell"><video muted loop playsinline preload="none" poster="../img/sm_10.jpg" data-src="../v/sm_10.mp4"></video></div></div><div class="ctl"><button data-d="-1" aria-label="назад">←</button><span class="cnt">1 / 11</span><button data-d="1" aria-label="вперёд">→</button><em>Смешарики · 11 анимированных слайдов</em></div></div>
+<div><div class="rows"><div class="rw"><b>10:10</b><span>голосом: «взрослые цитаты из Смешариков, 20 штук»</span></div><div class="rw ok"><b>10:13</b><span>двадцать цитат с героями и сериями</span></div><div class="rw"><b>10:20</b><span>«давай анимировано», выбрал девять</span></div><div class="rw ok"><b>10:35</b><span>10 видео-слайдов с героями</span></div><div class="rw ok"><b>10:37</b><span>текст поста</span></div><div class="rw ok"><b>10:50</b><span>финальный слайд с кадрами из серии</span></div></div>
+<div class="note">Герои — официальные, с сайта сериала. Сгенерированных картинок в постах нет: запрет с 21 августа.</div>
+<details><summary>Текст поста целиком →</summary><p>В феврале 2011 года «Афиша» публикует разговор Юрия Сапрыкина с Анатолием Прохоровым, художественным руководителем «Смешариков». Сапрыкин говорит: «Есть еще потрясающая серия „Смысл жизни“ — ремейк „Мертвеца“ Джармуша и одновременно „Легенды о Нараяме“. Я чуть со стула не упал, когда увидел». Серия идёт шесть с половиной минут. Основная аудитория сериала — дети пяти-семи лет.</p><p>Прохоров отвечает: «Мы долго думали, имеют ли право на существование такие серии, мы же понимаем, что это не для пятилетнего». У «Смешариков» есть документ из шести-семи пунктов, «сценарное евангелие». Первое правило в нём: «Истории должны быть интересны взрослому и понятны ребенку». Сценаристов пробовалось около восьмидесяти, реально работали «три с половиной человека».</p><p>Ведущий сценарист — Алексей Лебедев, на его счету больше трёхсот серий франшизы. Композитор сериала Сергей Васильев говорит о нём: «Это, по сути, человек, определивший интонацию всего сериала».</p><p>В серии «Мисс Вселенная» Нюша получает отказ с конкурса красоты: «Зачем вы меня обманывали? Какая я Мисс Вселенная, я пельмень на ножках». Прохоров: «Это может сказать только тридцатилетняя женщина, которая на что-то надеялась, и вдруг такой облом». Карыч, Совунья и Копатыч в сериале — старики.</p><p>«Смысл жизни» написал Лебедев, снял Джангир Сулейманов — стилистически как «Мертвец» Джармуша: изображение сменяется чёрным кадром, остаётся звук растекающейся гитары. У студии было семь сценариев под кодовым названием «Смертные грехи»; Сулейманов сделал серии про уныние и чревоугодие.</p><p>В 2023-м Сулейманов скажет: «Ее показывают даже на факультетах психологии и философии!» Некоторые зрители считают, что Бараш в этой серии умер.</p><p>Девять цитат — в карусели.</p></details></div>
+</div>
+
+<h2 style="margin-top:96px">Тот же конвейер, <i>рекорд</i> серии</h2>
+<div class="grid wide">
+<div class="car" id="c-cusk"><div class="track"><div class="cell"><img loading="lazy" src="../img/cusk_0.jpg" alt=""></div><div class="cell"><img loading="lazy" src="../img/cusk_1.jpg" alt=""></div><div class="cell"><img loading="lazy" src="../img/cusk_2.jpg" alt=""></div><div class="cell"><img loading="lazy" src="../img/cusk_3.jpg" alt=""></div><div class="cell"><img loading="lazy" src="../img/cusk_4.jpg" alt=""></div><div class="cell"><img loading="lazy" src="../img/cusk_5.jpg" alt=""></div><div class="cell"><img loading="lazy" src="../img/cusk_6.jpg" alt=""></div><div class="cell"><img loading="lazy" src="../img/cusk_7.jpg" alt=""></div><div class="cell"><img loading="lazy" src="../img/cusk_8.jpg" alt=""></div></div><div class="ctl"><button data-d="-1" aria-label="назад">←</button><span class="cnt">1 / 9</span><button data-d="1" aria-label="вперёд">→</button><em>Рейчел Каск · обложка + 8 цитат</em></div></div>
+<div><div class="nums"><div><b>97 117</b><span>охват за два дня</span></div><div><b>5 190</b><span>лайков</span></div><div><b>476</b><span>комментариев</span></div></div>
+<div class="rows"><div class="rw ok"><b>5.09</b><span>Рейчел Каск — рекорд серии</span></div><div class="rw"><b>31.08</b><span>Резерфорд, та же вёрстка — 7 873 охвата</span></div><div class="rw"><b>вывод</b><span>решает герой, а не дизайн</span></div></div>
+<div class="note">Агент нужен, чтобы быстро перебрать героев и цитаты из самих книг; выбор остаётся за автором. Сегодня утром я за пять минут отказался от двух героев и взял третьего.</div>
+<details><summary>Текст поста целиком →</summary><p>В 2001 году Рейчел Каск, к тому времени автор трёх романов и лауреат премии Whitbread, выпустила книгу о первом годе с ребёнком. Первая же рецензия: «Если бы все прочли эту книгу, человечество перестало бы размножаться». Дальше её обвиняли в ненависти к детям, в послеродовой депрессии, в жадности, в эгоизме и, чаще всего, в том, что она «слишком интеллектуальна». Читатели, как она потом написала, судили книгу не как читатели, а как матери.</p><p>Она родилась в 1967-м в Канаде, в семье английских католиков, выросла в Лос-Анджелесе, в одиннадцать её отправили в католический интернат в Кембридже. Оксфорд, первый роман в двадцать шесть. «A Life&#x27;s Work» она писала во время второй беременности; книга о том, что уход за ребёнком — занятие низкого статуса, а мать по определению не может одновременно быть собой.</p><p>Через десять лет она ушла от мужа, юриста, который бросил работу ради детей, и через год выпустила «Aftermath» — о разводе без роли жертвы. Sunday Times назвала её «хрупкой маленькой доминатрикс и непревзойдённой нарциссисткой»; эта рецензия получила британский приз «Худшая рецензия года». С родителями Каск не разговаривает с 2007-го. Потом была трилогия «Outline», два лонг-листа Букера и премия Goldsmiths 2024 года, а сама она стала одним из главных прозаиков английского языка.</p><p>Восемь цитат — в карусели, пять из книги о материнстве и три из книги о разводе. Оригинал оставил призрачным текстом на кадрах.</p></details></div>
+</div>
+</div></section>
+
+<section id="bots" class="paper">
+<div class="ghostbg" aria-hidden="true">Сегодня, в день, когда на счёт упало ··· ₽, семья помнит о тебе. Конверт лежит где обычно. Агент готовит сообщение от моего имени. Отправляю я, одним нажатием. Агент помнит, что я говорил и когда. И поправляет себя, когда путает план с фактом. Агент вытаскивает из записи, что человек обещал сделать, и в нужный день приносит готовое сообщение ему. Сегодня, в день, когда на счёт упало ··· ₽, семья помнит о тебе. Конверт лежит где обычно. Агент готовит сообщение от моего имени. Отправляю я, одним нажатием. Агент помнит, что я говорил и когда. И поправляет себя, когда путает план с фактом.</div>
+<div class="wrap">
+<div class="lab"><div class="num">03</div><em>Акт 03 · боты · сегодня утром</em></div>
+<h2>Рутина, которая делается <i>сама</i></h2>
+<div class="week"><span>10:49 → 10:53</span><span>«Сгенерируй сторис с Димой как героем „Бригады“. И надпись: Димон»</span></div>
+<div class="grid two">
+<figure class="story"><img src="../img/dimon.jpg" alt="Сторис «Димон»"></figure>
+<div class="bks">
+<div class="bk"><div class="bn">01</div><h3>Дон Андрео</h3><div class="cap">10:58 попросил → 11:01 ушло</div><p>Банк присылает платёж, агент пишет партнёру: «Сегодня, в день, когда на счёт упало ··· ₽, семья помнит о тебе. Конверт лежит где обычно».</p></div>
+<div class="bk"><div class="bn">02</div><h3>Вахта обещаний</h3><div class="cap">после каждого созвона</div><p>Агент вытаскивает из записи, что человек обещал сделать, и в нужный день приносит готовое сообщение ему.</p></div>
+<div class="bk"><div class="bn">03</div><h3>Кнопка «Отправить»</h3><div class="cap">без неё ничего не уходит</div><p>Агент готовит сообщение от моего имени. Отправляю я, одним нажатием. Этот блок про доверие, остальные про скорость.</p></div>
+<div class="bk"><div class="bn">04</div><h3>Память</h3><div class="cap">факты с датами</div><p>Агент помнит, что я говорил и когда. И поправляет себя, когда путает план с фактом.</p></div>
+</div>
+</div>
+<a class="ctaRow" href="#day"><span>Одно утро, 17 сентября</span><i>→</i></a>
+</div></section>
+
+<section id="day" class="cream"><div class="wrap">
+<div class="lab"><div class="num">04</div><em>Итог</em></div>
+<div class="fin-head"><div class="ava"><img src="img/ava.jpg" alt="Андрей Андреев"></div><h2>Одно утро, 17 сентября</h2></div>
+<div class="fin">
+<div class="rows"><div class="rw"><b>9:25</b><span>отказ от двух героев серии</span></div><div class="rw ok"><b>9:43</b><span>карусель белл хукс</span></div><div class="rw ok"><b>9:59</b><span>текст поста</span></div></div>
+<div class="rows"><div class="rw ok"><b>10:13</b><span>20 цитат Смешариков</span></div><div class="rw ok"><b>10:35</b><span>анимированная карусель</span></div><div class="rw ok"><b>10:53</b><span>сторис «Димон»</span></div></div>
+<div class="rows"><div class="rw ok"><b>11:01</b><span>дон Андрео ушёл партнёру</span></div><div class="rw"><b>13:37</b><span>старт разбора блога психолога</span></div><div class="rw ok"><b>14:53</b><span>разбор, сайт, лендинг, воронка</span></div></div>
+</div>
+<p class="big2">Агент не заменяет вкус. Он убирает расстояние между «придумал» и <b>«сделано»</b>. Что брать, что выбросить и когда нажать «Отправить», решаю я.</p>
+<p class="script sign" style="font-size:44px;color:var(--taupe)">Андрей Андреев</p>
+</div></section>
+
+<footer><div class="wrap">Рабочая страница к эфиру 17.09.2026 · время московское, по меткам сообщений · цифры постов из статистики Instagram · рилс «Антихрупкость» и кадр на обложке — Дмитрий Провоторов, @provotorov · <a href="../">версия 1</a> · <a href="../v2/">версия 2</a>
+<span class="cred">Свёрстано в дизайн-системе, снятой с аккаунта @provotorov за 12 сентября</span></div></footer>
+
+<script>
+document.querySelectorAll('.car').forEach(function(car){
+  var tr=car.querySelector('.track'),cells=[].slice.call(tr.children),cnt=car.querySelector('.cnt'),cur=0;
+  function act(i){cur=Math.max(0,Math.min(cells.length-1,i));cnt.textContent=(cur+1)+' / '+cells.length;
+    cells.forEach(function(c,k){var v=c.querySelector('video');if(!v)return;if(k===cur){if(!v.src)v.src=v.dataset.src;v.play().catch(function(){})}else{v.pause()}})}
+  car.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){var i=cur+parseInt(b.dataset.d,10);i=Math.max(0,Math.min(cells.length-1,i));tr.scrollTo({left:cells[i].offsetLeft-tr.offsetLeft,behavior:'smooth'});act(i)})});
+  var t;tr.addEventListener('scroll',function(){clearTimeout(t);t=setTimeout(function(){var w=cells[0].offsetWidth+14;act(Math.round(tr.scrollLeft/w))},120)});
+  new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)act(cur);else cells.forEach(function(c){var v=c.querySelector('video');if(v)v.pause()})})},{threshold:.4}).observe(car);
+});
+document.querySelectorAll('.vid video').forEach(function(v){v.addEventListener('play',function(){document.querySelectorAll('.vid video').forEach(function(o){if(o!==v)o.pause()})})});
+</script></body></html>
