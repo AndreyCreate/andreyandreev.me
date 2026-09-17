@@ -179,6 +179,7 @@ img{display:block;max-width:100%}
 .pcard .next{font:600 19px/1.2 var(--font-display);color:var(--orange-300);letter-spacing:-.01em;margin-top:12px}
 .pcard .cond{font:var(--text-body-md);color:var(--ink-300);margin:18px 0 28px}
 .pcard .cta{margin-top:0}
+.cta.eq{display:grid;grid-template-columns:1fr 1fr;gap:12px}.cta.eq .btn{width:100%;justify-content:center;text-align:center;box-sizing:border-box}
 .incl{background:#fff;border:1px solid var(--ink-200);border-radius:28px;padding:36px}
 .incl h3{font:var(--text-mono-sm);color:var(--ink-500);margin-bottom:18px}
 .incl ul{list-style:none;display:grid;gap:12px}
@@ -232,7 +233,7 @@ img{display:block;max-width:100%}
  .quote .mark{font-size:64px}
  .facts{grid-template-columns:1fr 1fr}
  .stage .play{font-size:13px;padding:12px 16px}
- .sticky span{display:none}.sticky .btn{width:100%}
+ .sticky{flex-direction:column;gap:8px;padding:10px 16px}.sticky span{display:block;text-align:center;font-size:11px;line-height:1.35}.sticky .btn{width:100%}.cta.eq{grid-template-columns:1fr}
  .pcard{padding:28px}.incl{padding:26px}
 }
 </style>
@@ -454,7 +455,7 @@ img{display:block;max-width:100%}
     <div class="old">165 000 ₽</div>
     <div class="next">цена с завтра — 79 990 ₽</div>
     <p class="cond">Специальная цена для участников эфира, действует сутки. Базовая цена — 165 000 ₽.<br><br>Забронировать место можно предоплатой 5 000 ₽ — напишите нам в телеграм.</p>
-    <div class="cta"><a class="btn" href="https://t.me/team_fokina" target="_blank" rel="noopener">Написать нам</a><a class="btn ghost" href="https://tadaa.createtoday.ru/hero/get/of_YmE8fLARaB6P" data-action="checkout">Оплатить участие</a></div>
+    <div class="cta eq"><a class="btn" href="https://tadaa.createtoday.ru/hero/get/of_YmE8fLARaB6P" data-action="checkout">Оплатить участие</a><a class="btn ghost" href="https://t.me/team_fokina" target="_blank" rel="noopener">Написать нам</a></div>
    </div>
    <div class="incl"><h3>что входит</h3><ul><li>3 общих зума с Андреем и разбором задач участников</li><li>видео-уроки и пошаговые инструкции по сборке обоих агентов</li><li>наши кастомные скилы по контенту и продажам</li><li>шаблоны базы знаний, воронок и лендингов</li><li>техподдержка в чате группы на всё время программы</li></ul></div>
   </div>
@@ -487,7 +488,7 @@ img{display:block;max-width:100%}
  </div>
 </footer>
 
-<div class="sticky"><span>старт 21 сентября · осталось 10 мест · <s>165 000 ₽</s> 69 990 ₽ для участников эфира · с завтра 79 990 ₽</span><a class="btn sm" href="https://t.me/team_fokina" target="_blank" rel="noopener">Написать нам</a></div>
+<div class="sticky"><span>старт 21&nbsp;сентября · осталось 10&nbsp;мест · <s>165&nbsp;000&nbsp;₽</s> 69&nbsp;990&nbsp;₽ для участников эфира · с завтра 79&nbsp;990&nbsp;₽</span><a class="btn sm" href="https://tadaa.createtoday.ru/hero/get/of_YmE8fLARaB6P" data-action="checkout">Оплатить участие</a></div>
 
 <div class="modal" id="modal"><div class="wrapx"><button class="x" id="modal-x" aria-label="Закрыть">✕</button><div class="box"><iframe id="modal-frame" src="" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" allowfullscreen></iframe></div></div></div>
 
