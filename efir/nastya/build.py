@@ -17,7 +17,8 @@ section:not(.dark) .bk{background:var(--grey)}section:not(.dark) .bk span{border
 .m0{right:auto;left:29vw;top:.45em}.nums.sm b{font-size:clamp(26px,2.6vw,40px)}.dark .nums span{color:#bbb}.dark .nums,.dark .nums div+div{border-color:#444}
 .bks.big .bk{min-height:0;padding:30px 28px 34px}.cv{width:100%;max-width:560px;aspect-ratio:560/760;border-radius:14px;background:#1b1b1b;display:block;margin-top:22px}.bks.big .bk h3{font-size:clamp(30px,3.2vw,44px);margin:12px 0 10px}.bks.big .bk .cap{font-size:13px}.bks.big .bk p{font-family:Inter,system-ui,sans-serif;font-size:19px;line-height:1.4}
 .flow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:28px;font-family:'JetBrains Mono',monospace;font-size:14px}.flow span{background:#2b2b2b;border-radius:99px;padding:12px 18px}.flow i{font-style:normal;color:#8cc4ff}
-@media(max-width:980px){.cases{grid-template-columns:1fr 1fr}.tbl div{grid-template-columns:1fr 90px 70px 70px;font-size:14px}}
+.rt{border-top:1px solid #444;columns:2;column-gap:40px;margin-top:26px}.rt div{display:grid;grid-template-columns:1fr 44px 1.15fr;gap:12px;padding:9px 0;border-bottom:1px solid #3a3a3a;font-size:15px;break-inside:avoid}.rt div b{font-family:'JetBrains Mono',monospace;font-weight:400;font-size:12.5px;color:#8cc4ff}.rt div em{font-style:normal;color:#ccc}.rt div.h span,.rt div.h b,.rt div.h em{font-family:'JetBrains Mono',monospace;font-size:11px;color:#888;text-transform:uppercase}.rt div.it em:after{content:' · из IT';color:#F0695F}
+@media(max-width:980px){.rt{columns:1}.cases{grid-template-columns:1fr 1fr}.tbl div{grid-template-columns:1fr 90px 70px 70px;font-size:14px}}
 """
 
 def video(src, label, poster=None):
@@ -37,6 +38,18 @@ def rows(items):
 def bk(n, title, cap, body):
     return (f'<div class="bk"><span class="c1"></span><span class="c2"></span><span class="c3"></span><span class="c4"></span>'
             f'<div class="bn">▢ {n}</div><h3>{title}</h3><div class="cap">{cap}</div>{body}</div>')
+
+ROSTER = [
+ ("1","Галина Фёдорова","трансперсональный психолог",0),("1","Наталья Мальцева","обучает коучей и психологов продажам",0),("1","Таня Меламори","ментор, сооснователь ProstoMeditation, ex-Google",1),("1","Виктория Индюкова","эксперт по травмам и отношениям",0),("1","Михаил Тесленко","финансовый консалтинг на маркетплейсах",0),("1","Настя Шадрина","психолог",0),("1","Нелли Чернова","обучение и индивидуальные консультации",0),("1","Татьяна Новикова","кофаундер документ-сервиса",1),
+ ("2","Инга Маккарти","блог о жизни и доброте",0),("2","Снежана Будько","PCC-коуч, mindfulness, дыхательные практики",0),("2","Виктория Шевчук","клуб по методу Фельденкрайза",0),("2","Виктория Лопатина","—",0),("2","Елена Губернаторова","коучинг денежного мышления",0),("2","Илья","AI-автоматизация контента",1),("2","Ольга Павленко","бизнес-коуч, «Деньги в голове»",0),("2","Ольга Фёдорова","психолог, расстановщик",0),("2","Ярослав Капустинский","ритриты, фотограф, предприниматель",0),
+ ("3","Екатерина Сёренсен","executive-коуч",0),("3","Женя Нечитайленко","маркетинг и деньги",0),("3","Олеся","нутрициолог, натуропат",0),("3","Софья Преображенская","психолог",0),
+ ("4","Ирина Пестова","эмбодимент-фасилитатор",0),("4","Ирина Сорокина","—",0),("4","Катя Кеннеди","—",0),("4","Мария","личный бренд, коучинг",0),("4","Элина Гелашвили","event-продюсер",0),("4","Юлия Морозова","карьерный ментор",0),
+ ("5","Анастасия Гречановская","ивент-бизнес, караоке-игры",0),("5","Даша Морозова","маркетолог, ex-Яндекс",0),("5","Ирина Решетова","туристическая компания",0),("5","Маша Адушкина","психолог, гештальт-терапевт",0),("5","Ольга Георгиевская","недвижимость в Дубае",0),("5","Таисия Крохмаль","клинический психолог",0),("5","Юлия Оздемир","биодинамика, мастер рэйки",0),
+ ("6","Екатерина Павлова","—",0),("6","Екатерина Рязанова","фотограф",0),("6","Лида","магазин тканей, 13 лет в бизнесе",0),
+]
+def roster_table():
+    rows_ = "".join(f'<div{" class=it" if it else ""}><span>{n}</span><b>П{p}</b><em>{w}</em></div>' for p,n,w,it in ROSTER)
+    return f'<div class="rt"><div class="h"><span>участница / участник</span><b>поток</b><em>чем занимается</em></div>{rows_}</div>'
 
 def agent_card(n, title, cap, text, vid):
     return (f'<div class="bk ag"><span class="c1"></span><span class="c2"></span><span class="c3"></span><span class="c4"></span>'
@@ -105,13 +118,16 @@ PAGE = f"""<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta name
 <p class="big2">Общее у всех больших каруселей: год, имя, профессия и конкретное событие в первой строке. Никаких «5 признаков». Для агента это не пожелание, а правило в базе знаний, поэтому он не сползает в «полезный контент».</p></div></section>
 
 <section id="people" class="dark"><div class="wrap"><div class="lab">Акт 04 · пятый поток · август</div><h2>Психолог, мастер рэйки, турфирма, маркетолог. <u>Ни одного технаря</u></h2>
-<div class="grid two">{video("../v/mbga5_reviews.mp4", "выпускной зум · 11 сентября · с согласия участниц")}<div><div class="price">4 человека, 3 недели</div><div class="sub">каждая собрала <b>своего агента</b>: сайт, бот, карусели, рилсы</div>
+<div class="grid two">{video("../v/mbga5_reviews.mp4", "выпускной зум · 11 сентября · с согласия участниц")}<div><div class="price">37 человек, 6 потоков</div><div class="sub">без технического бэкграунда — <b>34 из 37</b>; ниже четверо из пятого потока, полный список под ними</div>
 <div class="bks">
 <div class="q"><div class="who"><b>Юлия Оздемир</b>мастер рэйки, открывает школу для мастеров</div><p>«Каждый рубль отбивается в сто тысяч раз»</p><p>«Манус сделал мне сайт с онлайн-записью — клиенты просто визжат от восторга, как им удобно»</p></div>
 <div class="q"><div class="who"><b>Ирина Решетова</b>владелица туристической компании</div><p>«Агент подключился к Телеграму, собрал все мои голосовые и сделал полный клон голоса. Я в шоке»</p><p>«Пятьдесят пять чатов он с меня за сутки снял — в десять раз больше, чем до этого»</p></div>
 <div class="q"><div class="who"><b>Таисия Крохмаль</b>психолог, Вена</div><p>«С методологом, целой командой писали тексты, снимали рилсы — в итоге ноль клиентов»</p><p>За три недели: второй бот, сайт, к сайту подключены Google-отзывы клиентов</p></div>
 <div class="q"><div class="who"><b>Даша Морозова</b>маркетолог, десять лет в Яндексе</div><p>«Вспоминаю, когда появился интернет, компьютер, потом ютуб — вот примерно то же самое»</p><p>«Даже на клиентские проекты сейчас собираю. Это гениально»</p></div></div></div></div>
 
+<h2 style="margin-top:96px">Кто прошёл программы: <u>потоки 1–5</u> и набор шестого</h2>
+<p class="big2" style="margin-top:0">Психологи, коучи, нутрициолог, фотограф, турфирма, магазин тканей, недвижимость. Из IT — трое из тридцати семи. Остальные до программы не открывали ни терминал, ни Claude Code.</p>
+{roster_table()}
 <div class="week" style="margin-top:80px"><span>Даша</span><span>До программы — 5 постов за 7,5 месяца. После — 14 публикаций за 23 дня, и карусели по новостям день в день</span></div>
 <div class="grid wide" style="margin-top:26px">{dasha}<div>{nums([("1 ч 10 мин", "карусель по кампании PUMA день в день: ресёрч 5 мин, сборка 30, правки 25"), ("35 мин", "фоновой работы агента — рилс Hermès, 130 лайков"), ("47–60 %", "охвата рилсов — неподписчики, у каруселей 15–26 %")], "sm")}
 <blockquote>«Я бы вовсе не полезла делать карусель по свежей новости день в день, потому что руками собирать совсем не секси»</blockquote>
