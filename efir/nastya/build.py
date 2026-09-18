@@ -19,6 +19,7 @@ section:not(.dark) .bk{background:var(--grey)}section:not(.dark) .bk span{border
 .flow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:28px;font-family:'JetBrains Mono',monospace;font-size:14px}.flow span{background:#2b2b2b;border-radius:99px;padding:12px 18px}.flow i{font-style:normal;color:#8cc4ff}
 .rt{border-top:1px solid #444;columns:2;column-gap:40px;margin-top:26px}.rt div{display:grid;grid-template-columns:1fr 44px 1.15fr;gap:12px;padding:9px 0;border-bottom:1px solid #3a3a3a;font-size:15px;break-inside:avoid}.rt div b{font-family:'JetBrains Mono',monospace;font-weight:400;font-size:12.5px;color:#8cc4ff}.rt div em{font-style:normal;color:#ccc}.rt div.h span,.rt div.h b,.rt div.h em{font-family:'JetBrains Mono',monospace;font-size:11px;color:#888;text-transform:uppercase}.rt div.it em:after{content:' · из IT';color:#F0695F}
 .prog{display:grid;grid-template-columns:1.35fr 1fr;gap:40px;margin-top:34px;align-items:start}.pb{border-top:2px solid var(--ink);padding-top:18px}.pb .bn{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--bl);text-transform:uppercase;letter-spacing:.03em}.pb h3{font-size:clamp(30px,3.2vw,44px);font-weight:400;letter-spacing:-.03em;margin:10px 0 6px}.pb .cap{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--mut);margin-bottom:14px}.ls div{display:grid;grid-template-columns:40px 1fr;gap:10px;padding:11px 0;border-bottom:1px solid var(--line);font-size:16.5px;line-height:1.35;align-items:baseline}.ls div b{font-family:'JetBrains Mono',monospace;font-weight:400;font-size:13px;color:var(--bl)}.ls div.x{color:var(--mut)}.ls div.x b{color:var(--mut)}
+.ig{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--bl);text-decoration:none;border:1px solid currentColor;border-radius:99px;padding:7px 14px;margin:12px 8px 0 0;white-space:nowrap}.ig:hover{background:var(--bl);color:#fff}.dark .ig{color:#8cc4ff}.dark .ig:hover{background:#8cc4ff;color:#111}.ig+blockquote,.ig+.rows{margin-top:24px}.tbl div span a{color:inherit;text-decoration:underline;text-decoration-color:var(--bl);text-underline-offset:4px}.nums span a,figcaption a{color:var(--bl)}.dark .nums span a{color:#8cc4ff}
 @media(max-width:980px){.prog{grid-template-columns:1fr;gap:48px}}
 @media(max-width:980px){.rt{columns:1}.cases{grid-template-columns:1fr 1fr}.tbl div{grid-template-columns:1fr 90px 70px 70px;font-size:14px}}
 """
@@ -69,6 +70,9 @@ def lessons(n, title, cap, items, extra=None):
     if extra: body += f'<div class="x"><b>+</b><span>{extra}</span></div>'
     return f'<div class="pb"><div class="bn">▢ {n}</div><h3>{title}</h3><div class="cap">{cap}</div><div class="ls">{body}</div></div>'
 
+def ig(code, label="открыть в Instagram", kind="p"):
+    return f'<a class="ig" href="https://www.instagram.com/{kind}/{code}/" target="_blank" rel="noopener">{label} ↗</a>'
+
 cusk = carousel("c-cusk", [f"../img/cusk_{i}.jpg" for i in range(9)], "Рейчел Каск · обложка + 8 цитат · 5 сентября")
 dasha = carousel("c-dasha", [f"../img/dasha_puma_0{i}.jpg" for i in (1, 2, 3, 4, 7, 8)] + [f"../img/dasha_fomo_0{i}.jpg" for i in range(1, 8)],
                  "Даша Морозова · PUMA (3 сентября) и «ФОМО возможностей» (7 сентября)")
@@ -77,7 +81,7 @@ PAGE = f"""<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta name
 <meta name="robots" content="noindex,nofollow"><title>AI-маркетолог изнутри — эфир 18.09</title><link rel="icon" href="/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>{CSS}</style></head><body>
-<div class="wrap"><div class="top"><div class="me"><i></i><span>Прямой эфир<br>Андреев × Фокина</span></div><div class="sp"></div><a class="pill" href="#inside">Внутри ➤</a><a class="pill" href="#reels">Рилсы ➤</a><a class="pill" href="#carousels">Карусели ➤</a><a class="pill" href="#people">Участницы ➤</a><a class="pill cta" href="#program">Программа</a></div>
+<div class="wrap"><div class="top"><div class="me"><i></i><span>Прямой эфир<br>Андреев × Фокина</span></div><div class="sp"></div><a class="pill" href="#inside">Внутри ➤</a><a class="pill" href="#carousels">Посты и карусели ➤</a><a class="pill" href="#reels">Рилсы и монтаж ➤</a><a class="pill" href="#people">Участницы ➤</a><a class="pill cta" href="#program">Программа</a></div>
 <div class="hero"><div class="hgrid"><div><h1>hey, <u>маркетолог!</u><span class="m m0">+4 838<br>за 30 дней</span></h1></div>
 <div class="meta"><div><b>когда</b><span>18 сентября 2026, 12:00 МСК<br>/ прямой эфир</span></div><div><b>формат</b><span>что внутри, два кейса с цифрами,<br>участницы и живое демо</span></div></div></div>
 <div class="fl"><div class="pc a"><img src="../img/cusk_0.jpg" alt=""></div><div class="pc b"><img src="../img/dasha_puma_01.jpg" alt=""></div><span class="m m1">охват 140 694</span>
@@ -89,28 +93,8 @@ PAGE = f"""<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta name
 {agent_card("Агент 02", "Продающий", "офферы · воронки · лендинги", "Знает продукты, цены и аудиторию. Пишет прогревы, собирает воронку и лендинг.", "../v/chat_kobi.mp4")}</div>
 <div class="flow"><span>голосовое в Телеграме</span><i>→</i><span>агент работает на сервере</span><i>→</i><span>пост, рилс, воронка, лендинг</span></div></div></section>
 
-<section id="reels"><div class="wrap"><div class="lab">Акт 02 · рилсы</div><h2>Рилс за 13 минут, <u>монтаж без монтажёра</u></h2>
-<div class="week"><span>11 сентября</span><span>«Сними, как сделан этот пост» — процесс сам стал контентом</span></div>
-<div class="grid two" style="margin-top:26px">{video("../v/post13.mp4", "«дизайнерский пост за 13 минут»")}<div><div class="price">49 269 просмотров</div><div class="sub">столько собрал пост, <b>о котором</b> снят рилс</div>
-<div class="bks">{bk("Приём 01", "Сплит-экран", "сверху голова, снизу доказательства", "<p>График, обложки постов, шаги процесса. Зритель видит и человека, и экран.</p>")}
-{bk("Приём 02", "Без пауз", "паузы вырезаны, субтитры по словам", "<p>Монтаж по расшифровке: склейки попадают между фразами.</p>")}
-{bk("Приём 03", "Три хука", "один ролик → девять версий", "<p>По три версии на хук уходят в пробные рилсы. Через сутки агент сам снимает цифры: какой хук держит.</p>")}
-{bk("Приём 04", "Речь 1,2×", "правило с 13 сентября", "<p>Все рилсы ускорены. Субтитры печатаются по словам, с курсором.</p>")}</div></div></div>
-
-<div class="week" style="margin-top:80px"><span>16 сентября</span><span>Рилс клиента разобран до склеек и собран заново по его рецепту</span></div>
-<div class="grid" style="margin-top:26px">{video("../v/dima_orig.mp4", "оригинал · Дмитрий Провоторов, «Антихрупкость»")}{video("../v/dima_ours.mp4", "наша сборка · версия 13")}
-<div><div class="price">69 с · 7 склеек</div><div class="sub">тринадцать версий <b>за три дня</b> → «отлично, фиксирую как скилл»</div>
-{rows([("01", "один статичный план, крупности сделаны кропом и работают как склейки", ""), ("02", "субтитры печатаются по словам, с курсором", ""), ("03", "врезки на имена: обложки книг и карточка «выступление на TED»", ""), ("04", "теперь это рецепт: сырой дубль на входе, готовый рилс на выходе", "ok")])}
-<div class="note">Так выглядит «монтаж без монтажёра»: агент один раз выучил стиль, дальше каждый рилс собирается по правилу, а не с нуля.</div></div></div>
-
-<div class="week" style="margin-top:80px"><span>14 сентября</span><span>«Вырежи моменты, где только я прыгаю сальто: чёрная футболка, бледно-зелёные шорты»</span></div>
-<div class="grid two" style="margin-top:26px">{video("../v/salto.mp4", "гимнастика · 14 сальто за 59 секунд")}<div><div class="price">16 минут → 59 секунд</div><div class="sub">одно видео из зала, <b>1,6 ГБ</b>. Агент сам нашёл все прыжки и оставил только мои</div>
-{rows([("01", "прошёл всё видео по движению в кадре: 80 подозрительных моментов", ""), ("02", "посмотрел каждый глазами, оставил 14 сальто", ""), ("03", "узнал меня по футболке и татуировке, чужие прыжки выкинул", ""), ("04", "склеил ролик, отдал файлом в Телеграм", "ok")])}
-{nums([("70", "рилсов за 55 дней: 13 в ленте + 57 пробных"), ("39 061", "просмотр — лучший рилс в ленте, 10 августа"), ("47–60 %", "неподписчиков — у рилсов Даши Морозовой (ниже)")])}
-<div class="note">Честно про трафик: медиана охвата рилса в ленте у меня — 5 673, и это на уровне карусели. Рилсы дают холодную аудиторию и конвейер, а мотор охвата и подписок — карусели. Поэтому следующий акт про них.</div></div></div></div></section>
-
-<section id="carousels"><div class="wrap"><div class="lab">Акт 03 · виральные карусели</div><h2>Карусель по одному сообщению, <u>140 тысяч охвата</u></h2>
-<div class="grid wide">{cusk}<div><div class="price">140 694 охвата</div><div class="sub">2 068 сохранений · 1 298 репостов · <b>479 комментариев</b></div>
+<section id="carousels"><div class="wrap"><div class="lab">Акт 02 · кейсы · посты и карусели</div><h2>Карусель по одному сообщению, <u>140 тысяч охвата</u></h2>
+<div class="grid wide">{cusk}<div><div class="price">140 694 охвата</div><div class="sub">2 068 сохранений · 1 298 репостов · <b>479 комментариев</b></div>{ig("Dc5RMknEQLP", "карусель Каск в Instagram")}{ig("DdYRr7cEU1z", "белл хукс, 17 сентября")}
 <blockquote>«Берём 2, 3, 6, 7, 8, 9, 15. На обложку 5. Верстай»</blockquote>
 {rows([("9:34", "«цитаты» — агент приносит 17 цитат со страницами книги", ""), ("9:41", "я выбираю номера", ""), ("9:43", "8 слайдов готовы в моей дизайн-системе", "ok"), ("9:59", "текст поста, факты сверены по источникам", "ok")])}
 <div class="note">Так собиралась вчерашняя карусель по белл хукс: 25 минут от первого сообщения до текста поста. Одну цитату агент снял сам: на 60-й странице это оказались слова другого автора. Скорость без проверки фактов не нужна.</div></div></div>
@@ -118,13 +102,38 @@ PAGE = f"""<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta name
 <h2 style="margin-top:96px">Что это даёт <u>в цифрах</u></h2>
 {nums([("20", "цитатных каруселей за 55 дней: медиана охвата 22 998, сохранений 334"), ("166 002", "охвата у продающей карусели 22 августа, 1 437 комментариев"), ("+549", "подписчиков за день после неё; обычный день даёт 85–190")])}
 <div class="tbl"><div class="h"><span>карусель</span><b>охват</b><b>сохр.</b><b>репосты</b></div>
-<div><span>22.08 · Шестой поток: собираем двух AI-агентов</span><b>166 002</b><b>4 539</b><b>1 636</b></div>
-<div><span>05.09 · Рейчел Каск</span><b>140 694</b><b>2 068</b><b>1 298</b></div>
-<div><span>03.09 · Письмо в 2011 год</span><b>121 551</b><b>2 611</b><b>1 317</b></div>
-<div><span>25.08 · Эндрю Соломон, докторантура</span><b>101 838</b><b>2 281</b><b>1 339</b></div>
-<div><span>26.08 · Анонс воркшопа по AI с Настей</span><b>77 593</b><b>1 582</b><b>2 162</b></div>
-<div><span>27.08 · тот же анонс, без карусельной истории</span><b>10 055</b><b>—</b><b>1 953</b></div></div>
+<div><span><a href="https://www.instagram.com/p/DcWngewETa3/" target="_blank" rel="noopener">22.08 · Шестой поток: собираем двух AI-агентов ↗</a></span><b>166 002</b><b>4 539</b><b>1 636</b></div>
+<div><span><a href="https://www.instagram.com/p/Dc5RMknEQLP/" target="_blank" rel="noopener">05.09 · Рейчел Каск ↗</a></span><b>140 694</b><b>2 068</b><b>1 298</b></div>
+<div><span><a href="https://www.instagram.com/p/Dc0JVFZjFea/" target="_blank" rel="noopener">03.09 · Письмо в 2011 год ↗</a></span><b>121 551</b><b>2 611</b><b>1 317</b></div>
+<div><span><a href="https://www.instagram.com/p/DcdrF_cjIKu/" target="_blank" rel="noopener">25.08 · Эндрю Соломон, докторантура ↗</a></span><b>101 838</b><b>2 281</b><b>1 339</b></div>
+<div><span><a href="https://www.instagram.com/p/DcfhPGekVQv/" target="_blank" rel="noopener">26.08 · Анонс воркшопа по AI с Настей ↗</a></span><b>77 593</b><b>1 582</b><b>2 162</b></div>
+<div><span><a href="https://www.instagram.com/p/DcdjR3ADC8h/" target="_blank" rel="noopener">25.08 · тот же анонс, без карусельной истории ↗</a></span><b>10 055</b><b>—</b><b>1 953</b></div></div>
 <p class="big2">Общее у всех больших каруселей: год, имя, профессия и конкретное событие в первой строке. Никаких «5 признаков». Для агента это не пожелание, а правило в базе знаний, поэтому он не сползает в «полезный контент».</p></div></section>
+
+<section id="reels"><div class="wrap"><div class="lab">Акт 03 · кейсы · рилсы и монтаж</div><h2>Рилс за 13 минут, <u>монтаж без монтажёра</u></h2>
+<div class="week"><span>11 сентября</span><span>«Сними, как сделан этот пост» — процесс сам стал контентом</span></div>
+<div class="grid two" style="margin-top:26px">{video("../v/post13.mp4", "«дизайнерский пост за 13 минут»")}<div><div class="price">49 269 просмотров</div><div class="sub">столько собрал пост, <b>о котором</b> снят рилс</div>{ig("DcWx7UCETp7", "тот самый пост в Instagram")}
+<div class="bks">{bk("Приём 01", "Сплит-экран", "сверху голова, снизу доказательства", "<p>График, обложки постов, шаги процесса. Зритель видит и человека, и экран.</p>")}
+{bk("Приём 02", "Без пауз", "паузы вырезаны, субтитры по словам", "<p>Монтаж по расшифровке: склейки попадают между фразами.</p>")}
+{bk("Приём 03", "Три хука", "один ролик → девять версий", "<p>По три версии на хук уходят в пробные рилсы. Через сутки агент сам снимает цифры: какой хук держит.</p>")}
+{bk("Приём 04", "Речь 1,2×", "правило с 13 сентября", "<p>Все рилсы ускорены. Субтитры печатаются по словам, с курсором.</p>")}</div></div></div>
+
+<div class="week" style="margin-top:80px"><span>20 августа</span><span>«Сделай из последнего поста рилс» — одно сообщение, карусель про сериалы стала рилсом</span></div>
+<div class="grid two" style="margin-top:26px">{video("../v/serialy.mp4", "«сериалы, к которым стоит присмотреться» · 37 секунд")}<div><div class="price">33 422 просмотра</div><div class="sub">1 138 сохранений · 468 репостов · <b>пролистывают 33 %</b></div>{ig("DcRaBI9xUuJ", "рилс в Instagram", "reel")}
+{rows([("19:16", "сообщение агенту: «сделай из последнего поста рилс»", ""), ("—", "агент сам нарезал фрагменты трейлеров и сверстал плашки в моей дизайн-системе", ""), ("—", "звук исходников выровнен по громкости, склейки по 0,2 секунды, финал в тишине", ""), ("19:50", "готовое видео в Телеграме. Монтажную программу я не открывал", "ok")])}
+<div class="note">Сохраняют как шпаргалку: одно сохранение на каждые 29 просмотров. Средний просмотр — 11,8 секунды.</div></div></div>
+
+<div class="week" style="margin-top:80px"><span>16 сентября</span><span>Рилс клиента разобран до склеек и собран заново по его рецепту</span></div>
+<div class="grid" style="margin-top:26px">{video("../v/dima_orig.mp4", "оригинал · Дмитрий Провоторов, «Антихрупкость» · <a href=\"https://www.instagram.com/reel/DdUFrEbCaa3/\" target=\"_blank\" rel=\"noopener\">в Instagram ↗</a>")}{video("../v/dima_ours.mp4", "наша сборка · версия 13")}
+<div><div class="price">69 с · 7 склеек</div><div class="sub">тринадцать версий <b>за три дня</b> → «отлично, фиксирую как скилл»</div>
+{rows([("01", "один статичный план, крупности сделаны кропом и работают как склейки", ""), ("02", "субтитры печатаются по словам, с курсором", ""), ("03", "врезки на имена: обложки книг и карточка «выступление на TED»", ""), ("04", "теперь это рецепт: сырой дубль на входе, готовый рилс на выходе", "ok")])}
+<div class="note">Так выглядит «монтаж без монтажёра»: агент один раз выучил стиль, дальше каждый рилс собирается по правилу, а не с нуля.</div></div></div>
+
+<div class="week" style="margin-top:80px"><span>14 сентября</span><span>«Вырежи моменты, где только я прыгаю сальто: чёрная футболка, бледно-зелёные шорты»</span></div>
+<div class="grid two" style="margin-top:26px">{video("../v/salto.mp4", "гимнастика · 14 сальто за 59 секунд")}<div><div class="price">16 минут → 59 секунд</div><div class="sub">одно видео из зала, <b>1,6 ГБ</b>. Агент сам нашёл все прыжки и оставил только мои</div>
+{rows([("01", "прошёл всё видео по движению в кадре: 80 подозрительных моментов", ""), ("02", "посмотрел каждый глазами, оставил 14 сальто", ""), ("03", "узнал меня по футболке и татуировке, чужие прыжки выкинул", ""), ("04", "склеил ролик, отдал файлом в Телеграм", "ok")])}
+{nums([("70", "рилсов за 55 дней: 13 в ленте + 57 пробных"), ("39 061", "просмотр — <a href=\"https://www.instagram.com/reel/Db21dJ2sNUa/\" target=\"_blank\" rel=\"noopener\">лучший рилс в ленте ↗</a>, 10 августа"), ("47–60 %", "неподписчиков — у рилсов Даши Морозовой (ниже)")])}
+<div class="note">Честно про трафик: медиана охвата рилса в ленте у меня — 5 673, и это на уровне карусели. Рилсы дают холодную аудиторию и конвейер, а мотор охвата и подписок — карусели из предыдущего акта.</div></div></div></div></section>
 
 <section id="people" class="dark"><div class="wrap"><div class="lab">Акт 04 · пятый поток · август</div><h2>Психолог, мастер рэйки, турфирма, маркетолог. <u>Ни одного технаря</u></h2>
 <div class="grid two">{video("../v/mbga5_reviews.mp4", "выпускной зум · 11 сентября · с согласия участниц")}<div><div class="price">37 человек, 6 потоков</div><div class="sub">без технического бэкграунда — <b>34 из 37</b>; ниже четверо из пятого потока, полный список под ними</div>
@@ -138,7 +147,7 @@ PAGE = f"""<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta name
 <p class="big2" style="margin-top:0">Психологи, коучи, нутрициолог, фотограф, турфирма, магазин тканей, недвижимость. Из IT — трое из тридцати семи. Остальные до программы не открывали ни терминал, ни Claude Code.</p>
 {roster_table()}
 <div class="week" style="margin-top:80px"><span>Даша</span><span>До программы — 5 постов за 7,5 месяца. После — 14 публикаций за 23 дня, и карусели по новостям день в день</span></div>
-<div class="grid wide" style="margin-top:26px">{dasha}<div>{nums([("1 ч 10 мин", "карусель по кампании PUMA день в день: ресёрч 5 мин, сборка 30, правки 25"), ("35 мин", "фоновой работы агента — рилс Hermès, 130 лайков"), ("47–60 %", "охвата рилсов — неподписчики, у каруселей 15–26 %")], "sm")}
+<div class="grid wide" style="margin-top:26px"><div>{dasha}<div>{ig("Dc1So_1jJ8Q", "PUMA")}{ig("Dc-tkTkjJm1", "ФОМО")}{ig("DdRuN_CsT5w", "рилс Hermès", "reel")}</div></div><div>{nums([("1 ч 10 мин", "карусель по кампании PUMA день в день: ресёрч 5 мин, сборка 30, правки 25"), ("35 мин", "фоновой работы агента — рилс Hermès, 130 лайков"), ("47–60 %", "охвата рилсов — неподписчики, у каруселей 15–26 %")], "sm")}
 <blockquote>«Я бы вовсе не полезла делать карусель по свежей новости день в день, потому что руками собирать совсем не секси»</blockquote>
 <div class="note">Комментарий подписчицы под третьим рилсом: «классные рилсы, только на половине заметила, что это ИИ-аватар». Это она сама, с ускорением 1,2×.</div></div></div>
 
