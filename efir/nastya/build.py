@@ -51,7 +51,7 @@ ROSTER = [
  ("6","Екатерина Павлова","—",0),("6","Екатерина Рязанова","фотограф",0),("6","Лида","магазин тканей, 13 лет в бизнесе",0),
 ]
 def roster_table():
-    rows_ = "".join(f'<div{" class=it" if it else ""}><span>{n}</span><b>П{p}</b><em>{w}</em></div>' for p,n,w,it in ROSTER)
+    rows_ = "".join(f'<div{" class=it" if it else ""}><span>{n.split()[0]}</span><b>П{p}</b><em>{w}</em></div>' for p,n,w,it in ROSTER)
     return f'<div class="rt"><div class="h"><span>участница / участник</span><b>поток</b><em>чем занимается</em></div>{rows_}</div>'
 
 def agent_card(n, title, cap, text, vid):
