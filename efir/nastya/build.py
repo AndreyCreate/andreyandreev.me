@@ -19,7 +19,7 @@ section:not(.dark) .bk{background:var(--grey)}section:not(.dark) .bk span{border
 .flow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:28px;font-family:'JetBrains Mono',monospace;font-size:14px}.flow span{background:#2b2b2b;border-radius:99px;padding:12px 18px}.flow i{font-style:normal;color:#8cc4ff}
 .rt{border-top:1px solid #444;columns:2;column-gap:40px;margin-top:26px}.rt div{display:grid;grid-template-columns:1fr 44px 1.15fr;gap:12px;padding:9px 0;border-bottom:1px solid #3a3a3a;font-size:15px;break-inside:avoid}.rt div b{font-family:'JetBrains Mono',monospace;font-weight:400;font-size:12.5px;color:#8cc4ff}.rt div em{font-style:normal;color:#ccc}.rt div.h span,.rt div.h b,.rt div.h em{font-family:'JetBrains Mono',monospace;font-size:11px;color:#888;text-transform:uppercase}.rt div.it em:after{content:' · из IT';color:#F0695F}
 .prog{display:grid;grid-template-columns:1.35fr 1fr;gap:40px;margin-top:34px;align-items:start}.pb{border-top:2px solid var(--ink);padding-top:18px}.pb .bn{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--bl);text-transform:uppercase;letter-spacing:.03em}.pb h3{font-size:clamp(30px,3.2vw,44px);font-weight:400;letter-spacing:-.03em;margin:10px 0 6px}.pb .cap{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--mut);margin-bottom:14px}.ls div{display:grid;grid-template-columns:40px 1fr;gap:10px;padding:11px 0;border-bottom:1px solid var(--line);font-size:16.5px;line-height:1.35;align-items:baseline}.ls div b{font-family:'JetBrains Mono',monospace;font-weight:400;font-size:13px;color:var(--bl)}.ls div.x{color:var(--mut)}.ls div.x b{color:var(--mut)}
-.ig{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--bl);text-decoration:none;border:1px solid currentColor;border-radius:99px;padding:7px 14px;margin:12px 8px 0 0;white-space:nowrap}.ig:hover{background:var(--bl);color:#fff}.dark .ig{color:#8cc4ff}.dark .ig:hover{background:#8cc4ff;color:#111}.ig+blockquote,.ig+.rows{margin-top:24px}.tbl div span a{color:inherit;text-decoration:underline;text-decoration-color:var(--bl);text-underline-offset:4px}.nums span a,figcaption a{color:var(--bl)}.dark .nums span a{color:#8cc4ff}
+.ig{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--bl);text-decoration:none;border:1px solid currentColor;border-radius:99px;padding:7px 14px;margin:12px 8px 0 0;white-space:nowrap}.ig:hover{background:var(--bl);color:#fff}.dark .ig{color:#8cc4ff}.dark .ig:hover{background:#8cc4ff;color:#111}.ig+blockquote,.ig+.rows,.ig+.nums{margin-top:24px}.tbl div span a{color:inherit;text-decoration:underline;text-decoration-color:var(--bl);text-underline-offset:4px}.nums span a,figcaption a{color:var(--bl)}.dark .nums span a{color:#8cc4ff}
 @media(max-width:980px){.prog{grid-template-columns:1fr;gap:48px}}
 @media(max-width:980px){.rt{columns:1}.cases{grid-template-columns:1fr 1fr}.tbl div{grid-template-columns:1fr 90px 70px 70px;font-size:14px}}
 """
@@ -74,6 +74,7 @@ def ig(code, label="открыть в Instagram", kind="p"):
     return f'<a class="ig" href="https://www.instagram.com/{kind}/{code}/" target="_blank" rel="noopener">{label} ↗</a>'
 
 cusk = carousel("c-cusk", [f"../img/cusk_{i}.jpg" for i in range(9)], "Рейчел Каск · обложка + 8 цитат · 5 сентября")
+books = carousel("c-books", [f"../img/hooks_{i}.jpg" for i in range(10)], "«Книги, после которых ваши посты читают» · 10 слайдов · 9 августа")
 dasha = carousel("c-dasha", [f"../img/dasha_puma_0{i}.jpg" for i in (1, 2, 3, 4, 7, 8)] + [f"../img/dasha_fomo_0{i}.jpg" for i in range(1, 8)],
                  "Даша Морозова · PUMA (3 сентября) и «ФОМО возможностей» (7 сентября)")
 
@@ -98,6 +99,11 @@ PAGE = f"""<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta name
 <blockquote>«Берём 2, 3, 6, 7, 8, 9, 15. На обложку 5. Верстай»</blockquote>
 {rows([("9:34", "«цитаты» — агент приносит 17 цитат со страницами книги", ""), ("9:41", "я выбираю номера", ""), ("9:43", "8 слайдов готовы в моей дизайн-системе", "ok"), ("9:59", "текст поста, факты сверены по источникам", "ok")])}
 <div class="note">Так собиралась вчерашняя карусель по белл хукс: 25 минут от первого сообщения до текста поста. Одну цитату агент снял сам: на 60-й странице это оказались слова другого автора. Скорость без проверки фактов не нужна.</div></div></div>
+
+<div class="week" style="margin-top:80px"><span>9 августа</span><span>Восемь писателей, восемь навыков для постов. Подписался каждый второй, кто зашёл в профиль</span></div>
+<div class="grid wide" style="margin-top:26px">{books}<div><div class="price">181 подписка из 351</div><div class="sub">столько людей зашли в профиль с этого поста, <b>подписались 52 %</b></div>{ig("DbzxYs3jKi6", "пост в Instagram")}
+{nums([("36 478", "просмотров, охват 18 308"), ("1 174", "сохранения: одно на 16 человек охвата"), ("224", "репоста, 737 лайков")], "sm")}
+<div class="note">Пост собран голосовыми сообщениями: агент предложил структуру, сам нашёл примеры из книг и сверстал слайды по референсу. Из него выросла трилогия «книги, фильмы, сериалы», а рилс про сериалы из следующего акта — её продолжение.</div></div></div>
 
 <h2 style="margin-top:96px">Что это даёт <u>в цифрах</u></h2>
 {nums([("20", "цитатных каруселей за 55 дней: медиана охвата 22 998, сохранений 334"), ("166 002", "охвата у продающей карусели 22 августа, 1 437 комментариев"), ("+549", "подписчиков за день после неё; обычный день даёт 85–190")])}
