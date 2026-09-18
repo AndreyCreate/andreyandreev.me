@@ -49,9 +49,9 @@ PAGE = f"""<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta name
 <style>{CSS}</style></head><body>
 <div class="wrap"><div class="top"><div class="me"><i></i><span>Прямой эфир<br>Андреев × Фокина</span></div><div class="sp"></div><a class="pill" href="#inside">Внутри ➤</a><a class="pill" href="#reels">Рилсы ➤</a><a class="pill" href="#carousels">Карусели ➤</a><a class="pill cta" href="#people">Участницы</a></div>
 <div class="hero"><div class="hgrid"><div><h1>hey, <u>маркетолог!</u><span class="m m0">+4 838<br>за 30 дней</span></h1></div>
-<div class="meta"><div><b>когда</b><span>18 сентября 2026, 12:00 МСК<br>/ прямой эфир</span></div><div><b>формат</b><span>Настя — маркетинг и возражения<br>Андрей — что внутри и кейсы</span></div></div></div>
+<div class="meta"><div><b>когда</b><span>18 сентября 2026, 12:00 МСК<br>/ прямой эфир</span></div><div><b>формат</b><span>что внутри, два кейса с цифрами,<br>участницы и живое демо</span></div></div></div>
 <div class="fl"><div class="pc a"><img src="../img/cusk_0.jpg" alt=""></div><div class="pc b"><img src="../img/dasha_puma_01.jpg" alt=""></div><span class="m m1">охват 140 694</span>
-<p class="lead">Моя часть: показать, что внутри AI-маркетолога, сколько трафика дают рилсы и карусели, и кто из участниц уже делает это сам. Все цифры по моему аккаунту — из статистики Instagram на 17 сентября.</p>
+<p class="lead">Что внутри AI-маркетолога, сколько трафика дают рилсы и карусели, и кто из участниц уже делает это сам. Все цифры по моему аккаунту — из статистики Instagram на 17 сентября.</p>
 <div class="pc c"><img src="../img/dasha_fomo_01.jpg" alt=""></div><div class="pc d"><img src="../v/post13.jpg" alt=""></div><span class="m m2">▶ 49 269</span><span class="m m3">1 ч 10 мин</span></div></div></div><div class="band"></div>
 
 <section id="inside" class="dark"><div class="wrap"><div class="lab">Акт 01 · что внутри</div><h2>Два агента и один бот <u>в Телеграме</u></h2>
@@ -121,9 +121,9 @@ PAGE = f"""<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta name
 
 <div class="week" style="margin-top:80px"><span>до агентов</span><span>Кейсы предыдущих потоков MBGA, опубликованы в @mbga_materials</span></div>
 <div class="cases"><div class="cs"><img src="img/fedorova.jpg" alt=""><b>248 000</b><span>просмотров за неделю, +1 000 подписчиков, 70 000 ₽ · Галина Фёдорова, психолог</span></div><div class="cs"><img src="img/herd.jpg" alt=""><b>1 000 000</b><span>просмотров на одном посте · Маша Херд, про тело и эмоции</span></div><div class="cs"><img src="img/maltseva.jpg" alt=""><b>1 млн ₽</b><span>с одного поста: 2 110 комментариев → 900 регистраций → 100+ покупок · Наталья Мальцева, бизнес-психолог</span></div><div class="cs"><i>NDA</i><b>1,5 млн ₽</b><span>за неделю на холодную аудиторию, чек 20 000 ₽ · академия для психологов</span></div></div>
-<p class="big2">Дальше — живое демо: агент получает задание голосом и уходит думать, а мы разбираем, кому это подходит, а кому нет.</p></div></section>
+<p class="big2">Дальше — живое демо: агент получает задание голосом прямо в эфире.</p></div></section>
 
-<footer><div class="wrap">Рабочая страница к эфиру 18.09.2026 · цифры по @andreyandreev.me — статистика Instagram (Graph API) на 17.09 · цитаты участниц — выпускной зум пятого потока 11.09, с их согласия · кейс Даши Морозовой — её публикации и чат потока · «Антихрупкость» — Дмитрий Провоторов, @provotorov</div></footer>
+<footer><div class="wrap">Эфир 18.09.2026 · цифры по @andreyandreev.me — статистика Instagram (Graph API) на 17.09 · цитаты участниц — выпускной зум пятого потока 11.09, с их согласия · кейс Даши Морозовой — её публикации и чат потока · «Антихрупкость» — Дмитрий Провоторов, @provotorov</div></footer>
 <script>{JS}</script></body></html>"""
 
 open(os.path.join(HERE, "index.html"), "w", encoding="utf-8").write(PAGE)
