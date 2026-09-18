@@ -15,7 +15,7 @@ CSS += """
 .cases{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:26px}.cs{background:#2b2b2b;padding:18px}.cs b{display:block;font-size:26px;font-weight:400;letter-spacing:-.03em;line-height:1.05}.cs span{display:block;font-family:'JetBrains Mono',monospace;font-size:12px;color:#ccc;margin-top:8px;line-height:1.5}
 section:not(.dark) .bk{background:var(--grey)}section:not(.dark) .bk span{border-color:var(--ink)}section:not(.dark) .bn,section:not(.dark) .bk p,section:not(.dark) .bk li{color:var(--ink)}section:not(.dark) .bk .cap{color:var(--bl)}
 .m0{right:auto;left:29vw;top:.45em}.nums.sm b{font-size:clamp(26px,2.6vw,40px)}.dark .nums span{color:#bbb}.dark .nums,.dark .nums div+div{border-color:#444}
-.bks.big .bk{min-height:0;padding:30px 28px 34px}.bks.big .bk h3{font-size:clamp(30px,3.2vw,44px);margin:12px 0 10px}.bks.big .bk .cap{font-size:13px}.bks.big .bk p{font-family:Inter,system-ui,sans-serif;font-size:19px;line-height:1.4}
+.bks.big .bk{min-height:0;padding:30px 28px 34px}.cv{width:100%;max-width:560px;aspect-ratio:560/760;border-radius:14px;background:#1b1b1b;display:block;margin-top:22px}.bks.big .bk h3{font-size:clamp(30px,3.2vw,44px);margin:12px 0 10px}.bks.big .bk .cap{font-size:13px}.bks.big .bk p{font-family:Inter,system-ui,sans-serif;font-size:19px;line-height:1.4}
 .flow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:28px;font-family:'JetBrains Mono',monospace;font-size:14px}.flow span{background:#2b2b2b;border-radius:99px;padding:12px 18px}.flow i{font-style:normal;color:#8cc4ff}
 @media(max-width:980px){.cases{grid-template-columns:1fr 1fr}.tbl div{grid-template-columns:1fr 90px 70px 70px;font-size:14px}}
 """
@@ -38,6 +38,12 @@ def bk(n, title, cap, body):
     return (f'<div class="bk"><span class="c1"></span><span class="c2"></span><span class="c3"></span><span class="c4"></span>'
             f'<div class="bn">▢ {n}</div><h3>{title}</h3><div class="cap">{cap}</div>{body}</div>')
 
+def agent_card(n, title, cap, text, vid):
+    return (f'<div class="bk ag"><span class="c1"></span><span class="c2"></span><span class="c3"></span><span class="c4"></span>'
+            f'<div class="bt"><div class="bn">▢ {n}</div><h3>{title}</h3><div class="cap">{cap}</div><p>{text}</p>'
+            f'<div class="cap" style="margin-top:18px;color:#aaa">переписка 17 сентября, как есть</div></div>'
+            f'<video class="cv" autoplay muted loop playsinline preload="metadata" poster="{vid.replace(".mp4", ".jpg")}" src="{vid}"></video></div>')
+
 def nums(items, cls=""):
     return f'<div class="nums {cls}">' + "".join(f"<div><b>{a}</b><span>{b}</span></div>" for a, b in items) + "</div>"
 
@@ -57,8 +63,8 @@ PAGE = f"""<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta name
 <div class="pc c"><img src="../img/dasha_fomo_01.jpg" alt=""></div><div class="pc d"><img src="../v/post13.jpg" alt=""></div><span class="m m2">▶ 49 269</span><span class="m m3">1 ч 10 мин</span></div></div></div><div class="band"></div>
 
 <section id="inside" class="dark"><div class="wrap"><div class="lab">Акт 01 · что внутри</div><h2>Два AI-агента <u>в Телеграме</u></h2>
-<div class="bks big">{bk("Агент 01", "Контентный", "посты · карусели · рилсы", "<p>Пишет и собирает контент моим голосом и в моей дизайн-системе. Рилс монтирует сам.</p>")}
-{bk("Агент 02", "Продающий", "офферы · воронки · лендинги", "<p>Знает продукты, цены и аудиторию. Пишет прогревы, собирает воронку и лендинг.</p>")}</div>
+<div class="bks big">{agent_card("Агент 01", "Контентный", "посты · карусели · рилсы", "Пишет и собирает контент моим голосом и в моей дизайн-системе. Рилс монтирует сам.", "../v/chat_tony.mp4")}
+{agent_card("Агент 02", "Продающий", "офферы · воронки · лендинги", "Знает продукты, цены и аудиторию. Пишет прогревы, собирает воронку и лендинг.", "../v/chat_kobi.mp4")}</div>
 <div class="flow"><span>голосовое в Телеграме</span><i>→</i><span>агент работает на сервере</span><i>→</i><span>пост, рилс, воронка, лендинг</span></div></div></section>
 
 <section id="reels"><div class="wrap"><div class="lab">Акт 02 · рилсы</div><h2>Рилс за 13 минут, <u>монтаж без монтажёра</u></h2>
