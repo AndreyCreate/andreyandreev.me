@@ -18,6 +18,8 @@ section:not(.dark) .bk{background:var(--grey)}section:not(.dark) .bk span{border
 .bks.big .bk{min-height:0;padding:30px 28px 34px}.cv{width:100%;max-width:560px;aspect-ratio:560/760;border-radius:14px;background:#1b1b1b;display:block;margin-top:22px}.bks.big .bk h3{font-size:clamp(30px,3.2vw,44px);margin:12px 0 10px}.bks.big .bk .cap{font-size:13px}.bks.big .bk p{font-family:Inter,system-ui,sans-serif;font-size:19px;line-height:1.4}
 .flow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:28px;font-family:'JetBrains Mono',monospace;font-size:14px}.flow span{background:#2b2b2b;border-radius:99px;padding:12px 18px}.flow i{font-style:normal;color:#8cc4ff}
 .rt{border-top:1px solid #444;columns:2;column-gap:40px;margin-top:26px}.rt div{display:grid;grid-template-columns:1fr 44px 1.15fr;gap:12px;padding:9px 0;border-bottom:1px solid #3a3a3a;font-size:15px;break-inside:avoid}.rt div b{font-family:'JetBrains Mono',monospace;font-weight:400;font-size:12.5px;color:#8cc4ff}.rt div em{font-style:normal;color:#ccc}.rt div.h span,.rt div.h b,.rt div.h em{font-family:'JetBrains Mono',monospace;font-size:11px;color:#888;text-transform:uppercase}.rt div.it em:after{content:' · из IT';color:#F0695F}
+.prog{display:grid;grid-template-columns:1.35fr 1fr;gap:40px;margin-top:34px;align-items:start}.pb{border-top:2px solid var(--ink);padding-top:18px}.pb .bn{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--bl);text-transform:uppercase;letter-spacing:.03em}.pb h3{font-size:clamp(30px,3.2vw,44px);font-weight:400;letter-spacing:-.03em;margin:10px 0 6px}.pb .cap{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--mut);margin-bottom:14px}.ls div{display:grid;grid-template-columns:40px 1fr;gap:10px;padding:11px 0;border-bottom:1px solid var(--line);font-size:16.5px;line-height:1.35;align-items:baseline}.ls div b{font-family:'JetBrains Mono',monospace;font-weight:400;font-size:13px;color:var(--bl)}.ls div.x{color:var(--mut)}.ls div.x b{color:var(--mut)}
+@media(max-width:980px){.prog{grid-template-columns:1fr;gap:48px}}
 @media(max-width:980px){.rt{columns:1}.cases{grid-template-columns:1fr 1fr}.tbl div{grid-template-columns:1fr 90px 70px 70px;font-size:14px}}
 """
 
@@ -60,6 +62,13 @@ def agent_card(n, title, cap, text, vid):
 def nums(items, cls=""):
     return f'<div class="nums {cls}">' + "".join(f"<div><b>{a}</b><span>{b}</span></div>" for a, b in items) + "</div>"
 
+CONTENT = ["Введение: что будем делать и к чему должны прийти","Создаём AI-агента на базе Claude Code","Как собирать референсы в Pinterest","Дизайн-система для контента","Первые шаги в дизайне постов и нужные скиллы","Теория контента: ожидания, рубрики, эксперименты","Где брать темы. Исследование аудитории","Как работать с информацией. Notion","Как скопировать любой tone of voice","Секреты сторителлинга в текстах","Как создавать посты в Claude и в AI-агенте","Продвинутый агент, часть 1: подключаем ко всем чатам Телеграма","Продвинутый агент, часть 2: группа с темами в Телеграме"]
+SALES = ["Введение: что будем делать и к чему должны прийти","Настраиваем агента-маркетолога","Разбираем свои текущие продукты","Продуктовая матрица: какой продукт следующий и почему","Мини-продукт и лид-магнит: когда нужны и как собрать"]
+def lessons(n, title, cap, items, extra=None):
+    body = "".join(f"<div><b>{i:02d}</b><span>{t}</span></div>" for i, t in enumerate(items, 1))
+    if extra: body += f'<div class="x"><b>+</b><span>{extra}</span></div>'
+    return f'<div class="pb"><div class="bn">▢ {n}</div><h3>{title}</h3><div class="cap">{cap}</div><div class="ls">{body}</div></div>'
+
 cusk = carousel("c-cusk", [f"../img/cusk_{i}.jpg" for i in range(9)], "Рейчел Каск · обложка + 8 цитат · 5 сентября")
 dasha = carousel("c-dasha", [f"../img/dasha_puma_0{i}.jpg" for i in (1, 2, 3, 4, 7, 8)] + [f"../img/dasha_fomo_0{i}.jpg" for i in range(1, 8)],
                  "Даша Морозова · PUMA (3 сентября) и «ФОМО возможностей» (7 сентября)")
@@ -68,7 +77,7 @@ PAGE = f"""<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta name
 <meta name="robots" content="noindex,nofollow"><title>AI-маркетолог изнутри — эфир 18.09</title><link rel="icon" href="/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>{CSS}</style></head><body>
-<div class="wrap"><div class="top"><div class="me"><i></i><span>Прямой эфир<br>Андреев × Фокина</span></div><div class="sp"></div><a class="pill" href="#inside">Внутри ➤</a><a class="pill" href="#reels">Рилсы ➤</a><a class="pill" href="#carousels">Карусели ➤</a><a class="pill cta" href="#people">Участницы</a></div>
+<div class="wrap"><div class="top"><div class="me"><i></i><span>Прямой эфир<br>Андреев × Фокина</span></div><div class="sp"></div><a class="pill" href="#inside">Внутри ➤</a><a class="pill" href="#reels">Рилсы ➤</a><a class="pill" href="#carousels">Карусели ➤</a><a class="pill" href="#people">Участницы ➤</a><a class="pill cta" href="#program">Программа</a></div>
 <div class="hero"><div class="hgrid"><div><h1>hey, <u>маркетолог!</u><span class="m m0">+4 838<br>за 30 дней</span></h1></div>
 <div class="meta"><div><b>когда</b><span>18 сентября 2026, 12:00 МСК<br>/ прямой эфир</span></div><div><b>формат</b><span>что внутри, два кейса с цифрами,<br>участницы и живое демо</span></div></div></div>
 <div class="fl"><div class="pc a"><img src="../img/cusk_0.jpg" alt=""></div><div class="pc b"><img src="../img/dasha_puma_01.jpg" alt=""></div><span class="m m1">охват 140 694</span>
@@ -135,6 +144,12 @@ PAGE = f"""<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta name
 
 <div class="week" style="margin-top:80px"><span>до агентов</span><span>Кейсы предыдущих потоков MBGA, опубликованы в @mbga_materials</span></div>
 <div class="cases"><div class="cs"><img src="img/fedorova.jpg" alt=""><b>248 000</b><span>просмотров за неделю, +1 000 подписчиков, 70 000 ₽ · Галина Фёдорова, психолог</span></div><div class="cs"><img src="img/herd.jpg" alt=""><b>1 000 000</b><span>просмотров на одном посте · Маша Херд, про тело и эмоции</span></div><div class="cs"><img src="img/maltseva.jpg" alt=""><b>1 млн ₽</b><span>с одного поста: 2 110 комментариев → 900 регистраций → 100+ покупок · Наталья Мальцева, бизнес-психолог</span></div><div class="cs"><i>NDA</i><b>1,5 млн ₽</b><span>за неделю на холодную аудиторию, чек 20 000 ₽ · академия для психологов</span></div></div>
+</div></section>
+
+<section id="program"><div class="wrap"><div class="lab">Акт 05 · как построено обучение</div><h2>Два блока: сначала <u>контент</u>, потом <u>продажи</u></h2>
+<p class="big2" style="margin-top:0">Уроки записаны и лежат на платформе, проходятся в своём темпе. В первом блоке собираем контентного агента и учим его вашему голосу и дизайну. Во втором — агента-маркетолога: продукты, офферы, воронка.</p>
+<div class="prog">{lessons("Блок 01", "Контент", "13 уроков · агент, дизайн, тексты", CONTENT, "Дополнительно: создание базы знаний")}
+{lessons("Блок 02", "Продажи", "агент-маркетолог, продукты, воронка", SALES, "Блок пополняется: следующие уроки выходят по ходу потока")}</div>
 <p class="big2">Дальше — живое демо: агент получает задание голосом прямо в эфире.</p></div></section>
 
 <footer><div class="wrap">Эфир 18.09.2026 · цифры по @andreyandreev.me — статистика Instagram (Graph API) на 17.09 · цитаты участниц — выпускной зум пятого потока 11.09, с их согласия · кейс Даши Морозовой — её публикации и чат потока · «Антихрупкость» — Дмитрий Провоторов, @provotorov</div></footer>
