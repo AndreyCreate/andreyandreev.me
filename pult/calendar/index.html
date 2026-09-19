@@ -338,7 +338,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     </div>
   </div>
 
-  <div class="empty-week" id="emptyWeek" hidden><p>На эту неделю календаря ещё нет. Собери его из пульта: часы по дням разложатся блоками с 11:00, дальше двигай как удобно.</p><button type="button" class="btn primary" id="buildBtn">Собрать неделю из пульта</button></div>
+  <div class="empty-week" id="emptyWeek" hidden><p>На эту неделю календаря ещё нет. Собери его из пульта, и часы по дням разложатся блоками с 11:00. Или просто нажми на нужное время в сетке и выбери дело.</p><button type="button" class="btn primary" id="buildBtn">Собрать неделю из пульта</button></div>
   <div class="tray" id="tray"></div>
   <div class="cal-wrap"><div class="cal" id="cal"></div></div>
   <div id="overTray"></div>
@@ -625,9 +625,10 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
 
   document.addEventListener("pointercancel", () => { if (!drag) return; if (drag.el) drag.el.classList.remove("dragging"); drag = null; clearGhost(); });
   document.addEventListener("click", e => {
-    if (!state || !wk()) return;
+    if (!state) return;
     if (e.target.closest(".blk") || e.target.closest(".pop") || e.target.closest(".chipd")) return;
     const col = e.target.closest(".col"); if (!col) return;
+    if (!wk()) cal().weeks[week] = {slots:[], builtAt:null}; // неделя ещё не собрана — начинаем с пустой, чтобы клик работал сразу
     const r = col.getBoundingClientRect();
     const start = Math.floor((VIEW_START + (e.clientY - r.top) / PX_PER_MIN) / STEP) * STEP;
     openNew(+col.dataset.day, start, e.clientX, e.clientY);
