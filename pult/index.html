@@ -99,7 +99,7 @@ h1{font-weight:500;letter-spacing:-.045em;line-height:.98;font-size:clamp(44px,7
 .sec{margin-top:56px}
 .sec-h{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
 h2{font-weight:500;letter-spacing:-.035em;font-size:clamp(28px,3.4vw,40px);line-height:1;margin:8px 0 0}
-.lanes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:start}
+.lanes{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;align-items:start}
 @media (max-width:1100px){.lanes{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:620px){.lanes{grid-template-columns:1fr}}
 .lane{background:var(--gray);border-radius:20px;padding:14px;min-height:140px;display:flex;flex-direction:column;gap:10px;transition:background .15s, box-shadow .15s}
@@ -323,7 +323,8 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     {id:"big",   title:"Большие камни",   hint:"Съедают основной ресурс недели. Приоритет по умолчанию.", limitKey:"big", color:"var(--blue-deep)"},
     {id:"small", title:"Маленькие камни", hint:"Важные, но небольшие. Место маленького занимает другой маленький.", limitKey:"small", color:"color-mix(in srgb, var(--blue-deep) 45%, var(--surface))"},
     {id:"fan",   title:"Фан",             hint:"Весело и сам придумал. Риск чёрной дыры: время утекает незаметно.", color:"var(--warn)"},
-    {id:"ghost", title:"Призраки",        hint:"Не в пульте, но часы едят. Срочняки, инфра, мелочи из лички.", color:"var(--bad)"}
+    {id:"ghost", title:"Призраки",        hint:"Не в пульте, но часы едят. Срочняки, инфра, мелочи из лички.", color:"var(--bad)"},
+    {id:"personal", title:"Личное",       hint:"Вне рабочей ёмкости: тренировки и своё время. В часы недели не входит.", color:"var(--ok)", personal:true}
   ];
   const MOSCOW = [
     {id:"must", title:"Must", hint:"Без этого неделя провалена."},
@@ -357,6 +358,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
   const DAYS = ["Пн","Вт","Ср","Чт","Пт","Сб","Вс"];
   const MONTHS = ["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"];
   const sum = a => (Array.isArray(a) ? a : []).reduce((x,y)=>x+(+y||0),0);
+  function isWork(p){ return p.lane !== "personal"; }
   function hasDays(p){ return Array.isArray(p.days) && p.days.some(x => +x > 0); }
   function projHours(p){ return hasDays(p) ? sum(p.days) : (+p.hours||0); }
   function parseH(v){ const n = parseFloat(String(v).replace(",", ".").trim()); return isFinite(n) && n > 0 ? Math.min(24, Math.round(n*2)/2) : 0; }
@@ -392,7 +394,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
 
   /* ---------- derived numbers ---------- */
   function totals(){
-    const p = state.projects;
+    const p = state.projects.filter(isWork);
     const byLane = {}; LANES.forEach(l => byLane[l.id] = 0);
     p.forEach(x => byLane[x.lane] = (byLane[x.lane]||0) + projHours(x));
     const projH = p.reduce((a,x)=>a+projHours(x),0);
@@ -424,7 +426,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     const segs = [
       {k:"tax", label:"Налог", h:sum(state.fixed.tax), color:"var(--mute)"},
       {k:"chaos", label:"Окна хаоса", h:sum(state.fixed.chaos), color:"color-mix(in srgb, var(--mute) 45%, var(--surface))"}
-    ].concat(LANES.map(l => ({k:l.id, label:l.title, h:t.byLane[l.id]||0, color:l.color})));
+    ].concat(LANES.filter(l=>!l.personal).map(l => ({k:l.id, label:l.title, h:t.byLane[l.id]||0, color:l.color})));
     const scale = Math.max(t.plan, cap, 1);
     $("#barFill").innerHTML = segs.filter(s=>s.h>0).map(s =>
       '<div class="seg-b" title="'+esc(s.label)+': '+fmtH(s.h)+' ч" style="width:'+(s.h/scale*100)+'%;background:'+s.color+'"></div>').join("");
@@ -505,7 +507,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
       return '<td><input class="cell'+(v>0?" filled":"")+'" id="'+idPrefix+'-'+i+'" '+attrs+' data-d="'+i+'" inputmode="decimal" autocomplete="off" aria-label="'+DAYS[i]+'" value="'+(v>0?fmtH(v):"")+'"></td>';
     }).join("");
     let rows = "";
-    LANES.forEach(l => {
+    LANES.filter(l=>!l.personal).forEach(l => {
       const items = state.projects.filter(p => p.lane === l.id);
       if (!items.length) return;
       rows += '<tr class="lanehead"><td class="act" colspan="1">'+esc(l.title)+'</td><td colspan="8"></td></tr>';
@@ -520,8 +522,15 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     [["tax","Налог · созвоны и встречи"],["chaos","Окна хаоса · буфер на мелочи"]].forEach(([k,label]) => {
       rows += '<tr class="fixedrow"><td class="act">'+label+'</td>' + cellRow("f-"+k, state.fixed[k], 'data-fixed="'+k+'"') + '<td class="wk">'+fmtH(sum(state.fixed[k]))+'</td></tr>';
     });
-    const dayTot = DAYS.map((_,i) => state.projects.reduce((a,p)=>a+(hasDays(p)?(+p.days[i]||0):0),0) + (+state.fixed.tax[i]||0) + (+state.fixed.chaos[i]||0));
-    const unplanned = state.projects.filter(p=>!hasDays(p)).reduce((a,p)=>a+(+p.hours||0),0);
+    const personal = state.projects.filter(p => !isWork(p));
+    if (personal.length){
+      rows += '<tr class="lanehead"><td class="act">Личное · вне ёмкости</td><td colspan="8"></td></tr>';
+      personal.forEach(p => {
+        rows += '<tr class="fixedrow"><td class="act"><i style="background:var(--ok)"></i>'+esc(p.name)+(p.focus?'<small>'+esc(p.focus)+'</small>':'')+'</td>' + cellRow("c-"+p.id, p.days, 'data-p="'+p.id+'"') + '<td class="wk">'+fmtH(projHours(p))+'</td></tr>';
+      });
+    }
+    const dayTot = DAYS.map((_,i) => state.projects.filter(isWork).reduce((a,p)=>a+(hasDays(p)?(+p.days[i]||0):0),0) + (+state.fixed.tax[i]||0) + (+state.fixed.chaos[i]||0));
+    const unplanned = state.projects.filter(p=>isWork(p) && !hasDays(p)).reduce((a,p)=>a+(+p.hours||0),0);
     const totAll = sum(dayTot);
     const capAll = sum(state.dayCap);
     const foot = '<tfoot>' +
