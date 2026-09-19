@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Трекер пульта</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#FFFFFF; --surface:#FFFFFF; --gray:#F5F5F5; --blue:#BFDDFB; --blue-soft:#DCEBFC;
+  --blue-deep:#2F80ED; --blue-ink:#1F4F8A; --coral:#E8563F; --ink:#111111; --ink-2:#3A3A3A;
+  --mute:#6B6B6B; --line:#E6E6E6; --ok:#2E9E5B; --warn:#D9A21B; --bad:#E8563F; --none:#C9C9C9;
+  --shadow:0 18px 40px rgba(17,17,17,.10); --drop:rgba(47,128,237,.08);
+  --sans:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#101214; --surface:#16191C; --gray:#1D2125; --blue:#1C3552; --blue-soft:#223E5E;
+    --blue-deep:#6AA8FF; --blue-ink:#A9CBFF; --coral:#F06A53; --ink:#F2F3F4; --ink-2:#C9CDD1;
+    --mute:#8E959C; --line:#2A2F34; --ok:#4CC27E; --warn:#E8B53A; --bad:#F06A53; --none:#4A5056;
+    --shadow:0 18px 40px rgba(0,0,0,.45); --drop:rgba(106,168,255,.10);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#101214; --surface:#16191C; --gray:#1D2125; --blue:#1C3552; --blue-soft:#223E5E;
+  --blue-deep:#6AA8FF; --blue-ink:#A9CBFF; --coral:#F06A53; --ink:#F2F3F4; --ink-2:#C9CDD1;
+  --mute:#8E959C; --line:#2A2F34; --ok:#4CC27E; --warn:#E8B53A; --bad:#F06A53; --none:#4A5056;
+  --shadow:0 18px 40px rgba(0,0,0,.45); --drop:rgba(106,168,255,.10);
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1240px;margin:0 auto;padding-inline:clamp(16px,4vw,48px);padding-block:40px 72px}
+.mono{font-family:var(--mono)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--blue-deep);outline-offset:2px;border-radius:6px}
+
+/* header */
+.kick{font-family:var(--mono);font-size:12.5px;letter-spacing:.03em;color:var(--mute);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.kick .star{color:var(--coral)}
+h1{font-weight:500;letter-spacing:-.045em;line-height:.98;font-size:clamp(44px,7.4vw,96px);margin:18px 0 18px;text-wrap:balance}
+.u{position:relative;white-space:nowrap}
+.u::after{content:"";position:absolute;left:0;right:0;bottom:.05em;height:3px;background:var(--blue-deep)}
+.lead{font-size:clamp(16px,1.6vw,19px);color:var(--ink-2);max-width:62ch;margin:0}
+.lead .dd{font-family:var(--mono);color:var(--blue-deep)}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap}
+.top-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:8px;border-radius:999px;border:0;min-height:38px;padding:0 16px;font-family:var(--mono);font-size:13px;font-weight:500;background:var(--gray);color:var(--ink)}
+.pill:hover{background:var(--blue-soft)}
+.pill.on{background:var(--ink);color:var(--bg)}
+.seg{display:inline-flex;background:var(--gray);border-radius:999px;padding:3px}
+.seg button{border:0;background:transparent;border-radius:999px;padding:7px 14px;font-family:var(--mono);font-size:12.5px;color:var(--mute)}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.save{font-family:var(--mono);font-size:12px;color:var(--mute);min-width:9ch}
+
+/* summary */
+.summary{margin-top:40px;display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:16px}
+@media (max-width:860px){.summary{grid-template-columns:1fr}}
+.panel{border:1px solid var(--line);border-radius:20px;padding:24px;background:var(--surface)}
+.panel.blue{background:var(--blue);border-color:transparent}
+.lbl{font-family:var(--mono);font-size:12px;color:var(--blue-deep);letter-spacing:.02em}
+.panel.blue .lbl{color:var(--blue-ink)}
+.big{font-weight:500;letter-spacing:-.045em;font-size:clamp(40px,5vw,64px);line-height:1;white-space:nowrap;font-variant-numeric:tabular-nums}
+.big small{font-size:.42em;letter-spacing:-.02em;color:var(--mute);font-weight:400}
+.over{color:var(--bad)}
+.okc{color:var(--ok)}
+.headline{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-top:10px}
+.verdict{font-family:var(--mono);font-size:13px;padding:6px 12px;border-radius:999px;background:var(--gray)}
+.verdict.bad{background:var(--coral);color:#fff}
+.bar{position:relative;margin-top:22px;height:44px;border-radius:12px;background:var(--gray);overflow:visible}
+.bar .fill{position:absolute;inset:0;display:flex;border-radius:12px;overflow:hidden}
+.bar .seg-b{height:100%;min-width:2px;border-right:2px solid var(--surface);transition:width .25s ease}
+.bar .cap{position:absolute;top:-8px;bottom:-8px;width:0;border-left:2px dashed var(--ink)}
+.bar .cap span{position:absolute;top:-22px;left:-1px;transform:translateX(-50%);font-family:var(--mono);font-size:11px;color:var(--ink);white-space:nowrap;background:var(--surface);padding:0 4px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px;font-family:var(--mono);font-size:12px;color:var(--ink-2)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.knobs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:20px}
+@media (max-width:520px){.knobs{grid-template-columns:1fr}}
+.knob{background:var(--gray);border-radius:14px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.knob .t{font-size:13px;color:var(--ink-2);line-height:1.25}
+.knob .t b{display:block;font-weight:500;color:var(--ink)}
+.step{display:inline-flex;align-items:center;gap:2px;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.step button{width:28px;height:28px;border-radius:50%;border:1px solid var(--line);background:var(--surface);font-size:15px;line-height:1;display:grid;place-items:center;padding:0}
+.step button:hover{border-color:var(--blue-deep);color:var(--blue-deep)}
+.step output{min-width:4ch;text-align:center;font-size:14px}
+.facts{display:flex;flex-direction:column;gap:14px}
+.fact{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-bottom:1px solid color-mix(in srgb,var(--ink) 12%,transparent);padding-bottom:12px}
+.fact:last-child{border-bottom:0;padding-bottom:0}
+.fact .t{font-size:14px;color:var(--ink-2)}
+.fact .n{font-family:var(--mono);font-size:15px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.alina{margin-top:16px;font-size:14px;color:var(--ink-2);line-height:1.5}
+.alina .dd{font-family:var(--mono);color:var(--blue-ink)}
+
+/* lanes */
+.sec{margin-top:56px}
+.sec-h{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+h2{font-weight:500;letter-spacing:-.035em;font-size:clamp(28px,3.4vw,40px);line-height:1;margin:8px 0 0}
+.lanes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:start}
+@media (max-width:1100px){.lanes{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){.lanes{grid-template-columns:1fr}}
+.lane{background:var(--gray);border-radius:20px;padding:14px;min-height:140px;display:flex;flex-direction:column;gap:10px;transition:background .15s, box-shadow .15s}
+.lane.drop{background:var(--drop);box-shadow:inset 0 0 0 2px var(--blue-deep)}
+.lane.first{background:var(--blue)}
+.lane-h{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;padding:4px 4px 2px}
+.lane-h h3{margin:0;font-weight:500;font-size:18px;letter-spacing:-.02em}
+.lane-h p{margin:4px 0 0;font-size:12.5px;color:var(--ink-2);line-height:1.35}
+.cnt{font-family:var(--mono);font-size:12px;padding:4px 9px;border-radius:999px;background:var(--surface);white-space:nowrap;font-variant-numeric:tabular-nums}
+.cnt.bad{background:var(--coral);color:#fff}
+.lane-hours{font-family:var(--mono);font-size:11.5px;color:var(--mute);padding:0 4px}
+.lane.first .lane-hours,.lane.first .lane-h p{color:var(--blue-ink)}
+.add{border:1px dashed color-mix(in srgb,var(--ink) 25%,transparent);background:transparent;border-radius:14px;padding:10px;font-family:var(--mono);font-size:12.5px;color:var(--mute)}
+.add:hover{border-color:var(--blue-deep);color:var(--blue-deep)}
+
+.card{background:var(--surface);border-radius:16px;padding:14px 14px 12px;border:1px solid var(--line);display:flex;flex-direction:column;gap:10px;box-shadow:0 1px 0 rgba(0,0,0,.02)}
+.card[draggable="true"]{cursor:grab}
+.card.dragging{opacity:.45}
+.card-top{display:flex;gap:10px;align-items:flex-start}
+.dot{flex:none;width:18px;height:18px;border-radius:50%;border:0;padding:0;margin-top:2px;background:var(--none);box-shadow:inset 0 0 0 3px var(--surface)}
+.dot[data-s="green"]{background:var(--ok)}
+.dot[data-s="yellow"]{background:var(--warn)}
+.dot[data-s="red"]{background:var(--bad)}
+.name{border:0;background:transparent;padding:0;text-align:left;font-weight:500;font-size:15.5px;letter-spacing:-.01em;line-height:1.25;flex:1}
+.name:hover{color:var(--blue-deep)}
+.focus{font-size:13.5px;color:var(--ink-2);line-height:1.4;margin:0}
+.focus .dd{font-family:var(--mono);color:var(--blue-deep)}
+.meta{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.chips{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.chip{font-family:var(--mono);font-size:11.5px;border-radius:999px;padding:4px 9px;background:var(--gray);border:0;white-space:nowrap}
+button.chip:hover{background:var(--blue-soft)}
+.chip.hands{background:var(--ink);color:var(--bg)}
+.chip.tony{background:var(--blue);color:var(--ink)}
+.msgs{font-family:var(--mono);font-size:11.5px;color:var(--mute);overflow-wrap:anywhere}
+.chips .msgs{white-space:nowrap}
+.hrs{display:inline-flex;align-items:center;gap:2px;font-family:var(--mono);font-size:12.5px;font-variant-numeric:tabular-nums}
+.hrs button{width:24px;height:24px;border-radius:50%;border:1px solid var(--line);background:var(--surface);padding:0;display:grid;place-items:center;font-size:13px}
+.hrs button:hover{border-color:var(--blue-deep);color:var(--blue-deep)}
+.hrs output{min-width:5ch;text-align:center}
+.est{color:var(--mute)}
+
+.fixed{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
+@media (max-width:620px){.fixed{grid-template-columns:1fr}}
+.sand{border:1px solid var(--line);border-radius:20px;padding:16px 18px;display:flex;justify-content:space-between;gap:12px;align-items:center}
+.sand h4{margin:0;font-weight:500;font-size:16px}
+.sand p{margin:3px 0 0;font-size:13px;color:var(--ink-2)}
+
+.plan-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:20px;background:var(--surface)}
+table.plan{border-collapse:separate;border-spacing:0;width:100%;min-width:760px;font-variant-numeric:tabular-nums}
+.plan th,.plan td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:center;white-space:nowrap}
+.plan thead th{font-family:var(--mono);font-size:11.5px;font-weight:500;color:var(--mute);padding-block:12px;background:var(--surface);line-height:1.25}
+.plan thead th.wkend{color:color-mix(in srgb,var(--mute) 70%,transparent)}
+.plan th.act,.plan td.act{position:sticky;left:0;z-index:1;background:var(--surface);text-align:left;min-width:210px;max-width:260px;white-space:normal;border-right:1px solid var(--line)}
+.plan td.act{font-size:14px;font-weight:500;line-height:1.25;padding-left:14px}
+.plan td.act i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px;vertical-align:1px}
+.plan td.act small{display:block;font-family:var(--mono);font-size:10.5px;font-weight:400;color:var(--mute);margin-top:2px}
+.plan tr.lanehead td{background:var(--gray);font-family:var(--mono);font-size:11px;color:var(--mute);text-align:left;padding-block:7px;padding-left:14px}
+.plan tr.lanehead td.act{background:var(--gray)}
+.plan tr.fixedrow td{background:color-mix(in srgb,var(--gray) 55%,var(--surface))}
+.plan tr.fixedrow td.act{background:color-mix(in srgb,var(--gray) 55%,var(--surface));font-weight:400;color:var(--ink-2)}
+.cell{width:52px;height:34px;border:1px solid transparent;border-radius:9px;background:var(--gray);text-align:center;font-family:var(--mono);font-size:13px;padding:0 4px}
+.cell:hover{border-color:var(--line)}
+.cell:focus{outline:none;border-color:var(--blue-deep);background:var(--surface)}
+.cell.filled{background:var(--blue-soft)}
+.cap-cell{background:transparent;border:1px dashed color-mix(in srgb,var(--ink) 25%,transparent)}
+.plan td.wk{font-family:var(--mono);font-size:13px;min-width:64px}
+.plan td.wk.est{color:var(--mute)}
+.plan tfoot td{font-family:var(--mono);font-size:13px;border-bottom:0}
+.plan tfoot tr.sum td{border-top:2px solid var(--ink);font-weight:500}
+.plan tfoot td.act{font-family:var(--sans);font-size:13.5px}
+.plan .over{color:var(--bad);font-weight:600}
+.plan .okd{color:var(--ok)}
+.plan-hint{font-size:13.5px;color:var(--ink-2);margin:0 0 14px;max-width:70ch}
+.plan-hint .dd{font-family:var(--mono);color:var(--blue-deep)}
+.note{margin-top:56px;border-top:1px solid var(--line);padding-top:20px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;color:var(--mute)}
+.note p{margin:0;max-width:70ch;line-height:1.55}
+.banner{margin-top:24px;border-radius:14px;padding:12px 16px;background:var(--gray);font-size:14px;color:var(--ink-2)}
+.skeleton .card{min-height:92px;background:color-mix(in srgb,var(--surface) 70%,var(--gray))}
+
+/* dialog */
+dialog{border:0;border-radius:22px;padding:0;width:min(560px,calc(100vw - 32px));background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+dialog::backdrop{background:rgba(10,12,14,.45)}
+.dlg{padding:24px;display:flex;flex-direction:column;gap:14px}
+.dlg h3{margin:0;font-weight:500;font-size:22px;letter-spacing:-.02em}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-family:var(--mono);font-size:12px;color:var(--mute)}
+.field input,.field textarea,.field select{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg);width:100%}
+.field textarea{min-height:76px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:460px){.row2{grid-template-columns:1fr}}
+.dlg-actions{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:6px}
+.btn{border:0;border-radius:999px;min-height:40px;padding:0 18px;font-family:var(--mono);font-size:13px;font-weight:500;background:var(--gray)}
+.btn.primary{background:var(--coral);color:#fff}
+.btn.ghost{background:transparent;color:var(--bad)}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+<style>
+.gate{min-height:100vh;display:grid;place-items:center;padding-inline:16px;padding-block:40px;background:var(--bg)}
+.gate-box{width:min(420px,100%);display:flex;flex-direction:column;gap:14px}
+.gate h1{font-size:clamp(48px,10vw,72px);margin:6px 0 4px}
+.gate input[type=password]{border:1px solid var(--line);border-radius:14px;padding:14px 16px;font-size:17px;background:var(--surface);width:100%}
+.gate .remember{display:flex;gap:8px;align-items:center;font-size:14px;color:var(--ink-2)}
+.gate .btn.primary{min-height:48px;font-size:14px}
+.gate .err{min-height:20px;font-size:14px;color:var(--bad)}
+[hidden]{display:none!important}
+</style>
+<style>
+.nav{display:inline-flex;background:var(--gray);border-radius:999px;padding:3px}
+.nav a{border-radius:999px;padding:7px 14px;font-family:var(--mono);font-size:12.5px;color:var(--mute);text-decoration:none}
+.nav a[aria-current="page"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.timer{margin-top:28px;border-radius:24px;background:var(--blue);padding:24px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px;align-items:center}
+@media (max-width:720px){.timer{grid-template-columns:1fr}}
+.timer .lbl{color:var(--blue-ink)}
+.timer .clock{font-weight:500;letter-spacing:-.045em;font-size:clamp(48px,8vw,88px);line-height:1;font-variant-numeric:tabular-nums;margin:6px 0 4px}
+.timer .what{font-size:16px;color:var(--ink-2)}
+.timer .what b{color:var(--ink);font-weight:500}
+.go{border:0;border-radius:999px;min-height:64px;padding:0 34px;font-family:var(--mono);font-size:15px;font-weight:500;background:var(--coral);color:#fff;display:inline-flex;align-items:center;gap:10px}
+.go.stop{background:var(--ink);color:var(--bg)}
+.go .dotp{width:12px;height:12px;border-radius:50%;background:#fff}
+.go.stop .dotp{border-radius:2px;background:var(--bg)}
+.picker{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap}
+.pc{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:9px 14px;font-size:13.5px;border:1px solid var(--line);background:var(--surface)}
+.pc i{width:9px;height:9px;border-radius:50%}
+.pc[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.note-in{margin-top:12px;width:100%;border:1px solid color-mix(in srgb,var(--ink) 15%,transparent);border-radius:12px;padding:10px 12px;background:var(--surface);font-size:14px}
+.sec2{margin-top:44px}
+.weeknav{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.weeknav .wl{font-weight:500;font-size:17px;min-width:12ch;text-align:center}
+.iconbtn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;font-size:16px;padding:0}
+.iconbtn:hover{border-color:var(--blue-deep);color:var(--blue-deep)}
+.tbl-wrap{margin-top:16px;overflow-x:auto;border:1px solid var(--line);border-radius:20px;background:var(--surface)}
+table.rep{width:100%;border-collapse:collapse;min-width:720px;font-variant-numeric:tabular-nums}
+.rep th,.rep td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:right;font-size:14px;white-space:nowrap}
+.rep th{font-family:var(--mono);font-size:11.5px;font-weight:500;color:var(--mute)}
+.rep th:first-child,.rep td:first-child{text-align:left;white-space:normal;min-width:180px}
+.rep td:first-child i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px}
+.rep tfoot td{font-weight:600;border-top:2px solid var(--ink);border-bottom:0}
+.rep .bar{display:inline-block;height:8px;border-radius:4px;background:var(--blue-deep);vertical-align:middle;margin-left:8px;max-width:90px}
+.rep .over{color:var(--bad)} .rep .under{color:var(--mute)}
+.entries{margin-top:16px;display:flex;flex-direction:column;gap:8px}
+.ent{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:12px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:10px 14px;background:var(--surface)}
+.ent .n{font-weight:500;font-size:14px}
+.ent .n small{display:block;font-family:var(--mono);font-size:11px;color:var(--mute);font-weight:400;margin-top:2px}
+.ent .d{font-family:var(--mono);font-size:13px;white-space:nowrap}
+.ent button{border:0;background:transparent;color:var(--mute);font-size:18px;padding:4px 8px;border-radius:8px}
+.ent button:hover{color:var(--bad);background:var(--gray)}
+.src{font-family:var(--mono);font-size:10.5px;border-radius:999px;padding:2px 7px;background:var(--gray);color:var(--mute);margin-left:6px}
+.add-form{margin-top:16px;display:grid;grid-template-columns:minmax(0,2fr) repeat(3,minmax(0,1fr)) auto;gap:8px;align-items:end}
+@media (max-width:720px){.add-form{grid-template-columns:1fr 1fr}}
+.add-form label{display:flex;flex-direction:column;gap:4px;font-family:var(--mono);font-size:11.5px;color:var(--mute)}
+.add-form select,.add-form input{border:1px solid var(--line);border-radius:10px;padding:9px 10px;background:var(--bg);font-size:14px;width:100%}
+.empty{padding:16px 18px;color:var(--mute);font-size:14px}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);font-family:var(--mono);font-size:12.5px;padding:10px 16px;border-radius:999px;z-index:30}
+</style>
+</head>
+<body>
+<div class="gate" id="gate">
+  <form class="gate-box" id="gateForm" autocomplete="on">
+    <div class="kick"><span class="star">✳</span><span>Пульт управления проектами</span></div>
+    <h1>Пульт <span class="u">Андрея</span></h1>
+    <label class="field" for="gatePw"><span class="mono" style="font-size:12px;color:var(--mute)">Пароль</span></label>
+    <input id="gatePw" type="password" autocomplete="current-password" required>
+    <label class="remember" for="gateRemember"><input id="gateRemember" type="checkbox" checked> Запомнить на этом устройстве</label>
+    <button type="submit" class="btn primary" id="gateBtn">Открыть</button>
+    <div class="err" id="gateErr" aria-live="polite"></div>
+  </form>
+</div>
+
+<div id="app" hidden>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="kick"><span class="star">✳</span><span>Пульт управления проектами</span><span>·</span><span>трекер времени</span></div>
+      <h1>Сколько <span class="u">на самом деле</span></h1>
+      <p class="lead"><span class="dd">::</span> Включил таймер на проекте — время пишется. Забыл — добавь задним числом или напиши Тони в Telegram «старт MBGA» и «стоп». Внизу план против факта по каждому проекту.</p>
+    </div>
+    <div class="top-actions">
+      <nav class="nav" aria-label="Страницы пульта"><a href="../">Ёмкость</a><a href="../calendar/">Календарь</a><a href="./" aria-current="page">Трекер</a></nav>
+      <span class="save" id="saveState" aria-live="polite"></span>
+    </div>
+  </header>
+
+  <div id="banner" class="banner" hidden></div>
+
+  <section class="timer" aria-label="Таймер">
+    <div>
+      <div class="lbl mono" id="tLbl">Таймер</div>
+      <div class="clock" id="clock">0:00:00</div>
+      <div class="what" id="what">Выбери проект и нажми старт</div>
+    </div>
+    <button type="button" class="go" id="go"><span class="dotp"></span><span id="goTxt">Старт</span></button>
+  </section>
+  <div class="picker" id="picker" role="group" aria-label="Проект для таймера"></div>
+  <input class="note-in" id="noteIn" type="text" maxlength="120" placeholder="Что делаешь, коротко. Необязательно">
+
+  <section class="sec2" aria-labelledby="repTitle">
+    <div class="sec-h">
+      <div>
+        <div class="kick"><span class="star">✳</span><span>План против факта</span></div>
+        <h2 id="repTitle">Неделя в часах</h2>
+      </div>
+      <div class="weeknav"><button type="button" class="iconbtn" id="prevW" aria-label="Предыдущая неделя">←</button><span class="wl" id="wl"></span><button type="button" class="iconbtn" id="nextW" aria-label="Следующая неделя">→</button></div>
+    </div>
+    <div class="tbl-wrap" id="rep"></div>
+  </section>
+
+  <section class="sec2" aria-labelledby="entTitle">
+    <div class="kick"><span class="star">✳</span><span>Записи недели</span></div>
+    <h2 id="entTitle">Что записано</h2>
+    <form class="add-form" id="addForm">
+      <label for="aRef">Проект<select id="aRef"></select></label>
+      <label for="aDate">День<input id="aDate" type="date" required></label>
+      <label for="aStart">Начало<input id="aStart" type="time" value="11:00" required></label>
+      <label for="aDur">Минут<input id="aDur" type="number" min="5" max="720" step="5" value="60" required></label>
+      <button type="submit" class="btn primary">Добавить</button>
+    </form>
+    <div class="entries" id="entries"></div>
+  </section>
+
+  <footer class="note">
+    <p>Факт считается только по записям трекера: таймер, ручные записи, «старт/стоп» в Telegram и прошедшие встречи из календаря, которые подтянет Тони. План берётся из календаря недели, шаблон — из пульта.</p>
+    <p id="updated"></p>
+  </footer>
+</div>
+</div>
+
+<script>
+(function(){
+  const $ = s => document.querySelector(s);
+  const DAYS = ["Пн","Вт","Ср","Чт","Пт","Сб","Вс"];
+  const MONTHS = ["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"];
+  const LANE = {big:{t:"Большие камни",c:"var(--blue-deep)"}, small:{t:"Маленькие камни",c:"var(--blue)"}, fan:{t:"Фан",c:"var(--warn)"}, ghost:{t:"Призраки",c:"var(--bad)"}, personal:{t:"Отдых",c:"var(--ok)"}};
+  const ORDER = ["big","small","fan","ghost","personal"];
+  const SRC = {timer:"таймер", manual:"вручную", telegram:"Telegram", calendar:"встреча"};
+  let state = null, aesKey = null, auth = null, dirty = false, saving = false, saveTimer = null;
+  let week = null, pick = null, tick = null;
+
+  const sum = a => (Array.isArray(a) ? a : []).reduce((x,y)=>x+(+y||0),0);
+  const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const clone = o => JSON.parse(JSON.stringify(o));
+  const fmtH = n => { const r = Math.round(n*10)/10; return Number.isInteger(r) ? String(r) : r.toFixed(1).replace(".", ","); };
+  const uid = () => "t" + Math.random().toString(36).slice(2,9);
+  const pad = n => String(n).padStart(2,"0");
+  function fromIso(s){ const [y,m,d] = String(s).split("-").map(Number); return new Date(y,(m||1)-1,d||1); }
+  function isoDate(d){ return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()); }
+  function mondayOf(d){ const x = new Date(d.getFullYear(), d.getMonth(), d.getDate()); x.setDate(x.getDate() - (x.getDay()+6)%7); return x; }
+  function shiftWeek(iso, n){ const d = fromIso(iso); d.setDate(d.getDate()+7*n); return isoDate(d); }
+  function weekLabel(start){ const a = fromIso(start), b = new Date(a); b.setDate(a.getDate()+6); return a.getDate() + (a.getMonth()!==b.getMonth()?" "+MONTHS[a.getMonth()]:"") + "–" + b.getDate() + " " + MONTHS[b.getMonth()]; }
+  function setSave(t){ $("#saveState").textContent = t; }
+  function showBanner(t){ const b = $("#banner"); b.textContent = t; b.hidden = false; }
+  let toastT = null;
+  function toast(t){ let el = $(".toast"); if (!el){ el = document.createElement("div"); el.className = "toast"; el.setAttribute("role","status"); document.body.appendChild(el); } el.textContent = t; el.hidden = false; clearTimeout(toastT); toastT = setTimeout(()=>{ el.hidden = true; }, 2600); }
+
+  /* ---------- модель ---------- */
+  function T(){ return state.tracking; }
+  function projects(){ return ORDER.flatMap(l => state.projects.filter(p => p.lane === l)); }
+  function refs(){ return projects().map(p => ({ref:"p:"+p.id, name:p.name, lane:p.lane})).concat([{ref:"f:tax", name:"Налог · созвоны", lane:"fixed"}, {ref:"f:chaos", name:"Окна хаоса · мелочи", lane:"fixed"}]); }
+  function refName(ref){ const r = refs().find(x => x.ref === ref); return r ? r.name : (ref === "other" ? "Без проекта" : "Удалённый проект"); }
+  function refColor(ref){ const r = refs().find(x => x.ref === ref); return r && LANE[r.lane] ? LANE[r.lane].c : "var(--mute)"; }
+  function projHours(p){ return (Array.isArray(p.days) && p.days.some(x=>+x>0)) ? sum(p.days) : (+p.hours||0); }
+  function normalize(){
+    state.projects = state.projects || [];
+    state.fixed = state.fixed || {tax:[0,0,0,0,0,0,0], chaos:[0,0,0,0,0,0,0]};
+    state.tracking = state.tracking || {};
+    if (!Array.isArray(state.tracking.entries)) state.tracking.entries = [];
+    if (state.tracking.running === undefined) state.tracking.running = null;
+  }
+  function entriesOfWeek(){ const a = fromIso(week).getTime(), b = a + 7*864e5; return T().entries.filter(e => { const t = new Date(e.start).getTime(); return t >= a && t < b; }); }
+  function minutes(e){ return Math.max(0, (new Date(e.end) - new Date(e.start)) / 60000); }
+
+  /* ---------- сохранение ---------- */
+  function touch(){ state.updatedAt = new Date().toISOString(); dirty = true; setSave("сохраняю…"); render(); clearTimeout(saveTimer); saveTimer = setTimeout(flush, 500); }
+  async function flush(){
+    if (!auth || !dirty) return;
+    if (saving){ clearTimeout(saveTimer); saveTimer = setTimeout(flush, 400); return; }
+    saving = true; dirty = false;
+    try { await saveRemote(clone(state)); setSave(dirty ? "сохраняю…" : "сохранено"); }
+    catch(e){ dirty = true; if (e && e.code === "network") setTimeout(flush, 900 + Math.random()*900); else { setSave("не сохранилось"); showBanner("Изменения не сохранились: " + (e && e.message || "ошибка") + ". Обнови страницу."); } }
+    finally { saving = false; if (dirty){ clearTimeout(saveTimer); saveTimer = setTimeout(flush, 400); } }
+  }
+
+  /* ---------- отрисовка ---------- */
+  function renderClock(){
+    const run = T().running;
+    if (!run){ $("#clock").textContent = "0:00:00"; return; }
+    const s = Math.max(0, Math.floor((Date.now() - new Date(run.start).getTime())/1000));
+    $("#clock").textContent = Math.floor(s/3600) + ":" + pad(Math.floor(s/60)%60) + ":" + pad(s%60);
+  }
+  function render(){
+    if (!state) return;
+    const run = T().running;
+    $("#go").classList.toggle("stop", !!run);
+    $("#goTxt").textContent = run ? "Стоп" : "Старт";
+    $("#tLbl").textContent = run ? "Идёт с " + new Date(run.start).toLocaleTimeString("ru-RU",{hour:"2-digit",minute:"2-digit"}) : "Таймер";
+    $("#what").innerHTML = run ? '<b>'+esc(refName(run.ref))+'</b>' + (run.note ? " · " + esc(run.note) : "") : (pick ? 'Выбрано: <b>'+esc(refName(pick))+'</b>. Жми старт' : "Выбери проект и нажми старт");
+    renderClock();
+    clearInterval(tick); if (run) tick = setInterval(renderClock, 1000);
+    const active = run ? run.ref : pick;
+    $("#picker").innerHTML = refs().map(r => '<button type="button" class="pc" data-ref="'+r.ref+'" aria-pressed="'+(active===r.ref)+'"><i style="background:'+(LANE[r.lane]?LANE[r.lane].c:"var(--mute)")+'"></i>'+(r.lane==="personal"?"Отдых · ":"")+esc(r.name)+'</button>').join("");
+    const sel = $("#aRef"); const keep = sel.value;
+    sel.innerHTML = refs().map(r => '<option value="'+r.ref+'">'+esc(r.name)+'</option>').join(""); if (keep) sel.value = keep;
+    if (!$("#aDate").value) $("#aDate").value = isoDate(new Date());
+    $("#wl").textContent = weekLabel(week);
+    renderReport(); renderEntries();
+    if (state.updatedAt){ const d = new Date(state.updatedAt); $("#updated").textContent = "обновлено " + d.toLocaleString("ru-RU",{day:"numeric",month:"long",hour:"2-digit",minute:"2-digit"}); }
+  }
+  function renderReport(){
+    const E = entriesOfWeek();
+    const fact = {}; const factDay = {};
+    E.forEach(e => { const m = minutes(e); fact[e.ref] = (fact[e.ref]||0) + m; const d = (new Date(e.start).getDay()+6)%7; (factDay[e.ref] = factDay[e.ref] || [0,0,0,0,0,0,0])[d] += m; });
+    const cw = state.calendar && state.calendar.weeks && state.calendar.weeks[week];
+    const plan = {}; if (cw) cw.slots.forEach(b => { plan[b.ref] = (plan[b.ref]||0) + b.dur; });
+    const tmpl = {}; state.projects.forEach(p => tmpl["p:"+p.id] = projHours(p)*60); tmpl["f:tax"] = sum(state.fixed.tax)*60; tmpl["f:chaos"] = sum(state.fixed.chaos)*60;
+    const rows = refs().filter(r => tmpl[r.ref] || plan[r.ref] || fact[r.ref]);
+    Object.keys(fact).forEach(k => { if (!rows.find(r => r.ref === k)) rows.push({ref:k, name:refName(k), lane:"fixed"}); });
+    if (!rows.length){ $("#rep").innerHTML = '<div class="empty">На этой неделе пока пусто.</div>'; return; }
+    const maxF = Math.max(60, ...rows.map(r => fact[r.ref]||0));
+    let W = {t:0,p:0,f:0}, R = {f:0};
+    const body = rows.map(r => {
+      const t = (tmpl[r.ref]||0)/60, p = (plan[r.ref]||0)/60, f = (fact[r.ref]||0)/60;
+      if (r.lane === "personal") R.f += f; else { W.t += t; W.p += p; W.f += f; }
+      const base = p || t; const cls = base ? (f > base*1.15 ? "over" : (f < base*0.5 ? "under" : "")) : "";
+      const days = (factDay[r.ref]||[0,0,0,0,0,0,0]).map(m => '<td>'+(m ? fmtH(m/60) : "·")+'</td>').join("");
+      return '<tr><td><i style="background:'+refColor(r.ref)+'"></i>'+(r.lane==="personal"?"Отдых · ":"")+esc(r.name)+'</td><td>'+(t?fmtH(t):"—")+'</td><td>'+(p?fmtH(p):"—")+'</td><td class="'+cls+'">'+fmtH(f)+'<span class="bar" style="width:'+Math.round((fact[r.ref]||0)/maxF*90)+'px"></span></td>'+days+'</tr>';
+    }).join("");
+    $("#rep").innerHTML = '<table class="rep"><thead><tr><th>Проект</th><th>Шаблон, ч</th><th>Календарь, ч</th><th>Факт, ч</th>'+DAYS.map(d=>'<th>'+d+'</th>').join("")+'</tr></thead><tbody>'+body+'</tbody><tfoot><tr><td>Работа</td><td>'+fmtH(W.t)+'</td><td>'+fmtH(W.p)+'</td><td>'+fmtH(W.f)+'</td><td colspan="7" style="text-align:left;font-weight:400">'+(R.f ? "отдых " + fmtH(R.f) + " ч · работа к отдыху " + fmtH(W.f/R.f) + " к 1" : "отдыха в трекере нет")+'</td></tr></tfoot></table>';
+  }
+  function renderEntries(){
+    const E = entriesOfWeek().slice().sort((a,b) => new Date(b.start) - new Date(a.start));
+    $("#entries").innerHTML = E.length ? E.map(e => {
+      const s = new Date(e.start), en = new Date(e.end);
+      return '<div class="ent"><div class="n">'+esc(refName(e.ref))+'<span class="src">'+(SRC[e.source]||e.source||"")+'</span>'+(e.note?'<small>'+esc(e.note)+'</small>':'')+'</div>' +
+        '<div class="d">'+DAYS[(s.getDay()+6)%7]+' '+s.getDate()+' · '+pad(s.getHours())+':'+pad(s.getMinutes())+'–'+pad(en.getHours())+':'+pad(en.getMinutes())+' · '+fmtH(minutes(e)/60)+' ч</div>' +
+        '<button type="button" data-del="'+e.id+'" aria-label="Удалить запись">×</button></div>';
+    }).join("") : '<div class="empty">Записей за эту неделю нет. Включи таймер или добавь вручную.</div>';
+  }
+
+  /* ---------- действия ---------- */
+  document.addEventListener("click", e => {
+    if (!state) return;
+    const pc = e.target.closest(".pc");
+    if (pc){
+      const run = T().running;
+      if (run && run.ref !== pc.dataset.ref){ // переключение на лету: закрываем текущую запись, начинаем новую
+        stopRun(); T().running = {ref:pc.dataset.ref, start:new Date().toISOString(), note:$("#noteIn").value.trim()}; touch(); toast("Переключил на «" + refName(pc.dataset.ref) + "»"); return;
+      }
+      pick = pc.dataset.ref; render(); return;
+    }
+    const del = e.target.closest("[data-del]");
+    if (del){ if (!confirm("Удалить запись?")) return; T().entries = T().entries.filter(x => x.id !== del.dataset.del); touch(); return; }
+  });
+  function stopRun(){
+    const run = T().running; if (!run) return null;
+    const end = new Date(); const m = (end - new Date(run.start)) / 60000;
+    T().running = null;
+    if (m >= 1){ const ent = {id:uid(), ref:run.ref, start:run.start, end:end.toISOString(), note:run.note||"", source:run.source||"timer"}; T().entries.push(ent); return ent; }
+    return null;
+  }
+  $("#go").addEventListener("click", () => {
+    if (!state) return;
+    if (T().running){ const ent = stopRun(); touch(); toast(ent ? "Записал " + fmtH(minutes(ent)/60) + " ч · " + refName(ent.ref) : "Меньше минуты, не записал"); return; }
+    if (!pick){ toast("Сначала выбери проект"); return; }
+    T().running = {ref:pick, start:new Date().toISOString(), note:$("#noteIn").value.trim(), source:"timer"}; touch();
+  });
+  $("#noteIn").addEventListener("change", () => { const run = T() && T().running; if (run){ run.note = $("#noteIn").value.trim(); touch(); } });
+  $("#addForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const [hh, mm] = $("#aStart").value.split(":").map(Number); const d = fromIso($("#aDate").value); d.setHours(hh||0, mm||0, 0, 0);
+    const dur = Math.max(5, Math.min(720, +$("#aDur").value || 60));
+    const end = new Date(d.getTime() + dur*60000);
+    T().entries.push({id:uid(), ref:$("#aRef").value, start:d.toISOString(), end:end.toISOString(), note:"", source:"manual"});
+    week = isoDate(mondayOf(d)); touch(); toast("Добавил " + fmtH(dur/60) + " ч");
+  });
+  $("#prevW").addEventListener("click", () => { week = shiftWeek(week, -1); render(); });
+  $("#nextW").addEventListener("click", () => { week = shiftWeek(week, 1); render(); });
+
+  /* ---------- шифрование и вход (как на странице пульта) ---------- */
+  const API = "https://pult-api.andreyandreev.workers.dev/state";
+  const SALT = "EkoXzdyMRTfXukBPBImjSw==";
+  const b64 = u => btoa(String.fromCharCode.apply(null, new Uint8Array(u)));
+  const unb64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+  async function deriveKeys(pw){
+    const km = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw), "PBKDF2", false, ["deriveBits"]);
+    const bits = new Uint8Array(await crypto.subtle.deriveBits({name:"PBKDF2", salt:unb64(SALT), iterations:310000, hash:"SHA-256"}, km, 512));
+    const key = await crypto.subtle.importKey("raw", bits.slice(0,32), "AES-GCM", false, ["encrypt","decrypt"]);
+    return {key, authHex: Array.from(bits.slice(32)).map(b => b.toString(16).padStart(2,"0")).join("")};
+  }
+  async function api(method, body){
+    let r;
+    try { r = await fetch(API, {method, headers:{"X-Pult-Key":auth, "Content-Type":"application/json"}, body: body ? JSON.stringify(body) : undefined, cache:"no-store"}); }
+    catch(e){ throw {code:"network", message:"нет связи с хранилищем"}; }
+    if (r.status === 401) throw {code:"unauthorized", message:"неверный пароль"};
+    if (!r.ok) throw {code:"http", message:"хранилище ответило " + r.status};
+    return r.json();
+  }
+  async function loadRemote(){ const d = await api("GET"); if (!d.blob) return null; const pt = await crypto.subtle.decrypt({name:"AES-GCM", iv:unb64(d.blob.iv)}, aesKey, unb64(d.blob.ct)); return JSON.parse(new TextDecoder().decode(pt)); }
+  async function saveRemote(s){ const iv = crypto.getRandomValues(new Uint8Array(12)); const ct = await crypto.subtle.encrypt({name:"AES-GCM", iv}, aesKey, new TextEncoder().encode(JSON.stringify(s))); await api("PUT", {blob:{iv:b64(iv), ct:b64(ct)}}); }
+  function adopt(s){ state = s || {projects:[]}; normalize(); if (!week) week = isoDate(mondayOf(new Date())); render(); }
+  async function unlock(pw, remember){
+    const k = await deriveKeys(pw); aesKey = k.key; auth = k.authHex;
+    const s = await loadRemote();
+    try { if (remember) localStorage.setItem("pult-pw", pw); else localStorage.removeItem("pult-pw"); } catch(e) {}
+    $("#gate").hidden = true; $("#app").hidden = false;
+    adopt(s); setSave("сохранено");
+  }
+  async function refresh(){
+    if (!auth || dirty || saving) return;
+    try { const s = await loadRemote(); if (s && !dirty && !saving && s.updatedAt !== (state && state.updatedAt)) adopt(s); } catch(e) {}
+  }
+  document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") refresh(); });
+  setInterval(() => { if (document.visibilityState === "visible") refresh(); }, 15000);
+  $("#gateForm").addEventListener("submit", async e => {
+    e.preventDefault();
+    const btn = $("#gateBtn"); btn.disabled = true; btn.textContent = "Открываю…"; $("#gateErr").textContent = "";
+    try { await unlock($("#gatePw").value, $("#gateRemember").checked); }
+    catch(err){ auth = null; aesKey = null; $("#gateErr").textContent = err && err.code === "unauthorized" ? "Пароль не подошёл. Проверь раскладку и попробуй ещё раз." : "Не открылось: " + (err && err.message ? err.message : "ошибка") + "."; }
+    finally { btn.disabled = false; btn.textContent = "Открыть"; }
+  });
+  (async function(){
+    let saved = null; try { saved = localStorage.getItem("pult-pw"); } catch(e) {}
+    if (saved){ try { await unlock(saved, true); return; } catch(e){ try{localStorage.removeItem("pult-pw");}catch(_){} } }
+    setTimeout(() => $("#gatePw").focus(), 50);
+  })();
+})();
+</script>
+</body>
+</html>
