@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Пульт Андрея</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#FFFFFF; --surface:#FFFFFF; --gray:#F5F5F5; --blue:#BFDDFB; --blue-soft:#DCEBFC;
+  --blue-deep:#2F80ED; --blue-ink:#1F4F8A; --coral:#E8563F; --ink:#111111; --ink-2:#3A3A3A;
+  --mute:#6B6B6B; --line:#E6E6E6; --ok:#2E9E5B; --warn:#D9A21B; --bad:#E8563F; --none:#C9C9C9;
+  --shadow:0 18px 40px rgba(17,17,17,.10); --drop:rgba(47,128,237,.08);
+  --sans:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#101214; --surface:#16191C; --gray:#1D2125; --blue:#1C3552; --blue-soft:#223E5E;
+    --blue-deep:#6AA8FF; --blue-ink:#A9CBFF; --coral:#F06A53; --ink:#F2F3F4; --ink-2:#C9CDD1;
+    --mute:#8E959C; --line:#2A2F34; --ok:#4CC27E; --warn:#E8B53A; --bad:#F06A53; --none:#4A5056;
+    --shadow:0 18px 40px rgba(0,0,0,.45); --drop:rgba(106,168,255,.10);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#101214; --surface:#16191C; --gray:#1D2125; --blue:#1C3552; --blue-soft:#223E5E;
+  --blue-deep:#6AA8FF; --blue-ink:#A9CBFF; --coral:#F06A53; --ink:#F2F3F4; --ink-2:#C9CDD1;
+  --mute:#8E959C; --line:#2A2F34; --ok:#4CC27E; --warn:#E8B53A; --bad:#F06A53; --none:#4A5056;
+  --shadow:0 18px 40px rgba(0,0,0,.45); --drop:rgba(106,168,255,.10);
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1240px;margin:0 auto;padding-inline:clamp(16px,4vw,48px);padding-block:40px 72px}
+.mono{font-family:var(--mono)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--blue-deep);outline-offset:2px;border-radius:6px}
+
+/* header */
+.kick{font-family:var(--mono);font-size:12.5px;letter-spacing:.03em;color:var(--mute);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.kick .star{color:var(--coral)}
+h1{font-weight:500;letter-spacing:-.045em;line-height:.98;font-size:clamp(44px,7.4vw,96px);margin:18px 0 18px;text-wrap:balance}
+.u{position:relative;white-space:nowrap}
+.u::after{content:"";position:absolute;left:0;right:0;bottom:.05em;height:3px;background:var(--blue-deep)}
+.lead{font-size:clamp(16px,1.6vw,19px);color:var(--ink-2);max-width:62ch;margin:0}
+.lead .dd{font-family:var(--mono);color:var(--blue-deep)}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap}
+.top-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:8px;border-radius:999px;border:0;min-height:38px;padding:0 16px;font-family:var(--mono);font-size:13px;font-weight:500;background:var(--gray);color:var(--ink)}
+.pill:hover{background:var(--blue-soft)}
+.pill.on{background:var(--ink);color:var(--bg)}
+.seg{display:inline-flex;background:var(--gray);border-radius:999px;padding:3px}
+.seg button{border:0;background:transparent;border-radius:999px;padding:7px 14px;font-family:var(--mono);font-size:12.5px;color:var(--mute)}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.save{font-family:var(--mono);font-size:12px;color:var(--mute);min-width:9ch}
+
+/* summary */
+.summary{margin-top:40px;display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:16px}
+@media (max-width:860px){.summary{grid-template-columns:1fr}}
+.panel{border:1px solid var(--line);border-radius:20px;padding:24px;background:var(--surface)}
+.panel.blue{background:var(--blue);border-color:transparent}
+.lbl{font-family:var(--mono);font-size:12px;color:var(--blue-deep);letter-spacing:.02em}
+.panel.blue .lbl{color:var(--blue-ink)}
+.big{font-weight:500;letter-spacing:-.045em;font-size:clamp(40px,5vw,64px);line-height:1;white-space:nowrap;font-variant-numeric:tabular-nums}
+.big small{font-size:.42em;letter-spacing:-.02em;color:var(--mute);font-weight:400}
+.over{color:var(--bad)}
+.okc{color:var(--ok)}
+.headline{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-top:10px}
+.verdict{font-family:var(--mono);font-size:13px;padding:6px 12px;border-radius:999px;background:var(--gray)}
+.verdict.bad{background:var(--coral);color:#fff}
+.bar{position:relative;margin-top:22px;height:44px;border-radius:12px;background:var(--gray);overflow:visible}
+.bar .fill{position:absolute;inset:0;display:flex;border-radius:12px;overflow:hidden}
+.bar .seg-b{height:100%;min-width:2px;border-right:2px solid var(--surface);transition:width .25s ease}
+.bar .cap{position:absolute;top:-8px;bottom:-8px;width:0;border-left:2px dashed var(--ink)}
+.bar .cap span{position:absolute;top:-22px;left:-1px;transform:translateX(-50%);font-family:var(--mono);font-size:11px;color:var(--ink);white-space:nowrap;background:var(--surface);padding:0 4px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px;font-family:var(--mono);font-size:12px;color:var(--ink-2)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.knobs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:20px}
+@media (max-width:520px){.knobs{grid-template-columns:1fr}}
+.knob{background:var(--gray);border-radius:14px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.knob .t{font-size:13px;color:var(--ink-2);line-height:1.25}
+.knob .t b{display:block;font-weight:500;color:var(--ink)}
+.step{display:inline-flex;align-items:center;gap:2px;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.step button{width:28px;height:28px;border-radius:50%;border:1px solid var(--line);background:var(--surface);font-size:15px;line-height:1;display:grid;place-items:center;padding:0}
+.step button:hover{border-color:var(--blue-deep);color:var(--blue-deep)}
+.step output{min-width:4ch;text-align:center;font-size:14px}
+.facts{display:flex;flex-direction:column;gap:14px}
+.fact{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-bottom:1px solid color-mix(in srgb,var(--ink) 12%,transparent);padding-bottom:12px}
+.fact:last-child{border-bottom:0;padding-bottom:0}
+.fact .t{font-size:14px;color:var(--ink-2)}
+.fact .n{font-family:var(--mono);font-size:15px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.alina{margin-top:16px;font-size:14px;color:var(--ink-2);line-height:1.5}
+.alina .dd{font-family:var(--mono);color:var(--blue-ink)}
+
+/* lanes */
+.sec{margin-top:56px}
+.sec-h{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+h2{font-weight:500;letter-spacing:-.035em;font-size:clamp(28px,3.4vw,40px);line-height:1;margin:8px 0 0}
+.lanes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:start}
+@media (max-width:1100px){.lanes{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){.lanes{grid-template-columns:1fr}}
+.lane{background:var(--gray);border-radius:20px;padding:14px;min-height:140px;display:flex;flex-direction:column;gap:10px;transition:background .15s, box-shadow .15s}
+.lane.drop{background:var(--drop);box-shadow:inset 0 0 0 2px var(--blue-deep)}
+.lane.first{background:var(--blue)}
+.lane-h{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;padding:4px 4px 2px}
+.lane-h h3{margin:0;font-weight:500;font-size:18px;letter-spacing:-.02em}
+.lane-h p{margin:4px 0 0;font-size:12.5px;color:var(--ink-2);line-height:1.35}
+.cnt{font-family:var(--mono);font-size:12px;padding:4px 9px;border-radius:999px;background:var(--surface);white-space:nowrap;font-variant-numeric:tabular-nums}
+.cnt.bad{background:var(--coral);color:#fff}
+.lane-hours{font-family:var(--mono);font-size:11.5px;color:var(--mute);padding:0 4px}
+.lane.first .lane-hours,.lane.first .lane-h p{color:var(--blue-ink)}
+.add{border:1px dashed color-mix(in srgb,var(--ink) 25%,transparent);background:transparent;border-radius:14px;padding:10px;font-family:var(--mono);font-size:12.5px;color:var(--mute)}
+.add:hover{border-color:var(--blue-deep);color:var(--blue-deep)}
+
+.card{background:var(--surface);border-radius:16px;padding:14px 14px 12px;border:1px solid var(--line);display:flex;flex-direction:column;gap:10px;box-shadow:0 1px 0 rgba(0,0,0,.02)}
+.card[draggable="true"]{cursor:grab}
+.card.dragging{opacity:.45}
+.card-top{display:flex;gap:10px;align-items:flex-start}
+.dot{flex:none;width:18px;height:18px;border-radius:50%;border:0;padding:0;margin-top:2px;background:var(--none);box-shadow:inset 0 0 0 3px var(--surface)}
+.dot[data-s="green"]{background:var(--ok)}
+.dot[data-s="yellow"]{background:var(--warn)}
+.dot[data-s="red"]{background:var(--bad)}
+.name{border:0;background:transparent;padding:0;text-align:left;font-weight:500;font-size:15.5px;letter-spacing:-.01em;line-height:1.25;flex:1}
+.name:hover{color:var(--blue-deep)}
+.focus{font-size:13.5px;color:var(--ink-2);line-height:1.4;margin:0}
+.focus .dd{font-family:var(--mono);color:var(--blue-deep)}
+.meta{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.chips{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.chip{font-family:var(--mono);font-size:11.5px;border-radius:999px;padding:4px 9px;background:var(--gray);border:0;white-space:nowrap}
+button.chip:hover{background:var(--blue-soft)}
+.chip.hands{background:var(--ink);color:var(--bg)}
+.chip.tony{background:var(--blue);color:var(--ink)}
+.msgs{font-family:var(--mono);font-size:11.5px;color:var(--mute);overflow-wrap:anywhere}
+.chips .msgs{white-space:nowrap}
+.hrs{display:inline-flex;align-items:center;gap:2px;font-family:var(--mono);font-size:12.5px;font-variant-numeric:tabular-nums}
+.hrs button{width:24px;height:24px;border-radius:50%;border:1px solid var(--line);background:var(--surface);padding:0;display:grid;place-items:center;font-size:13px}
+.hrs button:hover{border-color:var(--blue-deep);color:var(--blue-deep)}
+.hrs output{min-width:5ch;text-align:center}
+.est{color:var(--mute)}
+
+.fixed{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
+@media (max-width:620px){.fixed{grid-template-columns:1fr}}
+.sand{border:1px solid var(--line);border-radius:20px;padding:16px 18px;display:flex;justify-content:space-between;gap:12px;align-items:center}
+.sand h4{margin:0;font-weight:500;font-size:16px}
+.sand p{margin:3px 0 0;font-size:13px;color:var(--ink-2)}
+
+.note{margin-top:56px;border-top:1px solid var(--line);padding-top:20px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;color:var(--mute)}
+.note p{margin:0;max-width:70ch;line-height:1.55}
+.banner{margin-top:24px;border-radius:14px;padding:12px 16px;background:var(--gray);font-size:14px;color:var(--ink-2)}
+.skeleton .card{min-height:92px;background:color-mix(in srgb,var(--surface) 70%,var(--gray))}
+
+/* dialog */
+dialog{border:0;border-radius:22px;padding:0;width:min(560px,calc(100vw - 32px));background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+dialog::backdrop{background:rgba(10,12,14,.45)}
+.dlg{padding:24px;display:flex;flex-direction:column;gap:14px}
+.dlg h3{margin:0;font-weight:500;font-size:22px;letter-spacing:-.02em}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-family:var(--mono);font-size:12px;color:var(--mute)}
+.field input,.field textarea,.field select{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg);width:100%}
+.field textarea{min-height:76px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:460px){.row2{grid-template-columns:1fr}}
+.dlg-actions{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:6px}
+.btn{border:0;border-radius:999px;min-height:40px;padding:0 18px;font-family:var(--mono);font-size:13px;font-weight:500;background:var(--gray)}
+.btn.primary{background:var(--coral);color:#fff}
+.btn.ghost{background:transparent;color:var(--bad)}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+<style>
+.gate{min-height:100vh;display:grid;place-items:center;padding-inline:16px;padding-block:40px;background:var(--bg)}
+.gate-box{width:min(420px,100%);display:flex;flex-direction:column;gap:14px}
+.gate h1{font-size:clamp(48px,10vw,72px);margin:6px 0 4px}
+.gate input[type=password]{border:1px solid var(--line);border-radius:14px;padding:14px 16px;font-size:17px;background:var(--surface);width:100%}
+.gate .remember{display:flex;gap:8px;align-items:center;font-size:14px;color:var(--ink-2)}
+.gate .btn.primary{min-height:48px;font-size:14px}
+.gate .err{min-height:20px;font-size:14px;color:var(--bad)}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+
+
+<div class="gate" id="gate">
+  <form class="gate-box" id="gateForm" autocomplete="on">
+    <div class="kick"><span class="star">✳</span><span>Пульт управления проектами</span></div>
+    <h1>Пульт <span class="u">Андрея</span></h1>
+    <label class="field" for="gatePw"><span class="mono" style="font-size:12px;color:var(--mute)">Пароль</span></label>
+    <input id="gatePw" type="password" autocomplete="current-password" required>
+    <label class="remember" for="gateRemember"><input id="gateRemember" type="checkbox" checked> Запомнить на этом устройстве</label>
+    <button type="submit" class="btn primary" id="gateBtn">Открыть</button>
+    <div class="err" id="gateErr" aria-live="polite"></div>
+  </form>
+</div>
+<div id="app" hidden>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="kick"><span class="star">✳</span><span>Пульт управления проектами</span><span>·</span><span id="weekLabel">неделя</span></div>
+      <h1>Где <span class="u">передоз</span></h1>
+      <p class="lead"><span class="dd">::</span> Все проекты в одной банке. Большие камни, маленькие, фан и призраки. Часы складываются сами, красный цвет виден сразу.</p>
+    </div>
+    <div class="top-actions">
+      <div class="seg" role="group" aria-label="Вид">
+        <button type="button" id="viewBank" aria-pressed="true">Банка</button>
+        <button type="button" id="viewMoscow" aria-pressed="false">MoSCoW</button>
+      </div>
+      <button type="button" class="pill" id="newWeek">Новая неделя</button>
+      <span class="save" id="saveState" aria-live="polite"></span>
+    </div>
+  </header>
+
+  <div id="banner" class="banner" hidden></div>
+
+  <section class="summary" aria-label="Сводка недели">
+    <div class="panel">
+      <div class="lbl">Часы недели · план против ёмкости</div>
+      <div class="headline">
+        <div class="big" id="hoursBig">—</div>
+        <div class="verdict" id="verdict">считаю</div>
+      </div>
+      <div class="bar" id="bar" aria-hidden="true"><div class="fill" id="barFill"></div><div class="cap" id="capLine"><span id="capLabel"></span></div></div>
+      <div class="legend" id="legend"></div>
+      <div class="knobs">
+        <div class="knob"><div class="t"><b>Ёмкость</b>часов в неделю</div><div class="step"><button type="button" data-knob="capacity" data-d="-1" aria-label="Меньше ёмкость">−</button><output id="k-capacity">0</output><button type="button" data-knob="capacity" data-d="1" aria-label="Больше ёмкость">+</button></div></div>
+        <div class="knob"><div class="t"><b>Налог</b>созвоны, планёрки</div><div class="step"><button type="button" data-knob="tax" data-d="-1" aria-label="Меньше налог">−</button><output id="k-tax">0</output><button type="button" data-knob="tax" data-d="1" aria-label="Больше налог">+</button></div></div>
+        <div class="knob"><div class="t"><b>Окна хаоса</b>буфер на мелочи</div><div class="step"><button type="button" data-knob="chaos" data-d="-1" aria-label="Меньше окон хаоса">−</button><output id="k-chaos">0</output><button type="button" data-knob="chaos" data-d="1" aria-label="Больше окон хаоса">+</button></div></div>
+      </div>
+    </div>
+    <div class="panel blue">
+      <div class="lbl">Банка · лимиты и руки</div>
+      <div class="facts" style="margin-top:14px">
+        <div class="fact"><span class="t">Большие камни</span><span class="n" id="f-big">—</span></div>
+        <div class="fact"><span class="t">Маленькие камни</span><span class="n" id="f-small">—</span></div>
+        <div class="fact"><span class="t">Руками делаешь сам</span><span class="n" id="f-hands">—</span></div>
+        <div class="fact"><span class="t">Красные фокусы</span><span class="n" id="f-red">—</span></div>
+      </div>
+      <p class="alina" id="alina"></p>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="bankTitle">
+    <div class="sec-h">
+      <div>
+        <div class="kick"><span class="star">✳</span><span id="bankKick">Банка · перетаскивай карточки между полосами</span></div>
+        <h2 id="bankTitle">Что лежит в банке</h2>
+      </div>
+    </div>
+    <div class="lanes" id="lanes"></div>
+  </section>
+
+  <footer class="note">
+    <p>Метод из краш-курса Школы ченджеров «Затаскивание проектов в срок»: пульт Миры, банка с камнями, хронометраж Алины. Часы со знаком ≈ — черновая оценка Тони по переписке за 13–19 сентября. Поправишь цифру, и знак уйдёт.</p>
+    <p id="updated"></p>
+  </footer>
+</div>
+
+<dialog id="dlg" aria-labelledby="dlgTitle">
+  <form class="dlg" id="dlgForm" method="dialog">
+    <h3 id="dlgTitle">Проект</h3>
+    <div class="field"><label for="f_name">Название</label><input id="f_name" required maxlength="80"></div>
+    <div class="field"><label for="f_focus">Фокус недели</label><textarea id="f_focus" maxlength="280"></textarea></div>
+    <div class="row2">
+      <div class="field"><label for="f_lane">Полоса банки</label><select id="f_lane"></select></div>
+      <div class="field"><label for="f_moscow">MoSCoW</label><select id="f_moscow"></select></div>
+    </div>
+    <div class="row2">
+      <div class="field"><label for="f_hours">Часов в неделю</label><input id="f_hours" type="number" min="0" max="80" step="0.5" inputmode="decimal"></div>
+      <div class="field"><label for="f_owner">Кто делает</label><select id="f_owner"></select></div>
+    </div>
+    <div class="field"><label for="f_note">Заметка</label><input id="f_note" maxlength="140"></div>
+    <div class="dlg-actions">
+      <button type="button" class="btn ghost" id="dlgDelete">Удалить проект</button>
+      <div style="display:flex;gap:8px">
+        <button type="button" class="btn" id="dlgCancel">Отмена</button>
+        <button type="submit" class="btn primary" id="dlgSave">Сохранить</button>
+      </div>
+    </div>
+  </form>
+</dialog>
+</div>
+
+<script>
+(function(){
+  const LANES = [
+    {id:"big",   title:"Большие камни",   hint:"Съедают основной ресурс недели. Приоритет по умолчанию.", limitKey:"big", color:"var(--blue-deep)"},
+    {id:"small", title:"Маленькие камни", hint:"Важные, но небольшие. Место маленького занимает другой маленький.", limitKey:"small", color:"color-mix(in srgb, var(--blue-deep) 45%, var(--surface))"},
+    {id:"fan",   title:"Фан",             hint:"Весело и сам придумал. Риск чёрной дыры: время утекает незаметно.", color:"var(--warn)"},
+    {id:"ghost", title:"Призраки",        hint:"Не в пульте, но часы едят. Срочняки, инфра, мелочи из лички.", color:"var(--bad)"}
+  ];
+  const MOSCOW = [
+    {id:"must", title:"Must", hint:"Без этого неделя провалена."},
+    {id:"should", title:"Should", hint:"Важно, но переживёт перенос."},
+    {id:"could", title:"Could", hint:"Хорошо бы, если останется время."},
+    {id:"would", title:"Would", hint:"Когда-нибудь. На этой неделе можно отпустить."}
+  ];
+  const OWNERS = [
+    {id:"hands", label:"руками"},
+    {id:"decide", label:"решаю"},
+    {id:"tony", label:"Тони"},
+    {id:"person", label:"человек"}
+  ];
+  const STATUS = ["none","green","yellow","red"];
+  const STATUS_LABEL = {none:"не отмечен", green:"идёт по плану", yellow:"под риском", red:"горит"};
+
+  let state = null;       // {week, capacity, tax, chaos, limits:{big,small}, projects:[...], updatedAt}
+  let view = "bank";
+  let aesKey = null, auth = null;
+  let dirty = false, saving = false, saveTimer = null;
+  let editingId = null;
+  const $ = s => document.querySelector(s);
+
+  try { const v = localStorage.getItem("pult-view"); if (v === "bank" || v === "moscow") view = v; } catch(e) {}
+
+  function fmtH(n){ const r = Math.round(n*2)/2; return (Number.isInteger(r) ? String(r) : r.toFixed(1).replace(".", ",")); }
+  function esc(s){ return String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+  function clone(o){ return JSON.parse(JSON.stringify(o)); }
+  function uid(){ return "p" + Math.random().toString(36).slice(2,9); }
+
+  function setSave(t){ $("#saveState").textContent = t; }
+
+  function touch(){
+    state.updatedAt = new Date().toISOString();
+    dirty = true; setSave("сохраняю…");
+    render();
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(flush, 700);
+  }
+  async function flush(){
+    if (!auth || !dirty) { if (!auth) setSave("не сохранится"); return; }
+    if (saving) { clearTimeout(saveTimer); saveTimer = setTimeout(flush, 400); return; }
+    saving = true; dirty = false;
+    try { await saveRemote(clone(state)); setSave(dirty ? "сохраняю…" : "сохранено"); }
+    catch(e){
+      dirty = true;
+      if (e && e.code === "network") { setTimeout(flush, 800 + Math.random()*800); }
+      else { setSave("не сохранилось"); showBanner("Изменения не сохранились: " + (e && e.message ? e.message : "ошибка хранилища") + ". Обнови страницу."); }
+    } finally { saving = false; if (dirty) { clearTimeout(saveTimer); saveTimer = setTimeout(flush, 400); } }
+  }
+  function showBanner(t){ const b = $("#banner"); b.textContent = t; b.hidden = false; }
+
+  /* ---------- derived numbers ---------- */
+  function totals(){
+    const p = state.projects;
+    const byLane = {}; LANES.forEach(l => byLane[l.id] = 0);
+    p.forEach(x => byLane[x.lane] = (byLane[x.lane]||0) + (+x.hours||0));
+    const projH = p.reduce((a,x)=>a+(+x.hours||0),0);
+    const plan = projH + (+state.tax||0) + (+state.chaos||0);
+    const important = p.filter(x => x.moscow==="must"||x.moscow==="should").reduce((a,x)=>a+(+x.hours||0),0);
+    const leak = p.filter(x => x.lane==="fan"||x.lane==="ghost").reduce((a,x)=>a+(+x.hours||0),0);
+    return {byLane, projH, plan, important, leak,
+      big: p.filter(x=>x.lane==="big").length, small: p.filter(x=>x.lane==="small").length,
+      hands: p.filter(x=>x.owner==="hands"), red: p.filter(x=>x.status==="red").length,
+      anyEst: p.some(x=>x.est)};
+  }
+
+  /* ---------- render ---------- */
+  function render(){
+    if (!state) return;
+    const t = totals();
+    $("#weekLabel").textContent = state.week || "неделя";
+    ["capacity","tax","chaos"].forEach(k => $("#k-"+k).textContent = fmtH(+state[k]||0));
+
+    const cap = +state.capacity||0, over = t.plan - cap;
+    $("#hoursBig").innerHTML = (t.anyEst ? "≈" : "") + fmtH(t.plan) + " <small>из " + fmtH(cap) + " ч</small>";
+    $("#hoursBig").classList.toggle("over", over > 0);
+    const v = $("#verdict");
+    if (over > 0){ v.textContent = "Передоз +" + fmtH(over) + " ч"; v.className = "verdict bad"; }
+    else { v.textContent = "Запас " + fmtH(-over) + " ч"; v.className = "verdict"; }
+
+    // bar
+    const segs = [
+      {k:"tax", label:"Налог", h:+state.tax||0, color:"var(--mute)"},
+      {k:"chaos", label:"Окна хаоса", h:+state.chaos||0, color:"color-mix(in srgb, var(--mute) 45%, var(--surface))"}
+    ].concat(LANES.map(l => ({k:l.id, label:l.title, h:t.byLane[l.id]||0, color:l.color})));
+    const scale = Math.max(t.plan, cap, 1);
+    $("#barFill").innerHTML = segs.filter(s=>s.h>0).map(s =>
+      '<div class="seg-b" title="'+esc(s.label)+': '+fmtH(s.h)+' ч" style="width:'+(s.h/scale*100)+'%;background:'+s.color+'"></div>').join("");
+    const capLine = $("#capLine"); capLine.style.left = (cap/scale*100) + "%";
+    $("#capLabel").textContent = "ёмкость " + fmtH(cap);
+    $("#legend").innerHTML = segs.map(s => '<span><i style="background:'+s.color+'"></i>'+esc(s.label)+' '+fmtH(s.h)+'</span>').join("");
+
+    const lim = state.limits || {big:2, small:4};
+    const fb = $("#f-big"); fb.textContent = t.big + " из " + lim.big; fb.className = "n" + (t.big > lim.big ? " over" : "");
+    const fs = $("#f-small"); fs.textContent = t.small + " из " + lim.small; fs.className = "n" + (t.small > lim.small ? " over" : "");
+    const handsH = t.hands.reduce((a,x)=>a+(+x.hours||0),0);
+    $("#f-hands").textContent = t.hands.length + " · " + fmtH(handsH) + " ч";
+    $("#f-red").textContent = String(t.red);
+    const pct = t.projH ? Math.round(t.important / t.projH * 100) : 0;
+    $("#alina").innerHTML = '<span class="dd">::</span> На Must и Should уходит ' + fmtH(t.important) + ' ч из ' + fmtH(t.projH) + ' проектных (' + pct + '%). Фан и призраки забирают ' + fmtH(t.leak) + ' ч. У Алины из курса было 24 из 47.';
+
+    renderLanes(t);
+    $("#viewBank").setAttribute("aria-pressed", view==="bank");
+    $("#viewMoscow").setAttribute("aria-pressed", view==="moscow");
+    $("#bankKick").textContent = view==="bank" ? "Банка · перетаскивай карточки между полосами" : "MoSCoW · что обязательно, а что можно отпустить";
+    $("#bankTitle").textContent = view==="bank" ? "Что лежит в банке" : "Что обязательно на этой неделе";
+    if (state.updatedAt){ const d = new Date(state.updatedAt); $("#updated").textContent = "обновлено " + d.toLocaleString("ru-RU",{day:"numeric",month:"long",hour:"2-digit",minute:"2-digit"}); }
+  }
+
+  function groups(){ return view==="bank" ? LANES : MOSCOW; }
+  function keyOf(p){ return view==="bank" ? p.lane : p.moscow; }
+
+  function renderLanes(t){
+    const lim = state.limits || {big:2, small:4};
+    const host = $("#lanes");
+    host.innerHTML = groups().map((g, i) => {
+      const items = state.projects.filter(p => keyOf(p) === g.id);
+      const hours = items.reduce((a,x)=>a+(+x.hours||0),0);
+      const limit = view==="bank" && g.limitKey ? lim[g.limitKey] : null;
+      const cntBad = limit != null && items.length > limit;
+      const cnt = limit != null ? items.length + " / " + limit : String(items.length);
+      return '<div class="lane' + (i===0 ? " first" : "") + '" data-group="'+g.id+'">' +
+        '<div class="lane-h"><div><h3>'+esc(g.title)+'</h3><p>'+esc(g.hint)+'</p></div><span class="cnt'+(cntBad?" bad":"")+'" title="'+(cntBad?"Больше лимита":"Карточек")+'">'+cnt+'</span></div>' +
+        '<div class="lane-hours">'+fmtH(hours)+' ч в неделю</div>' +
+        items.map(cardHTML).join("") +
+        '<button type="button" class="add" data-add="'+g.id+'">+ проект</button>' +
+      '</div>';
+    }).join("");
+  }
+
+  function cardHTML(p){
+    const owner = OWNERS.find(o=>o.id===p.owner) || OWNERS[0];
+    const ocls = p.owner==="hands" ? " hands" : (p.owner==="tony" ? " tony" : "");
+    const ms = MOSCOW.find(m=>m.id===p.moscow);
+    const lane = LANES.find(l=>l.id===p.lane);
+    const tag = view==="bank" ? (ms ? ms.title : "") : (lane ? lane.title : "");
+    return '<article class="card" draggable="true" data-id="'+p.id+'">' +
+      '<div class="card-top">' +
+        '<button type="button" class="dot" data-status="'+p.id+'" data-s="'+(p.status||"none")+'" aria-label="Статус: '+STATUS_LABEL[p.status||"none"]+'. Нажми, чтобы сменить" title="'+STATUS_LABEL[p.status||"none"]+'"></button>' +
+        '<button type="button" class="name" data-edit="'+p.id+'">'+esc(p.name)+'</button>' +
+      '</div>' +
+      (p.focus ? '<p class="focus"><span class="dd">::</span> '+esc(p.focus)+'</p>' : '') +
+      '<div class="meta">' +
+        '<div class="chips">' +
+          '<button type="button" class="chip'+ocls+'" data-owner="'+p.id+'" title="Кто делает. Нажми, чтобы сменить">'+esc(owner.label)+'</button>' +
+          (tag ? '<span class="chip">'+esc(tag)+'</span>' : '') +
+          (p.msgs != null ? '<span class="msgs" title="Сообщений Андрея в треде за 13–19.09">'+p.msgs+' сообщ.</span>' : '') +
+        '</div>' +
+        '<div class="hrs"><button type="button" data-h="'+p.id+'" data-d="-1" aria-label="Минус час">−</button><output class="'+(p.est?"est":"")+'">'+(p.est?"≈":"")+fmtH(+p.hours||0)+' ч</output><button type="button" data-h="'+p.id+'" data-d="1" aria-label="Плюс час">+</button></div>' +
+      '</div>' +
+      (p.note ? '<div class="msgs">'+esc(p.note)+'</div>' : '') +
+    '</article>';
+  }
+
+  function renderFixed(){
+    $("#fixed").innerHTML =
+      '<div class="sand"><div><h4>Налог</h4><p>Созвоны и встречи, без которых перестаёшь понимать картину. Держать маленьким.</p></div><div class="step"><button type="button" data-knob="tax" data-d="-1" aria-label="Меньше налог">−</button><output>'+fmtH(+state.tax||0)+'</output><button type="button" data-knob="tax" data-d="1" aria-label="Больше налог">+</button></div></div>' +
+      '<div class="sand"><div><h4>Окна хаоса</h4><p>Запланированное отсутствие плана: сюда падают мелочи, чтобы не рвать камни.</p></div><div class="step"><button type="button" data-knob="chaos" data-d="-1" aria-label="Меньше окон хаоса">−</button><output>'+fmtH(+state.chaos||0)+'</output><button type="button" data-knob="chaos" data-d="1" aria-label="Больше окон хаоса">+</button></div></div>';
+  }
+
+  /* ---------- interactions ---------- */
+  function find(id){ return state && state.projects.find(p => p.id === id); }
+
+  document.addEventListener("click", e => {
+    if (!state) return;
+    const b = e.target.closest("button"); if (!b) return;
+    if (b.dataset.knob){ const k = b.dataset.knob; state[k] = Math.max(0, Math.min(k==="capacity"?80:40, (+state[k]||0) + (+b.dataset.d))); touch(); return; }
+    if (b.dataset.status){ const p = find(b.dataset.status); const i = STATUS.indexOf(p.status||"none"); p.status = STATUS[(i+1)%STATUS.length]; touch(); return; }
+    if (b.dataset.owner){ const p = find(b.dataset.owner); const i = OWNERS.findIndex(o=>o.id===p.owner); p.owner = OWNERS[(i+1)%OWNERS.length].id; touch(); return; }
+    if (b.dataset.h){ const p = find(b.dataset.h); p.hours = Math.max(0, Math.min(80, (+p.hours||0) + (+b.dataset.d))); p.est = false; touch(); return; }
+    if (b.dataset.edit){ openDlg(b.dataset.edit); return; }
+    if (b.dataset.add){ openDlg(null, b.dataset.add); return; }
+  });
+
+  // drag and drop
+  let dragId = null;
+  document.addEventListener("dragstart", e => {
+    const c = e.target.closest && e.target.closest(".card"); if (!c) return;
+    dragId = c.dataset.id; c.classList.add("dragging");
+    try { e.dataTransfer.setData("text/plain", dragId); e.dataTransfer.effectAllowed = "move"; } catch(_) {}
+  });
+  document.addEventListener("dragend", e => { const c = e.target.closest && e.target.closest(".card"); if (c) c.classList.remove("dragging"); document.querySelectorAll(".lane.drop").forEach(l=>l.classList.remove("drop")); dragId = null; });
+  document.addEventListener("dragover", e => { const l = e.target.closest && e.target.closest(".lane"); if (!l || !dragId) return; e.preventDefault(); document.querySelectorAll(".lane.drop").forEach(x=>{ if (x!==l) x.classList.remove("drop"); }); l.classList.add("drop"); });
+  document.addEventListener("drop", e => {
+    const l = e.target.closest && e.target.closest(".lane"); if (!l || !dragId) return; e.preventDefault();
+    const p = find(dragId); if (!p) return;
+    const g = l.dataset.group;
+    if (view==="bank") { if (p.lane !== g) { p.lane = g; touch(); } }
+    else { if (p.moscow !== g) { p.moscow = g; touch(); } }
+    l.classList.remove("drop");
+  });
+
+  $("#viewBank").addEventListener("click", () => { view = "bank"; try{localStorage.setItem("pult-view", view);}catch(e){} render(); });
+  $("#viewMoscow").addEventListener("click", () => { view = "moscow"; try{localStorage.setItem("pult-view", view);}catch(e){} render(); });
+
+  $("#newWeek").addEventListener("click", () => {
+    if (!state) return;
+    if (!confirm("Начать новую неделю? Статусы фокусов сбросятся, проекты и часы останутся.")) return;
+    state.projects.forEach(p => { p.status = "none"; });
+    state.week = shiftWeek(state.week);
+    touch();
+  });
+  function shiftWeek(label){
+    const m = /(\d{1,2})\s*[–-]\s*(\d{1,2})\s+([а-яё]+)/i.exec(label || "");
+    const months = ["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"];
+    const now = new Date();
+    let start;
+    if (m){ const mi = months.indexOf(m[3].toLowerCase()); const endDay = +m[2]; const end = new Date(now.getFullYear(), mi < 0 ? now.getMonth() : mi, endDay); start = new Date(end); start.setDate(end.getDate() + 1); }
+    else { start = new Date(now); const dow = (start.getDay()+6)%7; start.setDate(start.getDate() - dow + 7); }
+    const end = new Date(start); end.setDate(start.getDate()+6);
+    return "неделя " + start.getDate() + (start.getMonth()!==end.getMonth() ? " " + months[start.getMonth()] : "") + "–" + end.getDate() + " " + months[end.getMonth()];
+  }
+
+  // dialog
+  const dlg = $("#dlg");
+  function fillSelect(sel, arr, labelKey){ sel.innerHTML = arr.map(a => '<option value="'+a.id+'">'+esc(a[labelKey])+'</option>').join(""); }
+  fillSelect($("#f_lane"), LANES, "title");
+  fillSelect($("#f_moscow"), MOSCOW, "title");
+  fillSelect($("#f_owner"), OWNERS, "label");
+  function openDlg(id, group){
+    editingId = id;
+    const p = id ? find(id) : null;
+    $("#dlgTitle").textContent = p ? "Проект" : "Новый проект";
+    $("#f_name").value = p ? p.name : "";
+    $("#f_focus").value = p ? (p.focus||"") : "";
+    $("#f_lane").value = p ? p.lane : (view==="bank" && group ? group : "small");
+    $("#f_moscow").value = p ? (p.moscow||"should") : (view==="moscow" && group ? group : "should");
+    $("#f_hours").value = p ? (+p.hours||0) : 2;
+    $("#f_owner").value = p ? (p.owner||"hands") : "decide";
+    $("#f_note").value = p ? (p.note||"") : "";
+    $("#dlgDelete").hidden = !p;
+    if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open","");
+    setTimeout(()=>$("#f_name").focus(), 30);
+  }
+  $("#dlgCancel").addEventListener("click", () => dlg.close());
+  $("#dlgDelete").addEventListener("click", () => {
+    const p = find(editingId); if (!p) return;
+    if (!confirm("Удалить «" + p.name + "» из пульта?")) return;
+    state.projects = state.projects.filter(x => x.id !== editingId); dlg.close(); touch();
+  });
+  $("#dlgForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const name = $("#f_name").value.trim(); if (!name) { $("#f_name").focus(); return; }
+    const hours = Math.max(0, Math.min(80, parseFloat(String($("#f_hours").value).replace(",", ".")) || 0));
+    let p = editingId ? find(editingId) : null;
+    if (!p){ p = {id: uid(), status:"none", msgs:null, est:false}; state.projects.push(p); }
+    if (p.hours !== hours) p.est = false;
+    Object.assign(p, {name, focus:$("#f_focus").value.trim(), lane:$("#f_lane").value, moscow:$("#f_moscow").value, hours, owner:$("#f_owner").value, note:$("#f_note").value.trim()});
+    dlg.close(); touch();
+  });
+
+  /* ---------- boot ---------- */
+  function skeleton(){
+    $("#lanes").innerHTML = LANES.map((g,i) => '<div class="lane skeleton'+(i===0?" first":"")+'"><div class="lane-h"><div><h3>'+g.title+'</h3><p>'+g.hint+'</p></div></div><div class="card"></div></div>').join("");
+  }
+  skeleton();
+  setSave("загружаю…");
+
+  const API = "https://pult-api.andreyandreev.workers.dev/state";
+  const SALT = "EkoXzdyMRTfXukBPBImjSw==";
+  const b64 = u => btoa(String.fromCharCode.apply(null, new Uint8Array(u)));
+  const unb64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+  async function deriveKeys(pw){
+    const km = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw), "PBKDF2", false, ["deriveBits"]);
+    const bits = new Uint8Array(await crypto.subtle.deriveBits({name:"PBKDF2", salt:unb64(SALT), iterations:310000, hash:"SHA-256"}, km, 512));
+    const key = await crypto.subtle.importKey("raw", bits.slice(0,32), "AES-GCM", false, ["encrypt","decrypt"]);
+    const authHex = Array.from(bits.slice(32)).map(b => b.toString(16).padStart(2,"0")).join("");
+    return {key, authHex};
+  }
+  async function api(method, body){
+    let r;
+    try { r = await fetch(API, {method, headers:{"X-Pult-Key":auth, "Content-Type":"application/json"}, body: body ? JSON.stringify(body) : undefined, cache:"no-store"}); }
+    catch(e){ throw {code:"network", message:"нет связи с хранилищем"}; }
+    if (r.status === 401) throw {code:"unauthorized", message:"неверный пароль"};
+    if (!r.ok) throw {code:"http", message:"хранилище ответило " + r.status};
+    return r.json();
+  }
+  async function loadRemote(){
+    const d = await api("GET");
+    if (!d.blob) return null;
+    const pt = await crypto.subtle.decrypt({name:"AES-GCM", iv:unb64(d.blob.iv)}, aesKey, unb64(d.blob.ct));
+    return JSON.parse(new TextDecoder().decode(pt));
+  }
+  async function saveRemote(s){
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+    const ct = await crypto.subtle.encrypt({name:"AES-GCM", iv}, aesKey, new TextEncoder().encode(JSON.stringify(s)));
+    await api("PUT", {blob:{iv:b64(iv), ct:b64(ct)}});
+  }
+  function adopt(s){
+    state = s || {week:shiftWeek(""), capacity:30, tax:3, chaos:5, limits:{big:2,small:4}, projects:[]};
+    state.projects = state.projects || [];
+    state.limits = state.limits || {big:2, small:4};
+    render();
+  }
+  async function unlock(pw, remember){
+    const k = await deriveKeys(pw);
+    aesKey = k.key; auth = k.authHex;
+    const s = await loadRemote();
+    try { if (remember) localStorage.setItem("pult-pw", pw); else localStorage.removeItem("pult-pw"); } catch(e) {}
+    $("#gate").hidden = true; $("#app").hidden = false;
+    adopt(s); setSave("сохранено");
+    if (!s) showBanner("Пульт пока пустой. Добавь проект кнопкой «+ проект».");
+  }
+  async function refresh(){
+    if (!auth || dirty || saving) return;
+    try { const s = await loadRemote(); if (s && !dirty && !saving && s.updatedAt !== (state && state.updatedAt)) adopt(s); } catch(e) {}
+  }
+  document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") refresh(); });
+  $("#gateForm").addEventListener("submit", async e => {
+    e.preventDefault();
+    const btn = $("#gateBtn"); btn.disabled = true; btn.textContent = "Открываю…"; $("#gateErr").textContent = "";
+    try { await unlock($("#gatePw").value, $("#gateRemember").checked); }
+    catch(err){ auth = null; aesKey = null; $("#gateErr").textContent = err && err.code === "unauthorized" ? "Пароль не подошёл. Проверь раскладку и попробуй ещё раз." : "Не открылось: " + (err && err.message ? err.message : "ошибка") + "."; }
+    finally { btn.disabled = false; btn.textContent = "Открыть"; }
+  });
+  (async function(){
+    let saved = null; try { saved = localStorage.getItem("pult-pw"); } catch(e) {}
+    if (saved){ try { await unlock(saved, true); return; } catch(e){ try{localStorage.removeItem("pult-pw");}catch(_){} } }
+    setSave(""); setTimeout(() => $("#gatePw").focus(), 50);
+  })();
+})();
+</script>
+
+</body>
+</html>
