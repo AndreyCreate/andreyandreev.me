@@ -143,6 +143,8 @@ button.chip:hover{background:var(--blue-soft)}
 .hrs button:hover{border-color:var(--blue-deep);color:var(--blue-deep)}
 .hrs output{min-width:5ch;text-align:center}
 .est{color:var(--mute)}
+.ts{display:inline-block;font-family:var(--mono);font-size:11.5px;color:var(--blue-deep);text-decoration:none;border-bottom:1px dotted color-mix(in srgb,var(--blue-deep) 50%,transparent);align-self:flex-start}
+.ts:hover{color:var(--ink);border-bottom-color:var(--ink)}
 
 .fixed{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
 @media (max-width:620px){.fixed{grid-template-columns:1fr}}
@@ -475,6 +477,18 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     }).join("");
   }
 
+  const MON_SHORT = ["янв","фев","мар","апр","мая","июн","июл","авг","сен","окт","ноя","дек"];
+  function plural(n, one, few, many){ const a = Math.abs(n)%100, b = a%10; return n + " " + (a>10&&a<20 ? many : b===1 ? one : b>=2&&b<=4 ? few : many); }
+  function tsLine(p){
+    const t = (state.timestripe && state.timestripe.by_project || {})[p.id];
+    if (!t) return "";
+    const d = t.next && new Date(t.next.date + "T00:00:00");
+    const today = new Date(); today.setHours(0,0,0,0);
+    const when = !d ? "" : (d.getTime() === today.getTime() ? "сегодня" : d.getTime() === today.getTime()+864e5 ? "завтра" : d.getDate() + " " + MON_SHORT[d.getMonth()]);
+    const over = t.overdue ? ' · <span style="color:var(--bad)">' + plural(t.overdue, "просрочена", "просрочены", "просрочено") + '</span>' : "";
+    const body = t.open ? plural(t.open, "задача", "задачи", "задач") + (when ? " · ближайшая " + when : "") + over : "задач нет";
+    return '<a class="ts" href="' + t.url + '" target="_blank" rel="noopener" title="' + esc(t.next ? t.next.name : (t.board||"")) + '">' + body + '</a>';
+  }
   function cardHTML(p){
     const owner = OWNERS.find(o=>o.id===p.owner) || OWNERS[0];
     const ocls = p.owner==="hands" ? " hands" : (p.owner==="tony" ? " tony" : "");
@@ -497,6 +511,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
           : '<div class="hrs"><button type="button" data-h="'+p.id+'" data-d="-1" aria-label="Минус час">−</button><output class="'+(p.est?"est":"")+'">'+(p.est?"≈":"")+fmtH(+p.hours||0)+' ч</output><button type="button" data-h="'+p.id+'" data-d="1" aria-label="Плюс час">+</button></div>') +
       '</div>' +
       (p.note ? '<div class="msgs">'+esc(p.note)+'</div>' : '') +
+      tsLine(p) +
     '</article>';
   }
 
