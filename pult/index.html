@@ -264,6 +264,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
         <div class="fact"><span class="t">Маленькие камни</span><span class="n" id="f-small">—</span></div>
         <div class="fact"><span class="t">Руками делаешь сам</span><span class="n" id="f-hands">—</span></div>
         <div class="fact"><span class="t">Красные фокусы</span><span class="n" id="f-red">—</span></div>
+        <div class="fact"><span class="t">Работа / отдых</span><span class="n" id="f-rest">—</span></div>
       </div>
       <p class="alina" id="alina"></p>
     </div>
@@ -328,7 +329,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     {id:"small", title:"Маленькие камни", hint:"Важные, но небольшие. Место маленького занимает другой маленький.", limitKey:"small", color:"color-mix(in srgb, var(--blue-deep) 45%, var(--surface))"},
     {id:"fan",   title:"Фан",             hint:"Весело и сам придумал. Риск чёрной дыры: время утекает незаметно.", color:"var(--warn)"},
     {id:"ghost", title:"Призраки",        hint:"Не в пульте, но часы едят. Срочняки, инфра, мелочи из лички.", color:"var(--bad)"},
-    {id:"personal", title:"Личное",       hint:"Вне рабочей ёмкости: тренировки и своё время. В часы недели не входит.", color:"var(--ok)", personal:true}
+    {id:"personal", title:"Отдых",        hint:"Тренировки и своё время. В рабочую ёмкость не входит, считается отдельно.", color:"var(--ok)", personal:true}
   ];
   const MOSCOW = [
     {id:"must", title:"Must", hint:"Без этого неделя провалена."},
@@ -444,6 +445,8 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     const handsH = t.hands.reduce((a,x)=>a+projHours(x),0);
     $("#f-hands").textContent = t.hands.length + " · " + fmtH(handsH) + " ч";
     $("#f-red").textContent = String(t.red);
+    const restH = state.projects.filter(p => !isWork(p)).reduce((a,p)=>a+projHours(p),0);
+    $("#f-rest").textContent = fmtH(t.plan) + " / " + fmtH(restH) + " ч" + (restH > 0 ? " · " + fmtH(t.plan/restH) + " к 1" : " · отдыха нет");
     const pct = t.projH ? Math.round(t.important / t.projH * 100) : 0;
     $("#alina").innerHTML = '<span class="dd">::</span> На Must и Should уходит ' + fmtH(t.important) + ' ч из ' + fmtH(t.projH) + ' проектных (' + pct + '%). Фан и призраки забирают ' + fmtH(t.leak) + ' ч. У Алины из курса было 24 из 47.';
 
@@ -528,7 +531,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     });
     const personal = state.projects.filter(p => !isWork(p));
     if (personal.length){
-      rows += '<tr class="lanehead"><td class="act">Личное · вне ёмкости</td><td colspan="8"></td></tr>';
+      rows += '<tr class="lanehead"><td class="act">Отдых · вне рабочей ёмкости</td><td colspan="8"></td></tr>';
       personal.forEach(p => {
         rows += '<tr class="fixedrow"><td class="act"><i style="background:var(--ok)"></i>'+esc(p.name)+(p.focus?'<small>'+esc(p.focus)+'</small>':'')+'</td>' + cellRow("c-"+p.id, p.days, 'data-p="'+p.id+'"') + '<td class="wk">'+fmtH(projHours(p))+'</td></tr>';
       });
@@ -541,6 +544,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
       '<tr class="sum"><td class="act">Итого по дням</td>' + dayTot.map((v,i) => '<td class="'+(v > (+state.dayCap[i]||0) ? "over" : "")+'">'+(v?fmtH(v):"·")+'</td>').join("") + '<td class="'+(totAll>capAll?"over":"")+'">'+fmtH(totAll)+'</td></tr>' +
       '<tr><td class="act">Ёмкость дня</td>' + cellRow("cap", state.dayCap, 'data-cap="1"').replace(/class="cell/g,'class="cell cap-cell') + '<td>'+fmtH(capAll)+'</td></tr>' +
       '<tr><td class="act">Запас</td>' + dayTot.map((v,i) => { const r = (+state.dayCap[i]||0) - v; return '<td class="'+(r<0?"over":(r>0?"okd":""))+'">'+(r>0?"+":"")+fmtH(r)+'</td>'; }).join("") + '<td class="'+(capAll-totAll<0?"over":"")+'">'+fmtH(capAll-totAll)+'</td></tr>' +
+ (personal.length ? '<tr><td class="act">Отдых по дням</td>' + DAYS.map((_,i) => { const v = personal.reduce((a,p)=>a+(+p.days[i]||0),0); return '<td class="okd">'+(v?fmtH(v):"·")+'</td>'; }).join("") + '<td class="okd">'+fmtH(personal.reduce((a,p)=>a+projHours(p),0))+'</td></tr>' : '') +
       (unplanned ? '<tr><td class="act" colspan="9" style="font-family:var(--mono);font-size:12px;color:var(--mute)">Ещё не разложено по дням: ≈'+fmtH(unplanned)+' ч оценки</td></tr>' : '') +
       '</tfoot>';
     $("#planWrap").innerHTML = '<table class="plan">' + head + '<tbody>' + rows + '</tbody>' + foot + '</table>';

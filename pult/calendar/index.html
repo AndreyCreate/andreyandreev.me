@@ -250,6 +250,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
 .blk.small{background:var(--blue);color:var(--ink)}
 .blk.fan{background:color-mix(in srgb,var(--warn) 28%,var(--surface));color:var(--ink)}
 .blk.ghost{background:color-mix(in srgb,var(--bad) 18%,var(--surface));color:var(--ink);border-color:color-mix(in srgb,var(--bad) 45%,transparent)}
+.blk.rest{background:color-mix(in srgb,var(--ok) 22%,var(--surface));color:var(--ink);border-color:color-mix(in srgb,var(--ok) 45%,transparent)}
 .blk.fixed{background:var(--gray);color:var(--ink-2);border-color:var(--line)}
 .blk.short{padding:3px 8px;flex-direction:row;align-items:center;gap:6px}
 .blk.short .m{display:none}
@@ -360,7 +361,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
   const LANE_ORDER = ["big","small","fan","ghost"];
   const FIXED = {tax:"Налог · созвоны", chaos:"Окна хаоса"};
   const STATUS = {plan:"Запланировано", done:"Сделано", miss:"Не случилось"};
-  const STEP = 30, PX_PER_MIN = 1.1, VIEW_START = 600, VIEW_END = 1080; // на экране 10:00–18:00
+  const STEP = 30, PX_PER_MIN = 1.0, VIEW_START = 540, VIEW_END = 1260; // на экране 09:00–21:00: отдых можно ставить и вне рабочего окна
   let state = null, aesKey = null, auth = null, dirty = false, saving = false, saveTimer = null;
   let week = null; // ISO понедельника открытой недели
 
@@ -391,20 +392,26 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     if (ref === "e") return {ref, name: title || "Событие", kind:"ev"};
     if (ref.startsWith("f:")) return {ref, name: FIXED[ref.slice(2)] || ref, kind:"fixed", days: state.fixed[ref.slice(2)]};
     const p = state.projects.find(x => "p:" + x.id === ref);
-    return p ? {ref, name:p.name, kind:p.lane, days:p.days, proj:p} : {ref, name:"Удалённый проект", kind:"fixed"};
+    return p ? {ref, name:p.name, kind: p.lane === "personal" ? "rest" : p.lane, days:p.days, proj:p} : {ref, name:"Удалённый проект", kind:"fixed"};
   }
   function baseRefs(){
     return workProjects().map(p => ({ref:"p:"+p.id, name:p.name, kind:p.lane, days:p.days, est:!(p.days||[]).some(x=>+x>0), hours:projHours(p)}))
       .concat(["tax","chaos"].map(k => ({ref:"f:"+k, name:FIXED[k], kind:"fixed", days:state.fixed[k], est:false, hours:sum(state.fixed[k])})));
   }
+  function isRest(ref){ const p = ref && ref.startsWith("p:") && state.projects.find(x => "p:" + x.id === ref); return !!(p && p.lane === "personal"); }
+  function restRefs(){ return state.projects.filter(p => p.lane === "personal").map(p => ({ref:"p:"+p.id, name:p.name, kind:"rest", days:p.days, est:false, hours:projHours(p)})); }
   function dayOpen(d){ return (+state.dayCap[d]||0) > 0; }
   function busy(d, exceptId){
     const c = cal(); const iv = [[c.lunch.start, c.lunch.start + c.lunch.dur]];
     slots().forEach(b => { if (b.day===d && b.start!=null && b.id!==exceptId) iv.push([b.start, b.start+b.dur]); });
     return iv.sort((a,b)=>a[0]-b[0]);
   }
-  function fits(d, start, dur, exceptId){
+  function fits(d, start, dur, exceptId, ref){
     const c = cal();
+    if (isRest(ref)){
+      if (start < VIEW_START || start + dur > VIEW_END) return false;
+      return !slots().some(b => b.day===d && b.start!=null && b.id!==exceptId && start < b.start + b.dur && start + dur > b.start);
+    }
     if (!dayOpen(d) || start < c.dayStart || start + dur > c.dayEnd) return false;
     return !busy(d, exceptId).some(([a,b]) => start < b && start + dur > a);
   }
@@ -465,11 +472,12 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     const S = slots();
     const workMin = c.dayEnd - c.dayStart - c.lunch.dur;
     const dayLoad = DAYS.map((_,d) => S.filter(b=>b.day===d && b.start!=null).reduce((x,b)=>x+b.dur,0));
+    const dayWork = DAYS.map((_,d) => S.filter(b=>b.day===d && b.start!=null && !isRest(b.ref)).reduce((x,b)=>x+b.dur,0));
     const dayOver = DAYS.map((_,d) => S.filter(b=>b.day===d && b.start==null).reduce((x,b)=>x+b.dur,0));
     let html = '<div class="corner"></div>';
     DAYS.forEach((dn,d) => {
       const dt = new Date(a); dt.setDate(a.getDate()+d);
-      const lo = dayOpen(d) ? fmtH(dayLoad[d]/60) + " из " + fmtH(workMin/60) + " ч" + (dayOver[d] ? " · +" + fmtH(dayOver[d]/60) + " не влезло" : "") : "не рабочий";
+      const lo = dayOpen(d) ? fmtH(dayWork[d]/60) + " из " + fmtH(workMin/60) + " ч" + (dayOver[d] ? " · +" + fmtH(dayOver[d]/60) + " не влезло" : "") : "не рабочий";
       html += '<div class="dh'+(isoDate(dt)===todayIso?" today":"")+'">'+dn+'<b>'+dt.getDate()+'</b><span class="load'+(dayOver[d]?" over":"")+'">'+lo+'</span></div>';
     });
     let times = '<div class="times" style="height:'+H+'px">';
@@ -496,20 +504,23 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
 
     // лоток: сколько часов шаблона ещё не стоит в календаре
     const planned = {}; S.forEach(b => { planned[b.ref] = (planned[b.ref]||0) + b.dur/60; });
-    const rest = baseRefs().map(r => ({...r, left: r.hours - (planned[r.ref]||0)})).filter(r => r.left > 0.01);
+    const rest = baseRefs().concat(restRefs()).map(r => ({...r, left: r.hours - (planned[r.ref]||0)})).filter(r => r.left > 0.01);
     $("#tray").innerHTML = w ? '<span class="lbl">Перетащи в календарь</span>' + (rest.length ? rest.map(r =>
-      '<span class="chipd" data-new="'+r.ref+'" tabindex="0"><i style="background:'+(LANES[r.kind] ? LANES[r.kind].color : "var(--mute)")+'"></i>'+esc(r.name)+'<span class="h">'+(r.est?"≈":"")+'осталось '+fmtH(r.left)+' ч</span></span>').join("") : '<span class="empty">всё из шаблона уже стоит в календаре</span>') : "";
+      '<span class="chipd" data-new="'+r.ref+'" tabindex="0"><i style="background:'+(r.kind==="rest" ? "var(--ok)" : LANES[r.kind] ? LANES[r.kind].color : "var(--mute)")+'"></i>'+(r.kind==="rest"?"Отдых · ":"")+esc(r.name)+'<span class="h">'+(r.est?"≈":"")+'осталось '+fmtH(r.left)+' ч</span></span>').join("") : '<span class="empty">всё из шаблона уже стоит в календаре</span>') : "";
 
-    const total = sum(dayLoad)/60, capH = DAYS.reduce((x,_,d)=>x + (dayOpen(d) ? workMin/60 : 0), 0), overAll = sum(dayOver)/60;
-    const doneH = S.filter(b=>b.status==="done").reduce((x,b)=>x+b.dur,0)/60;
+    const restMin = S.filter(b => b.start!=null && isRest(b.ref)).reduce((x,b)=>x+b.dur,0);
+    const total = (sum(dayLoad) - restMin)/60, capH = DAYS.reduce((x,_,d)=>x + (dayOpen(d) ? workMin/60 : 0), 0), overAll = sum(dayOver)/60;
+    const doneH = S.filter(b=>b.status==="done" && !isRest(b.ref)).reduce((x,b)=>x+b.dur,0)/60;
     $("#stats").innerHTML =
       '<div class="stat"><span>В календаре</span><b>'+fmtH(total)+' ч</b></div>' +
       '<div class="stat"><span>Рабочее окно</span><b>'+fmtH(capH)+' ч</b></div>' +
       '<div class="stat'+(overAll?" bad":"")+'"><span>Не влезло</span><b>'+fmtH(overAll)+' ч</b></div>' +
-      '<div class="stat"><span>Сделано</span><b>'+fmtH(doneH)+' ч</b></div>';
+      '<div class="stat"><span>Сделано</span><b>'+fmtH(doneH)+' ч</b></div>' +
+      '<div class="stat"><span>Отдых</span><b style="color:var(--ok)">'+fmtH(restMin/60)+' ч</b></div>' +
+      '<div class="stat"><span>Работа к отдыху</span><b>'+(restMin ? fmtH(total/(restMin/60)) + ' к 1' : '—')+'</b></div>';
     const overList = S.filter(b=>b.start==null);
     $("#overTray").innerHTML = overList.length ? '<div class="over-tray"><b>Не влезло в рабочее окно:</b> ' + overList.map(b => esc(refInfo(b.ref,b.title).name) + ' — ' + DAYS[b.day] + ' ' + fmtH(b.dur/60) + ' ч').join("; ") + '. Сократи часы в пульте или перенеси блоки на другие дни, потом нажми «Собрать из пульта».</div>' : '';
-    $("#legend2").innerHTML = LANE_ORDER.map(l => '<span><i style="background:'+LANES[l].color+'"></i>'+LANES[l].title+'</span>').join("") + '<span><i style="background:var(--gray);border:1px solid var(--line)"></i>Налог и окна хаоса</span><span><i style="background:var(--ink)"></i>Свои события</span>';
+    $("#legend2").innerHTML = LANE_ORDER.map(l => '<span><i style="background:'+LANES[l].color+'"></i>'+LANES[l].title+'</span>').join("") + '<span><i style="background:var(--gray);border:1px solid var(--line)"></i>Налог и окна хаоса</span><span><i style="background:var(--ink)"></i>Свои события</span><span><i style="background:var(--ok)"></i>Отдых</span>';
     renderReview();
     if (state.updatedAt){ const dd = new Date(state.updatedAt); $("#updated").textContent = "обновлено " + dd.toLocaleString("ru-RU",{day:"numeric",month:"long",hour:"2-digit",minute:"2-digit"}); }
   }
@@ -525,11 +536,13 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     });
     baseRefs().forEach(br => { if (rows[br.ref]) rows[br.ref].base = br.hours; });
     const order = Object.values(rows).sort((x,y) => {
-      const rank = k => ({big:0,small:1,fan:2,ghost:3,fixed:4,ev:5})[k] ?? 6;
+      const rank = k => ({big:0,small:1,fan:2,ghost:3,fixed:4,ev:5,rest:7})[k] ?? 6;
       return rank(x.info.kind) - rank(y.info.kind);
     });
-    let T = {plan:0, done:0, miss:0, base:0};
+    let T = {plan:0, done:0, miss:0, base:0}, R = {plan:0, done:0};
+    restRefs().forEach(br => { if (rows[br.ref]) rows[br.ref].base = br.hours; });
     const body = order.map(r => {
+      if (r.info.kind === "rest"){ R.plan += r.plan; R.done += r.done; return '<tr><td><i style="background:var(--ok)"></i>Отдых · '+esc(r.info.name)+'</td><td>'+(r.base!=null?fmtH(r.base):"—")+'</td><td>'+fmtH(r.plan)+'</td><td>'+fmtH(r.done)+'</td><td>'+fmtH(r.miss)+'</td><td class="pct">—</td></tr>'; }
       T.plan += r.plan; T.done += r.done; T.miss += r.miss; T.base += r.base || 0;
       const pct = r.plan ? Math.round(r.done / r.plan * 100) : 0;
       const col = LANES[r.info.kind] ? LANES[r.info.kind].color : (r.info.kind==="ev" ? "var(--ink)" : "var(--mute)");
@@ -537,7 +550,8 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     }).join("");
     const tp = T.plan ? Math.round(T.done / T.plan * 100) : 0;
     $("#review").innerHTML = '<table><thead><tr><th>Деятельность</th><th>Шаблон, ч</th><th>В календаре, ч</th><th>Сделано, ч</th><th>Не случилось, ч</th><th>Выполнено</th></tr></thead><tbody>' + body +
-      '</tbody><tfoot><tr><td>Итого</td><td>'+fmtH(T.base)+'</td><td>'+fmtH(T.plan)+'</td><td>'+fmtH(T.done)+'</td><td>'+fmtH(T.miss)+'</td><td class="pct">'+(T.done||T.miss ? tp+"%" : "—")+'</td></tr></tfoot></table>';
+      '</tbody><tfoot><tr><td>Итого работа</td><td>'+fmtH(T.base)+'</td><td>'+fmtH(T.plan)+'</td><td>'+fmtH(T.done)+'</td><td>'+fmtH(T.miss)+'</td><td class="pct">'+(T.done||T.miss ? tp+"%" : "—")+'</td></tr>' +
+      '<tr><td>Отдых · работа к отдыху</td><td></td><td>'+fmtH(R.plan)+'</td><td>'+fmtH(R.done)+'</td><td></td><td class="pct">'+(R.plan ? fmtH(T.plan/R.plan)+" к 1" : "—")+'</td></tr></tfoot></table>';
   }
 
   /* ---------- перетаскивание ---------- */
@@ -551,7 +565,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     g.className = "ghostblk" + (ok ? "" : " bad"); g.textContent = hm(start) + "–" + hm(start+dur) + (ok ? "" : " · нельзя");
   }
   function clearGhost(){ const g = $(".ghostblk"); if (g) g.remove(); }
-  function whyNot(t){ const c = cal(); return !dayOpen(t.day) ? "Это не рабочий день" : (t.start < c.dayStart || t.start + t.dur > c.dayEnd) ? "Только с " + hm(c.dayStart) + " до " + hm(c.dayEnd) : "Там занято или обед"; }
+  function whyNot(t){ const c = cal(); if (isRest(t.ref)) return "Там уже что-то стоит"; return !dayOpen(t.day) ? "Это не рабочий день" : (t.start < c.dayStart || t.start + t.dur > c.dayEnd) ? "Только с " + hm(c.dayStart) + " до " + hm(c.dayEnd) : "Там занято или обед"; }
 
   document.addEventListener("pointerdown", e => {
     if (!state || !wk() || e.button > 0) return;
@@ -578,13 +592,14 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     if (drag.mode === "resize"){
       const b = slots().find(s => s.id === drag.id); const col = document.querySelector('.col[data-day="'+b.day+'"]');
       const end = Math.max(b.start + STEP, minuteAt(col, e.clientY, 0));
-      drag.target = {day:b.day, start:b.start, dur:end - b.start}; drag.ok = fits(b.day, b.start, end - b.start, b.id);
+      drag.target = {day:b.day, start:b.start, dur:end - b.start, ref:b.ref}; drag.ok = fits(b.day, b.start, end - b.start, b.id, b.ref);
       showGhost(col, b.start, end - b.start, drag.ok); return;
     }
     const col = colAt(e.clientX, e.clientY);
     if (!col){ clearGhost(); drag.target = null; return; }
     const d = +col.dataset.day, start = minuteAt(col, e.clientY, drag.offset);
-    drag.target = {day:d, start, dur:drag.dur}; drag.ok = fits(d, start, drag.dur, drag.id);
+    const dref = drag.ref || ((slots().find(s => s.id === drag.id) || {}).ref);
+    drag.target = {day:d, start, dur:drag.dur, ref:dref}; drag.ok = fits(d, start, drag.dur, drag.id, dref);
     showGhost(col, start, drag.dur, drag.ok);
   });
   document.addEventListener("pointerup", e => {
@@ -626,7 +641,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
       if (bt.dataset.pd){
         const nd = b.dur + (+bt.dataset.pd);
         if (nd < STEP){ toast("Короче получаса нельзя, лучше убери блок"); return; }
-        if (!fits(b.day, b.start, nd, b.id)){ toast("Дальше занято или конец рабочего окна"); return; }
+        if (!fits(b.day, b.start, nd, b.id, b.ref)){ toast("Дальше занято или конец окна"); return; }
         b.dur = nd; touch(); openPop(id, x, yy);
       }
     });
@@ -635,9 +650,10 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
   function openNew(d, start, x, yy){
     closePop();
     const c = cal();
-    if (!dayOpen(d)){ toast("Это не рабочий день"); return; }
-    start = Math.max(c.dayStart, Math.min(c.dayEnd - STEP, start));
-    const opts = baseRefs().map(r => '<option value="'+r.ref+'">'+esc(r.name)+'</option>').join("") + '<option value="e">Своё событие…</option>';
+    start = Math.max(VIEW_START, Math.min(VIEW_END - STEP, start));
+    const opts = (dayOpen(d) && start >= c.dayStart && start < c.dayEnd ? baseRefs().map(r => '<option value="'+r.ref+'">'+esc(r.name)+'</option>').join("") + '<option value="e">Своё событие…</option>' : '') +
+      restRefs().map(r => '<option value="'+r.ref+'">Отдых · '+esc(r.name)+'</option>').join("");
+    if (!opts){ toast("Здесь можно ставить только отдых, а его в пульте нет"); return; }
     const p = document.createElement("div"); p.className = "pop"; p.style.width = "260px"; p.setAttribute("role","dialog"); p.setAttribute("aria-label","Новый блок");
     p.innerHTML = '<h4>Новый блок</h4><div class="m">'+DAYS[d]+' · с '+hm(start)+'</div>' +
       '<label class="m" for="nbRef">Что</label><select id="nbRef">'+opts+'</select>' +
@@ -653,7 +669,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
       if (bt.dataset.padd){
         const dur = +p.querySelector("#nbDur").value, ref = sel.value;
         if (ref === "e" && !ti.value.trim()){ ti.focus(); return; }
-        if (!fits(d, start, dur)){ toast(whyNot({day:d, start, dur})); return; }
+        if (!fits(d, start, dur, null, ref)){ toast(whyNot({day:d, start, dur, ref})); return; }
         const b = {id:uid(), ref, day:d, start, dur, status:"plan"}; if (ref === "e") b.title = ti.value.trim();
         slots().push(b); closePop(); touch();
       }
