@@ -665,7 +665,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
   setSave("загружаю…");
 
   const API = "https://pult-api.andreyandreev.workers.dev/state";
-  const SALT = "EkoXzdyMRTfXukBPBImjSw==";
+  const SALT = "+0C1r7qMsaADBTDQIiMucQ==";
   const b64 = u => btoa(String.fromCharCode.apply(null, new Uint8Array(u)));
   const unb64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
   async function deriveKeys(pw){
