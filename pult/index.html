@@ -709,6 +709,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     try { const s = await loadRemote(); if (s && !dirty && !saving && s.updatedAt !== (state && state.updatedAt)) adopt(s); } catch(e) {}
   }
   document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") refresh(); });
+  setInterval(() => { if (document.visibilityState === "visible") refresh(); }, 20000); // правки с другого устройства и от Тони
   $("#gateForm").addEventListener("submit", async e => {
     e.preventDefault();
     const btn = $("#gateBtn"); btn.disabled = true; btn.textContent = "Открываю…"; $("#gateErr").textContent = "";
