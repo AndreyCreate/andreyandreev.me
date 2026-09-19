@@ -147,6 +147,33 @@ button.chip:hover{background:var(--blue-soft)}
 .sand h4{margin:0;font-weight:500;font-size:16px}
 .sand p{margin:3px 0 0;font-size:13px;color:var(--ink-2)}
 
+.plan-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:20px;background:var(--surface)}
+table.plan{border-collapse:separate;border-spacing:0;width:100%;min-width:760px;font-variant-numeric:tabular-nums}
+.plan th,.plan td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:center;white-space:nowrap}
+.plan thead th{font-family:var(--mono);font-size:11.5px;font-weight:500;color:var(--mute);padding-block:12px;background:var(--surface);line-height:1.25}
+.plan thead th.wkend{color:color-mix(in srgb,var(--mute) 70%,transparent)}
+.plan th.act,.plan td.act{position:sticky;left:0;z-index:1;background:var(--surface);text-align:left;min-width:210px;max-width:260px;white-space:normal;border-right:1px solid var(--line)}
+.plan td.act{font-size:14px;font-weight:500;line-height:1.25;padding-left:14px}
+.plan td.act i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px;vertical-align:1px}
+.plan td.act small{display:block;font-family:var(--mono);font-size:10.5px;font-weight:400;color:var(--mute);margin-top:2px}
+.plan tr.lanehead td{background:var(--gray);font-family:var(--mono);font-size:11px;color:var(--mute);text-align:left;padding-block:7px;padding-left:14px}
+.plan tr.lanehead td.act{background:var(--gray)}
+.plan tr.fixedrow td{background:color-mix(in srgb,var(--gray) 55%,var(--surface))}
+.plan tr.fixedrow td.act{background:color-mix(in srgb,var(--gray) 55%,var(--surface));font-weight:400;color:var(--ink-2)}
+.cell{width:52px;height:34px;border:1px solid transparent;border-radius:9px;background:var(--gray);text-align:center;font-family:var(--mono);font-size:13px;padding:0 4px}
+.cell:hover{border-color:var(--line)}
+.cell:focus{outline:none;border-color:var(--blue-deep);background:var(--surface)}
+.cell.filled{background:var(--blue-soft)}
+.cap-cell{background:transparent;border:1px dashed color-mix(in srgb,var(--ink) 25%,transparent)}
+.plan td.wk{font-family:var(--mono);font-size:13px;min-width:64px}
+.plan td.wk.est{color:var(--mute)}
+.plan tfoot td{font-family:var(--mono);font-size:13px;border-bottom:0}
+.plan tfoot tr.sum td{border-top:2px solid var(--ink);font-weight:500}
+.plan tfoot td.act{font-family:var(--sans);font-size:13.5px}
+.plan .over{color:var(--bad);font-weight:600}
+.plan .okd{color:var(--ok)}
+.plan-hint{font-size:13.5px;color:var(--ink-2);margin:0 0 14px;max-width:70ch}
+.plan-hint .dd{font-family:var(--mono);color:var(--blue-deep)}
 .note{margin-top:56px;border-top:1px solid var(--line);padding-top:20px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;color:var(--mute)}
 .note p{margin:0;max-width:70ch;line-height:1.55}
 .banner{margin-top:24px;border-radius:14px;padding:12px 16px;background:var(--gray);font-size:14px;color:var(--ink-2)}
@@ -223,11 +250,8 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
       </div>
       <div class="bar" id="bar" aria-hidden="true"><div class="fill" id="barFill"></div><div class="cap" id="capLine"><span id="capLabel"></span></div></div>
       <div class="legend" id="legend"></div>
-      <div class="knobs">
-        <div class="knob"><div class="t"><b>Ёмкость</b>часов в неделю</div><div class="step"><button type="button" data-knob="capacity" data-d="-1" aria-label="Меньше ёмкость">−</button><output id="k-capacity">0</output><button type="button" data-knob="capacity" data-d="1" aria-label="Больше ёмкость">+</button></div></div>
-        <div class="knob"><div class="t"><b>Налог</b>созвоны, планёрки</div><div class="step"><button type="button" data-knob="tax" data-d="-1" aria-label="Меньше налог">−</button><output id="k-tax">0</output><button type="button" data-knob="tax" data-d="1" aria-label="Больше налог">+</button></div></div>
-        <div class="knob"><div class="t"><b>Окна хаоса</b>буфер на мелочи</div><div class="step"><button type="button" data-knob="chaos" data-d="-1" aria-label="Меньше окон хаоса">−</button><output id="k-chaos">0</output><button type="button" data-knob="chaos" data-d="1" aria-label="Больше окон хаоса">+</button></div></div>
-      </div>
+      <p class="plan-hint" style="margin:18px 0 0"><span class="dd">::</span> Ёмкость, налог и окна хаоса задаются по дням в сетке «План недели» ниже.</p>
+    </div>
     </div>
     <div class="panel blue">
       <div class="lbl">Банка · лимиты и руки</div>
@@ -239,6 +263,17 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
       </div>
       <p class="alina" id="alina"></p>
     </div>
+  </section>
+
+  <section class="sec" aria-labelledby="planTitle">
+    <div class="sec-h">
+      <div>
+        <div class="kick"><span class="star">✳</span><span>План недели · часы по дням</span></div>
+        <h2 id="planTitle">Сколько часов в какой день</h2>
+      </div>
+    </div>
+    <p class="plan-hint"><span class="dd">::</span> Впиши часы по каждой деятельности, можно дробные: 1,5. Строка «Итого» краснеет, если день не влезает в ёмкость. Пока дни не заполнены, в колонке «Неделя» стоит моя оценка со знаком ≈.</p>
+    <div class="plan-wrap" id="planWrap"></div>
   </section>
 
   <section class="sec" aria-labelledby="bankTitle">
@@ -319,6 +354,20 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
   function clone(o){ return JSON.parse(JSON.stringify(o)); }
   function uid(){ return "p" + Math.random().toString(36).slice(2,9); }
 
+  const DAYS = ["Пн","Вт","Ср","Чт","Пт","Сб","Вс"];
+  const MONTHS = ["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"];
+  const sum = a => (Array.isArray(a) ? a : []).reduce((x,y)=>x+(+y||0),0);
+  function hasDays(p){ return Array.isArray(p.days) && p.days.some(x => +x > 0); }
+  function projHours(p){ return hasDays(p) ? sum(p.days) : (+p.hours||0); }
+  function parseH(v){ const n = parseFloat(String(v).replace(",", ".").trim()); return isFinite(n) && n > 0 ? Math.min(24, Math.round(n*2)/2) : 0; }
+  function isoDate(d){ return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); }
+  function fromIso(s){ const [y,m,d] = String(s).split("-").map(Number); return new Date(y, (m||1)-1, d||1); }
+  function nextMonday(){ const d = new Date(); const dow = (d.getDay()+6)%7; d.setDate(d.getDate() - dow + 7); return isoDate(d); }
+  function weekLabelFrom(start){
+    const a = fromIso(start), b = new Date(a); b.setDate(a.getDate()+6);
+    return "неделя " + a.getDate() + (a.getMonth()!==b.getMonth() ? " " + MONTHS[a.getMonth()] : "") + "–" + b.getDate() + " " + MONTHS[b.getMonth()];
+  }
+  function dayDates(){ const a = fromIso(state.weekStart); return DAYS.map((_,i)=>{ const d = new Date(a); d.setDate(a.getDate()+i); return d.getDate(); }); }
   function setSave(t){ $("#saveState").textContent = t; }
 
   function touch(){
@@ -345,25 +394,26 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
   function totals(){
     const p = state.projects;
     const byLane = {}; LANES.forEach(l => byLane[l.id] = 0);
-    p.forEach(x => byLane[x.lane] = (byLane[x.lane]||0) + (+x.hours||0));
-    const projH = p.reduce((a,x)=>a+(+x.hours||0),0);
-    const plan = projH + (+state.tax||0) + (+state.chaos||0);
-    const important = p.filter(x => x.moscow==="must"||x.moscow==="should").reduce((a,x)=>a+(+x.hours||0),0);
-    const leak = p.filter(x => x.lane==="fan"||x.lane==="ghost").reduce((a,x)=>a+(+x.hours||0),0);
+    p.forEach(x => byLane[x.lane] = (byLane[x.lane]||0) + projHours(x));
+    const projH = p.reduce((a,x)=>a+projHours(x),0);
+    const plan = projH + sum(state.fixed.tax) + sum(state.fixed.chaos);
+    const important = p.filter(x => x.moscow==="must"||x.moscow==="should").reduce((a,x)=>a+projHours(x),0);
+    const leak = p.filter(x => x.lane==="fan"||x.lane==="ghost").reduce((a,x)=>a+projHours(x),0);
     return {byLane, projH, plan, important, leak,
       big: p.filter(x=>x.lane==="big").length, small: p.filter(x=>x.lane==="small").length,
       hands: p.filter(x=>x.owner==="hands"), red: p.filter(x=>x.status==="red").length,
-      anyEst: p.some(x=>x.est)};
+      anyEst: p.some(x=>x.est && !hasDays(x))};
   }
 
   /* ---------- render ---------- */
   function render(){
     if (!state) return;
+    const ae = document.activeElement, aeId = ae && ae.id && ae.classList.contains("cell") ? ae.id : null;
     const t = totals();
-    $("#weekLabel").textContent = state.week || "неделя";
-    ["capacity","tax","chaos"].forEach(k => $("#k-"+k).textContent = fmtH(+state[k]||0));
+    state.week = weekLabelFrom(state.weekStart);
+    $("#weekLabel").textContent = state.week;
 
-    const cap = +state.capacity||0, over = t.plan - cap;
+    const cap = sum(state.dayCap), over = t.plan - cap;
     $("#hoursBig").innerHTML = (t.anyEst ? "≈" : "") + fmtH(t.plan) + " <small>из " + fmtH(cap) + " ч</small>";
     $("#hoursBig").classList.toggle("over", over > 0);
     const v = $("#verdict");
@@ -372,8 +422,8 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
 
     // bar
     const segs = [
-      {k:"tax", label:"Налог", h:+state.tax||0, color:"var(--mute)"},
-      {k:"chaos", label:"Окна хаоса", h:+state.chaos||0, color:"color-mix(in srgb, var(--mute) 45%, var(--surface))"}
+      {k:"tax", label:"Налог", h:sum(state.fixed.tax), color:"var(--mute)"},
+      {k:"chaos", label:"Окна хаоса", h:sum(state.fixed.chaos), color:"color-mix(in srgb, var(--mute) 45%, var(--surface))"}
     ].concat(LANES.map(l => ({k:l.id, label:l.title, h:t.byLane[l.id]||0, color:l.color})));
     const scale = Math.max(t.plan, cap, 1);
     $("#barFill").innerHTML = segs.filter(s=>s.h>0).map(s =>
@@ -385,17 +435,19 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     const lim = state.limits || {big:2, small:4};
     const fb = $("#f-big"); fb.textContent = t.big + " из " + lim.big; fb.className = "n" + (t.big > lim.big ? " over" : "");
     const fs = $("#f-small"); fs.textContent = t.small + " из " + lim.small; fs.className = "n" + (t.small > lim.small ? " over" : "");
-    const handsH = t.hands.reduce((a,x)=>a+(+x.hours||0),0);
+    const handsH = t.hands.reduce((a,x)=>a+projHours(x),0);
     $("#f-hands").textContent = t.hands.length + " · " + fmtH(handsH) + " ч";
     $("#f-red").textContent = String(t.red);
     const pct = t.projH ? Math.round(t.important / t.projH * 100) : 0;
     $("#alina").innerHTML = '<span class="dd">::</span> На Must и Should уходит ' + fmtH(t.important) + ' ч из ' + fmtH(t.projH) + ' проектных (' + pct + '%). Фан и призраки забирают ' + fmtH(t.leak) + ' ч. У Алины из курса было 24 из 47.';
 
+    renderPlan();
     renderLanes(t);
     $("#viewBank").setAttribute("aria-pressed", view==="bank");
     $("#viewMoscow").setAttribute("aria-pressed", view==="moscow");
     $("#bankKick").textContent = view==="bank" ? "Банка · перетаскивай карточки между полосами" : "MoSCoW · что обязательно, а что можно отпустить";
     $("#bankTitle").textContent = view==="bank" ? "Что лежит в банке" : "Что обязательно на этой неделе";
+    if (aeId){ const el = document.getElementById(aeId); if (el){ el.focus(); try{ el.select(); }catch(e){} } }
     if (state.updatedAt){ const d = new Date(state.updatedAt); $("#updated").textContent = "обновлено " + d.toLocaleString("ru-RU",{day:"numeric",month:"long",hour:"2-digit",minute:"2-digit"}); }
   }
 
@@ -407,7 +459,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     const host = $("#lanes");
     host.innerHTML = groups().map((g, i) => {
       const items = state.projects.filter(p => keyOf(p) === g.id);
-      const hours = items.reduce((a,x)=>a+(+x.hours||0),0);
+      const hours = items.reduce((a,x)=>a+projHours(x),0);
       const limit = view==="bank" && g.limitKey ? lim[g.limitKey] : null;
       const cntBad = limit != null && items.length > limit;
       const cnt = limit != null ? items.length + " / " + limit : String(items.length);
@@ -438,10 +490,47 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
           (tag ? '<span class="chip">'+esc(tag)+'</span>' : '') +
           (p.msgs != null ? '<span class="msgs" title="Сообщений Андрея в треде за 13–19.09">'+p.msgs+' сообщ.</span>' : '') +
         '</div>' +
-        '<div class="hrs"><button type="button" data-h="'+p.id+'" data-d="-1" aria-label="Минус час">−</button><output class="'+(p.est?"est":"")+'">'+(p.est?"≈":"")+fmtH(+p.hours||0)+' ч</output><button type="button" data-h="'+p.id+'" data-d="1" aria-label="Плюс час">+</button></div>' +
+        (hasDays(p) ? '<div class="hrs"><output title="Сумма по дням из плана недели">'+fmtH(projHours(p))+' ч</output></div>'
+          : '<div class="hrs"><button type="button" data-h="'+p.id+'" data-d="-1" aria-label="Минус час">−</button><output class="'+(p.est?"est":"")+'">'+(p.est?"≈":"")+fmtH(+p.hours||0)+' ч</output><button type="button" data-h="'+p.id+'" data-d="1" aria-label="Плюс час">+</button></div>') +
       '</div>' +
       (p.note ? '<div class="msgs">'+esc(p.note)+'</div>' : '') +
     '</article>';
+  }
+
+  function renderPlan(){
+    const dd = dayDates();
+    const head = '<thead><tr><th class="act" scope="col">Деятельность</th>' + DAYS.map((d,i) => '<th scope="col" class="'+(i>4?"wkend":"")+'">'+d+'<br>'+dd[i]+'</th>').join("") + '<th scope="col">Неделя</th></tr></thead>';
+    const cellRow = (idPrefix, arr, attrs) => DAYS.map((_,i) => {
+      const v = +(arr && arr[i]) || 0;
+      return '<td><input class="cell'+(v>0?" filled":"")+'" id="'+idPrefix+'-'+i+'" '+attrs+' data-d="'+i+'" inputmode="decimal" autocomplete="off" aria-label="'+DAYS[i]+'" value="'+(v>0?fmtH(v):"")+'"></td>';
+    }).join("");
+    let rows = "";
+    LANES.forEach(l => {
+      const items = state.projects.filter(p => p.lane === l.id);
+      if (!items.length) return;
+      rows += '<tr class="lanehead"><td class="act" colspan="1">'+esc(l.title)+'</td><td colspan="8"></td></tr>';
+      items.forEach(p => {
+        const wk = hasDays(p) ? fmtH(sum(p.days)) : (p.est ? "≈" : "") + fmtH(+p.hours||0);
+        rows += '<tr><td class="act"><i style="background:'+l.color+'"></i>'+esc(p.name)+(p.focus?'<small>'+esc(p.focus.length>60?p.focus.slice(0,58)+"…":p.focus)+'</small>':'')+'</td>' +
+          cellRow("c-"+p.id, p.days, 'data-p="'+p.id+'"') +
+          '<td class="wk'+(hasDays(p)?"":" est")+'">'+wk+'</td></tr>';
+      });
+    });
+    rows += '<tr class="lanehead"><td class="act">Песок</td><td colspan="8"></td></tr>';
+    [["tax","Налог · созвоны и встречи"],["chaos","Окна хаоса · буфер на мелочи"]].forEach(([k,label]) => {
+      rows += '<tr class="fixedrow"><td class="act">'+label+'</td>' + cellRow("f-"+k, state.fixed[k], 'data-fixed="'+k+'"') + '<td class="wk">'+fmtH(sum(state.fixed[k]))+'</td></tr>';
+    });
+    const dayTot = DAYS.map((_,i) => state.projects.reduce((a,p)=>a+(hasDays(p)?(+p.days[i]||0):0),0) + (+state.fixed.tax[i]||0) + (+state.fixed.chaos[i]||0));
+    const unplanned = state.projects.filter(p=>!hasDays(p)).reduce((a,p)=>a+(+p.hours||0),0);
+    const totAll = sum(dayTot);
+    const capAll = sum(state.dayCap);
+    const foot = '<tfoot>' +
+      '<tr class="sum"><td class="act">Итого по дням</td>' + dayTot.map((v,i) => '<td class="'+(v > (+state.dayCap[i]||0) ? "over" : "")+'">'+(v?fmtH(v):"·")+'</td>').join("") + '<td class="'+(totAll>capAll?"over":"")+'">'+fmtH(totAll)+'</td></tr>' +
+      '<tr><td class="act">Ёмкость дня</td>' + cellRow("cap", state.dayCap, 'data-cap="1"').replace(/class="cell/g,'class="cell cap-cell') + '<td>'+fmtH(capAll)+'</td></tr>' +
+      '<tr><td class="act">Запас</td>' + dayTot.map((v,i) => { const r = (+state.dayCap[i]||0) - v; return '<td class="'+(r<0?"over":(r>0?"okd":""))+'">'+(r>0?"+":"")+fmtH(r)+'</td>'; }).join("") + '<td class="'+(capAll-totAll<0?"over":"")+'">'+fmtH(capAll-totAll)+'</td></tr>' +
+      (unplanned ? '<tr><td class="act" colspan="9" style="font-family:var(--mono);font-size:12px;color:var(--mute)">Ещё не разложено по дням: ≈'+fmtH(unplanned)+' ч оценки</td></tr>' : '') +
+      '</tfoot>';
+    $("#planWrap").innerHTML = '<table class="plan">' + head + '<tbody>' + rows + '</tbody>' + foot + '</table>';
   }
 
   function renderFixed(){
@@ -459,9 +548,26 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     if (b.dataset.knob){ const k = b.dataset.knob; state[k] = Math.max(0, Math.min(k==="capacity"?80:40, (+state[k]||0) + (+b.dataset.d))); touch(); return; }
     if (b.dataset.status){ const p = find(b.dataset.status); const i = STATUS.indexOf(p.status||"none"); p.status = STATUS[(i+1)%STATUS.length]; touch(); return; }
     if (b.dataset.owner){ const p = find(b.dataset.owner); const i = OWNERS.findIndex(o=>o.id===p.owner); p.owner = OWNERS[(i+1)%OWNERS.length].id; touch(); return; }
-    if (b.dataset.h){ const p = find(b.dataset.h); p.hours = Math.max(0, Math.min(80, (+p.hours||0) + (+b.dataset.d))); p.est = false; touch(); return; }
+    if (b.dataset.h){ const p = find(b.dataset.h); if (hasDays(p)) return; p.hours = Math.max(0, Math.min(80, (+p.hours||0) + (+b.dataset.d))); p.est = false; touch(); return; }
     if (b.dataset.edit){ openDlg(b.dataset.edit); return; }
     if (b.dataset.add){ openDlg(null, b.dataset.add); return; }
+  });
+
+  document.addEventListener("change", e => {
+    const el = e.target; if (!state || !el.classList || !el.classList.contains("cell")) return;
+    const d = +el.dataset.d, v = parseH(el.value);
+    if (el.dataset.p){ const p = find(el.dataset.p); if (!p) return; if (!Array.isArray(p.days)) p.days = [0,0,0,0,0,0,0]; p.days[d] = v; p.hours = sum(p.days); p.est = false; }
+    else if (el.dataset.fixed){ state.fixed[el.dataset.fixed][d] = v; }
+    else if (el.dataset.cap){ state.dayCap[d] = v; }
+    else return;
+    setTimeout(touch, 0); // даём фокусу уйти в следующую клетку, render вернёт его
+  });
+  document.addEventListener("keydown", e => {
+    const el = e.target; if (e.key !== "Enter" || !el.classList || !el.classList.contains("cell")) return;
+    e.preventDefault();
+    const cells = Array.from(document.querySelectorAll(".plan .cell")); const col = el.dataset.d;
+    const next = cells.slice(cells.indexOf(el)+1).find(c => c.dataset.d === col);
+    (next || el).focus();
   });
 
   // drag and drop
@@ -487,9 +593,9 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
 
   $("#newWeek").addEventListener("click", () => {
     if (!state) return;
-    if (!confirm("Начать новую неделю? Статусы фокусов сбросятся, проекты и часы останутся.")) return;
+    if (!confirm("Начать новую неделю? Статусы фокусов сбросятся, проекты и часы по дням перейдут как шаблон.")) return;
     state.projects.forEach(p => { p.status = "none"; });
-    state.week = shiftWeek(state.week);
+    const ns = fromIso(state.weekStart); ns.setDate(ns.getDate()+7); state.weekStart = isoDate(ns);
     touch();
   });
   function shiftWeek(label){
@@ -517,7 +623,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     $("#f_focus").value = p ? (p.focus||"") : "";
     $("#f_lane").value = p ? p.lane : (view==="bank" && group ? group : "small");
     $("#f_moscow").value = p ? (p.moscow||"should") : (view==="moscow" && group ? group : "should");
-    $("#f_hours").value = p ? (+p.hours||0) : 2;
+    $("#f_hours").value = p ? projHours(p) : 2; $("#f_hours").disabled = !!(p && hasDays(p)); $("#f_hours").title = (p && hasDays(p)) ? "Часы считаются из плана по дням" : "";
     $("#f_owner").value = p ? (p.owner||"hands") : "decide";
     $("#f_note").value = p ? (p.note||"") : "";
     $("#dlgDelete").hidden = !p;
@@ -536,8 +642,9 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     const hours = Math.max(0, Math.min(80, parseFloat(String($("#f_hours").value).replace(",", ".")) || 0));
     let p = editingId ? find(editingId) : null;
     if (!p){ p = {id: uid(), status:"none", msgs:null, est:false}; state.projects.push(p); }
-    if (p.hours !== hours) p.est = false;
-    Object.assign(p, {name, focus:$("#f_focus").value.trim(), lane:$("#f_lane").value, moscow:$("#f_moscow").value, hours, owner:$("#f_owner").value, note:$("#f_note").value.trim()});
+    const keepH = hasDays(p) ? sum(p.days) : hours;
+    if (!hasDays(p) && p.hours !== hours) p.est = false;
+    Object.assign(p, {name, focus:$("#f_focus").value.trim(), lane:$("#f_lane").value, moscow:$("#f_moscow").value, hours:keepH, owner:$("#f_owner").value, note:$("#f_note").value.trim()});
     dlg.close(); touch();
   });
 
@@ -579,9 +686,13 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     await api("PUT", {blob:{iv:b64(iv), ct:b64(ct)}});
   }
   function adopt(s){
-    state = s || {week:shiftWeek(""), capacity:30, tax:3, chaos:5, limits:{big:2,small:4}, projects:[]};
+    state = s || {weekStart:nextMonday(), dayCap:[6,6,6,6,6,0,0], fixed:{tax:[0,0,0,0,0,0,0],chaos:[1,1,1,1,1,0,0]}, limits:{big:2,small:4}, projects:[]};
     state.projects = state.projects || [];
     state.limits = state.limits || {big:2, small:4};
+    if (!state.weekStart) state.weekStart = nextMonday();
+    if (!Array.isArray(state.dayCap) || state.dayCap.length !== 7){ const c = +state.capacity||30; state.dayCap = [c/5,c/5,c/5,c/5,c/5,0,0].map(x=>Math.round(x*2)/2); }
+    state.fixed = state.fixed || {};
+    ["tax","chaos"].forEach(k => { if (!Array.isArray(state.fixed[k]) || state.fixed[k].length !== 7) state.fixed[k] = [0,0,0,0,0,0,0]; });
     render();
   }
   async function unlock(pw, remember){
