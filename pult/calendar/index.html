@@ -281,6 +281,12 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
 .statusrow button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 10px;font-family:var(--mono);font-size:11.5px}
 .statusrow button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .pop select,.pop input[type=text]{border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--bg);width:100%;font-size:13.5px}
+.picklist{display:flex;flex-direction:column;gap:4px;max-height:min(52vh,360px);overflow:auto;margin:0 -4px;padding:0 4px}
+.pick{display:flex;align-items:center;gap:10px;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:9px 10px;text-align:left;font-size:13.5px;min-height:42px}
+.pick:hover,.pick:focus-visible{border-color:var(--blue-deep);background:var(--blue-soft)}
+.pick i{width:9px;height:9px;border-radius:50%;flex:none}
+.pick span{flex:1;font-weight:500;line-height:1.2}
+.pick em{font-style:normal;font-family:var(--mono);font-size:11px;color:var(--mute);white-space:nowrap}
 .review{margin-top:48px}
 .review table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;min-width:560px}
 .review th,.review td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:right;font-size:14px}
@@ -581,7 +587,6 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
       try{blkEl.setPointerCapture(e.pointerId);}catch(_){}
       return;
     }
-    if (colEl){ drag = {mode:"empty", col:colEl, moved:false, x0:e.clientX, y0:e.clientY}; }
   });
   document.addEventListener("pointermove", e => {
     if (!drag) return;
@@ -608,7 +613,6 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     if (dg.el) dg.el.classList.remove("dragging");
     if (!dg.moved){
       if (dg.mode === "move" || dg.mode === "resize") openPop(dg.id, e.clientX, e.clientY);
-      else if (dg.mode === "empty"){ const d = +dg.col.dataset.day, start = minuteAt(dg.col, e.clientY, 15); openNew(d, start, e.clientX, e.clientY); }
       return;
     }
     if (dg.mode === "empty" || !dg.target) return;
@@ -617,6 +621,16 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     if (dg.mode === "new"){ slots().push({id:uid(), ref:dg.ref, day:t.day, start:t.start, dur:t.dur, status:"plan"}); touch(); return; }
     const b = slots().find(s => s.id === dg.id); if (!b) return;
     Object.assign(b, {day:t.day, start:t.start, dur:t.dur}); touch();
+  });
+
+  document.addEventListener("pointercancel", () => { if (!drag) return; if (drag.el) drag.el.classList.remove("dragging"); drag = null; clearGhost(); });
+  document.addEventListener("click", e => {
+    if (!state || !wk()) return;
+    if (e.target.closest(".blk") || e.target.closest(".pop") || e.target.closest(".chipd")) return;
+    const col = e.target.closest(".col"); if (!col) return;
+    const r = col.getBoundingClientRect();
+    const start = Math.floor((VIEW_START + (e.clientY - r.top) / PX_PER_MIN) / STEP) * STEP;
+    openNew(+col.dataset.day, start, e.clientX, e.clientY);
   });
 
   /* ---------- карточки блоков ---------- */
@@ -647,34 +661,50 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     });
     const first = p.querySelector("button[aria-pressed='true']") || p.querySelector("button"); if (first) first.focus();
   }
+  function freeRun(d, start, ref){
+    // сколько минут свободно подряд от start: до следующего блока, обеда или конца окна
+    const c = cal(); const rest = isRest(ref);
+    const end = rest ? VIEW_END : c.dayEnd;
+    if (!fits(d, start, STEP, null, ref)) return 0;
+    let m = STEP; while (start + m + STEP <= end && fits(d, start, m + STEP, null, ref)) m += STEP;
+    return m;
+  }
+  function autoDur(ref, d){
+    const r = refInfo(ref); const placedDay = slots().filter(b => b.ref===ref && b.day===d).reduce((x,b)=>x+b.dur,0);
+    const placedAll = slots().filter(b => b.ref===ref).reduce((x,b)=>x+b.dur,0);
+    let want = Math.round((+(r.days && r.days[d]) || 0) * 60) - placedDay;
+    if (want <= 0){ const p = r.proj; const wkH = p ? projHours(p) : sum(r.days); want = Math.round(wkH * 60) - placedAll; }
+    if (want <= 0) want = 60;
+    return Math.max(STEP, Math.round(want / STEP) * STEP);
+  }
   function openNew(d, start, x, yy){
     closePop();
     const c = cal();
     start = Math.max(VIEW_START, Math.min(VIEW_END - STEP, start));
-    const opts = (dayOpen(d) && start >= c.dayStart && start < c.dayEnd ? baseRefs().map(r => '<option value="'+r.ref+'">'+esc(r.name)+'</option>').join("") + '<option value="e">Своё событие…</option>' : '') +
-      restRefs().map(r => '<option value="'+r.ref+'">Отдых · '+esc(r.name)+'</option>').join("");
-    if (!opts){ toast("Здесь можно ставить только отдых, а его в пульте нет"); return; }
-    const p = document.createElement("div"); p.className = "pop"; p.style.width = "260px"; p.setAttribute("role","dialog"); p.setAttribute("aria-label","Новый блок");
-    p.innerHTML = '<h4>Новый блок</h4><div class="m">'+DAYS[d]+' · с '+hm(start)+'</div>' +
-      '<label class="m" for="nbRef">Что</label><select id="nbRef">'+opts+'</select>' +
-      '<input type="text" id="nbTitle" placeholder="Название, например «Созвон с Дашей»" maxlength="60" hidden>' +
-      '<label class="m" for="nbDur">Сколько</label><select id="nbDur">'+[30,60,90,120,150,180,240].map(m => '<option value="'+m+'"'+(m===60?" selected":"")+'>'+fmtH(m/60)+' ч</option>').join("")+'</select>' +
-      '<div class="row"><button type="button" class="btn" data-pclose="1">Отмена</button><button type="button" class="btn primary" data-padd="1">Поставить</button></div>';
+    const inWork = dayOpen(d) && start >= c.dayStart && start < c.dayEnd && !(start >= c.lunch.start && start < c.lunch.start + c.lunch.dur);
+    const cands = (inWork ? baseRefs() : []).concat(restRefs());
+    const items = cands.map(r => {
+      const free = freeRun(d, start, r.ref); if (!free) return null;
+      const dur = Math.min(autoDur(r.ref, d), free);
+      return {r, dur};
+    }).filter(Boolean);
+    if (!items.length && !inWork){ toast(!dayOpen(d) ? "Не рабочий день: сюда можно только отдых" : (start >= c.lunch.start && start < c.lunch.start + c.lunch.dur) ? "Это обед" : "Рабочее окно с " + hm(c.dayStart) + " до " + hm(c.dayEnd)); return; }
+    if (!items.length){ toast("Здесь уже занято"); return; }
+    const color = r => r.kind==="rest" ? "var(--ok)" : LANES[r.kind] ? LANES[r.kind].color : "var(--mute)";
+    const p = document.createElement("div"); p.className = "pop"; p.style.width = "280px"; p.setAttribute("role","dialog"); p.setAttribute("aria-label","Что будет в " + hm(start));
+    p.innerHTML = '<h4>'+DAYS[d]+', '+hm(start)+'</h4><div class="m">Что будет? Длина подставится сама</div>' +
+      '<div class="picklist">' + items.map((it,k) => '<button type="button" class="pick" data-k="'+k+'"><i style="background:'+color(it.r)+'"></i><span>'+(it.r.kind==="rest"?"Отдых · ":"")+esc(it.r.name)+'</span><em>'+hm(start)+'–'+hm(start+it.dur)+'</em></button>').join("") + '</div>' +
+      (inWork && freeRun(d, start, "e") ? '<div class="row" style="gap:6px"><input type="text" id="nbTitle" placeholder="Своё: например «Созвон с Дашей»" maxlength="60"><button type="button" class="btn" data-ev="1">+</button></div>' : '') +
+      '<div class="row"><span class="m">Длину потом можно поменять</span><button type="button" class="btn" data-pclose="1">Отмена</button></div>';
     document.body.appendChild(p); positionPop(p, x, yy);
-    const sel = p.querySelector("#nbRef"), ti = p.querySelector("#nbTitle");
-    sel.addEventListener("change", () => { ti.hidden = sel.value !== "e"; if (!ti.hidden) ti.focus(); });
     p.addEventListener("click", ev => {
       const bt = ev.target.closest("button"); if (!bt) return;
       if (bt.dataset.pclose){ closePop(); return; }
-      if (bt.dataset.padd){
-        const dur = +p.querySelector("#nbDur").value, ref = sel.value;
-        if (ref === "e" && !ti.value.trim()){ ti.focus(); return; }
-        if (!fits(d, start, dur, null, ref)){ toast(whyNot({day:d, start, dur, ref})); return; }
-        const b = {id:uid(), ref, day:d, start, dur, status:"plan"}; if (ref === "e") b.title = ti.value.trim();
-        slots().push(b); closePop(); touch();
-      }
+      if (bt.dataset.k != null){ const it = items[+bt.dataset.k]; slots().push({id:uid(), ref:it.r.ref, day:d, start, dur:it.dur, status:"plan"}); closePop(); touch(); toast(it.r.name + " · " + hm(start) + "–" + hm(start+it.dur)); return; }
+      if (bt.dataset.ev){ const ti = p.querySelector("#nbTitle"); const t = ti.value.trim(); if (!t){ ti.focus(); return; } const dur = Math.min(60, freeRun(d, start, "e")); slots().push({id:uid(), ref:"e", title:t, day:d, start, dur, status:"plan"}); closePop(); touch(); }
     });
-    sel.focus();
+    p.addEventListener("keydown", ev => { if (ev.key === "Enter" && ev.target.id === "nbTitle"){ ev.preventDefault(); p.querySelector("[data-ev]").click(); } });
+    const first = p.querySelector(".pick"); if (first) first.focus();
   }
   document.addEventListener("keydown", e => {
     if (e.key === "Escape") closePop();

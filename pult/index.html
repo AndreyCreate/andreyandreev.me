@@ -234,10 +234,6 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     </div>
     <div class="top-actions">
       <nav class="nav" aria-label="Страницы пульта"><a href="./" aria-current="page">Ёмкость</a><a href="calendar/">Календарь</a></nav>
-      <div class="seg" role="group" aria-label="Вид">
-        <button type="button" id="viewBank" aria-pressed="true">Банка</button>
-        <button type="button" id="viewMoscow" aria-pressed="false">MoSCoW</button>
-      </div>
       <button type="button" class="pill" id="newWeek">Новая неделя</button>
       <span class="save" id="saveState" aria-live="polite"></span>
     </div>
@@ -353,7 +349,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
   let editingId = null;
   const $ = s => document.querySelector(s);
 
-  try { const v = localStorage.getItem("pult-view"); if (v === "bank" || v === "moscow") view = v; } catch(e) {}
+
 
   function fmtH(n){ const r = Math.round(n*2)/2; return (Number.isInteger(r) ? String(r) : r.toFixed(1).replace(".", ",")); }
   function esc(s){ return String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
@@ -452,8 +448,6 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
 
     renderPlan();
     renderLanes(t);
-    $("#viewBank").setAttribute("aria-pressed", view==="bank");
-    $("#viewMoscow").setAttribute("aria-pressed", view==="moscow");
     $("#bankKick").textContent = view==="bank" ? "Банка · перетаскивай карточки между полосами" : "MoSCoW · что обязательно, а что можно отпустить";
     $("#bankTitle").textContent = view==="bank" ? "Что лежит в банке" : "Что обязательно на этой неделе";
     if (aeId){ const el = document.getElementById(aeId); if (el){ el.focus(); try{ el.select(); }catch(e){} } }
@@ -605,8 +599,6 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     l.classList.remove("drop");
   });
 
-  $("#viewBank").addEventListener("click", () => { view = "bank"; try{localStorage.setItem("pult-view", view);}catch(e){} render(); });
-  $("#viewMoscow").addEventListener("click", () => { view = "moscow"; try{localStorage.setItem("pult-view", view);}catch(e){} render(); });
 
   $("#newWeek").addEventListener("click", () => {
     if (!state) return;
