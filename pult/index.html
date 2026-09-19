@@ -55,6 +55,9 @@ h1{font-weight:500;letter-spacing:-.045em;line-height:.98;font-size:clamp(44px,7
 .seg{display:inline-flex;background:var(--gray);border-radius:999px;padding:3px}
 .seg button{border:0;background:transparent;border-radius:999px;padding:7px 14px;font-family:var(--mono);font-size:12.5px;color:var(--mute)}
 .seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.nav{display:inline-flex;background:var(--gray);border-radius:999px;padding:3px}
+.nav a{border-radius:999px;padding:7px 14px;font-family:var(--mono);font-size:12.5px;color:var(--mute);text-decoration:none}
+.nav a[aria-current="page"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
 .save{font-family:var(--mono);font-size:12px;color:var(--mute);min-width:9ch}
 
 /* summary */
@@ -230,6 +233,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
       <p class="lead"><span class="dd">::</span> Все проекты в одной банке. Большие камни, маленькие, фан и призраки. Часы складываются сами, красный цвет виден сразу.</p>
     </div>
     <div class="top-actions">
+      <nav class="nav" aria-label="Страницы пульта"><a href="./" aria-current="page">Ёмкость</a><a href="calendar/">Календарь</a></nav>
       <div class="seg" role="group" aria-label="Вид">
         <button type="button" id="viewBank" aria-pressed="true">Банка</button>
         <button type="button" id="viewMoscow" aria-pressed="false">MoSCoW</button>
