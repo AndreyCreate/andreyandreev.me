@@ -1,0 +1,128 @@
+[
+  {
+    "card": 1,
+    "destination": "https://t.me/mbga_materials/299",
+    "asset": "images/demo-reels.jpg",
+    "source_url": "https://t.me/mbga_materials/299",
+    "provenance": "Existing public asset or screenshot of the exact public source",
+    "alt": "Процесс создания Reels: скриншот из поста",
+    "sha256": "6f996030efb80bcb58bb55dd835d5024022f10732f8bb629bf8d30d3bb34f31a"
+  },
+  {
+    "card": 2,
+    "destination": "https://t.me/mbga_materials/268",
+    "asset": "images/post-268.jpg",
+    "source_url": "https://t.me/mbga_materials/268",
+    "provenance": "Existing public asset or screenshot of the exact public source",
+    "alt": "Обложка видео о создании Reels",
+    "sha256": "a51ae3669e82ee4e1e23dd0ab266cda46dd4726c0028a20972a23a414d54a5b8"
+  },
+  {
+    "card": 3,
+    "destination": "https://t.me/mbga_materials/280",
+    "asset": "images/post-280.jpg",
+    "source_url": "https://t.me/mbga_materials/280",
+    "provenance": "Existing public asset or screenshot of the exact public source",
+    "alt": "Обложка кейса Даши Морозовой",
+    "sha256": "e9a301d62bd5a6c53b89e7597ade8111ed7d28a7738e5dedb164f4d826c796b8"
+  },
+  {
+    "card": 4,
+    "destination": "https://t.me/mbga_materials/251",
+    "asset": "images/post-251.jpg",
+    "source_url": "https://t.me/mbga_materials/251",
+    "provenance": "Existing public asset or screenshot of the exact public source",
+    "alt": "Кадр демонстрации: из Reels в пост",
+    "sha256": "a035ca24b26f96b4a144c99ba5af9d6ff755ee23bec87bd43ecca58474058bf2"
+  },
+  {
+    "card": 5,
+    "destination": "https://t.me/mbga_materials/262",
+    "asset": "images/post-262.jpg",
+    "source_url": "https://t.me/mbga_materials/262",
+    "provenance": "Existing public asset or screenshot of the exact public source",
+    "alt": "Кадр видео с отзывами участниц",
+    "sha256": "0674156a4f876edc6bb4428f2f4c60b1371f661ccb6f81979f74db26fb27f211"
+  },
+  {
+    "card": 6,
+    "destination": "https://andreyandreev.me/ai-agents/",
+    "asset": "images/program.jpg",
+    "source_url": "https://andreyandreev.me/ai-agents/",
+    "provenance": "Existing public asset or screenshot of the exact public source",
+    "alt": "Страница личной программы Андрея",
+    "sha256": "4a0950e5543a0bc53d01d319dcabaa319900fddd4023b0ffd2a115381b5d65e1"
+  },
+  {
+    "card": 7,
+    "destination": "https://t.me/mbga_materials/15",
+    "asset": "images/fedorova.jpg",
+    "source_url": "https://andreyandreev.me/ai/assets/people/fedorova.jpg",
+    "provenance": "Existing public asset or screenshot of the exact public source",
+    "alt": "Галина Фёдорова",
+    "sha256": "d1133f864ed5ada71027915473f95059a051d4ccaeb17924d6c2a9f1c4fac071"
+  },
+  {
+    "card": 8,
+    "destination": "https://t.me/mbga_materials/24",
+    "asset": "images/herd.jpg",
+    "source_url": "https://andreyandreev.me/ai/assets/people/herd.jpg",
+    "provenance": "Existing public asset or screenshot of the exact public source",
+    "alt": "Маша Херд",
+    "sha256": "856d08c344f12df77cd69db49c7b54f1e7b74cd576b0fc0b3ad2504299709f40"
+  },
+  {
+    "card": 9,
+    "destination": "https://t.me/mbga_materials/169",
+    "asset": "images/maltseva.jpg",
+    "source_url": "https://andreyandreev.me/ai/assets/people/maltseva.jpg",
+    "provenance": "Existing public asset or screenshot of the exact public source",
+    "alt": "Наталья Мальцева",
+    "sha256": "de7603722a1659063d7691f7f8cb66423571a8b61991e9cdb313322e3c3e9bfa"
+  },
+  {
+    "card": 10,
+    "destination": "https://t.me/mbga_materials/244",
+    "asset": "images/private-academy.svg",
+    "source_url": null,
+    "provenance": "Identity-free editorial SVG; no client names, messages, handles or metrics",
+    "alt": "Иллюстрация конфиденциального кейса академии",
+    "sha256": "e159f25e02fac15727ff633600e02df1c7a11b4df97b44c68bbc51f3b11c4772"
+  },
+  {
+    "card": 11,
+    "destination": "https://t.me/mbga_materials/85",
+    "asset": "images/private-case.svg",
+    "source_url": null,
+    "provenance": "Identity-free editorial SVG; no client names, messages, handles or metrics",
+    "alt": "Иллюстрация: конфиденциальные материалы",
+    "sha256": "21b02ee339a3fa5fea95a368855056950e609fbc5ddf9d4e05977c0313ad0818"
+  },
+  {
+    "card": 12,
+    "destination": "https://t.me/mbga_materials/240",
+    "asset": "images/private-result.svg",
+    "source_url": null,
+    "provenance": "Identity-free editorial SVG; no client names, messages, handles or metrics",
+    "alt": "Иллюстрация клиентского результата, без данных",
+    "sha256": "9f01d47591b7988269c892cf795f7d4a861de6d0c72d5275493e11d133d82de4"
+  },
+  {
+    "card": 13,
+    "destination": "https://t.me/mbga_materials/290",
+    "asset": "images/post-290.jpg",
+    "source_url": "https://t.me/mbga_materials/290",
+    "provenance": "Existing public asset or screenshot of the exact public source",
+    "alt": "Обложка недельной статистики Reels",
+    "sha256": "18363051b3cce7f7344da787c08dce20b8ba84ba64e6dc32bd7bbce8fa3e2b60"
+  },
+  {
+    "card": 14,
+    "destination": "https://andreyandreev.me/ig-analytics/",
+    "asset": "images/analytics.jpg",
+    "source_url": "https://andreyandreev.me/ig-analytics/",
+    "provenance": "Existing public asset or screenshot of the exact public source",
+    "alt": "Открытая статистика блога на сайте",
+    "sha256": "c7d5354209d33cdd93853ca34f1a0cbec2bf513f9a368fd123dee0a6a4ebbc6d"
+  }
+]
