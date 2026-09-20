@@ -173,6 +173,7 @@ table.plan{border-collapse:separate;border-spacing:0;width:100%;min-width:760px;
 .plan .over{color:var(--bad);font-weight:600}
 .plan .okd{color:var(--ok)}
 .plan-hint{font-size:13.5px;color:var(--ink-2);margin:0 0 14px;max-width:70ch}
+.pop .hint{font-size:12px;line-height:1.35;color:var(--mute);margin:10px 0 0}
 .plan-hint .dd{font-family:var(--mono);color:var(--blue-deep)}
 .note{margin-top:56px;border-top:1px solid var(--line);padding-top:20px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;color:var(--mute)}
 .note p{margin:0;max-width:70ch;line-height:1.55}
@@ -420,7 +421,8 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
   }
   function fits(d, start, dur, exceptId, ref){
     const c = cal();
-    if (isRest(ref)){
+    // события календаря живут вне рабочего окна (гимнастика в 19, созвон в 10) — им можно везде
+    if (isRest(ref) || ref === "e"){
       if (start < VIEW_START || start + dur > VIEW_END) return false;
       return !slots().some(b => b.day===d && b.start!=null && b.id!==exceptId && start < b.start + b.dur && start + dur > b.start);
     }
@@ -580,7 +582,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     g.className = "ghostblk" + (ok ? "" : " bad"); g.textContent = hm(start) + "–" + hm(start+dur) + (ok ? "" : " · нельзя");
   }
   function clearGhost(){ const g = $(".ghostblk"); if (g) g.remove(); }
-  function whyNot(t){ const c = cal(); if (isRest(t.ref)) return "Там уже что-то стоит"; return !dayOpen(t.day) ? "Это не рабочий день" : (t.start < c.dayStart || t.start + t.dur > c.dayEnd) ? "Только с " + hm(c.dayStart) + " до " + hm(c.dayEnd) : "Там занято или обед"; }
+  function whyNot(t){ const c = cal(); if (isRest(t.ref) || t.ref === "e") return "Там уже что-то стоит"; return !dayOpen(t.day) ? "Это не рабочий день" : (t.start < c.dayStart || t.start + t.dur > c.dayEnd) ? "Только с " + hm(c.dayStart) + " до " + hm(c.dayEnd) : "Там занято или обед"; }
 
   document.addEventListener("pointerdown", e => {
     if (!state || !wk() || e.button > 0) return;
@@ -629,7 +631,9 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     const t = dg.target;
     if (dg.mode === "new"){ slots().push({id:uid(), ref:dg.ref, day:t.day, start:t.start, dur:t.dur, status:"plan"}); touch(); return; }
     const b = slots().find(s => s.id === dg.id); if (!b) return;
-    Object.assign(b, {day:t.day, start:t.start, dur:t.dur}); touch();
+    Object.assign(b, {day:t.day, start:t.start, dur:t.dur});
+    if (b.gid) b.moved = true;   // ручная правка главнее гугл-календаря: синк такой блок не двигает
+    touch();
   });
 
   document.addEventListener("pointercancel", () => { if (!drag) return; if (drag.el) drag.el.classList.remove("dragging"); drag = null; clearGhost(); });
@@ -655,12 +659,17 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     p.innerHTML = '<h4>'+esc(r.name)+'</h4><div class="m">'+DAYS[b.day]+' · '+hm(b.start)+'–'+hm(b.start+b.dur)+'</div>' +
       '<div class="statusrow">' + Object.keys(STATUS).map(k => '<button type="button" data-st="'+k+'" aria-pressed="'+((b.status||"plan")===k)+'">'+STATUS[k]+'</button>').join("") + '</div>' +
       '<div class="row"><span>Длительность</span><span class="step"><button type="button" data-pd="-30" aria-label="Короче на полчаса">−</button><output>'+fmtH(b.dur/60)+' ч</output><button type="button" data-pd="30" aria-label="Длиннее на полчаса">+</button></span></div>' +
-      '<div class="row"><button type="button" class="btn ghost" data-pdel="1">Убрать блок</button><button type="button" class="btn" data-pclose="1">Готово</button></div>';
+      (b.gid ? '<p class="hint">Встреча из гугл-календаря. Подвинешь — синк её больше не трогает; уберёшь — не вернётся.</p>' : '') +
+      '<div class="row"><button type="button" class="btn ghost" data-pdel="1">'+(b.gid?'Убрать из плана':'Убрать блок')+'</button><button type="button" class="btn" data-pclose="1">Готово</button></div>';
     document.body.appendChild(p); positionPop(p, x, yy);
     p.addEventListener("click", ev => {
       const bt = ev.target.closest("button"); if (!bt) return;
       if (bt.dataset.pclose){ closePop(); return; }
-      if (bt.dataset.pdel){ wk().slots = slots().filter(s => s.id !== id); closePop(); touch(); return; }
+      if (bt.dataset.pdel){
+        const gone = slots().find(s => s.id === id);
+        if (gone && gone.gid){ const c = cal(); c.dropped = (c.dropped || []).filter(g => g !== gone.gid); c.dropped.push(gone.gid); c.dropped = c.dropped.slice(-300); }
+        wk().slots = slots().filter(s => s.id !== id); closePop(); touch(); return;
+      }
       if (bt.dataset.st){ b.status = bt.dataset.st; touch(); openPop(id, x, yy); return; }
       if (bt.dataset.pd){
         const nd = b.dur + (+bt.dataset.pd);
