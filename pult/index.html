@@ -119,6 +119,8 @@ h2{font-weight:500;letter-spacing:-.035em;font-size:clamp(28px,3.4vw,40px);line-
 .add:hover{border-color:var(--blue-deep);color:var(--blue-deep)}
 
 .card{background:var(--surface);border-radius:16px;padding:14px 14px 12px;border:1px solid var(--line);display:flex;flex-direction:column;gap:10px;box-shadow:0 1px 0 rgba(0,0,0,.02)}
+.card.tinted{position:relative;padding-left:18px;overflow:hidden}
+.card.tinted::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--pc)}
 .card[draggable="true"]{cursor:grab}
 .card.dragging{opacity:.45}
 .card-top{display:flex;gap:10px;align-items:flex-start}
@@ -459,6 +461,12 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
   function groups(){ return view==="bank" ? LANES : MOSCOW; }
   function keyOf(p){ return view==="bank" ? p.lane : p.moscow; }
 
+  // Единое цветовое кодирование по проектам (20.09.2026): та же палитра, что в календаре и TimeStripe
+  const PALETTE = {mbga:"#df496d", nastya:"#b23a56", ct:"#278dea", beskromny:"#1c6bb0",
+                   content:"#ecce32", clients:"#f2713a", coaching:"#c4541f",
+                   tbank:"#92ce14", dm:"#6a9a10", gym:"#955be0"};
+  function projColor(p){ return p ? (p.color || PALETTE[p.id] || null) : null; }
+
   function renderLanes(t){
     const lim = state.limits || {big:2, small:4};
     const host = $("#lanes");
@@ -495,7 +503,8 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     const ms = MOSCOW.find(m=>m.id===p.moscow);
     const lane = LANES.find(l=>l.id===p.lane);
     const tag = view==="bank" ? (ms ? ms.title : "") : (lane ? lane.title : "");
-    return '<article class="card" draggable="true" data-id="'+p.id+'">' +
+    const pc = projColor(p);
+    return '<article class="card'+(pc?" tinted":"")+'" draggable="true" data-id="'+p.id+'"'+(pc?' style="--pc:'+pc+'"':'')+'>' +
       '<div class="card-top">' +
         '<button type="button" class="dot" data-status="'+p.id+'" data-s="'+(p.status||"none")+'" aria-label="Статус: '+STATUS_LABEL[p.status||"none"]+'. Нажми, чтобы сменить" title="'+STATUS_LABEL[p.status||"none"]+'"></button>' +
         '<button type="button" class="name" data-edit="'+p.id+'">'+esc(p.name)+'</button>' +

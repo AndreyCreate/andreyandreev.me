@@ -363,6 +363,12 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
   const $ = s => document.querySelector(s);
   const DAYS = ["Пн","Вт","Ср","Чт","Пт","Сб","Вс"];
   const MONTHS = ["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"];
+  // Единое цветовое кодирование по проектам (20.09.2026): база — палитра TimeStripe,
+  // MBGA красный с 17.07.2026. Один проект = один цвет в пульте, календаре и задачах.
+  const PALETTE = {mbga:"#df496d", nastya:"#b23a56", ct:"#278dea", beskromny:"#1c6bb0",
+                   content:"#ecce32", clients:"#f2713a", coaching:"#c4541f",
+                   tbank:"#92ce14", dm:"#6a9a10", gym:"#955be0"};
+  function projColor(p){ return p ? (p.color || PALETTE[p.id] || null) : null; }
   const LANES = {big:{title:"Большие камни",color:"var(--blue-deep)"}, small:{title:"Маленькие камни",color:"var(--blue)"}, fan:{title:"Фан",color:"var(--warn)"}, ghost:{title:"Призраки",color:"var(--bad)"}};
   const LANE_ORDER = ["big","small","fan","ghost"];
   const FIXED = {tax:"Налог · созвоны", chaos:"Окна хаоса"};
@@ -398,14 +404,14 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     if (ref === "e") return {ref, name: title || "Событие", kind:"ev"};
     if (ref.startsWith("f:")) return {ref, name: FIXED[ref.slice(2)] || ref, kind:"fixed", days: state.fixed[ref.slice(2)]};
     const p = state.projects.find(x => "p:" + x.id === ref);
-    return p ? {ref, name:p.name, kind: p.lane === "personal" ? "rest" : p.lane, days:p.days, proj:p} : {ref, name:"Удалённый проект", kind:"fixed"};
+    return p ? {ref, name:p.name, kind: p.lane === "personal" ? "rest" : p.lane, days:p.days, proj:p, color:projColor(p)} : {ref, name:"Удалённый проект", kind:"fixed"};
   }
   function baseRefs(){
-    return workProjects().map(p => ({ref:"p:"+p.id, name:p.name, kind:p.lane, days:p.days, est:!(p.days||[]).some(x=>+x>0), hours:projHours(p)}))
+    return workProjects().map(p => ({ref:"p:"+p.id, name:p.name, kind:p.lane, days:p.days, est:!(p.days||[]).some(x=>+x>0), hours:projHours(p), color:projColor(p)}))
       .concat(["tax","chaos"].map(k => ({ref:"f:"+k, name:FIXED[k], kind:"fixed", days:state.fixed[k], est:false, hours:sum(state.fixed[k])})));
   }
   function isRest(ref){ const p = ref && ref.startsWith("p:") && state.projects.find(x => "p:" + x.id === ref); return !!(p && p.lane === "personal"); }
-  function restRefs(){ return state.projects.filter(p => p.lane === "personal").map(p => ({ref:"p:"+p.id, name:p.name, kind:"rest", days:p.days, est:false, hours:projHours(p)})); }
+  function restRefs(){ return state.projects.filter(p => p.lane === "personal").map(p => ({ref:"p:"+p.id, name:p.name, kind:"rest", days:p.days, est:false, hours:projHours(p), color:projColor(p)})); }
   function dayOpen(d){ return (+state.dayCap[d]||0) > 0; }
   function busy(d, exceptId){
     const c = cal(); const iv = [[c.lunch.start, c.lunch.start + c.lunch.dur]];
@@ -503,7 +509,8 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
       }
       S.filter(b => b.day===d && b.start!=null).forEach(b => {
         const r = refInfo(b.ref, b.title);
-        col += '<div class="blk '+r.kind+(b.dur<=30?" short":"")+(b.status==="done"?" done":"")+(b.status==="miss"?" miss":"")+'" data-id="'+b.id+'" tabindex="0" role="button" aria-label="'+esc(r.name)+', '+hm(b.start)+'–'+hm(b.start+b.dur)+', '+STATUS[b.status||"plan"]+'" style="top:'+y(b.start)+'px;height:'+(b.dur*PX_PER_MIN - 2)+'px">' +
+        const tint = r.color ? 'background:'+r.color+';color:#fff;border-color:transparent;' : '';
+        col += '<div class="blk '+r.kind+(b.dur<=30?" short":"")+(b.status==="done"?" done":"")+(b.status==="miss"?" miss":"")+'" data-id="'+b.id+'" tabindex="0" role="button" aria-label="'+esc(r.name)+', '+hm(b.start)+'–'+hm(b.start+b.dur)+', '+STATUS[b.status||"plan"]+'" style="'+tint+'top:'+y(b.start)+'px;height:'+(b.dur*PX_PER_MIN - 2)+'px">' +
           '<span class="t">'+esc(r.name)+'</span><span class="m">'+hm(b.start)+'–'+hm(b.start+b.dur)+' · '+fmtH(b.dur/60)+' ч</span><span class="rz" data-rz="1"></span></div>';
       });
       html += col + '</div>';
@@ -514,7 +521,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     const planned = {}; S.forEach(b => { planned[b.ref] = (planned[b.ref]||0) + b.dur/60; });
     const rest = baseRefs().concat(restRefs()).map(r => ({...r, left: r.hours - (planned[r.ref]||0)})).filter(r => r.left > 0.01);
     $("#tray").innerHTML = w ? '<span class="lbl">Перетащи в календарь</span>' + (rest.length ? rest.map(r =>
-      '<span class="chipd" data-new="'+r.ref+'" tabindex="0"><i style="background:'+(r.kind==="rest" ? "var(--ok)" : LANES[r.kind] ? LANES[r.kind].color : "var(--mute)")+'"></i>'+(r.kind==="rest"?"Отдых · ":"")+esc(r.name)+'<span class="h">'+(r.est?"≈":"")+'осталось '+fmtH(r.left)+' ч</span></span>').join("") : '<span class="empty">всё из шаблона уже стоит в календаре</span>') : "";
+      '<span class="chipd" data-new="'+r.ref+'" tabindex="0"><i style="background:'+(r.color || (r.kind==="rest" ? "var(--ok)" : LANES[r.kind] ? LANES[r.kind].color : "var(--mute)"))+'"></i>'+(r.kind==="rest"?"Отдых · ":"")+esc(r.name)+'<span class="h">'+(r.est?"≈":"")+'осталось '+fmtH(r.left)+' ч</span></span>').join("") : '<span class="empty">всё из шаблона уже стоит в календаре</span>') : "";
 
     const restMin = S.filter(b => b.start!=null && isRest(b.ref)).reduce((x,b)=>x+b.dur,0);
     const total = (sum(dayLoad) - restMin)/60, capH = DAYS.reduce((x,_,d)=>x + (dayOpen(d) ? workMin/60 : 0), 0), overAll = sum(dayOver)/60;
@@ -528,7 +535,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
       '<div class="stat"><span>Работа к отдыху</span><b>'+(restMin ? fmtH(total/(restMin/60)) + ' к 1' : '—')+'</b></div>';
     const overList = S.filter(b=>b.start==null);
     $("#overTray").innerHTML = overList.length ? '<div class="over-tray"><b>Не влезло в рабочее окно:</b> ' + overList.map(b => esc(refInfo(b.ref,b.title).name) + ' — ' + DAYS[b.day] + ' ' + fmtH(b.dur/60) + ' ч').join("; ") + '. Сократи часы в пульте или перенеси блоки на другие дни, потом нажми «Собрать из пульта».</div>' : '';
-    $("#legend2").innerHTML = LANE_ORDER.map(l => '<span><i style="background:'+LANES[l].color+'"></i>'+LANES[l].title+'</span>').join("") + '<span><i style="background:var(--gray);border:1px solid var(--line)"></i>Налог и окна хаоса</span><span><i style="background:var(--ink)"></i>Свои события</span><span><i style="background:var(--ok)"></i>Отдых</span>';
+    $("#legend2").innerHTML = state.projects.map(p => '<span><i style="background:'+(projColor(p)||"var(--mute)")+'"></i>'+esc(p.name)+'</span>').join("") + '<span><i style="background:var(--gray);border:1px solid var(--line)"></i>Налог и окна хаоса</span><span><i style="background:var(--ink)"></i>Свои события</span>';
     renderReview();
     if (state.updatedAt){ const dd = new Date(state.updatedAt); $("#updated").textContent = "обновлено " + dd.toLocaleString("ru-RU",{day:"numeric",month:"long",hour:"2-digit",minute:"2-digit"}); }
   }
@@ -550,10 +557,10 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     let T = {plan:0, done:0, miss:0, base:0}, R = {plan:0, done:0};
     restRefs().forEach(br => { if (rows[br.ref]) rows[br.ref].base = br.hours; });
     const body = order.map(r => {
-      if (r.info.kind === "rest"){ R.plan += r.plan; R.done += r.done; return '<tr><td><i style="background:var(--ok)"></i>Отдых · '+esc(r.info.name)+'</td><td>'+(r.base!=null?fmtH(r.base):"—")+'</td><td>'+fmtH(r.plan)+'</td><td>'+fmtH(r.done)+'</td><td>'+fmtH(r.miss)+'</td><td class="pct">—</td></tr>'; }
+      if (r.info.kind === "rest"){ R.plan += r.plan; R.done += r.done; return '<tr><td><i style="background:'+(r.info.color||"var(--ok)")+'"></i>Отдых · '+esc(r.info.name)+'</td><td>'+(r.base!=null?fmtH(r.base):"—")+'</td><td>'+fmtH(r.plan)+'</td><td>'+fmtH(r.done)+'</td><td>'+fmtH(r.miss)+'</td><td class="pct">—</td></tr>'; }
       T.plan += r.plan; T.done += r.done; T.miss += r.miss; T.base += r.base || 0;
       const pct = r.plan ? Math.round(r.done / r.plan * 100) : 0;
-      const col = LANES[r.info.kind] ? LANES[r.info.kind].color : (r.info.kind==="ev" ? "var(--ink)" : "var(--mute)");
+      const col = r.info.color || (LANES[r.info.kind] ? LANES[r.info.kind].color : (r.info.kind==="ev" ? "var(--ink)" : "var(--mute)"));
       return '<tr><td><i style="background:'+col+'"></i>'+esc(r.info.name)+'</td><td>'+(r.base!=null?fmtH(r.base):"—")+'</td><td>'+fmtH(r.plan)+'</td><td>'+fmtH(r.done)+'</td><td>'+fmtH(r.miss)+'</td><td class="pct '+(r.done||r.miss ? (pct>=80?"hi":(pct<50?"lo":"")) : "")+'">'+(r.done||r.miss ? pct+"%" : "—")+'</td></tr>';
     }).join("");
     const tp = T.plan ? Math.round(T.done / T.plan * 100) : 0;
@@ -693,7 +700,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     }).filter(Boolean);
     if (!items.length && !inWork){ toast(!dayOpen(d) ? "Не рабочий день: сюда можно только отдых" : (start >= c.lunch.start && start < c.lunch.start + c.lunch.dur) ? "Это обед" : "Рабочее окно с " + hm(c.dayStart) + " до " + hm(c.dayEnd)); return; }
     if (!items.length){ toast("Здесь уже занято"); return; }
-    const color = r => r.kind==="rest" ? "var(--ok)" : LANES[r.kind] ? LANES[r.kind].color : "var(--mute)";
+    const color = r => r.color || (r.kind==="rest" ? "var(--ok)" : LANES[r.kind] ? LANES[r.kind].color : "var(--mute)");
     const p = document.createElement("div"); p.className = "pop"; p.style.width = "280px"; p.setAttribute("role","dialog"); p.setAttribute("aria-label","Что будет в " + hm(start));
     p.innerHTML = '<h4>'+DAYS[d]+', '+hm(start)+'</h4><div class="m">Что будет? Длина подставится сама</div>' +
       '<div class="picklist">' + items.map((it,k) => '<button type="button" class="pick" data-k="'+k+'"><i style="background:'+color(it.r)+'"></i><span>'+(it.r.kind==="rest"?"Отдых · ":"")+esc(it.r.name)+'</span><em>'+hm(start)+'–'+hm(start+it.dur)+'</em></button>').join("") + '</div>' +
