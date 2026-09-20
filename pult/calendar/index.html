@@ -433,7 +433,9 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     if (left > 0) wk().slots.push({id:uid(), ref, day:d, start:null, dur:left, status:"plan"});
   }
   function buildWeek(){
-    cal().weeks[week] = {slots:[], builtAt:new Date().toISOString()};
+    // события (ref "e") переживают пересборку: их не пульт придумал, они из календаря (20.09.2026)
+    const keep = slots().filter(b => b.ref === "e");
+    cal().weeks[week] = {slots: keep, builtAt:new Date().toISOString()};
     baseRefs().forEach(r => { for (let d = 0; d < 7; d++){ const m = Math.round((+(r.days && r.days[d]) || 0) * 60); if (m > 0) place(r.ref, d, m); } });
   }
   function normalize(){
