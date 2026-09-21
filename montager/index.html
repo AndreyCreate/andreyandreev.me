@@ -54,13 +54,21 @@ main{flex:1;display:flex;align-items:center}
 .count b{font-weight:500;color:var(--ink)}
 .note{margin-top:12px;color:var(--mute);font-size:14px}
 .msg{margin-top:12px;font-size:15px;color:var(--coral);min-height:1.4em}
-/* phone */
-.phone{position:relative;width:min(300px,100%);margin:0 auto;aspect-ratio:9/16;border-radius:28px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.22);background:#ddd}
-.phone video{width:100%;height:100%;object-fit:cover}
-.chip-f{position:absolute;background:#fff;border-radius:999px;padding:9px 16px;font-family:'JetBrains Mono',monospace;font-size:13px;box-shadow:0 8px 24px rgba(0,0,0,.14);white-space:nowrap;display:flex;gap:8px;align-items:center}
-.chip-f i{font-style:normal;color:var(--blue-deep)}
-.c1{left:-22px;top:36px}.c2{right:-18px;bottom:52px}
-.side{position:relative}
+/* Compact examples: one mounted player, stable stage. */
+.side{position:relative;min-width:0}
+.example-stage{height:420px;width:100%;background:var(--gray);border:1px solid var(--line);border-radius:20px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.example-stage video,.example-stage iframe,.example-stage img{display:block;width:100%;height:100%;object-fit:contain;border:0}
+.example-tabs{display:flex;gap:8px;justify-content:center;margin-top:14px}
+.example-tabs button,.example-views button{font:500 13px 'JetBrains Mono',monospace;min-height:44px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);cursor:pointer}
+.example-tabs button{width:52px}
+.example-tabs button[aria-selected="true"],.example-views button[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:#1f4f8a}
+.example-tabs button:focus-visible,.example-views button:focus-visible{outline:3px solid var(--blue-deep);outline-offset:3px}
+.example-caption{min-height:66px;padding-top:12px;text-align:center;font-size:15px;color:var(--ink-2)}
+.example-caption small{display:block;color:var(--mute);font-size:12px;margin-top:3px}
+.example-views{display:flex;gap:6px;justify-content:center;min-height:44px}
+.example-views button{padding:0 10px;font-size:11px}
+.example-views[hidden]{display:flex;visibility:hidden}
+@media(max-width:900px){.side{width:100%;max-width:560px;margin:auto}.example-stage{height:360px}}
 .footer{padding:26px 0 34px;border-top:1px solid var(--line)}
 .footer .rowf{display:flex;flex-wrap:wrap;gap:12px 30px;align-items:center;justify-content:space-between;font-size:14px;color:var(--mute)}
 .footer a{color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--line)}
@@ -102,12 +110,22 @@ main{flex:1;display:flex;align-items:center}
     </div>
    </div>
 
-   <div class="side">
-    <div class="phone">
-     <video src="../ai-montage/clips/montage_vh1.mp4" poster="../ai-montage/clips/montage_vh1.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Пример рилса, смонтированного агентом"></video>
+   <div class="side" aria-label="Примеры работы агента">
+    <div class="example-stage" id="example-stage" role="tabpanel" aria-labelledby="example-1" tabindex="0">
+     <video src="../ai-montage/clips/montage_vh1.mp4" poster="../ai-montage/clips/montage_vh1.jpg" controls playsinline preload="metadata" aria-label="Готовый рилс"></video>
     </div>
-    <span class="chip-f c1"><i>28 мин</i> от исходника до ролика</span>
-    <span class="chip-f c2">смонтировано <i>агентом</i></span>
+    <div class="example-tabs" role="tablist" aria-label="Выберите пример">
+     <button type="button" id="example-1" role="tab" aria-controls="example-stage" aria-selected="true" aria-label="1. Готовый рилс">01</button>
+     <button type="button" id="example-2" role="tab" aria-controls="example-stage" aria-selected="false" tabindex="-1" aria-label="2. Четыре варианта из исходников">02</button>
+     <button type="button" id="example-3" role="tab" aria-controls="example-stage" aria-selected="false" tabindex="-1" aria-label="3. Графика и комментарии">03</button>
+     <button type="button" id="example-4" role="tab" aria-controls="example-stage" aria-selected="false" tabindex="-1" aria-label="4. Правки сообщением">04</button>
+    </div>
+    <p class="example-caption" aria-live="polite"><span id="example-title">Готовый рилс</span><small id="example-detail">Пример монтажа агентом</small></p>
+    <div class="example-views" aria-label="Видео и опубликованная переписка" hidden>
+     <button type="button" aria-pressed="true" data-view="video">Видео</button>
+     <button type="button" aria-pressed="false" data-view="request">Правки</button>
+     <button type="button" aria-pressed="false" data-view="result">Ответ агента</button>
+    </div>
    </div>
   </div>
  </section>
@@ -123,6 +141,56 @@ main{flex:1;display:flex;align-items:center}
  </div>
 </footer>
 
+<script>
+(function(){
+ var examples=[
+  {title:'Готовый рилс',detail:'Пример монтажа агентом',src:'../ai-montage/clips/montage_vh1.mp4',poster:'../ai-montage/clips/montage_vh1.jpg'},
+  {title:'Четыре варианта из исходников',detail:'Запись экрана: исходники, хуки и монтаж',embed:'https://kinescope.io/embed/2UHjCw6MoQ6Pbnoec35i9X'},
+  {title:'Графика и комментарии',detail:'Фото и реальные комментарии внутри рилса',src:'media/graphics-comments.mp4',poster:'media/graphics-comments.jpg'},
+  {title:'Правки сообщением',detail:'30 минут на первую версию, ещё 20 — на правки',src:'media/message-edits.mp4',poster:'media/message-edits.jpg'}
+ ];
+ var stage=document.getElementById('example-stage'),tabs=Array.from(document.querySelectorAll('.example-tabs button'));
+ var views=document.querySelector('.example-views'),viewButtons=Array.from(views.querySelectorAll('button')),selected=0;
+ function render(view){
+  var previous=stage.querySelector('video');
+  if(previous){previous.pause();previous.removeAttribute('src');previous.load()}
+  stage.replaceChildren(); // Removing an embed also stops its playback.
+  var item=examples[selected],media;
+  if(view==='request'||view==='result'){
+   media=document.createElement('img');media.src=view==='request'?'media/edit-request.jpg':'media/edit-result.jpg';
+   media.alt=view==='request'?'Опубликованное сообщение Андрея с правками к ролику':'Опубликованный ответ агента о внесённых правках';
+  }else if(item.embed){
+   media=document.createElement('iframe');media.src=item.embed;media.title=item.title;media.allow='fullscreen; picture-in-picture';media.allowFullscreen=true;
+  }else{
+   media=document.createElement('video');media.controls=true;media.playsInline=true;media.preload='metadata';media.src=item.src;media.poster=item.poster;media.setAttribute('aria-label',item.title);
+  }
+  stage.appendChild(media);
+  viewButtons.forEach(function(button){button.setAttribute('aria-pressed',String(button.dataset.view===view))});
+ }
+ function select(index){
+  if(index===selected)return;
+  selected=index;
+  tabs.forEach(function(tab,i){tab.setAttribute('aria-selected',String(i===index));tab.tabIndex=i===index?0:-1});
+  stage.setAttribute('aria-labelledby',tabs[index].id);
+  document.getElementById('example-title').textContent=examples[index].title;
+  document.getElementById('example-detail').textContent=examples[index].detail;
+  views.hidden=index!==3;render('video');
+ }
+ tabs.forEach(function(tab,index){
+  tab.addEventListener('click',function(){select(index)});
+  tab.addEventListener('keydown',function(event){
+   var next=index;
+   if(event.key==='ArrowRight')next=(index+1)%tabs.length;
+   else if(event.key==='ArrowLeft')next=(index+tabs.length-1)%tabs.length;
+   else if(event.key==='Home')next=0;
+   else if(event.key==='End')next=tabs.length-1;
+   else return;
+   event.preventDefault();select(next);tabs[next].focus();
+  });
+ });
+ viewButtons.forEach(function(button){button.addEventListener('click',function(){render(button.dataset.view)})});
+})();
+</script>
 <script>
 (function(){
  var API='https://montager-telegram.andrey-e96.workers.dev';
