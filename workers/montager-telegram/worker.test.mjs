@@ -25,9 +25,9 @@ test('real SQLite concurrent unique signup, duplicate delivery, repeat start, fa
   assert.ok(results.every(r=>r.status===200));
   assert.deepEqual({...sql.prepare('SELECT count(*) n,count(DISTINCT position) p,max(position) m FROM queue').get()},{n:30,p:30,m:30});
   await Promise.all(Array.from({length:20},()=>worker.fetch(req(31,1001),env)));
-  assert.equal(sends,31);
-  await worker.fetch(req(31,1001),env);assert.equal(sends,31);
-  await worker.fetch(req(32,1001),env);assert.equal(sends,32);
+  assert.equal(sends,61);
+  await worker.fetch(req(31,1001),env);assert.equal(sends,61);
+  await worker.fetch(req(32,1001),env);assert.equal(sends,62);
   assert.equal(sql.prepare('SELECT position FROM queue WHERE telegram_id=1001').get().position,1);
   globalThis.fetch=async()=>Response.json({ok:false},{status:500});
   assert.equal((await worker.fetch(req(33,2001),env)).status,503);

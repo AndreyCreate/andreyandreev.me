@@ -22,6 +22,22 @@ A crash after Telegram accepts but before D1 marks sent can repeat a confirmatio
 cannot create another queue position. There is no unsolicited sender or cron job.
 Real-user Start and authoritative row/sent readback are the final canary, not synthetic production events.
 
+## Channel followup
+The first message remains the existing text queue confirmation, not an image ticket.
+Only newly created registrations receive a second message with the approved channel copy
+and one URL button to https://t.me/mbga_materials. Existing registrations/repeated Start
+receive only the original confirmation; no broadcast, gate, timer, or background sender.
+The registration transaction snapshots followup eligibility before queue insertion.
+Confirmation success is checkpointed before the channel message; ordinary retries resume
+at the failed step without repeating the confirmed first message. `sent=1` means all
+required steps succeeded. A crash/ambiguous response between Telegram acceptance and
+D1 persistence can still duplicate that step; delivery is not exactly-once.
+
+Before upload, back up queue/updates/schema and apply migrations/0002-channel-followup.sql
+once, checking PRAGMA table_info(updates) first. Both additive defaults are zero so legacy
+rows are unchanged/excluded. New installs use schema.sql. Rolling back Worker code does
+not require dropping columns or deleting data. Run both worker.test.mjs and followup.test.mjs.
+
 Rollback: revert only the frontend commit to restore the previous email form. Disable this
 bot webhook with drop_pending_updates=false only if explicitly approved; retain D1 data.
 Never delete the queue as a rollback. Old unknown email storage is untouched, not verified/migrated.
