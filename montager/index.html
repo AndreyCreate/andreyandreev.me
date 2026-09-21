@@ -65,10 +65,10 @@ main{flex:1;display:flex;align-items:center}
 .footer .rowf{display:flex;flex-wrap:wrap;gap:12px 30px;align-items:center;justify-content:space-between;font-size:14px;color:var(--mute)}
 .footer a{color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--line)}
 .footer nav{display:flex;flex-wrap:wrap;gap:22px}
-@media (max-width:900px){.grid{grid-template-columns:1fr;gap:40px}.side{order:2}.phone{width:min(240px,100%)}.c2{right:0}}
+@media (max-width:900px){.hero{padding-left:40px;padding-right:40px}.grid{grid-template-columns:1fr;gap:40px}.side{order:2}.phone{width:min(240px,100%)}.c2{right:0}}
 @media (max-width:640px){
  .wrap{padding:0 20px}.nav-l .tag{display:none}
- .hero{padding:8px 0 48px}.h1{font-size:10vw}
+ .hero{padding:8px 20px 48px;padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right))}.h1{font-size:10vw}
  .row{flex-direction:column}.pill{width:100%}
  .c1{left:-6px}.c2{right:0}
 }
