@@ -40,6 +40,18 @@ main{flex:1;display:flex;align-items:center}
 .steps li:before{content:"0" counter(s);font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--blue-deep);padding-top:3px}
 /* form */
 .form{margin-top:26px;max-width:620px}
+.offer-title{font-size:clamp(22px,2.1vw,27px);line-height:1.12;font-weight:500;letter-spacing:-.035em}
+.offer-description{font-size:16px;line-height:1.45;color:var(--ink-2);margin-top:12px}
+.ticket-tiers{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:20px 0 14px}
+.ticket-mini{position:relative;min-width:0;min-height:112px;padding:14px 8px 14px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;background:url('assets/ticket-gold.svg') center/100% 100% no-repeat;color:#25251f;filter:drop-shadow(0 3px 2px #00000016)}
+.ticket-mini[data-tier="silver"]{background-image:url('assets/ticket-silver.svg')}
+.ticket-mini[data-tier="bronze"]{background-image:url('assets/ticket-bronze.svg')}
+.ticket-name{font-size:14px;font-weight:500;line-height:1.3}
+.ticket-discount{font-size:36px;line-height:1.1;font-weight:600;letter-spacing:-.045em;margin:3px 0}
+.ticket-range{font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.4;white-space:nowrap;letter-spacing:-.05em}
+.ticket-mini.is-current:after{content:'';position:absolute;bottom:-7px;left:25%;right:25%;height:3px;border-radius:2px;background:var(--blue-deep)}
+.ticket-status{font-size:14px;line-height:1.45;margin:0 0 16px;color:var(--ink-2)}
+@media(max-width:640px){.ticket-tiers{gap:8px}.ticket-mini{padding:14px 6px;min-height:116px}.ticket-name{font-size:12px}.ticket-discount{font-size:32px}}
 .row{display:flex;gap:10px}
 .inp{flex:1;min-width:0;height:56px;border:1.5px solid var(--line);border-radius:999px;padding:0 22px;font:inherit;font-size:17px;color:var(--ink);background:#fff;outline:none;transition:border-color .15s}
 .inp:focus{border-color:var(--blue-deep)}
@@ -100,8 +112,16 @@ main{flex:1;display:flex;align-items:center}
     </ul>
 
     <div class="form" id="signup">
-     <a class="pill" id="telegram-signup" href="https://t.me/reels_by_Andrey_bot?start=montager_site" aria-describedby="signup-note" data-event="montager-telegram-click">Записаться через Telegram</a>
-     <p class="note" id="signup-note">Откройте бота и нажмите «Старт». Бот запишет вас в Telegram-предзапись и покажет ваш номер. Когда откроется запись на программу, напишу в Telegram. Бесплатно и ни к чему не обязывает.</p>
+     <h2 class="offer-title">Раньше в списке — больше скидка</h2>
+     <p class="offer-description">Запишитесь на обучающую программу по настройке своего агента-монтажёра. Ваш номер в предзаписи определит скидку на участие.</p>
+     <ul class="ticket-tiers" aria-label="Скидка по номеру предзаписи">
+      <li class="ticket-mini" data-tier="gold"><span class="ticket-name">Золотой</span><strong class="ticket-discount">10%</strong><span class="ticket-range">№ 001–050</span></li>
+      <li class="ticket-mini" data-tier="silver"><span class="ticket-name">Серебряный</span><strong class="ticket-discount">5%</strong><span class="ticket-range">№ 051–250</span></li>
+      <li class="ticket-mini" data-tier="bronze"><span class="ticket-name">Бронзовый</span><strong class="ticket-discount">3%</strong><span class="ticket-range">№ 251 и дальше</span></li>
+     </ul>
+     <p class="ticket-status" id="ticket-status" role="status">Скидка зависит от вашего номера в предзаписи.</p>
+     <a class="pill" id="telegram-signup" href="https://t.me/reels_by_Andrey_bot?start=montager_site" aria-describedby="signup-note" data-event="montager-telegram-click">Получить билет в Telegram</a>
+     <p class="note" id="signup-note">Бесплатно и без обязательств. Бот закрепит за вами номер. Когда откроется запись на программу, вы сможете воспользоваться своей скидкой.</p>
      <p class="count"><span class="dot"></span><span id="count-text">Загружаем число участников Telegram-предзаписи…</span></p>
     </div>
    </div>
@@ -177,12 +197,41 @@ main{flex:1;display:flex;align-items:center}
  button.addEventListener('click',function(){
   try{window.ym&&window.ym(109255989,'reachGoal','montager_telegram_click',{src:src})}catch(_){}
  });
- fetch(API+'/count',{cache:'no-store'}).then(function(r){
-  if(!r.ok)throw new Error('unavailable');return r.json();
- }).then(function(d){
-  if(!Number.isSafeInteger(d.count)||d.count<0)throw new Error('invalid_count');
-  countText.textContent='В Telegram-предзаписи: '+d.count.toLocaleString('ru-RU')+' человек';
- }).catch(function(){countText.textContent='Не удалось загрузить число участников Telegram-предзаписи'});
+ var ticketStatus=document.getElementById('ticket-status');
+ var tickets=Array.from(document.querySelectorAll('.ticket-mini'));
+ var generation=0,controller;
+ function neutral(){
+  tickets.forEach(function(ticket){ticket.classList.remove('is-current')});
+  ticketStatus.textContent='Скидка зависит от вашего номера в предзаписи.';
+ }
+ function refreshCount(){
+  var request=++generation;
+  if(controller)controller.abort();
+  neutral();
+  countText.textContent='Загружаем число участников Telegram-предзаписи…';
+  if(document.hidden)return;
+  controller=new AbortController();
+  var timeout=setTimeout(function(){controller.abort()},6000);
+  fetch(API+'/count',{cache:'no-store',signal:controller.signal}).then(function(r){
+   if(!r.ok)throw new Error('unavailable');return r.json();
+  }).then(function(d){
+   if(request!==generation)return;
+   if(!d||!Number.isSafeInteger(d.count)||d.count<0||d.count>=Number.MAX_SAFE_INTEGER)throw new Error('invalid_count');
+   countText.textContent='В Telegram-предзаписи: '+d.count.toLocaleString('ru-RU')+' человек';
+   // /count counts the unique contiguous queue: the next issued position is count + 1.
+   var tier=d.count<50?'gold':d.count<250?'silver':'bronze';
+   var label={gold:'золотые билеты — скидка 10%',silver:'серебряные билеты — скидка 5%',bronze:'бронзовые билеты — скидка 3%'};
+   tickets.forEach(function(ticket){ticket.classList.toggle('is-current',ticket.dataset.tier===tier)});
+   ticketStatus.textContent='Сейчас выдаём '+label[tier];
+  }).catch(function(){
+   if(request!==generation)return;
+   neutral();countText.textContent='Не удалось загрузить число участников Telegram-предзаписи';
+  }).finally(function(){clearTimeout(timeout)});
+ }
+ refreshCount();
+ setInterval(refreshCount,30000);
+ document.addEventListener('visibilitychange',refreshCount);
+ window.addEventListener('pageshow',function(event){if(event.persisted)refreshCount()});
 })();
 </script>
 <!-- Yandex.Metrika counter -->
