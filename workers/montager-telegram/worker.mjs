@@ -1,0 +1,74 @@
+const ORIGIN = 'https://andreyandreev.me';
+const reply = (status, text) => new Response(text, {status});
+export async function boundedJSON(request) {
+  if (Number(request.headers.get('content-length')) > 16384) throw new Error('large');
+  const reader = request.body?.getReader();
+  if (!reader) throw new Error('json');
+  let size = 0; const chunks = [];
+  while (true) {
+    const {done, value} = await reader.read(); if (done) break;
+    size += value.byteLength;
+    if (size > 16384) { await reader.cancel(); throw new Error('large'); }
+    chunks.push(value);
+  }
+  const bytes = new Uint8Array(size); let offset = 0;
+  for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.byteLength; }
+  return JSON.parse(new TextDecoder().decode(bytes));
+}
+export default {
+ async fetch(request, env) {
+  const path = new URL(request.url).pathname;
+  if (path === '/count' && request.method === 'GET') {
+    const row = await env.DB.prepare('SELECT COUNT(*) AS count FROM queue').first();
+    return Response.json({count: row.count}, {headers: {
+      'Access-Control-Allow-Origin': ORIGIN, 'Vary':'Origin', 'Cache-Control':'no-store'
+    }});
+  }
+  if (path !== '/telegram' || request.method !== 'POST') return reply(404, 'Not found');
+  if (!env.WEBHOOK_SECRET || request.headers.get('X-Telegram-Bot-Api-Secret-Token') !== env.WEBHOOK_SECRET)
+    return reply(401, 'Unauthorized');
+  let update;
+  try { update = await boundedJSON(request); }
+  catch (e) { return reply(e.message === 'large' ? 413 : 400, 'Invalid body'); }
+  const m = update?.message;
+  if (!Number.isSafeInteger(update?.update_id) || update.update_id < 0 ||
+      !m || m.chat?.type !== 'private' || m.from?.is_bot !== false ||
+      !Number.isSafeInteger(m.from?.id) || m.from.id <= 0 || m.from.id !== m.chat.id)
+    return reply(200, 'Ignored');
+  const command = /^\/start(?:@([A-Za-z0-9_]+))?(?: (montager_(?:site|reel|other)))?$/.exec(m.text || '');
+  if (!command || (command[1] && command[1].toLowerCase() !== env.BOT_USERNAME.toLowerCase())) return reply(200, 'Ignored');
+  const source = command[2]?.slice('montager_'.length) || 'other';
+  const uid = update.update_id, tid = m.from.id;
+  try {
+    // D1 batch is a single atomic transaction. No read-then-write position race.
+    await env.DB.batch([
+      env.DB.prepare('INSERT INTO updates(update_id,telegram_id) VALUES(?,?) ON CONFLICT(update_id) DO NOTHING').bind(uid,tid),
+      env.DB.prepare(`INSERT INTO queue(position,telegram_id,source)
+        SELECT COALESCE(MAX(position),0)+1,?,? FROM queue
+        HAVING NOT EXISTS(SELECT 1 FROM queue WHERE telegram_id=?)
+        AND EXISTS(SELECT 1 FROM updates WHERE update_id=? AND telegram_id=?)`).bind(tid,source,tid,uid,tid)
+    ]);
+    const state = await env.DB.prepare('SELECT telegram_id,sent FROM updates WHERE update_id=?').bind(uid).first();
+    if (state.telegram_id !== tid) return reply(409,'Conflict');
+    if (state.sent) return reply(200,'OK');
+    const lease = crypto.randomUUID();
+    const claimed = await env.DB.prepare(`UPDATE updates SET lease=?,lease_until=unixepoch()+60
+      WHERE update_id=? AND sent=0 AND lease_until<=unixepoch() RETURNING update_id`).bind(lease,uid).first();
+    if (!claimed) return reply(503,'Retry');
+    const row = await env.DB.prepare('SELECT position FROM queue WHERE telegram_id=?').bind(tid).first();
+    try {
+      const response = await fetch('https://api.telegram.org/bot'+env.BOT_TOKEN+'/sendMessage', {
+        method:'POST', headers:{'Content-Type':'application/json'}, signal:AbortSignal.timeout(10000),
+        body:JSON.stringify({chat_id:tid,text:`Вы в Telegram-предзаписи. Ваш номер — #${row.position}. Когда откроем доступ, напишу сюда.`})
+      });
+      const result = await response.json();
+      if (!response.ok || !result.ok) throw new Error('delivery');
+      await env.DB.prepare('UPDATE updates SET sent=1,lease=NULL,lease_until=0 WHERE update_id=? AND lease=?').bind(uid,lease).run();
+      return reply(200,'OK');
+    } catch (_) {
+      await env.DB.prepare('UPDATE updates SET lease=NULL,lease_until=0 WHERE update_id=? AND lease=? AND sent=0').bind(uid,lease).run();
+      return reply(503,'Retry');
+    }
+  } catch (_) { return reply(503,'Retry'); }
+ }
+};

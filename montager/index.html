@@ -54,13 +54,6 @@ main{flex:1;display:flex;align-items:center}
 .count b{font-weight:500;color:var(--ink)}
 .note{margin-top:12px;color:var(--mute);font-size:14px}
 .msg{margin-top:12px;font-size:15px;color:var(--coral);min-height:1.4em}
-/* done state */
-.done{display:none;margin-top:34px;max-width:620px;background:var(--gray);border-radius:20px;padding:28px 28px 26px}
-.done .num{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--blue-deep);margin-bottom:10px}
-.done h2{font-size:clamp(24px,2.4vw,32px);line-height:1.15;letter-spacing:-.02em;font-weight:500}
-.done p{margin-top:12px;color:var(--ink-2)}
-.done .pos{font-size:clamp(44px,5vw,72px);line-height:1;letter-spacing:-.04em;font-weight:500;color:var(--ink);margin:6px 0 10px}
-.is-done .form{display:none}.is-done .done{display:block}
 /* phone */
 .phone{position:relative;width:min(300px,100%);margin:0 auto;aspect-ratio:9/16;border-radius:28px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.22);background:#ddd}
 .phone video{width:100%;height:100%;object-fit:cover}
@@ -72,12 +65,12 @@ main{flex:1;display:flex;align-items:center}
 .footer .rowf{display:flex;flex-wrap:wrap;gap:12px 30px;align-items:center;justify-content:space-between;font-size:14px;color:var(--mute)}
 .footer a{color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--line)}
 .footer nav{display:flex;flex-wrap:wrap;gap:22px}
-@media (max-width:900px){.grid{grid-template-columns:1fr;gap:40px}.side{order:2}.phone{width:min(240px,100%)}}
+@media (max-width:900px){.grid{grid-template-columns:1fr;gap:40px}.side{order:2}.phone{width:min(240px,100%)}.c2{right:0}}
 @media (max-width:640px){
  .wrap{padding:0 20px}.nav-l .tag{display:none}
  .hero{padding:8px 0 48px}.h1{font-size:10vw}
  .row{flex-direction:column}.pill{width:100%}
- .c1{left:-6px}.c2{right:-6px}
+ .c1{left:-6px}.c2{right:0}
 }
 </style>
 </head>
@@ -102,22 +95,10 @@ main{flex:1;display:flex;align-items:center}
      <li>Забираете готовый рилс, минут через тридцать</li>
     </ul>
 
-    <form class="form" id="form" novalidate>
-     <div class="row">
-      <input class="inp" id="email" type="email" name="email" inputmode="email" autocomplete="email" placeholder="Ваша почта" required aria-label="Ваша почта">
-      <input class="hp" type="text" name="site" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <button class="pill" id="btn" type="submit" data-event="montager-signup">Записаться в предзапись</button>
-     </div>
-     <p class="msg" id="msg" aria-live="polite"></p>
-     <p class="count"><span class="dot"></span><span id="count-text">В предзаписи уже <b id="count">…</b></span></p>
-     <p class="note">Бесплатно и ни к чему не обязывает. Напишу на почту, когда откроем доступ, первым — тем, кто раньше записался.</p>
-    </form>
-
-    <div class="done" id="done" role="status">
-     <div class="num">:: вы в списке</div>
-     <h2>Ваш номер в очереди</h2>
-     <div class="pos" id="pos">#—</div>
-     <p id="done-text">Напишу на почту, как только откроем доступ. Раньше записались — раньше получите.</p>
+    <div class="form" id="signup">
+     <a class="pill" id="telegram-signup" href="https://t.me/reels_by_Andrey_bot?start=montager_site" aria-describedby="signup-note" data-event="montager-telegram-click">Записаться через Telegram</a>
+     <p class="note" id="signup-note">Откройте бота и нажмите «Старт». Бот запишет вас в Telegram-предзапись и покажет ваш номер. Когда откроем доступ, напишу в Telegram. Бесплатно и ни к чему не обязывает.</p>
+     <p class="count"><span class="dot"></span><span id="count-text">Загружаем число участников Telegram-предзаписи…</span></p>
     </div>
    </div>
 
@@ -144,42 +125,22 @@ main{flex:1;display:flex;align-items:center}
 
 <script>
 (function(){
- var API='https://montager-waitlist.andreyandreev.workers.dev';
+ var API='https://montager-telegram.andrey-e96.workers.dev';
  var q=new URLSearchParams(location.search);
  var src=(q.get('src')||q.get('utm_source')||'site').toLowerCase();
  if(/reel|ig|insta/.test(src))src='reel';else if(src!=='site')src='other';
- var $=function(id){return document.getElementById(id)};
- var form=$('form'),email=$('email'),btn=$('btn'),msg=$('msg'),count=$('count'),countText=$('count-text'),pos=$('pos');
- function plural(n){var a=n%10,b=n%100;if(b>=11&&b<=19)return 'человек';if(a===1)return 'человек';return 'человек'}
- function showCount(n){
-  n=parseInt(n,10)||0;
-  if(n<=0){countText.textContent='Список только открылся — первые места свободны';return}
-  countText.innerHTML='В предзаписи уже <b>'+n.toLocaleString('ru-RU')+'</b> '+plural(n);
- }
- fetch(API+'/count',{cache:'no-store'}).then(function(r){return r.json()}).then(function(d){showCount(d.count)}).catch(function(){countText.textContent='В предзаписи уже есть люди'});
- var done=false;
- form.addEventListener('submit',function(e){
-  e.preventDefault();if(done)return;
-  var v=(email.value||'').trim();
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)){email.classList.add('err');msg.textContent='Проверьте адрес почты';email.focus();return}
-  email.classList.remove('err');msg.textContent='';btn.disabled=true;btn.textContent='Записываю…';
-  var hp=form.querySelector('.hp').value||'';
-  fetch(API+'/signup',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:v,src:src,hp:hp})})
-  .then(function(r){return r.json()})
-  .then(function(d){
-   if(!d.ok){throw new Error(d.error||'err')}
-   done=true;pos.textContent='#'+d.position;
-   if(d.already)$('done-text').textContent='Эта почта уже в списке. Напишу на неё, как только откроем доступ.';
-   document.body.classList.add('is-done');
-   try{localStorage.setItem('montager_pos',String(d.position))}catch(_){}
-   try{window.ym&&ym(109255989,'reachGoal','montager_signup',{src:src})}catch(_){}
-  })
-  .catch(function(err){
-   btn.disabled=false;btn.textContent='Записаться в предзапись';
-   msg.textContent=(err&&err.message==='rate_limit')?'Слишком много попыток, попробуйте позже':'Не получилось отправить. Попробуйте ещё раз или напишите Андрею в Telegram';
-  });
+ var button=document.getElementById('telegram-signup');
+ var countText=document.getElementById('count-text');
+ button.href='https://t.me/reels_by_Andrey_bot?start=montager_'+src;
+ button.addEventListener('click',function(){
+  try{window.ym&&window.ym(109255989,'reachGoal','montager_telegram_click',{src:src})}catch(_){}
  });
- try{var saved=localStorage.getItem('montager_pos');if(saved){pos.textContent='#'+saved;$('done-text').textContent='Вы уже в списке. Напишу на почту, как только откроем доступ.';document.body.classList.add('is-done')}}catch(_){}
+ fetch(API+'/count',{cache:'no-store'}).then(function(r){
+  if(!r.ok)throw new Error('unavailable');return r.json();
+ }).then(function(d){
+  if(!Number.isSafeInteger(d.count)||d.count<0)throw new Error('invalid_count');
+  countText.textContent='В Telegram-предзаписи: '+d.count.toLocaleString('ru-RU')+' человек';
+ }).catch(function(){countText.textContent='Не удалось загрузить число участников Telegram-предзаписи'});
 })();
 </script>
 <!-- Yandex.Metrika counter -->
