@@ -1,3 +1,4 @@
+import {ticketCaption} from './ticket.mjs';
 const ORIGIN = 'https://andreyandreev.me';
 const reply = (status, text) => new Response(text, {status});
 export async function boundedJSON(request) {
@@ -15,7 +16,7 @@ export async function boundedJSON(request) {
   for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.byteLength; }
   return JSON.parse(new TextDecoder().decode(bytes));
 }
-export default {
+export function createWorker(renderTicket) { return {
  async fetch(request, env) {
   const path = new URL(request.url).pathname;
   if (path === '/count' && request.method === 'GET') {
@@ -68,7 +69,16 @@ export default {
         if (!response.ok || !result.ok) throw new Error('delivery');
       };
       if (!claimed.confirmation_sent) {
-        await send({text:`Вы в Telegram-предзаписи. Ваш номер — #${row.position}. Когда откроем доступ, напишу сюда.`});
+        const photo=await renderTicket(row.position,m.from);
+        const form=new FormData();
+        form.set('chat_id',String(tid));
+        form.set('caption',ticketCaption(row.position,m.from));
+        form.set('photo',new Blob([photo],{type:'image/png'}),'ticket.png');
+        const response=await fetch('https://api.telegram.org/bot'+env.BOT_TOKEN+'/sendPhoto',{
+          method:'POST',body:form,signal:AbortSignal.timeout(10000)
+        });
+        const result=await response.json();
+        if (!response.ok || !result.ok) throw new Error('delivery');
         const saved = await env.DB.prepare(`UPDATE updates SET confirmation_sent=1
           WHERE update_id=? AND lease=? AND sent=0 RETURNING update_id`).bind(uid,lease).first();
         if (!saved) throw new Error('lease');
@@ -87,4 +97,4 @@ export default {
     }
   } catch (_) { return reply(503,'Retry'); }
  }
-};
+}; }

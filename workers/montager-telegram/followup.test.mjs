@@ -2,7 +2,8 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {DatabaseSync} from 'node:sqlite';
 import {readFileSync} from 'node:fs';
-import worker from './worker.mjs';
+import {createWorker} from './worker.mjs';
+const worker=createWorker(async()=>new Uint8Array([137,80,78,71]));
 const text='Кейсы и примеры того, что можно делать с AI-агентами, я показываю в Telegram-канале «Андрей, бесишь!».\n\nПодпишитесь, чтобы увидеть, как это работает на практике: от задачи до готового результата.';
 const button={inline_keyboard:[[{text:'Подписаться на канал',url:'https://t.me/mbga_materials'}]]};
 function fixture(){
@@ -13,12 +14,12 @@ function fixture(){
 const req=(id=1)=>new Request('https://test/telegram',{method:'POST',headers:{'X-Telegram-Bot-Api-Secret-Token':'test'},body:JSON.stringify({update_id:id,message:{from:{id:1001,is_bot:false},chat:{id:1001,type:'private'},text:'/start montager_site'}})});
 test('confirmation then exact channel message, retry resumes only followup, no existing-user backfill',async()=>{
  const {sql,env}=fixture(),old=globalThis.fetch,calls=[];let failFirst=true,failSecond=true;
- globalThis.fetch=async(url,opts)=>{assert.ok(url.endsWith('/sendMessage'));const body=JSON.parse(opts.body);calls.push(body);return Response.json({ok:body.text===text?!failSecond:!failFirst})};
+ globalThis.fetch=async(url,opts)=>{const isPhoto=url.endsWith('/sendPhoto');assert.ok(isPhoto||url.endsWith('/sendMessage'));const body=isPhoto?{text:opts.body.get('caption')}:JSON.parse(opts.body);if(isPhoto){assert.equal(opts.body.get('photo').type,'image/png');assert.equal(opts.body.get('chat_id'),'1001')}calls.push(body);return Response.json({ok:isPhoto?!failFirst:!failSecond})};
  try{
   assert.equal((await worker.fetch(req(),env)).status,503);assert.equal(calls.length,1);assert.notEqual(calls[0].text,text);
   failFirst=false;
   assert.equal((await worker.fetch(req(),env)).status,503);assert.equal(calls.length,3);
-  assert.equal(calls[1].text,'Вы в Telegram-предзаписи. Ваш номер — #1. Когда откроем доступ, напишу сюда.');
+  assert.equal(calls[1].text,'Ваш золотой билет №001. Скидка 10% на обучающую программу по настройке агента-монтажёра. Когда откроется запись, напишу сюда.\nИмя: Участник');
   assert.deepEqual(calls[2],{chat_id:1001,text,reply_markup:button});
   assert.equal(sql.prepare('SELECT sent FROM updates').get().sent,0);
   failSecond=false;
