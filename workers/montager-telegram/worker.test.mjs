@@ -2,7 +2,8 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {DatabaseSync} from 'node:sqlite';
 import {readFileSync} from 'node:fs';
-import worker from './worker.mjs';
+import {createWorker} from './worker.mjs';
+const worker=createWorker(async()=>new Uint8Array([137,80,78,71]));
 function fixture(){
  const sql=new DatabaseSync(':memory:'); sql.exec(readFileSync(new URL('./schema.sql',import.meta.url),'utf8'));
  const DB={prepare(q){return {args:[],bind(...args){this.args=args;return this},async first(){return sql.prepare(q).get(...this.args)},async run(){return sql.prepare(q).run(...this.args)},q}},async batch(stmts){sql.exec('BEGIN');try{for(const s of stmts)sql.prepare(s.q).run(...s.args);sql.exec('COMMIT')}catch(e){sql.exec('ROLLBACK');throw e}}};
