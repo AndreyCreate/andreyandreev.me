@@ -42,7 +42,9 @@ export default {
   try {
     // D1 batch is a single atomic transaction. No read-then-write position race.
     await env.DB.batch([
-      env.DB.prepare('INSERT INTO updates(update_id,telegram_id) VALUES(?,?) ON CONFLICT(update_id) DO NOTHING').bind(uid,tid),
+      env.DB.prepare(`INSERT INTO updates(update_id,telegram_id,followup_required)
+        VALUES(?,?,NOT EXISTS(SELECT 1 FROM queue WHERE telegram_id=?))
+        ON CONFLICT(update_id) DO NOTHING`).bind(uid,tid,tid),
       env.DB.prepare(`INSERT INTO queue(position,telegram_id,source)
         SELECT COALESCE(MAX(position),0)+1,?,? FROM queue
         HAVING NOT EXISTS(SELECT 1 FROM queue WHERE telegram_id=?)
@@ -53,16 +55,30 @@ export default {
     if (state.sent) return reply(200,'OK');
     const lease = crypto.randomUUID();
     const claimed = await env.DB.prepare(`UPDATE updates SET lease=?,lease_until=unixepoch()+60
-      WHERE update_id=? AND sent=0 AND lease_until<=unixepoch() RETURNING update_id`).bind(lease,uid).first();
+      WHERE update_id=? AND sent=0 AND lease_until<=unixepoch() RETURNING update_id,confirmation_sent,followup_required`).bind(lease,uid).first();
     if (!claimed) return reply(503,'Retry');
     const row = await env.DB.prepare('SELECT position FROM queue WHERE telegram_id=?').bind(tid).first();
     try {
-      const response = await fetch('https://api.telegram.org/bot'+env.BOT_TOKEN+'/sendMessage', {
-        method:'POST', headers:{'Content-Type':'application/json'}, signal:AbortSignal.timeout(10000),
-        body:JSON.stringify({chat_id:tid,text:`Вы в Telegram-предзаписи. Ваш номер — #${row.position}. Когда откроем доступ, напишу сюда.`})
-      });
-      const result = await response.json();
-      if (!response.ok || !result.ok) throw new Error('delivery');
+      const send = async (body) => {
+        const response = await fetch('https://api.telegram.org/bot'+env.BOT_TOKEN+'/sendMessage', {
+          method:'POST', headers:{'Content-Type':'application/json'}, signal:AbortSignal.timeout(10000),
+          body:JSON.stringify({chat_id:tid,...body})
+        });
+        const result = await response.json();
+        if (!response.ok || !result.ok) throw new Error('delivery');
+      };
+      if (!claimed.confirmation_sent) {
+        await send({text:`Вы в Telegram-предзаписи. Ваш номер — #${row.position}. Когда откроем доступ, напишу сюда.`});
+        const saved = await env.DB.prepare(`UPDATE updates SET confirmation_sent=1
+          WHERE update_id=? AND lease=? AND sent=0 RETURNING update_id`).bind(uid,lease).first();
+        if (!saved) throw new Error('lease');
+      }
+      if (claimed.followup_required) {
+        await send({
+          text:'Кейсы и примеры того, что можно делать с AI-агентами, я показываю в Telegram-канале «Андрей, бесишь!».\n\nПодпишитесь, чтобы увидеть, как это работает на практике: от задачи до готового результата.',
+          reply_markup:{inline_keyboard:[[{text:'Подписаться на канал',url:'https://t.me/mbga_materials'}]]}
+        });
+      }
       await env.DB.prepare('UPDATE updates SET sent=1,lease=NULL,lease_until=0 WHERE update_id=? AND lease=?').bind(uid,lease).run();
       return reply(200,'OK');
     } catch (_) {

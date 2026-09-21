@@ -8,6 +8,8 @@ CREATE TABLE IF NOT EXISTS updates (
  update_id INTEGER PRIMARY KEY,
  telegram_id INTEGER NOT NULL,
  sent INTEGER NOT NULL DEFAULT 0 CHECK(sent IN (0,1)),
+ confirmation_sent INTEGER NOT NULL DEFAULT 0 CHECK(confirmation_sent IN (0,1)),
+ followup_required INTEGER NOT NULL DEFAULT 0 CHECK(followup_required IN (0,1)),
  lease TEXT,
  lease_until INTEGER NOT NULL DEFAULT 0
 );
