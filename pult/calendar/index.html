@@ -526,10 +526,12 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
 
   /* ---------- отрисовка ---------- */
   const y = m => (m - VIEW_START) * PX_PER_MIN;
+  /* Линия живёт только в рабочем окне 10:00–18:00 — вне его Андрею она не нужна (22.09.2026, msg 13696) */
+  const NOW_FROM = 600, NOW_TO = 1080;
   function paintNow(){
     const el = document.querySelector(".nowline"); if (!el) return;
     const m = mskParts().min;
-    if (m < VIEW_START || m > VIEW_END){ el.style.display = "none"; return; }
+    if (m < NOW_FROM || m > NOW_TO){ el.style.display = "none"; return; }
     el.style.display = "";
     el.style.top = y(m) + "px";
     const lab = el.querySelector("b"); if (lab) lab.textContent = hm(m);
