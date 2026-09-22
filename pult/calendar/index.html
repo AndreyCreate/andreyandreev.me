@@ -265,6 +265,8 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
 .blk.short .t{font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .blk.dragging{opacity:.35}
 .blk.sel{outline:2px solid var(--ink);outline-offset:1px}
+.blk.overlap{opacity:.88;box-shadow:0 0 0 2px var(--warn),0 1px 0 rgba(0,0,0,.04);z-index:2}
+.blk.overlap .ovtag{display:inline-block;font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.02em;text-transform:uppercase;background:var(--warn);color:#1a1200;border-radius:5px;padding:1px 4px;margin-left:4px;vertical-align:1px}
 .blk .rz{position:absolute;left:0;right:0;bottom:0;height:8px;cursor:ns-resize}
 .ghostblk{position:absolute;left:4px;right:4px;border-radius:10px;border:2px dashed var(--blue-deep);background:var(--drop);pointer-events:none;z-index:4;font-family:var(--mono);font-size:10.5px;color:var(--blue-deep);padding:4px 6px}
 .ghostblk.bad{border-color:var(--bad);color:var(--bad);background:color-mix(in srgb,var(--bad) 8%,transparent)}
@@ -383,7 +385,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
   const FIXED = {tax:"Налог · созвоны", chaos:"Окна хаоса"};
   const STATUS = {plan:"Запланировано", done:"Сделано", miss:"Не случилось"};
   const STEP = 30, PX_PER_MIN = 1.0, VIEW_START = 540, VIEW_END = 1260; // на экране 09:00–21:00: отдых можно ставить и вне рабочего окна
-  const PULT_VERSION = "2.2";
+  const PULT_VERSION = "2.3";
   let state = null, aesKey = null, auth = null, dirty = false, saving = false, saveTimer = null;
   let week = null; // ISO понедельника открытой недели
   // оптимистичная блокировка (22.09.2026): см. index.html
@@ -462,6 +464,30 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
   function isRest(ref){ const p = ref && ref.startsWith("p:") && state.projects.find(x => "p:" + x.id === ref); return !!(p && p.lane === "personal"); }
   function restRefs(){ return state.projects.filter(p => p.lane === "personal").map(p => ({ref:"p:"+p.id, name:p.name, kind:"rest", days:p.days, est:false, hours:projHours(p), color:projColor(p)})); }
   function dayOpen(d){ return (+state.dayCap[d]||0) > 0; }
+  /* Раскладка наложений ТОЛЬКО для отрисовки (22.09.2026, TG 13825/13827): данные не трогает и
+     ничего не двигает — просто решает, в какую «дорожку» по горизонтали поставить каждый блок
+     дня, если он пересекается по времени с другим. blocks — уже отсортированы по start. */
+  function layoutOverlaps(blocks){
+    const map = new Map();
+    let i = 0;
+    while (i < blocks.length){
+      let end = blocks[i].start + blocks[i].dur, j = i + 1;
+      while (j < blocks.length && blocks[j].start < end){ end = Math.max(end, blocks[j].start + blocks[j].dur); j++; }
+      const cluster = blocks.slice(i, j);
+      if (cluster.length === 1){ map.set(cluster[0].id, {lane:0, lanes:1}); }
+      else {
+        const laneEnds = [];
+        cluster.forEach(b => {
+          let lane = laneEnds.findIndex(e => e <= b.start);
+          if (lane === -1){ lane = laneEnds.length; laneEnds.push(b.start + b.dur); } else laneEnds[lane] = b.start + b.dur;
+          map.set(b.id, {lane, lanes:0});
+        });
+        cluster.forEach(b => { map.get(b.id).lanes = laneEnds.length; });
+      }
+      i = j;
+    }
+    return map;
+  }
   function busy(d, exceptId){
     const c = cal(); const iv = [[c.lunch.start, c.lunch.start + c.lunch.dur]];
     slots().forEach(b => { if (b.day===d && b.start!=null && b.id!==exceptId) iv.push([b.start, b.start+b.dur]); });
@@ -489,40 +515,17 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     if (start < c.lunch.start + c.lunch.dur && start + dur > c.lunch.start) return "Это обед";
     return null;
   }
-  function pushCount(d, start, dur, exceptId){
+  /* Сколько существующих блоков займёт эта позиция — только для превью при перетаскивании
+     и текста тоста. НИКОГО не двигает (запрос Андрея 22.09.2026, TG 13827: «давай система не
+     будет автоматом ничего перемещать» — куда положил, там и лежит; наложения допускаются и
+     просто видны на сетке рядом/полупрозрачно, разруливать их автоматикой нельзя). Единственная
+     авто-раскладка дня/недели — явная кнопка «Собрать из пульта» (buildWeek()). */
+  function overlapCount(d, start, dur, exceptId){
     return slots().filter(b => b.day===d && b.start!=null && b.id!==exceptId && start < b.start + b.dur && start + dur > b.start).length;
   }
-  function reflowDay(d, anchorId){
-    const c = cal(), moved = [];
-    const anchor = slots().find(b => b.id === anchorId);
-    const placed = (anchor && anchor.day===d && anchor.start!=null) ? [[anchor.start, anchor.start + anchor.dur]] : [];
-    slots().filter(b => b.day===d && b.start!=null && b.id!==anchorId).sort((a,b)=>a.start-b.start).forEach(b => {
-      const ev = isRest(b.ref) || b.ref === "e";
-      const hi = ev ? VIEW_END : c.dayEnd;
-      const wall = placed.concat(ev ? [] : [[c.lunch.start, c.lunch.start + c.lunch.dur]]);
-      let t = b.start, to = null;
-      while (t + b.dur <= hi){
-        const hit = wall.find(([a, z]) => t < z && t + b.dur > a);
-        if (!hit){ to = t; break; }
-        t = Math.ceil(hit[1] / STEP) * STEP;
-      }
-      if (to === null){ moved.push({b, to:null}); b.start = null; }
-      else { if (to !== b.start) moved.push({b, to}); b.start = to; placed.push([to, to + b.dur]); }
-    });
-    return moved;
-  }
-  function pushToast(moved){
-    if (!moved.length) return;
-    const nm = m => refInfo(m.b.ref, m.b.title).name;
-    const out = moved.filter(m => m.to === null), sh = moved.filter(m => m.to !== null);
-    if (out.length){
-      // список имён, а не только счётчик — иначе выглядит как «пропали», а не «не влезли»
-      // (баг TG 13819, 22.09.2026: раздвижка соседей при плотном дне выталкивала несколько блоков разом)
-      const names = out.slice(0,4).map(nm).join(", ") + (out.length > 4 ? " и ещё " + (out.length-4) : "");
-      toast((out.length === 1 ? nm(out[0]) + " не влез" : out.length + " блока не влезли: " + names) + " — смотри «не влезло» внизу, они никуда не делись", out.length >= 2 ? 6000 : 2600);
-    }
-    else if (sh.length === 1) toast("Подвинул: " + nm(sh[0]) + " → " + hm(sh[0].to));
-    else toast("Подвинул блоков: " + sh.length);
+  function overlapToast(b, n){
+    if (!n) return;
+    toast((n === 1 ? "Наложился на 1 блок" : "Наложился на " + n + " блока(ов)") + " — оба видны на сетке, ничего не подвинул");
   }
   function gaps(d){
     const c = cal(); const out = []; let t = c.dayStart;
@@ -695,12 +698,22 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
         const lunchMissed = w && Array.isArray(w.lunchMissed) && w.lunchMissed.includes(d);
         col += '<div class="closed lunch'+(lunchMissed?" missed":"")+'" style="top:'+y(c.lunch.start)+'px;height:'+(c.lunch.dur*PX_PER_MIN)+'px"><span class="tag">'+(lunchMissed?"обед — пропущен":"обед")+'</span></div>';
       }
-      S.filter(b => b.day===d && b.start!=null).forEach(b => {
+      const dayBlocks = S.filter(b => b.day===d && b.start!=null).sort((x,z)=>x.start-z.start);
+      const lay = layoutOverlaps(dayBlocks);
+      dayBlocks.forEach(b => {
         const r = refInfo(b.ref, b.title);
         const tint = r.color ? 'background:'+r.color+';color:#fff;border-color:transparent;' : '';
         const overBadge = b.over ? ' <b class="overmin">+'+Math.round(b.over)+' мин</b>' : '';
-        col += '<div class="blk '+(r.kind==="fixed"?"bfix":r.kind)+(b.dur<=30?" short":"")+(b.status==="done"?" done":"")+(b.status==="miss"?" miss":"")+'" data-id="'+b.id+'" tabindex="0" role="button" aria-label="'+esc(r.name)+', '+hm(b.start)+'–'+hm(b.start+b.dur)+', '+STATUS[b.status||"plan"]+(b.over?', +'+Math.round(b.over)+' минут сверх плана':'')+'" style="'+tint+'top:'+y(b.start)+'px;height:'+(b.dur*PX_PER_MIN - 2)+'px">' +
-          '<span class="t">'+esc(r.name)+'</span><span class="m">'+hm(b.start)+'–'+hm(b.start+b.dur)+' · '+fmtH(b.dur/60)+' ч'+overBadge+'</span><span class="rz" data-rz="1"></span></div>';
+        const L = lay.get(b.id);
+        // Наложение (два блока на одно время) НЕ разруливается автоматикой — только видно рядом,
+        // узко, полупрозрачно, с пометкой (22.09.2026, TG 13827: «система не будет автоматом
+        // ничего перемещать»); ставится куда бросили, даже поверх другого блока.
+        const posStyle = L.lanes > 1
+          ? 'left:calc(4px + (100% - 8px) * '+L.lane+' / '+L.lanes+');right:auto;width:calc((100% - 8px) / '+L.lanes+' - 3px);'
+          : '';
+        const overlapTag = L.lanes > 1 ? ' <b class="ovtag">наложение</b>' : '';
+        col += '<div class="blk '+(r.kind==="fixed"?"bfix":r.kind)+(b.dur<=30?" short":"")+(b.status==="done"?" done":"")+(b.status==="miss"?" miss":"")+(L.lanes>1?" overlap":"")+'" data-id="'+b.id+'" tabindex="0" role="button" aria-label="'+esc(r.name)+', '+hm(b.start)+'–'+hm(b.start+b.dur)+', '+STATUS[b.status||"plan"]+(b.over?', +'+Math.round(b.over)+' минут сверх плана':'')+(L.lanes>1?', накладывается на другой блок':'')+'" style="'+tint+posStyle+'top:'+y(b.start)+'px;height:'+(b.dur*PX_PER_MIN - 2)+'px">' +
+          '<span class="t">'+esc(r.name)+overlapTag+'</span><span class="m">'+hm(b.start)+'–'+hm(b.start+b.dur)+' · '+fmtH(b.dur/60)+' ч'+overBadge+'</span><span class="rz" data-rz="1"></span></div>';
       });
       const dcol = new Date(a); dcol.setDate(a.getDate()+d);
       if (isoDate(dcol) === todayIso) col += '<div class="nowline"><i></i><b></b></div>';
@@ -766,12 +779,12 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
   let drag = null;
   function colAt(x, yy){ return Array.from(document.querySelectorAll(".col")).find(c => { const r = c.getBoundingClientRect(); return x >= r.left && x < r.right && yy >= r.top - 40 && yy <= r.bottom + 40; }); }
   function minuteAt(col, clientY, offsetMin){ const r = col.getBoundingClientRect(); return Math.round((VIEW_START + (clientY - r.top) / PX_PER_MIN - (offsetMin||0)) / STEP) * STEP; }
-  function showGhost(col, start, dur, ok, push){
+  function showGhost(col, start, dur, ok, overlap){
     let g = $(".ghostblk"); if (!g){ g = document.createElement("div"); }
     if (g.parentNode !== col) col.appendChild(g);
     g.style.top = y(start) + "px"; g.style.height = (dur*PX_PER_MIN - 2) + "px";
-    g.className = "ghostblk" + (!ok ? " bad" : push ? " warn" : "");
-    g.textContent = hm(start) + "–" + hm(start+dur) + (!ok ? " · нельзя" : push ? " · подвинет " + push : "");
+    g.className = "ghostblk" + (!ok ? " bad" : overlap ? " warn" : "");
+    g.textContent = hm(start) + "–" + hm(start+dur) + (!ok ? " · нельзя" : overlap ? " · наложится на " + overlap : "");
   }
   function clearGhost(){ const g = $(".ghostblk"); if (g) g.remove(); }
   function whyNot(t){ const c = cal(); if (isRest(t.ref) || t.ref === "e") return "Там уже что-то стоит"; return !dayOpen(t.day) ? "Это не рабочий день" : (t.start < c.dayStart || t.start + t.dur > c.dayEnd) ? "Только с " + hm(c.dayStart) + " до " + hm(c.dayEnd) : "Там занято или обед"; }
@@ -802,8 +815,8 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
       const end = Math.max(b.start + STEP, minuteAt(col, e.clientY, 0));
       drag.target = {day:b.day, start:b.start, dur:end - b.start, ref:b.ref};
       drag.no = hardNo(b.day, b.start, end - b.start, b.ref); drag.ok = !drag.no;
-      drag.push = drag.ok ? pushCount(b.day, b.start, end - b.start, b.id) : 0;
-      showGhost(col, b.start, end - b.start, drag.ok, drag.push); return;
+      drag.overlap = drag.ok ? overlapCount(b.day, b.start, end - b.start, b.id) : 0;
+      showGhost(col, b.start, end - b.start, drag.ok, drag.overlap); return;
     }
     const col = colAt(e.clientX, e.clientY);
     if (!col){ clearGhost(); drag.target = null; return; }
@@ -811,8 +824,8 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     const dref = drag.ref || ((slots().find(s => s.id === drag.id) || {}).ref);
     drag.target = {day:d, start, dur:drag.dur, ref:dref};
     drag.no = hardNo(d, start, drag.dur, dref); drag.ok = !drag.no;
-    drag.push = drag.ok ? pushCount(d, start, drag.dur, drag.id) : 0;
-    showGhost(col, start, drag.dur, drag.ok, drag.push);
+    drag.overlap = drag.ok ? overlapCount(d, start, drag.dur, drag.id) : 0;
+    showGhost(col, start, drag.dur, drag.ok, drag.overlap);
   });
   document.addEventListener("pointerup", e => {
     if (!drag) return;
@@ -825,11 +838,13 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     if (dg.mode === "empty" || !dg.target) return;
     if (!dg.ok){ toast(dg.no || whyNot(dg.target)); return; }
     const t = dg.target;
-    if (dg.mode === "new"){ const nb = {id:uid(), ref:dg.ref, day:t.day, start:t.start, dur:t.dur, status:"plan"}; slots().push(nb); pushToast(reflowDay(t.day, nb.id)); touch(); return; }
+    // Куда положил — там и лежит: никакой авто-раскладки соседей (22.09.2026, TG 13827).
+    // Наложение на другой блок допускается и просто видно на сетке (см. render()/CSS .blk.overlap).
+    if (dg.mode === "new"){ const nb = {id:uid(), ref:dg.ref, day:t.day, start:t.start, dur:t.dur, status:"plan"}; slots().push(nb); overlapToast(nb, overlapCount(t.day, t.start, t.dur, nb.id)); touch(); return; }
     const b = slots().find(s => s.id === dg.id); if (!b) return;
     Object.assign(b, {day:t.day, start:t.start, dur:t.dur});
     if (b.gid) b.moved = true;   // ручная правка главнее гугл-календаря: синк такой блок не двигает
-    pushToast(reflowDay(t.day, b.id)); touch();
+    overlapToast(b, overlapCount(t.day, t.start, t.dur, b.id)); touch();
   });
 
   document.addEventListener("pointercancel", () => { if (!drag) return; if (drag.el) drag.el.classList.remove("dragging"); drag = null; clearGhost(); });
@@ -872,7 +887,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
         if (nd < STEP){ toast("Короче получаса нельзя, лучше убери блок"); return; }
         const no = hardNo(b.day, b.start, nd, b.ref);
         if (no){ toast(no); return; }
-        b.dur = nd; pushToast(reflowDay(b.day, b.id)); touch(); openPop(id, x, yy);
+        b.dur = nd; overlapToast(b, overlapCount(b.day, b.start, nd, b.id)); touch(); openPop(id, x, yy);
       }
     });
     const first = p.querySelector("button[aria-pressed='true']") || p.querySelector("button"); if (first) first.focus();
