@@ -138,8 +138,10 @@ main{flex:1;display:flex;align-items:center}
      <button type="button" id="example-5" role="tab" aria-controls="example-stage" aria-selected="false" tabindex="-1" aria-label="Пример 5">05</button>
      <button type="button" id="example-6" role="tab" aria-controls="example-stage" aria-selected="false" tabindex="-1" aria-label="Пример 6">06</button>
      <button type="button" id="example-7" role="tab" aria-controls="example-stage" aria-selected="false" tabindex="-1" aria-label="Пример 7">07</button>
+     <button type="button" id="example-8" role="tab" aria-controls="example-stage" aria-selected="false" tabindex="-1" aria-label="Пример 8">08</button>
+     <button type="button" id="example-9" role="tab" aria-controls="example-stage" aria-selected="false" tabindex="-1" aria-label="Пример 9">09</button>
     </div>
-    <p class="example-caption" aria-live="polite"><span id="example-title">Пример 1</span><small>Рилсы Андрея Андреева</small></p>
+    <p class="example-caption" aria-live="polite"><span id="example-title">Пример 1</span><small id="example-credit">Рилсы Андрея Андреева</small></p>
    </div>
   </div>
  </section>
@@ -157,7 +159,7 @@ main{flex:1;display:flex;align-items:center}
 
 <script>
 (function(){
- var examples=[{"title": "Пример 1", "src": "media/DdTBhdiIAiX.mp4", "poster": "media/DdTBhdiIAiX.jpg"}, {"title": "Пример 2", "src": "media/DdWWIzfIcna.mp4", "poster": "media/DdWWIzfIcna.jpg"}, {"title": "Пример 3", "src": "media/DdQjXBpoTMV.mp4", "poster": "media/DdQjXBpoTMV.jpg"}, {"title": "Пример 4", "src": "media/DdORHGNRZpx.mp4", "poster": "media/DdORHGNRZpx.jpg"}, {"title": "Пример 5", "src": "media/DdM2id1Avra.mp4", "poster": "media/DdM2id1Avra.jpg"}, {"title": "Пример 6", "src": "media/DdJES4oCZdq.mp4", "poster": "media/DdJES4oCZdq.jpg"}, {"title": "Пример 7", "src": "media/DdHEZS9odOa.mp4", "poster": "media/DdHEZS9odOa.jpg"}];
+ var examples=[{"title": "Пример 1", "src": "media/DdTBhdiIAiX.mp4", "poster": "media/DdTBhdiIAiX.jpg", "credit": "Рилсы Андрея Андреева"}, {"title": "Пример 2", "src": "media/DdRuN_CsT5w.mp4", "poster": "media/DdRuN_CsT5w.jpg", "credit": "Автор: @_damorozova"}, {"title": "Пример 3", "src": "media/DdWWIzfIcna.mp4", "poster": "media/DdWWIzfIcna.jpg", "credit": "Рилсы Андрея Андреева"}, {"title": "Пример 4", "src": "media/DdQjXBpoTMV.mp4", "poster": "media/DdQjXBpoTMV.jpg", "credit": "Рилсы Андрея Андреева"}, {"title": "Пример 5", "src": "media/Ddjlj_sil1C.mp4", "poster": "media/Ddjlj_sil1C.jpg", "credit": "Автор: @provotorov"}, {"title": "Пример 6", "src": "media/DdORHGNRZpx.mp4", "poster": "media/DdORHGNRZpx.jpg", "credit": "Рилсы Андрея Андреева"}, {"title": "Пример 7", "src": "media/DdM2id1Avra.mp4", "poster": "media/DdM2id1Avra.jpg", "credit": "Рилсы Андрея Андреева"}, {"title": "Пример 8", "src": "media/DdJES4oCZdq.mp4", "poster": "media/DdJES4oCZdq.jpg", "credit": "Рилсы Андрея Андреева"}, {"title": "Пример 9", "src": "media/DdHEZS9odOa.mp4", "poster": "media/DdHEZS9odOa.jpg", "credit": "Рилсы Андрея Андреева"}];
  var stage=document.getElementById('example-stage'),tabs=Array.from(document.querySelectorAll('.example-tabs button')),selected=0;
  function select(index){
   if(index===selected)return;
@@ -170,6 +172,7 @@ main{flex:1;display:flex;align-items:center}
   tabs.forEach(function(tab,i){tab.setAttribute('aria-selected',String(i===index));tab.tabIndex=i===index?0:-1});
   stage.setAttribute('aria-labelledby',tabs[index].id);
   document.getElementById('example-title').textContent=item.title;
+  document.getElementById('example-credit').textContent=item.credit;
  }
  tabs.forEach(function(tab,index){
   tab.addEventListener('click',function(){select(index)});
