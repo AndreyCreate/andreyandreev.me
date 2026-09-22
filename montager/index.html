@@ -208,11 +208,26 @@ main{flex:1;display:flex;align-items:center}
   var request=++generation;
   if(controller)controller.abort();
   neutral();
+  if(document.hidden){
+   countText.textContent='Число участников обновится при возвращении на страницу';
+   return;
+  }
   countText.textContent='Загружаем число участников Telegram-предзаписи…';
-  if(document.hidden)return;
-  controller=new AbortController();
-  var timeout=setTimeout(function(){controller.abort()},6000);
-  fetch(API+'/count',{cache:'no-store',signal:controller.signal}).then(function(r){
+  var currentController;
+  // The UI deadline must not depend on the browser settling an aborted fetch.
+  var timeout=setTimeout(function(){
+   if(request!==generation)return;
+   generation++;
+   neutral();countText.textContent='Не удалось загрузить число участников Telegram-предзаписи';
+   if(currentController)currentController.abort();
+  },6000);
+  Promise.resolve().then(function(){
+   currentController=typeof AbortController==='function'?new AbortController():null;
+   controller=currentController;
+   var options={cache:'no-store'};
+   if(currentController)options.signal=currentController.signal;
+   return fetch(API+'/count',options);
+  }).then(function(r){
    if(!r.ok)throw new Error('unavailable');return r.json();
   }).then(function(d){
    if(request!==generation)return;
