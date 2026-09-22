@@ -383,7 +383,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
   const FIXED = {tax:"Налог · созвоны", chaos:"Окна хаоса"};
   const STATUS = {plan:"Запланировано", done:"Сделано", miss:"Не случилось"};
   const STEP = 30, PX_PER_MIN = 1.0, VIEW_START = 540, VIEW_END = 1260; // на экране 09:00–21:00: отдых можно ставить и вне рабочего окна
-  const PULT_VERSION = "2.1";
+  const PULT_VERSION = "2.2";
   let state = null, aesKey = null, auth = null, dirty = false, saving = false, saveTimer = null;
   let week = null; // ISO понедельника открытой недели
   // оптимистичная блокировка (22.09.2026): см. index.html
@@ -583,8 +583,24 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
   });
 
   /* ---------- сохранение ---------- */
-  function touch(){
+  /* Защита от неявного исчезновения блоков (баг TG 13819, 22.09.2026 16:06 МСК): если после
+     операции число слотов текущей недели уменьшилось больше чем на 1, а вызывающий код не
+     пометил это явным удалением (explicit=true — «Убрать блок», пересборка недели, смена
+     обеда), правку откатываем к состоянию до неё и показываем плашку вместо тихой потери. */
+  function touch(explicit){
     if (conflictLocked){ showBanner("Данные обновились на сервере — обнови страницу (Cmd+Shift+R), иначе правка не сохранится."); return; }
+    if (!explicit && snap){
+      try {
+        const prevWeeks = ((JSON.parse(snap).calendar || {}).weeks) || {};
+        const prevCount = ((prevWeeks[week] || {}).slots || []).length;
+        const curCount = slots().length;
+        if (prevCount - curCount > 1){
+          state = JSON.parse(snap); normalize(); render();
+          showBanner("Пропало " + (prevCount - curCount) + " блока(ов) без явного удаления — правку отменил. Обнови страницу (Cmd+Shift+R) и попробуй ещё раз.");
+          return;
+        }
+      } catch(e) {}
+    }
     markUndo(); state.updatedAt = new Date().toISOString(); dirty = true; setSave("сохраняю…"); render();
     clearTimeout(saveTimer); saveTimer = setTimeout(() => flush(), 700);
   }
@@ -607,7 +623,11 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
         const pt = await crypto.subtle.decrypt({name:"AES-GCM", iv:unb64(err.blob.iv)}, aesKey, unb64(err.blob.ct));
         const fresh = JSON.parse(new TextDecoder().decode(pt));
         merged = reconcile(fresh, toSave, baseSnapshot);
-        if (merged){ state = merged; baseV = err.v; baseSnapshot = clone(fresh); }
+        // baseSnapshot должен отражать то, ЧТО СТАЛО состоянием страницы (merged), а не сырой
+        // ответ сервера (fresh) — иначе следующий конфликт в этой же серии сравнивает local
+        // против уже устаревшего base и может решить, что локальная правка "не менялась"
+        // (22.09.2026, разбор бага TG 13819: страховка на случай цепочки конфликтов подряд).
+        if (merged){ state = merged; baseV = err.v; baseSnapshot = clone(merged); }
       } catch(_) { merged = null; }
       if (merged){ dirty = true; render(); clearTimeout(saveTimer); saveTimer = setTimeout(() => flush(mergeAttempt + 1), 50); return; }
       conflictLocked = true; setSave("конфликт"); showBanner("Данные обновились на сервере — обнови страницу (Cmd+Shift+R), последняя правка не сохранена.");
@@ -839,7 +859,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
       if (bt.dataset.pdel){
         const gone = slots().find(s => s.id === id);
         if (gone && gone.gid){ const c = cal(); c.dropped = (c.dropped || []).filter(g => g !== gone.gid); c.dropped.push(gone.gid); c.dropped = c.dropped.slice(-300); }
-        wk().slots = slots().filter(s => s.id !== id); closePop(); touch(); return;
+        wk().slots = slots().filter(s => s.id !== id); closePop(); touch(true); return;
       }
       if (bt.dataset.st){ b.status = bt.dataset.st; touch(); openPop(id, x, yy); return; }
       if (bt.dataset.pd){
@@ -912,15 +932,17 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
       hit.forEach(b => place(b.ref, b.day, b.dur));
       week = saveWeek;
     });
-    touch();
+    touch(true);
   });
   $("#undoBtn").addEventListener("click", () => { closePop(); undo(); });
   $("#prevW").addEventListener("click", () => { closePop(); week = shiftWeek(week, -1); render(); });
   $("#nextW").addEventListener("click", () => { closePop(); week = shiftWeek(week, 1); render(); });
-  $("#buildBtn").addEventListener("click", () => { buildWeek(); touch(); toast("Неделя собрана из пульта"); });
+  // buildWeek() намеренно заменяет содержимое недели целиком (оставляет только "e") — это
+  // явное действие Андрея по кнопке, не неявная потеря, поэтому touch(true) обходит страховку выше.
+  $("#buildBtn").addEventListener("click", () => { buildWeek(); touch(true); toast("Неделя собрана из пульта"); });
   $("#rebuild").addEventListener("click", () => {
     if (!confirm("Пересобрать неделю " + weekLabel(week) + " из пульта? Блоки, свои события и отметки этой недели заменятся.")) return;
-    buildWeek(); touch(); toast("Неделя пересобрана");
+    buildWeek(); touch(true); toast("Неделя пересобрана");
   });
 
   /* ---------- шифрование и вход (как на странице пульта) ---------- */

@@ -334,7 +334,7 @@ table.rep{width:100%;border-collapse:collapse;min-width:720px;font-variant-numer
   const LANE = {big:{t:"Большие камни",c:"var(--blue-deep)"}, small:{t:"Маленькие камни",c:"var(--blue)"}, fan:{t:"Фан",c:"var(--warn)"}, ghost:{t:"Призраки",c:"var(--bad)"}, personal:{t:"Отдых",c:"var(--ok)"}};
   const ORDER = ["big","small","fan","ghost","personal"];
   const SRC = {timer:"таймер", manual:"вручную", telegram:"Telegram", calendar:"встреча"};
-  const PULT_VERSION = "2.1";
+  const PULT_VERSION = "2.2";
   let state = null, aesKey = null, auth = null, dirty = false, saving = false, saveTimer = null;
   let week = null, pick = null, tick = null;
   // оптимистичная блокировка (22.09.2026): см. index.html
@@ -419,7 +419,10 @@ table.rep{width:100%;border-collapse:collapse;min-width:720px;font-variant-numer
         const pt = await crypto.subtle.decrypt({name:"AES-GCM", iv:unb64(err.blob.iv)}, aesKey, unb64(err.blob.ct));
         const fresh = JSON.parse(new TextDecoder().decode(pt));
         merged = reconcile(fresh, toSave, baseSnapshot);
-        if (merged){ state = merged; baseV = err.v; baseSnapshot = clone(fresh); }
+        // baseSnapshot = merged (не fresh) — тот же фикс, что в calendar/index.html 22.09.2026
+        // (разбор TG 13819): следующий конфликт подряд должен сравнивать против того, что
+        // реально стало состоянием страницы, а не против сырого ответа сервера.
+        if (merged){ state = merged; baseV = err.v; baseSnapshot = clone(merged); }
       } catch(_) { merged = null; }
       if (merged){ dirty = true; render(); clearTimeout(saveTimer); saveTimer = setTimeout(() => flush(mergeAttempt + 1), 50); return; }
       conflictLocked = true; setSave("конфликт"); showBanner("Данные обновились на сервере — обнови страницу (Cmd+Shift+R), последняя правка не сохранена.");
