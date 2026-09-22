@@ -146,6 +146,15 @@ button.chip:hover{background:var(--blue-soft)}
 .hrs output{min-width:5ch;text-align:center}
 .est{color:var(--mute)}
 .ts{display:inline-block;font-family:var(--mono);font-size:11.5px;color:var(--blue-deep);text-decoration:none;border-bottom:1px dotted color-mix(in srgb,var(--blue-deep) 50%,transparent);align-self:flex-start}
+.factwrap{display:flex;flex-direction:column;gap:4px}
+.factbar{position:relative;height:6px;border-radius:999px;background:var(--gray);overflow:hidden}
+.factbar.big{height:10px;margin-top:6px}
+.factfill{height:100%;border-radius:999px;background:var(--ok);transition:width .25s ease}
+.factfill.warn{background:var(--warn)}
+.factfill.bad{background:var(--bad)}
+.factlabel{font-family:var(--mono);font-size:11px;color:var(--mute)}
+.factlabel .over{color:var(--bad);font-weight:600;margin-left:4px}
+.fact-top{margin-top:14px}
 .ts:hover{color:var(--ink);border-bottom-color:var(--ink)}
 
 .fixed{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
@@ -254,6 +263,10 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
       </div>
       <div class="bar" id="bar" aria-hidden="true"><div class="fill" id="barFill"></div><div class="cap" id="capLine"><span id="capLabel"></span></div></div>
       <div class="legend" id="legend"></div>
+      <div id="factTop" class="fact-top" hidden>
+        <div class="factbar big"><div class="factfill" id="factTopFill" style="width:0%"></div></div>
+        <div class="factlabel" id="factTopLabel"></div>
+      </div>
       <p class="plan-hint" style="margin:18px 0 0"><span class="dd">::</span> Ёмкость, налог и окна хаоса задаются по дням в сетке «План недели» ниже.</p>
     </div>
     </div>
@@ -346,7 +359,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
   const STATUS = ["none","green","yellow","red"];
   const STATUS_LABEL = {none:"не отмечен", green:"идёт по плану", yellow:"под риском", red:"горит"};
 
-  const PULT_VERSION = "2.0";
+  const PULT_VERSION = "2.1";
   let state = null;       // {week, capacity, tax, chaos, limits:{big,small}, projects:[...], updatedAt}
   let view = "bank";
   let aesKey = null, auth = null;
@@ -403,6 +416,58 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
   function hasDays(p){ return Array.isArray(p.days) && p.days.some(x => +x > 0); }
   function projHours(p){ return hasDays(p) ? sum(p.days) : (+p.hours||0); }
   function parseH(v){ const n = parseFloat(String(v).replace(",", ".").trim()); return isFinite(n) && n > 0 ? Math.min(24, Math.round(n*2)/2) : 0; }
+
+  /* ---------- факт против плана (22.09.2026, TG 13812) ----------
+     Факт проекта за неделю = записи трекера ref="p:<id>" внутри weekStart..сейчас (+ идущий таймер)
+     плюс done-слоты календаря того же ref, которые НЕ перекрыты записью трекера хотя бы на 50% —
+     чтобы встреча, уже учтённая трекером, не считалась дважды. Пульт и календарь читают один state,
+     поэтому лишних запросов не нужно. Мск фиксированный +03:00 (без перевода часов). */
+  function mskWallParts(d){
+    const f = new Intl.DateTimeFormat("en-CA",{timeZone:"Europe/Moscow",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hour12:false});
+    const o = {}; f.formatToParts(d).forEach(x => o[x.type] = x.value);
+    return {iso: o.year+"-"+o.month+"-"+o.day, min: (+o.hour % 24)*60 + (+o.minute)};
+  }
+  function mskDayIdx(d, weekStart){
+    const p = mskWallParts(d);
+    return Math.round((fromIso(p.iso) - fromIso(weekStart)) / 86400000);
+  }
+  function mskSlotToAbs(weekStart, day, startMin){
+    const mo = fromIso(weekStart); const d = new Date(mo); d.setDate(mo.getDate()+day);
+    const y = d.getFullYear(), m = String(d.getMonth()+1).padStart(2,"0"), dd = String(d.getDate()).padStart(2,"0");
+    const hh = String(Math.floor(startMin/60)%24).padStart(2,"0"), mm = String(startMin%60).padStart(2,"0");
+    return new Date(y+"-"+m+"-"+dd+"T"+hh+":"+mm+":00+03:00");
+  }
+  function isCurrentWeek(weekStart){ return mskWallParts(new Date()).iso >= weekStart && mskDayIdx(new Date(), weekStart) <= 6 && mskDayIdx(new Date(), weekStart) >= 0; }
+  function todayIdxIn(weekStart){ return mskDayIdx(new Date(), weekStart); }
+  function factHours(ref, weekStart, now){
+    const tr = (state.tracking || {});
+    const entries = (tr.entries || []).filter(e => e.ref === ref);
+    let ms = 0;
+    const inWeek = (d) => { const i = mskDayIdx(d, weekStart); return i >= 0 && i <= 6; };
+    entries.forEach(e => { const s = new Date(e.start), en = new Date(e.end); if (inWeek(s)) ms += (en - s); });
+    if (tr.running && tr.running.ref === ref){ const s = new Date(tr.running.start); if (inWeek(s)) ms += (now - s); }
+    const wk = state.calendar && state.calendar.weeks && state.calendar.weeks[weekStart];
+    if (wk){
+      (wk.slots||[]).filter(sl => sl.ref === ref && sl.status === "done" && sl.start != null).forEach(sl => {
+        const a = mskSlotToAbs(weekStart, sl.day, sl.start), b = new Date(a.getTime() + sl.dur*60000);
+        const dur = b - a;
+        const covered = entries.some(e => {
+          const s = new Date(e.start), en = new Date(e.end);
+          const ov = Math.max(0, Math.min(en, b) - Math.max(s, a));
+          return ov >= dur * 0.5;
+        });
+        if (!covered) ms += dur;
+      });
+    }
+    return ms / 3600000;
+  }
+  function factClass(fact, plan, weekStart){
+    if (plan <= 0) return fact > 0 ? "warn" : "";
+    if (fact > plan) return "bad";
+    const idx = todayIdxIn(weekStart);
+    if (idx >= 0 && idx < 3 && fact / plan > 0.8) return "warn";
+    return "ok";
+  }
   function isoDate(d){ return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); }
   function fromIso(s){ const [y,m,d] = String(s).split("-").map(Number); return new Date(y, (m||1)-1, d||1); }
   function nextMonday(){ const d = new Date(); const dow = (d.getDay()+6)%7; d.setDate(d.getDate() - dow + 7); return isoDate(d); }
@@ -496,6 +561,18 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     $("#capLabel").textContent = "ёмкость " + fmtH(cap);
     $("#legend").innerHTML = segs.map(s => '<span><i style="background:'+s.color+'"></i>'+esc(s.label)+' '+fmtH(s.h)+'</span>').join("");
 
+    const factTop = $("#factTop");
+    if (isCurrentWeek(state.weekStart)){
+      const factAll = state.projects.filter(isWork).reduce((a,x)=>a+factHours("p:"+x.id, state.weekStart, new Date()),0);
+      const cls = factClass(factAll, cap, state.weekStart);
+      const pct = cap > 0 ? Math.min(100, factAll/cap*100) : 0;
+      const overAll2 = factAll - cap;
+      $("#factTopFill").className = "factfill " + cls;
+      $("#factTopFill").style.width = pct + "%";
+      $("#factTopLabel").innerHTML = "факт по трекеру " + fmtH(factAll) + " ч из " + fmtH(cap) + " ч" + (overAll2 > 0.01 ? ' <b class="over">+'+fmtH(overAll2)+' ч сверх плана</b>' : "");
+      factTop.hidden = false;
+    } else factTop.hidden = true;
+
     const lim = state.limits || {big:2, small:4};
     const fb = $("#f-big"); fb.textContent = t.big + " из " + lim.big; fb.className = "n" + (t.big > lim.big ? " over" : "");
     const fs = $("#f-small"); fs.textContent = t.small + " из " + lim.small; fs.className = "n" + (t.small > lim.small ? " over" : "");
@@ -577,8 +654,21 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
           : '<div class="hrs"><button type="button" data-h="'+p.id+'" data-d="-1" aria-label="Минус час">−</button><output class="'+(p.est?"est":"")+'">'+(p.est?"≈":"")+fmtH(+p.hours||0)+' ч</output><button type="button" data-h="'+p.id+'" data-d="1" aria-label="Плюс час">+</button></div>') +
       '</div>' +
       (p.note ? '<div class="msgs">'+esc(p.note)+'</div>' : '') +
+      factHTML(p) +
       tsLine(p) +
     '</article>';
+  }
+  function factHTML(p){
+    if (!isCurrentWeek(state.weekStart)) return "";
+    const plan = projHours(p), fact = factHours("p:"+p.id, state.weekStart, new Date());
+    if (!plan && !fact) return "";
+    const cls = factClass(fact, plan, state.weekStart);
+    const pct = plan > 0 ? Math.min(100, fact/plan*100) : (fact > 0 ? 100 : 0);
+    const over = fact - plan;
+    return '<div class="factwrap">' +
+      '<div class="factbar"><div class="factfill '+cls+'" style="width:'+pct+'%"></div></div>' +
+      '<div class="factlabel">факт '+fmtH(fact)+' ч из '+fmtH(plan)+' ч' + (over > 0.01 ? ' <b class="over">+'+fmtH(over)+' ч сверх плана</b>' : '') + '</div>' +
+    '</div>';
   }
 
   function renderPlan(){
