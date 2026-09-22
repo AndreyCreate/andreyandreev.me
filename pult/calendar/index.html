@@ -336,7 +336,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
   <div id="banner" class="banner" hidden></div>
 
   <div class="cal-top">
-    <div class="weeknav"><button type="button" class="iconbtn" id="prevW" aria-label="Предыдущая неделя">←</button><span class="wl" id="wl"></span><button type="button" class="iconbtn" id="nextW" aria-label="Следующая неделя">→</button><button type="button" class="pill" id="rebuild">Собрать из пульта</button></div>
+    <div class="weeknav"><button type="button" class="iconbtn" id="prevW" aria-label="Предыдущая неделя">←</button><span class="wl" id="wl"></span><button type="button" class="iconbtn" id="nextW" aria-label="Следующая неделя">→</button><button type="button" class="pill" id="rebuild">Собрать из пульта</button><button type="button" class="iconbtn" id="undoBtn" aria-label="Отменить последнее действие" title="Отменить (⌘Z / Ctrl+Z)" hidden>↶</button></div>
     <div class="cal-stats" id="stats"></div>
     <div class="controls">
       <label for="lunchSel">Обед</label>
@@ -513,8 +513,40 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     delete state.schedule; // черновая схема первой версии
   }
 
+  /* ---------- отмена (⌘Z / Ctrl+Z) ----------
+     Андрей подвинул кроссфит, соседние блоки разъехались, часть ушла в «не влезло» —
+     и это выглядит как «события пропали» (22.09.2026, DM 7992). Держим стек состояний
+     ДО каждого изменения: снимок делается в touch(), там state уже новый, а snap — ещё старый. */
+  const UNDO_MAX = 60;
+  let undoStack = [], redoStack = [], snap = null;
+  function snapshot(){ return JSON.stringify(state); }
+  function markUndo(){ if (snap != null){ undoStack.push(snap); if (undoStack.length > UNDO_MAX) undoStack.shift(); } redoStack.length = 0; snap = snapshot(); }
+  function applySnap(js){
+    state = JSON.parse(js); normalize(); snap = js;
+    state.updatedAt = new Date().toISOString(); dirty = true; setSave("сохраняю…");
+    render(); clearTimeout(saveTimer); saveTimer = setTimeout(flush, 700);
+  }
+  function undo(){
+    if (!undoStack.length){ toast("Отменять нечего"); return; }
+    redoStack.push(snapshot()); applySnap(undoStack.pop()); toast("Отменил — вернуть ⇧⌘Z");
+  }
+  function redo(){
+    if (!redoStack.length){ toast("Возвращать нечего"); return; }
+    undoStack.push(snapshot()); applySnap(redoStack.pop()); toast("Вернул");
+  }
+  function syncUndoBtn(){ const b = $("#undoBtn"); if (b) b.hidden = !undoStack.length; }
+  document.addEventListener("keydown", e => {
+    const mod = e.metaKey || e.ctrlKey;
+    if (!mod) return;
+    const t = e.target, typing = t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.tagName === "SELECT" || t.isContentEditable);
+    if (typing) return;
+    const k = (e.key || "").toLowerCase();
+    if (k === "z"){ e.preventDefault(); (e.shiftKey ? redo : undo)(); }
+    else if (k === "y"){ e.preventDefault(); redo(); }
+  });
+
   /* ---------- сохранение ---------- */
-  function touch(){ state.updatedAt = new Date().toISOString(); dirty = true; setSave("сохраняю…"); render(); clearTimeout(saveTimer); saveTimer = setTimeout(flush, 700); }
+  function touch(){ markUndo(); state.updatedAt = new Date().toISOString(); dirty = true; setSave("сохраняю…"); render(); clearTimeout(saveTimer); saveTimer = setTimeout(flush, 700); }
   async function flush(){
     if (!auth || !dirty) return;
     if (saving){ clearTimeout(saveTimer); saveTimer = setTimeout(flush, 400); return; }
@@ -586,6 +618,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     });
     $("#cal").innerHTML = html;
     paintNow();
+    syncUndoBtn();
 
     // лоток: сколько часов шаблона ещё не стоит в календаре
     const planned = {}; S.forEach(b => { planned[b.ref] = (planned[b.ref]||0) + b.dur/60; });
@@ -816,6 +849,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     });
     touch();
   });
+  $("#undoBtn").addEventListener("click", () => { closePop(); undo(); });
   $("#prevW").addEventListener("click", () => { closePop(); week = shiftWeek(week, -1); render(); });
   $("#nextW").addEventListener("click", () => { closePop(); week = shiftWeek(week, 1); render(); });
   $("#buildBtn").addEventListener("click", () => { buildWeek(); touch(); toast("Неделя собрана из пульта"); });
@@ -850,7 +884,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
   }
   async function loadRemote(){ const d = await api("GET"); if (!d.blob) return null; const pt = await crypto.subtle.decrypt({name:"AES-GCM", iv:unb64(d.blob.iv)}, aesKey, unb64(d.blob.ct)); return JSON.parse(new TextDecoder().decode(pt)); }
   async function saveRemote(s){ const iv = crypto.getRandomValues(new Uint8Array(12)); const ct = await crypto.subtle.encrypt({name:"AES-GCM", iv}, aesKey, new TextEncoder().encode(JSON.stringify(s))); await api("PUT", {blob:{iv:b64(iv), ct:b64(ct)}}); }
-  function adopt(s){ state = s || {projects:[]}; normalize(); if (!week){ const cur = isoDate(mondayOf(new Date())); week = (state.weekStart && state.weekStart >= cur) ? state.weekStart : defaultWeek(); } render(); }
+  function adopt(s){ state = s || {projects:[]}; normalize(); undoStack = []; redoStack = []; snap = snapshot(); if (!week){ const cur = isoDate(mondayOf(new Date())); week = (state.weekStart && state.weekStart >= cur) ? state.weekStart : defaultWeek(); } render(); }
   async function unlock(pw, remember){
     const k = await deriveKeys(pw); aesKey = k.key; auth = k.authHex;
     const s = await loadRemote();
