@@ -441,7 +441,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
   function setSave(t){ $("#saveState").textContent = t; }
   function showBanner(t){ const b = $("#banner"); b.textContent = t; b.hidden = false; }
   let toastT = null;
-  function toast(t){ let el = $(".toast"); if (!el){ el = document.createElement("div"); el.className = "toast"; el.setAttribute("role","status"); document.body.appendChild(el); } el.textContent = t; el.hidden = false; clearTimeout(toastT); toastT = setTimeout(()=>{ el.hidden = true; }, 2600); }
+  function toast(t, ms){ let el = $(".toast"); if (!el){ el = document.createElement("div"); el.className = "toast"; el.setAttribute("role","status"); document.body.appendChild(el); } el.textContent = t; el.hidden = false; clearTimeout(toastT); toastT = setTimeout(()=>{ el.hidden = true; }, ms || 2600); }
 
   /* ---------- модель ---------- */
   function cal(){ return state.calendar; }
@@ -515,7 +515,12 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     if (!moved.length) return;
     const nm = m => refInfo(m.b.ref, m.b.title).name;
     const out = moved.filter(m => m.to === null), sh = moved.filter(m => m.to !== null);
-    if (out.length) toast((out.length === 1 ? nm(out[0]) + " не влез" : out.length + " блока не влезли") + " — в «не влезло», внизу");
+    if (out.length){
+      // список имён, а не только счётчик — иначе выглядит как «пропали», а не «не влезли»
+      // (баг TG 13819, 22.09.2026: раздвижка соседей при плотном дне выталкивала несколько блоков разом)
+      const names = out.slice(0,4).map(nm).join(", ") + (out.length > 4 ? " и ещё " + (out.length-4) : "");
+      toast((out.length === 1 ? nm(out[0]) + " не влез" : out.length + " блока не влезли: " + names) + " — смотри «не влезло» внизу, они никуда не делись", out.length >= 2 ? 6000 : 2600);
+    }
     else if (sh.length === 1) toast("Подвинул: " + nm(sh[0]) + " → " + hm(sh[0].to));
     else toast("Подвинул блоков: " + sh.length);
   }
