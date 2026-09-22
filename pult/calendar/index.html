@@ -243,6 +243,10 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
 .closed .tag{position:absolute;left:6px;top:4px;font-family:var(--mono);font-size:10.5px;color:var(--mute)}
 .col.off .closed.full{background:repeating-linear-gradient(135deg,transparent 0 7px,color-mix(in srgb,var(--ink) 9%,transparent) 7px 8px)}
 .col.drop-ok{background:var(--drop)}
+/* Линия «сейчас» — как в гугл-календаре, только в палитре пульта (22.09.2026, msg 13689) */
+.nowline{position:absolute;left:0;right:0;height:0;border-top:2px solid var(--bad);z-index:6;pointer-events:none}
+.nowline i{position:absolute;left:-5px;top:-5.5px;width:9px;height:9px;border-radius:50%;background:var(--bad)}
+.nowline b{position:absolute;right:3px;top:-17px;font-family:var(--mono);font-size:10.5px;font-weight:600;color:var(--bad);background:var(--surface);padding:0 4px;border-radius:6px;box-shadow:0 0 0 1px color-mix(in srgb,var(--bad) 25%,transparent)}
 
 .blk{position:absolute;left:4px;right:4px;border-radius:10px;padding:5px 8px 6px;font-size:12px;line-height:1.2;overflow:hidden;cursor:grab;touch-action:none;user-select:none;display:flex;flex-direction:column;gap:2px;box-shadow:0 1px 0 rgba(0,0,0,.04);border:1px solid transparent}
 .blk .t{font-weight:500;font-size:12.5px}
@@ -387,6 +391,13 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
   const uid = () => "s" + Math.random().toString(36).slice(2,9);
   function fromIso(s){ const [y,m,d] = String(s).split("-").map(Number); return new Date(y,(m||1)-1,d||1); }
   function isoDate(d){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+  /* Сетка пульта всегда в МСК, поэтому «сегодня» и «сейчас» считаем по Москве,
+     а не по часовому поясу браузера (Андрей открывает пульт и из поездок). */
+  function mskParts(){
+    const f = new Intl.DateTimeFormat("en-CA",{timeZone:"Europe/Moscow",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hour12:false});
+    const o = {}; f.formatToParts(new Date()).forEach(x => o[x.type] = x.value);
+    return {iso: o.year+"-"+o.month+"-"+o.day, min: (+o.hour % 24)*60 + (+o.minute)};
+  }
   function mondayOf(d){ const x = new Date(d.getFullYear(), d.getMonth(), d.getDate()); x.setDate(x.getDate() - (x.getDay()+6)%7); return x; }
   function defaultWeek(){ const now = new Date(); const m = mondayOf(now); if (now.getDay() === 0 || now.getDay() === 6) m.setDate(m.getDate()+7); return isoDate(m); } // в выходные открываем следующую неделю
   function shiftWeek(iso, n){ const d = fromIso(iso); d.setDate(d.getDate()+7*n); return isoDate(d); }
@@ -515,6 +526,15 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
 
   /* ---------- отрисовка ---------- */
   const y = m => (m - VIEW_START) * PX_PER_MIN;
+  function paintNow(){
+    const el = document.querySelector(".nowline"); if (!el) return;
+    const m = mskParts().min;
+    if (m < VIEW_START || m > VIEW_END){ el.style.display = "none"; return; }
+    el.style.display = "";
+    el.style.top = y(m) + "px";
+    const lab = el.querySelector("b"); if (lab) lab.textContent = hm(m);
+  }
+  setInterval(paintNow, 30000);
   function render(){
     if (!state) return;
     const c = cal(), w = wk();
@@ -526,7 +546,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     $("#emptyWeek").hidden = !!w;
     $("#rebuild").hidden = !w;
 
-    const a = fromIso(week); const todayIso = isoDate(new Date());
+    const a = fromIso(week); const todayIso = mskParts().iso;
     const H = (VIEW_END - VIEW_START) * PX_PER_MIN;
     const S = slots();
     const workMin = c.dayEnd - c.dayStart - c.lunch.dur;
@@ -558,9 +578,12 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
         col += '<div class="blk '+(r.kind==="fixed"?"bfix":r.kind)+(b.dur<=30?" short":"")+(b.status==="done"?" done":"")+(b.status==="miss"?" miss":"")+'" data-id="'+b.id+'" tabindex="0" role="button" aria-label="'+esc(r.name)+', '+hm(b.start)+'–'+hm(b.start+b.dur)+', '+STATUS[b.status||"plan"]+'" style="'+tint+'top:'+y(b.start)+'px;height:'+(b.dur*PX_PER_MIN - 2)+'px">' +
           '<span class="t">'+esc(r.name)+'</span><span class="m">'+hm(b.start)+'–'+hm(b.start+b.dur)+' · '+fmtH(b.dur/60)+' ч</span><span class="rz" data-rz="1"></span></div>';
       });
+      const dcol = new Date(a); dcol.setDate(a.getDate()+d);
+      if (isoDate(dcol) === todayIso) col += '<div class="nowline"><i></i><b></b></div>';
       html += col + '</div>';
     });
     $("#cal").innerHTML = html;
+    paintNow();
 
     // лоток: сколько часов шаблона ещё не стоит в календаре
     const planned = {}; S.forEach(b => { planned[b.ref] = (planned[b.ref]||0) + b.dur/60; });
