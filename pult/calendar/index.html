@@ -270,6 +270,13 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
 /* Блок трекера/done вне рабочего окна — лёгкая штриховка поверх цвета проекта, без перемещений (22.09.2026, TG 13856) */
 .blk.offhours::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(135deg,rgba(255,255,255,0) 0 6px,rgba(255,255,255,.32) 6px 7px)}
 .blk .offbadge{display:inline-block;font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.02em;text-transform:uppercase;background:rgba(0,0,0,.32);color:#fff;border-radius:5px;padding:1px 4px;margin-left:4px;vertical-align:1px}
+/* Слой «факт из трекера» — read-only поверх плана (22.09.2026, TG 13861): сплошная заливка
+   цветом проекта, но тоньше/прозрачнее плановых блоков и с пунктирной рамкой, не перетаскивается. */
+.blk.fact{opacity:.6;border-style:dashed;border-width:1.5px;box-shadow:none;z-index:3;cursor:pointer}
+.blk.fact:hover{opacity:.82}
+.blk.fact.running{opacity:.82}
+.blk.fact .facttag{display:inline-block;font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.02em;text-transform:uppercase;background:rgba(0,0,0,.3);color:#fff;border-radius:5px;padding:1px 4px;margin-left:4px;vertical-align:1px}
+.blk.fact.sel{outline:2px solid var(--ink);outline-offset:1px}
 .blk .rz{position:absolute;left:0;right:0;bottom:0;height:8px;cursor:ns-resize}
 .ghostblk{position:absolute;left:4px;right:4px;border-radius:10px;border:2px dashed var(--blue-deep);background:var(--drop);pointer-events:none;z-index:4;font-family:var(--mono);font-size:10.5px;color:var(--blue-deep);padding:4px 6px}
 .ghostblk.bad{border-color:var(--bad);color:var(--bad);background:color-mix(in srgb,var(--bad) 8%,transparent)}
@@ -388,11 +395,12 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
   const FIXED = {tax:"Налог · созвоны", chaos:"Окна хаоса"};
   const STATUS = {plan:"Запланировано", done:"Сделано", miss:"Не случилось"};
   const STEP = 30, PX_PER_MIN = 1.0, VIEW_START = 540, VIEW_END = 1260; // на экране 09:00–21:00: отдых можно ставить и вне рабочего окна
-  const PULT_VERSION = "2.4";
+  const PULT_VERSION = "2.5";
   let state = null, aesKey = null, auth = null, dirty = false, saving = false, saveTimer = null;
   let week = null; // ISO понедельника открытой недели
   // оптимистичная блокировка (22.09.2026): см. index.html
   let baseV = 0, baseSnapshot = null, conflictLocked = false;
+  let factByDomId = new Map(); // id → факт-блок трекера текущего рендера, для клика (22.09.2026, TG 13861)
 
   const sum = a => (Array.isArray(a) ? a : []).reduce((x,y)=>x+(+y||0),0);
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -475,6 +483,63 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     const ranges = [[0, c.dayStart], [c.dayEnd, 1440], [c.lunch.start, c.lunch.start + c.lunch.dur]];
     const end = b.start + b.dur;
     return ranges.reduce((s,[r0,r1]) => s + Math.max(0, Math.min(end, r1) - Math.max(b.start, r0)), 0);
+  }
+  /* ---------- факт из трекера, слой поверх плана (22.09.2026, TG 13861) ----------
+     Всё, что записал трекер (state.tracking.entries + растущий running) и чего нет в плане,
+     само появляется в календаре блоком «факт» цветом проекта — включая время до dayStart,
+     после dayEnd и в выходные (сетка это уже рисует, см. .closed зоны в render()). Это только
+     отрисовка, не новые slots: ничего не двигает, не участвует в «не влезло»/наложениях плановых
+     блоков, не перетаскивается. МСК-конвертация — порт 1-в-1 с factHours()/offHours() в
+     pult/index.html (mskWallParts/mskDayIdx/mskSlotToAbs). */
+  function mskWallParts(d){
+    const f = new Intl.DateTimeFormat("en-CA",{timeZone:"Europe/Moscow",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hour12:false});
+    const o = {}; f.formatToParts(d).forEach(x => o[x.type] = x.value);
+    return {iso: o.year+"-"+o.month+"-"+o.day, min: (+o.hour % 24)*60 + (+o.minute)};
+  }
+  function mskDayIdx(d, weekStart){ const p = mskWallParts(d); return Math.round((fromIso(p.iso) - fromIso(weekStart)) / 86400000); }
+  function mskSlotToAbs(weekStart, day, startMin){
+    const mo = fromIso(weekStart); const dt = new Date(mo); dt.setDate(mo.getDate()+day);
+    const yy = dt.getFullYear(), mm2 = String(dt.getMonth()+1).padStart(2,"0"), dd = String(dt.getDate()).padStart(2,"0");
+    const hh = String(Math.floor(startMin/60)%24).padStart(2,"0"), mi = String(startMin%60).padStart(2,"0");
+    return new Date(yy+"-"+mm2+"-"+dd+"T"+hh+":"+mi+":00+03:00");
+  }
+  /* Диапазоны уже стоящих в плане слотов (план ИЛИ done, не "не случилось") того же ref —
+     запись трекера, перекрывшая такой слот ≥50% своей длительности, не рисуется отдельным
+     блоком: слот уже показывает факт (done + бейдж «+N мин» от reconcile_facts, или просто
+     совпал с планом). Считается по неделе `week`, открытой в календаре сейчас. */
+  function planOrDoneRanges(){
+    const out = [];
+    (wk() ? wk().slots : []).forEach(sl => {
+      if (sl.start == null || !sl.ref || sl.ref === "e" || sl.status === "miss") return;
+      const a = mskSlotToAbs(week, sl.day, sl.start), b = new Date(a.getTime() + sl.dur*60000);
+      out.push({ref: sl.ref, a, b});
+    });
+    return out;
+  }
+  function overlapsRange(ranges, ref, a, b){
+    const dur = b - a; if (dur <= 0) return false;
+    return ranges.some(r => r.ref === ref && Math.max(0, Math.min(b, r.b) - Math.max(a, r.a)) >= dur * 0.5);
+  }
+  function factBlocksForDay(d, ranges){
+    const tr = state.tracking || {};
+    const out = [];
+    (tr.entries || []).forEach(e => {
+      if (!e.ref || !e.start || !e.end) return;
+      const s = new Date(e.start), en = new Date(e.end);
+      if (mskDayIdx(s, week) !== d) return;
+      if (overlapsRange(ranges, e.ref, s, en)) return;
+      out.push({id:"fact-"+e.id, ref:e.ref, day:d, start: mskWallParts(s).min,
+        dur: Math.max(1, Math.round((en - s)/60000)), note:e.note||"", source:e.source||"timer", running:false});
+    });
+    const run = tr.running;
+    if (run && run.ref && run.start){
+      const s = new Date(run.start);
+      if (mskDayIdx(s, week) === d && !overlapsRange(ranges, run.ref, s, new Date())){
+        out.push({id:"fact-running", ref: run.ref, day:d, start: mskWallParts(s).min,
+          dur: Math.max(1, Math.round((Date.now() - s.getTime())/60000)), note: run.note||"", source: run.source||"timer", running:true});
+      }
+    }
+    return out;
   }
   /* Раскладка наложений ТОЛЬКО для отрисовки (22.09.2026, TG 13825/13827): данные не трогает и
      ничего не двигает — просто решает, в какую «дорожку» по горизонтали поставить каждый блок
@@ -672,8 +737,13 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     const lab = el.querySelector("b"); if (lab) lab.textContent = hm(m);
   }
   setInterval(paintNow, 30000);
+  // Растущий факт-блок идущего таймера (22.09.2026, TG 13861): полный ре-рендер раз в 20с,
+  // но только когда нет драга/открытого попапа — не мешает работе, дёшево на таком объёме данных.
+  function tickFacts(){ if (!state || drag || $(".pop")) return; render(); }
+  setInterval(tickFacts, 20000);
   function render(){
     if (!state) return;
+    factByDomId = new Map();
     const c = cal(), w = wk();
     $("#weekLabel").textContent = "неделя " + weekLabel(week);
     $("#wl").textContent = weekLabel(week);
@@ -699,6 +769,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     let times = '<div class="times" style="height:'+H+'px">';
     for (let m = VIEW_START + 60; m < VIEW_END; m += 60) times += '<span style="top:'+y(m)+'px">'+hm(m)+'</span>';
     html += times + '</div>';
+    const factRanges = planOrDoneRanges();
     DAYS.forEach((_,d) => {
       const open = dayOpen(d);
       let col = '<div class="col'+(open?"":" off")+'" data-day="'+d+'" style="height:'+H+'px">';
@@ -728,6 +799,18 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
         const overlapTag = L.lanes > 1 ? ' <b class="ovtag">наложение</b>' : '';
         col += '<div class="blk '+(r.kind==="fixed"?"bfix":r.kind)+(b.dur<=30?" short":"")+(b.status==="done"?" done":"")+(b.status==="miss"?" miss":"")+(L.lanes>1?" overlap":"")+(offMin>0?" offhours":"")+'" data-id="'+b.id+'" tabindex="0" role="button" aria-label="'+esc(r.name)+', '+hm(b.start)+'–'+hm(b.start+b.dur)+', '+STATUS[b.status||"plan"]+(b.over?', +'+Math.round(b.over)+' минут сверх плана':'')+(L.lanes>1?', накладывается на другой блок':'')+(offMin>0?', вне рабочего времени':'')+'" style="'+tint+posStyle+'top:'+y(b.start)+'px;height:'+(b.dur*PX_PER_MIN - 2)+'px">' +
           '<span class="t">'+esc(r.name)+overlapTag+offBadge+'</span><span class="m">'+hm(b.start)+'–'+hm(b.start+b.dur)+' · '+fmtH(b.dur/60)+' ч'+overBadge+'</span><span class="rz" data-rz="1"></span></div>';
+      });
+      // Слой факта из трекера — поверх плана, read-only (22.09.2026, TG 13861)
+      factBlocksForDay(d, factRanges).forEach(f => {
+        const vs = Math.max(f.start, VIEW_START), ve = Math.min(f.start + f.dur, VIEW_END);
+        if (ve <= vs) return; // целиком вне видимой сетки (09:00–21:00) — редкий случай, не рисуем
+        const fr = refInfo(f.ref);
+        const ftint = fr.color ? 'background:'+fr.color+';color:#fff;border-color:'+fr.color+';' : '';
+        const foffMin = offMinutesOfBlock(f);
+        const foffBadge = foffMin > 0 ? ' <b class="offbadge">свободные часы</b>' : '';
+        factByDomId.set(f.id, f);
+        col += '<div class="blk fact'+(f.dur<=30?" short":"")+(f.running?" running":"")+(foffMin>0?" offhours":"")+'" data-fact="1" data-id="'+f.id+'" tabindex="0" role="button" aria-label="Факт: '+esc(fr.name)+', '+hm(f.start)+'–'+hm(f.start+f.dur)+(f.running?', идёт сейчас':'')+(foffMin>0?', вне рабочего времени':'')+'" style="'+ftint+'top:'+y(vs)+'px;height:'+Math.max(10,(ve-vs)*PX_PER_MIN - 2)+'px">' +
+          '<span class="t">⏱ '+esc(fr.name)+' <b class="facttag">факт</b>'+foffBadge+'</span><span class="m">'+hm(f.start)+'–'+hm(f.start+f.dur)+(f.running?' · идёт':'')+' · '+fmtH(f.dur/60)+' ч</span></div>';
       });
       const dcol = new Date(a); dcol.setDate(a.getDate()+d);
       if (isoDate(dcol) === todayIso) col += '<div class="nowline"><i></i><b></b></div>';
@@ -810,6 +893,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     const chip = e.target.closest(".chipd"), blkEl = e.target.closest(".blk"), colEl = e.target.closest(".col");
     if (chip){ e.preventDefault(); drag = {mode:"new", ref:chip.dataset.new, dur:60, offset:30, moved:false, x0:e.clientX, y0:e.clientY}; try{chip.setPointerCapture(e.pointerId);}catch(_){} return; }
     if (blkEl){
+      if (blkEl.dataset.fact){ return; } // факт-блок read-only — обрабатывается обычным click, не драгом
       e.preventDefault();
       const b = slots().find(s => s.id === blkEl.dataset.id); if (!b) return;
       const r = blkEl.getBoundingClientRect(); const rz = !!e.target.closest("[data-rz]");
@@ -864,6 +948,8 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
   document.addEventListener("pointercancel", () => { if (!drag) return; if (drag.el) drag.el.classList.remove("dragging"); drag = null; clearGhost(); });
   document.addEventListener("click", e => {
     if (!state) return;
+    const factEl = e.target.closest(".blk[data-fact]");
+    if (factEl){ const f = factByDomId.get(factEl.dataset.id); if (f){ const r = factEl.getBoundingClientRect(); openFactPop(f, r.left + r.width/2, r.bottom); } return; }
     if (e.target.closest(".blk") || e.target.closest(".pop") || e.target.closest(".chipd")) return;
     const col = e.target.closest(".col"); if (!col) return;
     if (!wk()) cal().weeks[week] = {slots:[], builtAt:null}; // неделя ещё не собрана — начинаем с пустой, чтобы клик работал сразу
@@ -905,6 +991,33 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
       }
     });
     const first = p.querySelector("button[aria-pressed='true']") || p.querySelector("button"); if (first) first.focus();
+  }
+  /* Карточка факт-блока (22.09.2026, TG 13861): только просмотр + одна явная кнопка,
+     которая один раз создаёт done-слот плана с этими же ref/start/dur — единственное место,
+     где клик по факту что-то пишет в state. */
+  function openFactPop(f, x, yy){
+    closePop();
+    const el = document.querySelector('.blk.fact[data-id="'+f.id+'"]'); if (el) el.classList.add("sel");
+    const r = refInfo(f.ref);
+    const srcLabel = {timer:"таймер", telegram:"телеграм", manual:"вручную"}[f.source] || f.source || "—";
+    const p = document.createElement("div"); p.className = "pop"; p.style.width = "260px"; p.setAttribute("role","dialog"); p.setAttribute("aria-label", r.name + " — факт");
+    p.innerHTML = '<h4>'+esc(r.name)+' <span class="m" style="font-weight:400">· факт'+(f.running?', идёт':'')+'</span></h4>' +
+      '<div class="m">'+DAYS[f.day]+' · '+hm(f.start)+'–'+hm(f.start+f.dur)+' · '+fmtH(f.dur/60)+' ч</div>' +
+      (f.note ? '<div class="m" style="color:var(--ink-2)">'+esc(f.note)+'</div>' : '') +
+      '<div class="m">источник: '+esc(srcLabel)+'</div>' +
+      '<div class="row"><button type="button" class="btn primary" data-mkplan="1">Сделать блоком плана</button><button type="button" class="btn" data-pclose="1">Готово</button></div>';
+    document.body.appendChild(p); positionPop(p, x, yy);
+    p.addEventListener("click", ev => {
+      const bt = ev.target.closest("button"); if (!bt) return;
+      if (bt.dataset.pclose){ closePop(); return; }
+      if (bt.dataset.mkplan){
+        if (!wk()) cal().weeks[week] = {slots:[], builtAt:null};
+        slots().push({id:uid(), ref:f.ref, day:f.day, start:Math.round(f.start), dur:Math.max(1, Math.round(f.dur)), status:"done", factSrc:f.id});
+        closePop(); touch(true); toast("Добавил блоком плана: " + r.name);
+        return;
+      }
+    });
+    const first = p.querySelector("button"); if (first) first.focus();
   }
   function freeRun(d, start, ref){
     // сколько минут свободно подряд от start: до следующего блока, обеда или конца окна
@@ -953,7 +1066,11 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
   }
   document.addEventListener("keydown", e => {
     if (e.key === "Escape") closePop();
-    if (e.key === "Enter" && e.target.classList && e.target.classList.contains("blk")){ const r = e.target.getBoundingClientRect(); openPop(e.target.dataset.id, r.left + r.width/2, r.bottom); }
+    if (e.key === "Enter" && e.target.classList && e.target.classList.contains("blk")){
+      const r = e.target.getBoundingClientRect();
+      if (e.target.dataset.fact){ const f = factByDomId.get(e.target.dataset.id); if (f) openFactPop(f, r.left + r.width/2, r.bottom); return; }
+      openPop(e.target.dataset.id, r.left + r.width/2, r.bottom);
+    }
   });
 
   $("#lunchSel").addEventListener("change", e => {
