@@ -154,6 +154,7 @@ button.chip:hover{background:var(--blue-soft)}
 .factfill.bad{background:var(--bad)}
 .factlabel{font-family:var(--mono);font-size:11px;color:var(--mute)}
 .factlabel .over{color:var(--bad);font-weight:600;margin-left:4px}
+.factlabel.offhrs{margin-top:2px;opacity:.85}
 .fact-top{margin-top:14px}
 .ts:hover{color:var(--ink);border-bottom-color:var(--ink)}
 
@@ -266,6 +267,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
       <div id="factTop" class="fact-top" hidden>
         <div class="factbar big"><div class="factfill" id="factTopFill" style="width:0%"></div></div>
         <div class="factlabel" id="factTopLabel"></div>
+        <div class="factlabel offhrs" id="offTopLabel"></div>
       </div>
       <p class="plan-hint" style="margin:18px 0 0"><span class="dd">::</span> Ёмкость, налог и окна хаоса задаются по дням в сетке «План недели» ниже.</p>
     </div>
@@ -359,7 +361,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
   const STATUS = ["none","green","yellow","red"];
   const STATUS_LABEL = {none:"не отмечен", green:"идёт по плану", yellow:"под риском", red:"горит"};
 
-  const PULT_VERSION = "2.3";
+  const PULT_VERSION = "2.4";
   let state = null;       // {week, capacity, tax, chaos, limits:{big,small}, projects:[...], updatedAt}
   let view = "bank";
   let aesKey = null, auth = null;
@@ -460,6 +462,64 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
       });
     }
     return ms / 3600000;
+  }
+  /* ---------- вне рабочего времени (22.09.2026, TG 13856) ----------
+     Минуты записи/done-слота, попавшие вне окна dayStart–dayEnd, внутрь обеда, или в день,
+     где dayCap==0 (выходной, весь день целиком офф). Порт 1-в-1 с pult_overrun_watch.py —
+     менять оба места синхронно. */
+  function dayOffRanges(dayIdx){
+    if (!((+((state.dayCap||[])[dayIdx])||0) > 0)) return [[0,1440]];
+    const c = state.calendar || {};
+    const dayStart = c.dayStart != null ? c.dayStart : 660;
+    const dayEnd = c.dayEnd != null ? c.dayEnd : 1020;
+    const lunch = c.lunch || {start:780, dur:60};
+    const ranges = [[0, dayStart], [dayEnd, 1440]];
+    if (lunch.dur > 0) ranges.push([lunch.start, lunch.start + lunch.dur]);
+    return ranges;
+  }
+  function rangeOverlap(a0,a1,b0,b1){ return Math.max(0, Math.min(a1,b1) - Math.max(a0,b0)); }
+  function offMinutesInInterval(startAbs, endAbs, weekStart){
+    const startDay = mskDayIdx(startAbs, weekStart), endDay = mskDayIdx(endAbs, weekStart);
+    const startMin = mskWallParts(startAbs).min, endMin = mskWallParts(endAbs).min;
+    let total = 0;
+    for (let d = startDay; d <= endDay; d++){
+      if (d < 0 || d > 6) continue;
+      const from = (d === startDay) ? startMin : 0;
+      const to = (d === endDay) ? endMin : 1440;
+      if (to <= from) continue;
+      dayOffRanges(d).forEach(([r0,r1]) => { total += rangeOverlap(from, to, r0, r1); });
+    }
+    return total;
+  }
+  function offHours(ref, weekStart, now){
+    const tr = (state.tracking || {});
+    const entries = (tr.entries || []).filter(e => e.ref === ref);
+    let mins = 0;
+    const inWeek = (d) => { const i = mskDayIdx(d, weekStart); return i >= 0 && i <= 6; };
+    entries.forEach(e => { const s = new Date(e.start), en = new Date(e.end); if (inWeek(s)) mins += offMinutesInInterval(s, en, weekStart); });
+    if (tr.running && tr.running.ref === ref){ const s = new Date(tr.running.start); if (inWeek(s)) mins += offMinutesInInterval(s, now, weekStart); }
+    const wk = state.calendar && state.calendar.weeks && state.calendar.weeks[weekStart];
+    if (wk){
+      (wk.slots||[]).filter(sl => sl.ref === ref && sl.status === "done" && sl.start != null).forEach(sl => {
+        const a = mskSlotToAbs(weekStart, sl.day, sl.start), b = new Date(a.getTime() + sl.dur*60000);
+        const dur = b - a;
+        const covered = entries.some(e => {
+          const s = new Date(e.start), en = new Date(e.end);
+          const ov = Math.max(0, Math.min(en, b) - Math.max(s, a));
+          return ov >= dur * 0.5;
+        });
+        if (!covered) mins += offMinutesInInterval(a, b, weekStart);
+      });
+    }
+    return mins / 60;
+  }
+  function prevMonday(ws){ const d = fromIso(ws); d.setDate(d.getDate()-7); return isoDate(d); }
+  function weekHasData(ws){
+    const tr = state.tracking || {};
+    const inW = (iso) => { const i = mskDayIdx(new Date(iso), ws); return i >= 0 && i <= 6; };
+    const hasEntries = (tr.entries||[]).some(e => inW(e.start));
+    const hasCal = !!(state.calendar && state.calendar.weeks && state.calendar.weeks[ws]);
+    return hasEntries || hasCal;
   }
   function factClass(fact, plan, weekStart){
     if (plan <= 0) return fact > 0 ? "warn" : "";
@@ -573,6 +633,16 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
       $("#factTopFill").className = "factfill " + cls;
       $("#factTopFill").style.width = pct + "%";
       $("#factTopLabel").innerHTML = "факт по трекеру " + fmtH(factAll) + " ч из " + fmtH(cap) + " ч" + (overAll2 > 0.01 ? ' <b class="over">+'+fmtH(overAll2)+' ч сверх плана</b>' : "");
+      const offAll = state.projects.filter(isWork).reduce((a,x)=>a+offHours("p:"+x.id, state.weekStart, new Date()),0);
+      const pctOff = factAll > 0 ? Math.round(offAll/factAll*100) : (offAll > 0 ? 100 : 0);
+      const prevWs = prevMonday(state.weekStart);
+      let cmp = "";
+      if (weekHasData(prevWs)){
+        const prevOff = state.projects.filter(isWork).reduce((a,x)=>a+offHours("p:"+x.id, prevWs, new Date()),0);
+        const diff = offAll - prevOff;
+        cmp = " · на прошлой неделе " + fmtH(prevOff) + " ч" + (Math.abs(diff) >= 0.05 ? (diff > 0 ? " (+"+fmtH(diff)+" ч)" : " (−"+fmtH(-diff)+" ч)") : "");
+      }
+      $("#offTopLabel").textContent = "в свободные часы за неделю: " + fmtH(offAll) + " ч (" + pctOff + "% факта)" + cmp;
       factTop.hidden = false;
     } else factTop.hidden = true;
 
@@ -668,9 +738,11 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     const cls = factClass(fact, plan, state.weekStart);
     const pct = plan > 0 ? Math.min(100, fact/plan*100) : (fact > 0 ? 100 : 0);
     const over = fact - plan;
+    const off = offHours("p:"+p.id, state.weekStart, new Date());
     return '<div class="factwrap">' +
       '<div class="factbar"><div class="factfill '+cls+'" style="width:'+pct+'%"></div></div>' +
       '<div class="factlabel">факт '+fmtH(fact)+' ч из '+fmtH(plan)+' ч' + (over > 0.01 ? ' <b class="over">+'+fmtH(over)+' ч сверх плана</b>' : '') + '</div>' +
+      (off > 0.01 ? '<div class="factlabel offhrs">из них в свободные часы '+fmtH(off)+' ч</div>' : '') +
     '</div>';
   }
 

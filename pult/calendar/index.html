@@ -267,6 +267,9 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
 .blk.sel{outline:2px solid var(--ink);outline-offset:1px}
 .blk.overlap{opacity:.88;box-shadow:0 0 0 2px var(--warn),0 1px 0 rgba(0,0,0,.04);z-index:2}
 .blk.overlap .ovtag{display:inline-block;font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.02em;text-transform:uppercase;background:var(--warn);color:#1a1200;border-radius:5px;padding:1px 4px;margin-left:4px;vertical-align:1px}
+/* Блок трекера/done вне рабочего окна — лёгкая штриховка поверх цвета проекта, без перемещений (22.09.2026, TG 13856) */
+.blk.offhours::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(135deg,rgba(255,255,255,0) 0 6px,rgba(255,255,255,.32) 6px 7px)}
+.blk .offbadge{display:inline-block;font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.02em;text-transform:uppercase;background:rgba(0,0,0,.32);color:#fff;border-radius:5px;padding:1px 4px;margin-left:4px;vertical-align:1px}
 .blk .rz{position:absolute;left:0;right:0;bottom:0;height:8px;cursor:ns-resize}
 .ghostblk{position:absolute;left:4px;right:4px;border-radius:10px;border:2px dashed var(--blue-deep);background:var(--drop);pointer-events:none;z-index:4;font-family:var(--mono);font-size:10.5px;color:var(--blue-deep);padding:4px 6px}
 .ghostblk.bad{border-color:var(--bad);color:var(--bad);background:color-mix(in srgb,var(--bad) 8%,transparent)}
@@ -385,7 +388,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
   const FIXED = {tax:"Налог · созвоны", chaos:"Окна хаоса"};
   const STATUS = {plan:"Запланировано", done:"Сделано", miss:"Не случилось"};
   const STEP = 30, PX_PER_MIN = 1.0, VIEW_START = 540, VIEW_END = 1260; // на экране 09:00–21:00: отдых можно ставить и вне рабочего окна
-  const PULT_VERSION = "2.3";
+  const PULT_VERSION = "2.4";
   let state = null, aesKey = null, auth = null, dirty = false, saving = false, saveTimer = null;
   let week = null; // ISO понедельника открытой недели
   // оптимистичная блокировка (22.09.2026): см. index.html
@@ -464,6 +467,15 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
   function isRest(ref){ const p = ref && ref.startsWith("p:") && state.projects.find(x => "p:" + x.id === ref); return !!(p && p.lane === "personal"); }
   function restRefs(){ return state.projects.filter(p => p.lane === "personal").map(p => ({ref:"p:"+p.id, name:p.name, kind:"rest", days:p.days, est:false, hours:projHours(p), color:projColor(p)})); }
   function dayOpen(d){ return (+state.dayCap[d]||0) > 0; }
+  /* Минуты блока вне рабочего окна/обеда, или весь блок в выходной день (22.09.2026, TG 13856).
+     Только показ (штриховка/бейдж) — никаких перемещений. Порт 1-в-1 с pult_overrun_watch.py. */
+  function offMinutesOfBlock(b){
+    if (!dayOpen(b.day)) return b.dur;
+    const c = cal();
+    const ranges = [[0, c.dayStart], [c.dayEnd, 1440], [c.lunch.start, c.lunch.start + c.lunch.dur]];
+    const end = b.start + b.dur;
+    return ranges.reduce((s,[r0,r1]) => s + Math.max(0, Math.min(end, r1) - Math.max(b.start, r0)), 0);
+  }
   /* Раскладка наложений ТОЛЬКО для отрисовки (22.09.2026, TG 13825/13827): данные не трогает и
      ничего не двигает — просто решает, в какую «дорожку» по горизонтали поставить каждый блок
      дня, если он пересекается по времени с другим. blocks — уже отсортированы по start. */
@@ -704,6 +716,8 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
         const r = refInfo(b.ref, b.title);
         const tint = r.color ? 'background:'+r.color+';color:#fff;border-color:transparent;' : '';
         const overBadge = b.over ? ' <b class="overmin">+'+Math.round(b.over)+' мин</b>' : '';
+        const offMin = b.status==="done" ? offMinutesOfBlock(b) : 0;
+        const offBadge = offMin > 0 ? ' <b class="offbadge">свободные часы</b>' : '';
         const L = lay.get(b.id);
         // Наложение (два блока на одно время) НЕ разруливается автоматикой — только видно рядом,
         // узко, полупрозрачно, с пометкой (22.09.2026, TG 13827: «система не будет автоматом
@@ -712,8 +726,8 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
           ? 'left:calc(4px + (100% - 8px) * '+L.lane+' / '+L.lanes+');right:auto;width:calc((100% - 8px) / '+L.lanes+' - 3px);'
           : '';
         const overlapTag = L.lanes > 1 ? ' <b class="ovtag">наложение</b>' : '';
-        col += '<div class="blk '+(r.kind==="fixed"?"bfix":r.kind)+(b.dur<=30?" short":"")+(b.status==="done"?" done":"")+(b.status==="miss"?" miss":"")+(L.lanes>1?" overlap":"")+'" data-id="'+b.id+'" tabindex="0" role="button" aria-label="'+esc(r.name)+', '+hm(b.start)+'–'+hm(b.start+b.dur)+', '+STATUS[b.status||"plan"]+(b.over?', +'+Math.round(b.over)+' минут сверх плана':'')+(L.lanes>1?', накладывается на другой блок':'')+'" style="'+tint+posStyle+'top:'+y(b.start)+'px;height:'+(b.dur*PX_PER_MIN - 2)+'px">' +
-          '<span class="t">'+esc(r.name)+overlapTag+'</span><span class="m">'+hm(b.start)+'–'+hm(b.start+b.dur)+' · '+fmtH(b.dur/60)+' ч'+overBadge+'</span><span class="rz" data-rz="1"></span></div>';
+        col += '<div class="blk '+(r.kind==="fixed"?"bfix":r.kind)+(b.dur<=30?" short":"")+(b.status==="done"?" done":"")+(b.status==="miss"?" miss":"")+(L.lanes>1?" overlap":"")+(offMin>0?" offhours":"")+'" data-id="'+b.id+'" tabindex="0" role="button" aria-label="'+esc(r.name)+', '+hm(b.start)+'–'+hm(b.start+b.dur)+', '+STATUS[b.status||"plan"]+(b.over?', +'+Math.round(b.over)+' минут сверх плана':'')+(L.lanes>1?', накладывается на другой блок':'')+(offMin>0?', вне рабочего времени':'')+'" style="'+tint+posStyle+'top:'+y(b.start)+'px;height:'+(b.dur*PX_PER_MIN - 2)+'px">' +
+          '<span class="t">'+esc(r.name)+overlapTag+offBadge+'</span><span class="m">'+hm(b.start)+'–'+hm(b.start+b.dur)+' · '+fmtH(b.dur/60)+' ч'+overBadge+'</span><span class="rz" data-rz="1"></span></div>';
       });
       const dcol = new Date(a); dcol.setDate(a.getDate()+d);
       if (isoDate(dcol) === todayIso) col += '<div class="nowline"><i></i><b></b></div>';
