@@ -380,12 +380,45 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
   const FIXED = {tax:"Налог · созвоны", chaos:"Окна хаоса"};
   const STATUS = {plan:"Запланировано", done:"Сделано", miss:"Не случилось"};
   const STEP = 30, PX_PER_MIN = 1.0, VIEW_START = 540, VIEW_END = 1260; // на экране 09:00–21:00: отдых можно ставить и вне рабочего окна
+  const PULT_VERSION = "2.0";
   let state = null, aesKey = null, auth = null, dirty = false, saving = false, saveTimer = null;
   let week = null; // ISO понедельника открытой недели
+  // оптимистичная блокировка (22.09.2026): см. index.html
+  let baseV = 0, baseSnapshot = null, conflictLocked = false;
 
   const sum = a => (Array.isArray(a) ? a : []).reduce((x,y)=>x+(+y||0),0);
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   const clone = o => JSON.parse(JSON.stringify(o));
+  const eq = (a,b) => JSON.stringify(a) === JSON.stringify(b);
+
+  /* ---------- слияние при 409 (22.09.2026) ----------
+     Календарь редактирует только state.calendar (блоки по неделям + dropped); всё остальное
+     (проекты, ёмкость, лимиты) здесь только читается — значит на конфликте просто берём его
+     из свежего state. Внутри state.calendar блоки мержим по id, по открытой неделе. */
+  function reconcile(fresh, local, base){
+    if (!fresh || !base || !local) return null;
+    try {
+      const merged = clone(fresh);
+      merged.calendar = merged.calendar || {weeks:{}};
+      const fc = merged.calendar, lc = local.calendar || {}, bc = base.calendar || {};
+      ["dayStart","dayEnd","lunch"].forEach(k => { if (!eq(lc[k], bc[k])) fc[k] = clone(lc[k]); });
+      const bDropped = new Set(bc.dropped || []);
+      const addedDrops = (lc.dropped || []).filter(g => !bDropped.has(g));
+      if (addedDrops.length) fc.dropped = Array.from(new Set([...(fc.dropped||[]), ...addedDrops]));
+      fc.weeks = fc.weeks || {};
+      const lWeeks = lc.weeks || {}, bWeeks = bc.weeks || {};
+      Object.keys(lWeeks).forEach(wk => {
+        const lw = lWeeks[wk] || {slots:[]}, bw = bWeeks[wk] || {slots:[]}, fw = fc.weeks[wk] || {slots:[], builtAt:null};
+        const baseById = new Map((bw.slots||[]).map(x => [x.id, x]));
+        const freshById = new Map((fw.slots||[]).map(x => [x.id, x]));
+        const localIds = new Set((lw.slots||[]).map(x => x.id));
+        (lw.slots||[]).forEach(sl => { const b = baseById.get(sl.id); if (!b || !eq(b, sl)) freshById.set(sl.id, clone(sl)); });
+        baseById.forEach((b, id) => { if (!localIds.has(id) && freshById.has(id) && eq(freshById.get(id), b)) freshById.delete(id); });
+        fc.weeks[wk] = {slots: Array.from(freshById.values()), builtAt: fw.builtAt || lw.builtAt};
+      });
+      return merged;
+    } catch(e){ return null; }
+  }
   const hm = m => String(Math.floor(m/60)).padStart(2,"0") + ":" + String(m%60).padStart(2,"0");
   const fmtH = n => { const r = Math.round(n*2)/2; return Number.isInteger(r) ? String(r) : r.toFixed(1).replace(".", ","); };
   const uid = () => "s" + Math.random().toString(36).slice(2,9);
@@ -522,9 +555,10 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
   function snapshot(){ return JSON.stringify(state); }
   function markUndo(){ if (snap != null){ undoStack.push(snap); if (undoStack.length > UNDO_MAX) undoStack.shift(); } redoStack.length = 0; snap = snapshot(); }
   function applySnap(js){
+    if (conflictLocked){ showBanner("Данные обновились на сервере — обнови страницу (Cmd+Shift+R), иначе правка не сохранится."); return; }
     state = JSON.parse(js); normalize(); snap = js;
     state.updatedAt = new Date().toISOString(); dirty = true; setSave("сохраняю…");
-    render(); clearTimeout(saveTimer); saveTimer = setTimeout(flush, 700);
+    render(); clearTimeout(saveTimer); saveTimer = setTimeout(() => flush(), 700);
   }
   function undo(){
     if (!undoStack.length){ toast("Отменять нечего"); return; }
@@ -546,14 +580,40 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
   });
 
   /* ---------- сохранение ---------- */
-  function touch(){ markUndo(); state.updatedAt = new Date().toISOString(); dirty = true; setSave("сохраняю…"); render(); clearTimeout(saveTimer); saveTimer = setTimeout(flush, 700); }
-  async function flush(){
+  function touch(){
+    if (conflictLocked){ showBanner("Данные обновились на сервере — обнови страницу (Cmd+Shift+R), иначе правка не сохранится."); return; }
+    markUndo(); state.updatedAt = new Date().toISOString(); dirty = true; setSave("сохраняю…"); render();
+    clearTimeout(saveTimer); saveTimer = setTimeout(() => flush(), 700);
+  }
+  async function flush(mergeAttempt){
+    mergeAttempt = mergeAttempt || 0;
     if (!auth || !dirty) return;
-    if (saving){ clearTimeout(saveTimer); saveTimer = setTimeout(flush, 400); return; }
+    if (saving){ clearTimeout(saveTimer); saveTimer = setTimeout(() => flush(mergeAttempt), 400); return; }
     saving = true; dirty = false;
-    try { await saveRemote(clone(state)); setSave(dirty ? "сохраняю…" : "сохранено"); }
-    catch(e){ dirty = true; if (e && e.code === "network") setTimeout(flush, 900 + Math.random()*900); else { setSave("не сохранилось"); showBanner("Изменения не сохранились: " + (e && e.message || "ошибка") + ". Обнови страницу."); } }
-    finally { saving = false; if (dirty){ clearTimeout(saveTimer); saveTimer = setTimeout(flush, 400); } }
+    const toSave = clone(state);
+    let outcome = "ok", err = null;
+    try { await saveRemote(toSave); } catch(e){ outcome = (e && e.code) || "error"; err = e; }
+    saving = false;
+
+    if (outcome === "ok"){ setSave(dirty ? "сохраняю…" : "сохранено"); if (dirty){ clearTimeout(saveTimer); saveTimer = setTimeout(() => flush(), 400); } return; }
+
+    if (outcome === "conflict"){
+      if (mergeAttempt >= 3){ conflictLocked = true; setSave("конфликт"); showBanner("Данные обновились на сервере несколько раз подряд — обнови страницу (Cmd+Shift+R)."); return; }
+      let merged = null;
+      try {
+        const pt = await crypto.subtle.decrypt({name:"AES-GCM", iv:unb64(err.blob.iv)}, aesKey, unb64(err.blob.ct));
+        const fresh = JSON.parse(new TextDecoder().decode(pt));
+        merged = reconcile(fresh, toSave, baseSnapshot);
+        if (merged){ state = merged; baseV = err.v; baseSnapshot = clone(fresh); }
+      } catch(_) { merged = null; }
+      if (merged){ dirty = true; render(); clearTimeout(saveTimer); saveTimer = setTimeout(() => flush(mergeAttempt + 1), 50); return; }
+      conflictLocked = true; setSave("конфликт"); showBanner("Данные обновились на сервере — обнови страницу (Cmd+Shift+R), последняя правка не сохранена.");
+      return;
+    }
+
+    dirty = true;
+    if (outcome === "network") setTimeout(() => flush(mergeAttempt), 900 + Math.random()*900);
+    else { setSave("не сохранилось"); showBanner("Изменения не сохранились: " + (err && err.message || "ошибка") + ". Обнови страницу."); }
   }
 
   /* ---------- отрисовка ---------- */
@@ -640,7 +700,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     $("#overTray").innerHTML = overList.length ? '<div class="over-tray"><b>Не влезло в рабочее окно:</b> ' + overList.map(b => esc(refInfo(b.ref,b.title).name) + ' — ' + DAYS[b.day] + ' ' + fmtH(b.dur/60) + ' ч').join("; ") + '. Сократи часы в пульте или перенеси блоки на другие дни, потом нажми «Собрать из пульта».</div>' : '';
     $("#legend2").innerHTML = state.projects.map(p => '<span><i style="background:'+(projColor(p)||"var(--mute)")+'"></i>'+esc(p.name)+'</span>').join("") + '<span><i style="background:var(--gray);border:1px solid var(--line)"></i>Налог и окна хаоса</span><span><i style="background:var(--ink)"></i>Свои события</span>';
     renderReview();
-    if (state.updatedAt){ const dd = new Date(state.updatedAt); $("#updated").textContent = "обновлено " + dd.toLocaleString("ru-RU",{day:"numeric",month:"long",hour:"2-digit",minute:"2-digit"}); }
+    if (state.updatedAt){ const dd = new Date(state.updatedAt); $("#updated").textContent = "обновлено " + dd.toLocaleString("ru-RU",{day:"numeric",month:"long",hour:"2-digit",minute:"2-digit"}) + " · v" + PULT_VERSION + " · " + (baseV ? "версия " + baseV : ""); }
   }
 
   function renderReview(){
@@ -879,26 +939,35 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
     try { r = await fetch(API, {method, headers:{"X-Pult-Key":auth, "Content-Type":"application/json"}, body: body ? JSON.stringify(body) : undefined, cache:"no-store"}); }
     catch(e){ throw {code:"network", message:"нет связи с хранилищем"}; }
     if (r.status === 401) throw {code:"unauthorized", message:"неверный пароль"};
+    let j = null; try { j = await r.json(); } catch(e) {}
+    if (r.status === 409) throw {code:"conflict", v:(j&&j.v)||0, blob:(j&&j.blob)||null};
     if (!r.ok) throw {code:"http", message:"хранилище ответило " + r.status};
-    return r.json();
+    return j;
   }
-  async function loadRemote(){ const d = await api("GET"); if (!d.blob) return null; const pt = await crypto.subtle.decrypt({name:"AES-GCM", iv:unb64(d.blob.iv)}, aesKey, unb64(d.blob.ct)); return JSON.parse(new TextDecoder().decode(pt)); }
-  async function saveRemote(s){ const iv = crypto.getRandomValues(new Uint8Array(12)); const ct = await crypto.subtle.encrypt({name:"AES-GCM", iv}, aesKey, new TextEncoder().encode(JSON.stringify(s))); await api("PUT", {blob:{iv:b64(iv), ct:b64(ct)}}); }
-  function adopt(s){ state = s || {projects:[]}; normalize(); undoStack = []; redoStack = []; snap = snapshot(); if (!week){ const cur = isoDate(mondayOf(new Date())); week = (state.weekStart && state.weekStart >= cur) ? state.weekStart : defaultWeek(); } render(); }
+  async function loadRemote(){ const d = await api("GET"); if (!d.blob) return {s:null, v:d.v||0}; const pt = await crypto.subtle.decrypt({name:"AES-GCM", iv:unb64(d.blob.iv)}, aesKey, unb64(d.blob.ct)); return {s: JSON.parse(new TextDecoder().decode(pt)), v: d.v||0}; }
+  async function saveRemote(s){ const iv = crypto.getRandomValues(new Uint8Array(12)); const ct = await crypto.subtle.encrypt({name:"AES-GCM", iv}, aesKey, new TextEncoder().encode(JSON.stringify(s))); const r = await api("PUT", {blob:{iv:b64(iv), ct:b64(ct)}, baseV}); baseV = r.v; baseSnapshot = clone(s); }
+  function adopt(s, v){
+    state = s || {projects:[]}; normalize(); undoStack = []; redoStack = []; snap = snapshot();
+    if (!week){ const cur = isoDate(mondayOf(new Date())); week = (state.weekStart && state.weekStart >= cur) ? state.weekStart : defaultWeek(); }
+    if (typeof v === "number") baseV = v;
+    baseSnapshot = clone(state); conflictLocked = false;
+    render();
+  }
   async function unlock(pw, remember){
     const k = await deriveKeys(pw); aesKey = k.key; auth = k.authHex;
-    const s = await loadRemote();
+    const {s, v} = await loadRemote();
     try { if (remember) localStorage.setItem("pult-pw", pw); else localStorage.removeItem("pult-pw"); } catch(e) {}
     $("#gate").hidden = true; $("#app").hidden = false;
-    adopt(s); setSave("сохранено");
+    adopt(s, v); setSave("сохранено");
     if (!s) showBanner("Пульт пока пустой. Заполни часы на странице «Ёмкость».");
   }
   async function refresh(){
-    if (!auth || dirty || saving || drag || $(".pop")) return;
-    try { const s = await loadRemote(); if (s && !dirty && !saving && !drag && !$(".pop") && s.updatedAt !== (state && state.updatedAt)) adopt(s); } catch(e) {}
+    if (!auth || dirty || saving || drag || conflictLocked || $(".pop")) return;
+    try { const {s, v} = await loadRemote(); if (s && !dirty && !saving && !drag && !$(".pop") && v !== baseV) adopt(s, v); } catch(e) {}
   }
   document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") refresh(); });
-  setInterval(() => { if (document.visibilityState === "visible") refresh(); }, 20000);
+  window.addEventListener("focus", refresh);
+  setInterval(refresh, 60000); // тихий refetch без несохранённых правок (22.09.2026)
   $("#gateForm").addEventListener("submit", async e => {
     e.preventDefault();
     const btn = $("#gateBtn"); btn.disabled = true; btn.textContent = "Открываю…"; $("#gateErr").textContent = "";

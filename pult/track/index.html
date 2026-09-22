@@ -334,12 +334,36 @@ table.rep{width:100%;border-collapse:collapse;min-width:720px;font-variant-numer
   const LANE = {big:{t:"Большие камни",c:"var(--blue-deep)"}, small:{t:"Маленькие камни",c:"var(--blue)"}, fan:{t:"Фан",c:"var(--warn)"}, ghost:{t:"Призраки",c:"var(--bad)"}, personal:{t:"Отдых",c:"var(--ok)"}};
   const ORDER = ["big","small","fan","ghost","personal"];
   const SRC = {timer:"таймер", manual:"вручную", telegram:"Telegram", calendar:"встреча"};
+  const PULT_VERSION = "2.0";
   let state = null, aesKey = null, auth = null, dirty = false, saving = false, saveTimer = null;
   let week = null, pick = null, tick = null;
+  // оптимистичная блокировка (22.09.2026): см. index.html
+  let baseV = 0, baseSnapshot = null, conflictLocked = false;
 
   const sum = a => (Array.isArray(a) ? a : []).reduce((x,y)=>x+(+y||0),0);
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   const clone = o => JSON.parse(JSON.stringify(o));
+  const eq = (a,b) => JSON.stringify(a) === JSON.stringify(b);
+
+  /* ---------- слияние при 409 (22.09.2026) ----------
+     Трекер редактирует только state.tracking (записи по id + running); всё остальное здесь
+     только читается — на конфликте берём его из свежего state. */
+  function reconcile(fresh, local, base){
+    if (!fresh || !base || !local) return null;
+    try {
+      const merged = clone(fresh);
+      merged.tracking = merged.tracking || {entries:[], running:null};
+      const ft = merged.tracking, lt = local.tracking || {entries:[], running:null}, bt = base.tracking || {entries:[], running:null};
+      const baseById = new Map((bt.entries||[]).map(x => [x.id, x]));
+      const freshById = new Map((ft.entries||[]).map(x => [x.id, x]));
+      const localIds = new Set((lt.entries||[]).map(x => x.id));
+      (lt.entries||[]).forEach(e => { const b = baseById.get(e.id); if (!b || !eq(b, e)) freshById.set(e.id, clone(e)); });
+      baseById.forEach((b, id) => { if (!localIds.has(id) && freshById.has(id) && eq(freshById.get(id), b)) freshById.delete(id); });
+      ft.entries = Array.from(freshById.values());
+      if (!eq(lt.running, bt.running)) ft.running = clone(lt.running); // локальный старт/стоп важнее
+      return merged;
+    } catch(e){ return null; }
+  }
   const fmtH = n => { const r = Math.round(n*10)/10; return Number.isInteger(r) ? String(r) : r.toFixed(1).replace(".", ","); };
   const uid = () => "t" + Math.random().toString(36).slice(2,9);
   const pad = n => String(n).padStart(2,"0");
@@ -371,14 +395,40 @@ table.rep{width:100%;border-collapse:collapse;min-width:720px;font-variant-numer
   function minutes(e){ return Math.max(0, (new Date(e.end) - new Date(e.start)) / 60000); }
 
   /* ---------- сохранение ---------- */
-  function touch(){ state.updatedAt = new Date().toISOString(); dirty = true; setSave("сохраняю…"); render(); clearTimeout(saveTimer); saveTimer = setTimeout(flush, 500); }
-  async function flush(){
+  function touch(){
+    if (conflictLocked){ showBanner("Данные обновились на сервере — обнови страницу (Cmd+Shift+R), иначе правка не сохранится."); return; }
+    state.updatedAt = new Date().toISOString(); dirty = true; setSave("сохраняю…"); render();
+    clearTimeout(saveTimer); saveTimer = setTimeout(() => flush(), 500);
+  }
+  async function flush(mergeAttempt){
+    mergeAttempt = mergeAttempt || 0;
     if (!auth || !dirty) return;
-    if (saving){ clearTimeout(saveTimer); saveTimer = setTimeout(flush, 400); return; }
+    if (saving){ clearTimeout(saveTimer); saveTimer = setTimeout(() => flush(mergeAttempt), 400); return; }
     saving = true; dirty = false;
-    try { await saveRemote(clone(state)); setSave(dirty ? "сохраняю…" : "сохранено"); }
-    catch(e){ dirty = true; if (e && e.code === "network") setTimeout(flush, 900 + Math.random()*900); else { setSave("не сохранилось"); showBanner("Изменения не сохранились: " + (e && e.message || "ошибка") + ". Обнови страницу."); } }
-    finally { saving = false; if (dirty){ clearTimeout(saveTimer); saveTimer = setTimeout(flush, 400); } }
+    const toSave = clone(state);
+    let outcome = "ok", err = null;
+    try { await saveRemote(toSave); } catch(e){ outcome = (e && e.code) || "error"; err = e; }
+    saving = false;
+
+    if (outcome === "ok"){ setSave(dirty ? "сохраняю…" : "сохранено"); if (dirty){ clearTimeout(saveTimer); saveTimer = setTimeout(() => flush(), 400); } return; }
+
+    if (outcome === "conflict"){
+      if (mergeAttempt >= 3){ conflictLocked = true; setSave("конфликт"); showBanner("Данные обновились на сервере несколько раз подряд — обнови страницу (Cmd+Shift+R)."); return; }
+      let merged = null;
+      try {
+        const pt = await crypto.subtle.decrypt({name:"AES-GCM", iv:unb64(err.blob.iv)}, aesKey, unb64(err.blob.ct));
+        const fresh = JSON.parse(new TextDecoder().decode(pt));
+        merged = reconcile(fresh, toSave, baseSnapshot);
+        if (merged){ state = merged; baseV = err.v; baseSnapshot = clone(fresh); }
+      } catch(_) { merged = null; }
+      if (merged){ dirty = true; render(); clearTimeout(saveTimer); saveTimer = setTimeout(() => flush(mergeAttempt + 1), 50); return; }
+      conflictLocked = true; setSave("конфликт"); showBanner("Данные обновились на сервере — обнови страницу (Cmd+Shift+R), последняя правка не сохранена.");
+      return;
+    }
+
+    dirty = true;
+    if (outcome === "network") setTimeout(() => flush(mergeAttempt), 900 + Math.random()*900);
+    else { setSave("не сохранилось"); showBanner("Изменения не сохранились: " + (err && err.message || "ошибка") + ". Обнови страницу."); }
   }
 
   /* ---------- отрисовка ---------- */
@@ -404,7 +454,7 @@ table.rep{width:100%;border-collapse:collapse;min-width:720px;font-variant-numer
     if (!$("#aDate").value) $("#aDate").value = isoDate(new Date());
     $("#wl").textContent = weekLabel(week);
     renderReport(); renderEntries();
-    if (state.updatedAt){ const d = new Date(state.updatedAt); $("#updated").textContent = "обновлено " + d.toLocaleString("ru-RU",{day:"numeric",month:"long",hour:"2-digit",minute:"2-digit"}); }
+    if (state.updatedAt){ const d = new Date(state.updatedAt); $("#updated").textContent = "обновлено " + d.toLocaleString("ru-RU",{day:"numeric",month:"long",hour:"2-digit",minute:"2-digit"}) + " · v" + PULT_VERSION + " · " + (baseV ? "версия " + baseV : ""); }
   }
   function renderReport(){
     const E = entriesOfWeek();
@@ -497,25 +547,33 @@ table.rep{width:100%;border-collapse:collapse;min-width:720px;font-variant-numer
     try { r = await fetch(API, {method, headers:{"X-Pult-Key":auth, "Content-Type":"application/json"}, body: body ? JSON.stringify(body) : undefined, cache:"no-store"}); }
     catch(e){ throw {code:"network", message:"нет связи с хранилищем"}; }
     if (r.status === 401) throw {code:"unauthorized", message:"неверный пароль"};
+    let j = null; try { j = await r.json(); } catch(e) {}
+    if (r.status === 409) throw {code:"conflict", v:(j&&j.v)||0, blob:(j&&j.blob)||null};
     if (!r.ok) throw {code:"http", message:"хранилище ответило " + r.status};
-    return r.json();
+    return j;
   }
-  async function loadRemote(){ const d = await api("GET"); if (!d.blob) return null; const pt = await crypto.subtle.decrypt({name:"AES-GCM", iv:unb64(d.blob.iv)}, aesKey, unb64(d.blob.ct)); return JSON.parse(new TextDecoder().decode(pt)); }
-  async function saveRemote(s){ const iv = crypto.getRandomValues(new Uint8Array(12)); const ct = await crypto.subtle.encrypt({name:"AES-GCM", iv}, aesKey, new TextEncoder().encode(JSON.stringify(s))); await api("PUT", {blob:{iv:b64(iv), ct:b64(ct)}}); }
-  function adopt(s){ state = s || {projects:[]}; normalize(); if (!week) week = isoDate(mondayOf(new Date())); render(); }
+  async function loadRemote(){ const d = await api("GET"); if (!d.blob) return {s:null, v:d.v||0}; const pt = await crypto.subtle.decrypt({name:"AES-GCM", iv:unb64(d.blob.iv)}, aesKey, unb64(d.blob.ct)); return {s: JSON.parse(new TextDecoder().decode(pt)), v: d.v||0}; }
+  async function saveRemote(s){ const iv = crypto.getRandomValues(new Uint8Array(12)); const ct = await crypto.subtle.encrypt({name:"AES-GCM", iv}, aesKey, new TextEncoder().encode(JSON.stringify(s))); const r = await api("PUT", {blob:{iv:b64(iv), ct:b64(ct)}, baseV}); baseV = r.v; baseSnapshot = clone(s); }
+  function adopt(s, v){
+    state = s || {projects:[]}; normalize(); if (!week) week = isoDate(mondayOf(new Date()));
+    if (typeof v === "number") baseV = v;
+    baseSnapshot = clone(state); conflictLocked = false;
+    render();
+  }
   async function unlock(pw, remember){
     const k = await deriveKeys(pw); aesKey = k.key; auth = k.authHex;
-    const s = await loadRemote();
+    const {s, v} = await loadRemote();
     try { if (remember) localStorage.setItem("pult-pw", pw); else localStorage.removeItem("pult-pw"); } catch(e) {}
     $("#gate").hidden = true; $("#app").hidden = false;
-    adopt(s); setSave("сохранено");
+    adopt(s, v); setSave("сохранено");
   }
   async function refresh(){
-    if (!auth || dirty || saving) return;
-    try { const s = await loadRemote(); if (s && !dirty && !saving && s.updatedAt !== (state && state.updatedAt)) adopt(s); } catch(e) {}
+    if (!auth || dirty || saving || conflictLocked) return;
+    try { const {s, v} = await loadRemote(); if (s && !dirty && !saving && v !== baseV) adopt(s, v); } catch(e) {}
   }
   document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") refresh(); });
-  setInterval(() => { if (document.visibilityState === "visible") refresh(); }, 15000);
+  window.addEventListener("focus", refresh);
+  setInterval(refresh, 60000); // тихий refetch без несохранённых правок (22.09.2026)
   $("#gateForm").addEventListener("submit", async e => {
     e.preventDefault();
     const btn = $("#gateBtn"); btn.disabled = true; btn.textContent = "Открываю…"; $("#gateErr").textContent = "";
