@@ -242,6 +242,7 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
 .closed.lunch{background:repeating-linear-gradient(135deg,color-mix(in srgb,var(--warn) 10%,transparent) 0 7px,color-mix(in srgb,var(--warn) 22%,transparent) 7px 8px)}
 .closed.lunch.missed{background:repeating-linear-gradient(135deg,color-mix(in srgb,var(--bad) 10%,transparent) 0 7px,color-mix(in srgb,var(--bad) 24%,transparent) 7px 8px)}
 .closed.lunch.missed .tag{color:var(--bad);font-weight:600}
+.projtag{font-weight:500;opacity:.8;margin-left:4px}
 .overmin{color:#fff;background:color-mix(in srgb, var(--bad) 70%, transparent);border-radius:6px;padding:0 4px;font-weight:600}
 .closed .tag{position:absolute;left:6px;top:4px;font-family:var(--mono);font-size:10.5px;color:var(--mute)}
 .col.off .closed.full{background:repeating-linear-gradient(135deg,transparent 0 7px,color-mix(in srgb,var(--ink) 9%,transparent) 7px 8px)}
@@ -785,6 +786,11 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
       const lay = layoutOverlaps(dayBlocks);
       dayBlocks.forEach(b => {
         const r = refInfo(b.ref, b.title);
+        // Событие из Google Calendar, отнесённое к проекту, показывается своим названием, а не именем
+        // проекта: зум в календаре главнее блока плана (23.09.2026, TG 14019 — «Группа с Настей»
+        // закрывала «Стратегическую встречу с Настей» на то же время).
+        const label = (b.gid && b.title && r.kind !== "ev") ? b.title : r.name;
+        const projTag = label !== r.name ? ' <b class="projtag">'+esc(r.name)+'</b>' : '';
         const tint = r.color ? 'background:'+r.color+';color:#fff;border-color:transparent;' : '';
         const overBadge = b.over ? ' <b class="overmin">+'+Math.round(b.over)+' мин</b>' : '';
         const offMin = b.status==="done" ? offMinutesOfBlock(b) : 0;
@@ -797,8 +803,8 @@ dialog::backdrop{background:rgba(10,12,14,.45)}
           ? 'left:calc(4px + (100% - 8px) * '+L.lane+' / '+L.lanes+');right:auto;width:calc((100% - 8px) / '+L.lanes+' - 3px);'
           : '';
         const overlapTag = L.lanes > 1 ? ' <b class="ovtag">наложение</b>' : '';
-        col += '<div class="blk '+(r.kind==="fixed"?"bfix":r.kind)+(b.dur<=30?" short":"")+(b.status==="done"?" done":"")+(b.status==="miss"?" miss":"")+(L.lanes>1?" overlap":"")+(offMin>0?" offhours":"")+'" data-id="'+b.id+'" tabindex="0" role="button" aria-label="'+esc(r.name)+', '+hm(b.start)+'–'+hm(b.start+b.dur)+', '+STATUS[b.status||"plan"]+(b.over?', +'+Math.round(b.over)+' минут сверх плана':'')+(L.lanes>1?', накладывается на другой блок':'')+(offMin>0?', вне рабочего времени':'')+'" style="'+tint+posStyle+'top:'+y(b.start)+'px;height:'+(b.dur*PX_PER_MIN - 2)+'px">' +
-          '<span class="t">'+esc(r.name)+overlapTag+offBadge+'</span><span class="m">'+hm(b.start)+'–'+hm(b.start+b.dur)+' · '+fmtH(b.dur/60)+' ч'+overBadge+'</span><span class="rz" data-rz="1"></span></div>';
+        col += '<div class="blk '+(r.kind==="fixed"?"bfix":r.kind)+(b.dur<=30?" short":"")+(b.status==="done"?" done":"")+(b.status==="miss"?" miss":"")+(L.lanes>1?" overlap":"")+(offMin>0?" offhours":"")+'" data-id="'+b.id+'" tabindex="0" role="button" aria-label="'+esc(label)+', '+hm(b.start)+'–'+hm(b.start+b.dur)+', '+STATUS[b.status||"plan"]+(b.over?', +'+Math.round(b.over)+' минут сверх плана':'')+(L.lanes>1?', накладывается на другой блок':'')+(offMin>0?', вне рабочего времени':'')+'" style="'+tint+posStyle+'top:'+y(b.start)+'px;height:'+(b.dur*PX_PER_MIN - 2)+'px">' +
+          '<span class="t">'+esc(label)+overlapTag+offBadge+'</span><span class="m">'+hm(b.start)+'–'+hm(b.start+b.dur)+' · '+fmtH(b.dur/60)+' ч'+overBadge+projTag+'</span><span class="rz" data-rz="1"></span></div>';
       });
       // Слой факта из трекера — поверх плана, read-only (22.09.2026, TG 13861)
       factBlocksForDay(d, factRanges).forEach(f => {
