@@ -20,7 +20,7 @@ test('auth, bounds, invalid identities and no public writes',async()=>{
 });
 test('real SQLite concurrent unique signup, duplicate delivery, repeat start, failure retry',async()=>{
  const {env,sql}=fixture();let sends=0;const old=globalThis.fetch;
- globalThis.fetch=async()=>{sends++;return Response.json({ok:true})};
+ globalThis.fetch=async(url)=>{if(url.endsWith('/getChatMember'))return Response.json({ok:true,result:{status:'member'}});sends++;return Response.json({ok:true})};
  try{
   const results=await Promise.all(Array.from({length:30},(_,i)=>worker.fetch(req(i,1001+i),env)));
   assert.ok(results.every(r=>r.status===200));
@@ -30,10 +30,10 @@ test('real SQLite concurrent unique signup, duplicate delivery, repeat start, fa
   await worker.fetch(req(31,1001),env);assert.equal(sends,61);
   await worker.fetch(req(32,1001),env);assert.equal(sends,62);
   assert.equal(sql.prepare('SELECT position FROM queue WHERE telegram_id=1001').get().position,1);
-  globalThis.fetch=async()=>Response.json({ok:false},{status:500});
+  globalThis.fetch=async(url)=>url.endsWith('/getChatMember')?Response.json({ok:true,result:{status:'member'}}):Response.json({ok:false},{status:500});
   assert.equal((await worker.fetch(req(33,2001),env)).status,503);
   assert.equal(sql.prepare('SELECT sent FROM updates WHERE update_id=33').get().sent,0);
-  globalThis.fetch=async()=>Response.json({ok:true});
+  globalThis.fetch=async()=>Response.json({ok:true,result:{status:'member'}});
   assert.equal((await worker.fetch(req(33,2001),env)).status,200);
   const response=await worker.fetch(new Request('https://test/count'),env);
   assert.deepEqual(await response.json(),{count:31});assert.equal(response.headers.get('access-control-allow-origin'),'https://andreyandreev.me');

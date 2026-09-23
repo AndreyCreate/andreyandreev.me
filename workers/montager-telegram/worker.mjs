@@ -1,4 +1,5 @@
 import {ticketCaption} from './ticket.mjs';
+import {telegram, membership, gateReply} from './gate.mjs';
 const ORIGIN = 'https://andreyandreev.me';
 const reply = (status, text) => new Response(text, {status});
 export async function boundedJSON(request) {
@@ -31,21 +32,44 @@ export function createWorker(renderTicket) { return {
   let update;
   try { update = await boundedJSON(request); }
   catch (e) { return reply(e.message === 'large' ? 413 : 400, 'Invalid body'); }
-  const m = update?.message;
+  const cb = update?.callback_query;
+  const m = cb ? {chat:cb.message?.chat,from:cb.from} : update?.message;
   if (!Number.isSafeInteger(update?.update_id) || update.update_id < 0 ||
       !m || m.chat?.type !== 'private' || m.from?.is_bot !== false ||
       !Number.isSafeInteger(m.from?.id) || m.from.id <= 0 || m.from.id !== m.chat.id)
     return reply(200, 'Ignored');
-  const command = /^\/start(?:@([A-Za-z0-9_]+))?(?: (montager_(?:site|reel|other)))?$/.exec(m.text || '');
-  if (!command || (command[1] && command[1].toLowerCase() !== env.BOT_USERNAME.toLowerCase())) return reply(200, 'Ignored');
-  const source = command[2]?.slice('montager_'.length) || 'other';
+  let mode, source = 'site';
+  if (cb) {
+    if (!['montager:program','montager:site'].includes(cb.data) ||
+        typeof cb.id !== 'string' || cb.message?.from?.is_bot !== true ||
+        cb.message.from.username?.toLowerCase() !== env.BOT_USERNAME.toLowerCase()) return reply(200,'Ignored');
+    mode = cb.data === 'montager:site' ? 'site' : 'program';
+  } else {
+    const command = /^\/start(?:@([A-Za-z0-9_]+))?(?: (montager_(?:site|channel|reel|other)))?$/.exec(m.text || '');
+    if (!command || (command[1] && command[1].toLowerCase() !== env.BOT_USERNAME.toLowerCase())) return reply(200,'Ignored');
+    mode = command[2] === 'montager_site' ? 'site' : 'program';
+  }
   const uid = update.update_id, tid = m.from.id;
   try {
-    // D1 batch is a single atomic transaction. No read-then-write position race.
+    const previous = await env.DB.prepare('SELECT telegram_id,sent FROM updates WHERE update_id=?').bind(uid).first();
+    if (previous && previous.telegram_id !== tid) return reply(409,'Conflict');
+    if (previous?.sent) return reply(200,'OK');
+    if (cb) {
+      // An expired callback acknowledgement must not prevent a safe retry.
+      try { await telegram(env,'answerCallbackQuery',{callback_query_id:cb.id}); } catch (_) {}
+    }
+    const verified = (cb || mode === 'site') ? await membership(env,tid) : false;
+    if (mode === 'program' || !verified) return await gateReply(env,uid,tid,mode,verified);
+    // Claim before registration: an in-flight gate delivery owns this update too.
+    await env.DB.prepare('INSERT INTO updates(update_id,telegram_id) VALUES(?,?) ON CONFLICT(update_id) DO NOTHING').bind(uid,tid).run();
+    const lease = crypto.randomUUID();
+    const acquired = await env.DB.prepare(`UPDATE updates SET lease=?,lease_until=unixepoch()+60
+      WHERE update_id=? AND telegram_id=? AND sent=0 AND lease_until<=unixepoch() RETURNING update_id`).bind(lease,uid,tid).first();
+    if (!acquired) return reply(503,'Retry');
+    // Preserve retry eligibility, including an unsent negative gate becoming signup.
     await env.DB.batch([
-      env.DB.prepare(`INSERT INTO updates(update_id,telegram_id,followup_required)
-        VALUES(?,?,NOT EXISTS(SELECT 1 FROM queue WHERE telegram_id=?))
-        ON CONFLICT(update_id) DO NOTHING`).bind(uid,tid,tid),
+      env.DB.prepare(`UPDATE updates SET followup_required=1 WHERE update_id=? AND lease=?
+        AND NOT EXISTS(SELECT 1 FROM queue WHERE telegram_id=?)`).bind(uid,lease,tid),
       env.DB.prepare(`INSERT INTO queue(position,telegram_id,source)
         SELECT COALESCE(MAX(position),0)+1,?,? FROM queue
         HAVING NOT EXISTS(SELECT 1 FROM queue WHERE telegram_id=?)
@@ -54,9 +78,8 @@ export function createWorker(renderTicket) { return {
     const state = await env.DB.prepare('SELECT telegram_id,sent FROM updates WHERE update_id=?').bind(uid).first();
     if (state.telegram_id !== tid) return reply(409,'Conflict');
     if (state.sent) return reply(200,'OK');
-    const lease = crypto.randomUUID();
-    const claimed = await env.DB.prepare(`UPDATE updates SET lease=?,lease_until=unixepoch()+60
-      WHERE update_id=? AND sent=0 AND lease_until<=unixepoch() RETURNING update_id,confirmation_sent,followup_required`).bind(lease,uid).first();
+    const claimed = await env.DB.prepare(`SELECT update_id,confirmation_sent,followup_required FROM updates
+      WHERE update_id=? AND lease=? AND sent=0`).bind(uid,lease).first();
     if (!claimed) return reply(503,'Retry');
     const row = await env.DB.prepare('SELECT position FROM queue WHERE telegram_id=?').bind(tid).first();
     try {
@@ -85,8 +108,8 @@ export function createWorker(renderTicket) { return {
       }
       if (claimed.followup_required) {
         await send({
-          text:'Кейсы и примеры того, что можно делать с AI-агентами, я показываю в Telegram-канале «Андрей, бесишь!».\n\nПодпишитесь, чтобы увидеть, как это работает на практике: от задачи до готового результата.',
-          reply_markup:{inline_keyboard:[[{text:'Подписаться на канал',url:'https://t.me/mbga_materials'}]]}
+          text:'Кейсы и примеры того, что можно делать с AI-агентами, я показываю в Telegram-канале «Андрей, бесишь!».\n\nПосмотрите, как это работает на практике: от задачи до готового результата.',
+          reply_markup:{inline_keyboard:[[{text:'Открыть канал',url:'https://t.me/mbga_materials'}]]}
         });
       }
       await env.DB.prepare('UPDATE updates SET sent=1,lease=NULL,lease_until=0 WHERE update_id=? AND lease=?').bind(uid,lease).run();
