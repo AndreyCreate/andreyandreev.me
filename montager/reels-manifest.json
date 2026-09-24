@@ -79,5 +79,17 @@
     "poster": "media/DdHEZS9odOa.jpg",
     "media_sha256": "7fa7d3ffdeddf8b1b49bd97f3e40819dc57a65ec9a1a07710a7e16207b5468d2",
     "poster_sha256": "d68c013469ea6d837cbab981c65a615a8c511d30a304b1037df5eee8802eb226"
+  },
+  {
+    "order": 10,
+    "original_url": "https://www.instagram.com/reel/DdrTk1Qsiub/?stkn=aHJlZmdwamhud3Vx",
+    "shortcode": "DdrTk1Qsiub",
+    "file": "media/DdrTk1Qsiub.mp4",
+    "poster": "media/DdrTk1Qsiub.jpg",
+    "media_sha256": "688d22f6833f73209c1067efcd6d284b86002189ed14fa1416a59e767a20f0ac",
+    "poster_sha256": "f42c2880b26fe1dc2e88b499cf4d5601c369a50afe6c1c81c1e4765d049ca56f",
+    "has_audio": false,
+    "audio_note": "Original Instagram metadata has_audio=false; DASH manifest and all three source candidates contain video only.",
+    "duration_seconds": 109.966667
   }
 ]
