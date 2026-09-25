@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Монтажёр рилсов — ваши видео в работу | Предпросмотр</title>
+<meta name="description" content="Научитесь настраивать своего AI-монтажёра: работать с исходниками, задавать оформление и проверять ролик перед публикацией. Предпросмотр программы.">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:title" content="Монтажёр рилсов — ваши видео в работу | Предпросмотр">
+<meta property="og:description" content="Научитесь настраивать своего AI-монтажёра: работать с исходниками, задавать оформление и проверять ролик перед публикацией. Предпросмотр программы.">
+<meta property="og:type" content="website">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFFFFF;--blue:#BFDDFB;--blue-soft:#DCEBFC;--blue-deep:#2F80ED;--coral:#E8563F;--ink:#111111;--ink-2:#3A3A3A;--mute:#6B6B6B;--line:#E6E6E6;--gray:#F5F5F5;--dark:#2B2B2B}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,system-ui,-apple-system,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;line-height:1.45;font-size:17px;min-height:100vh;display:flex;flex-direction:column}
+img,video{display:block;max-width:100%}
+a{color:inherit}
+.mono{font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,monospace;font-size:12.5px;letter-spacing:.02em}
+.wrap{width:100%;max-width:1240px;margin:0 auto;padding:0 40px}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0}
+.nav-l{display:flex;align-items:center;gap:14px;text-decoration:none}
+.nav-l img{width:44px;height:44px;border-radius:50%;object-fit:cover}
+.nav-l .tag{background:var(--gray);border-radius:12px;padding:10px 16px;line-height:1.35}
+.nav-r .chip{background:var(--blue);border-radius:999px;padding:10px 16px;font-family:'JetBrains Mono',monospace;font-size:13px;white-space:nowrap}
+main{flex:1;display:flex;align-items:center}
+.hero{width:100%;padding:8px 0 56px}
+.grid{display:grid;grid-template-columns:1.25fr .75fr;gap:56px;align-items:center}
+.kick{color:var(--mute);margin-bottom:22px;display:flex;gap:10px;align-items:center}
+.kick .star{color:var(--coral);font-size:15px}
+.h1{font-size:clamp(36px,4.3vw,62px);line-height:1.04;letter-spacing:-.04em;font-weight:500;max-width:820px}
+.h1 .u{display:inline;text-decoration:underline;text-decoration-color:var(--blue-deep);text-decoration-thickness:3px;text-underline-offset:.12em}
+.lead{font-size:clamp(17px,1.4vw,20px);line-height:1.45;color:var(--ink-2);max-width:620px;margin-top:20px}
+.steps{list-style:none;margin-top:22px;border-top:1px solid var(--line);counter-reset:s;max-width:620px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:44px 1fr;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:16px;color:var(--ink-2)}
+.steps li:before{content:"0" counter(s);font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--blue-deep);padding-top:3px}
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:56px;padding:0 30px;border-radius:999px;border:0;text-decoration:none;font-size:15px;font-weight:500;font-family:'JetBrains Mono',monospace;cursor:pointer;white-space:nowrap;background:var(--coral);color:#fff;transition:transform .15s ease,opacity .15s}
+.pill:hover{transform:translateY(-1px);opacity:.94}
+.pill:focus-visible{outline:3px solid var(--blue-deep);outline-offset:3px}
+.note{margin-top:12px;color:var(--mute);font-size:14px}
+
+/* Compact examples: one mounted player, stable stage. */
+.side{position:relative;min-width:0}
+.example-stage{height:420px;width:100%;background:var(--gray);border:1px solid var(--line);border-radius:20px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.example-stage video,.example-stage iframe,.example-stage img{display:block;width:100%;height:100%;object-fit:contain;border:0}
+.example-tabs{display:flex;gap:6px;justify-content:center;margin-top:14px}
+.example-tabs button{font:500 12px 'JetBrains Mono',monospace;min-height:44px;min-width:0;flex:1;max-width:52px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);cursor:pointer}
+.example-tabs button[aria-selected="true"]{background:var(--blue);border-color:var(--blue);color:#1f4f8a}
+.example-tabs button:focus-visible{outline:3px solid var(--blue-deep);outline-offset:3px}
+.example-caption{min-height:66px;padding-top:12px;text-align:center;font-size:15px;color:var(--ink-2)}
+.example-caption small{display:block;color:var(--mute);font-size:12px;margin-top:3px}
+@media(max-width:900px){.side{width:100%;max-width:560px;margin:auto}.example-stage{height:360px}}
+.footer{padding:26px 0 34px;border-top:1px solid var(--line)}
+.footer .rowf{display:flex;flex-wrap:wrap;gap:12px 30px;align-items:center;justify-content:space-between;font-size:14px;color:var(--mute)}
+.footer a{color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--line)}
+.footer nav{display:flex;flex-wrap:wrap;gap:22px}
+@media (max-width:900px){.hero{padding-left:40px;padding-right:40px}.grid{grid-template-columns:1fr;gap:40px}.side{order:2}.phone{width:min(240px,100%)}.c2{right:0}}
+@media (max-width:640px){
+ .wrap{padding:0 20px}.nav-l .tag{display:none}
+ .hero{padding:8px 20px 48px;padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right))}.h1{font-size:10vw}
+ .row{flex-direction:column}.pill{width:100%}
+ .c1{left:-6px}.c2{right:0}
+}
+
+main{display:block}.hero{padding-top:44px;padding-bottom:68px}.grid{align-items:start;gap:48px}.h1{font-size:clamp(36px,4.1vw,59px);line-height:1.06}.lead .dd{font-family:'JetBrains Mono',monospace;color:var(--blue-deep)}
+.hero-actions{margin-top:28px}.hero-actions .note{max-width:490px}.side-label{margin-bottom:12px;color:var(--mute)}.example-tabs{flex-wrap:wrap}.example-tabs button{flex:1 0 44px;min-width:44px;max-width:52px}.example-caption{min-height:72px}.example-context{font-size:14px;color:var(--mute);line-height:1.5;text-align:center}
+.section{padding:72px 0;border-top:1px solid var(--line)}.section.gray{background:var(--gray)}.section h2{font-size:clamp(30px,3.3vw,46px);font-weight:500;letter-spacing:-.04em;line-height:1.08;max-width:780px}.section-intro{font-size:19px;color:var(--ink-2);max-width:740px;margin-top:22px}.split{display:grid;grid-template-columns:1fr 1fr;gap:64px}.editorial-list{list-style:none;margin-top:30px}.editorial-list li{padding:20px 0;border-top:1px solid var(--line)}.editorial-list h3,.workflow h3{font-size:22px;font-weight:500;letter-spacing:-.025em;line-height:1.2;margin-bottom:10px}.editorial-list p,.workflow p{color:var(--ink-2);font-size:17px;line-height:1.55}.blue-note{background:var(--blue);padding:22px 26px;border-radius:18px;margin-top:28px;font-size:18px;line-height:1.5}.workflow{margin-top:32px;list-style:none}.workflow li{display:grid;grid-template-columns:70px 1fr;gap:20px;padding:26px 0;border-top:1px solid var(--line)}.step-label{color:var(--blue-deep);padding-top:3px}.workflow p{max-width:750px}.faq{margin-top:30px;max-width:900px}.faq details{border-top:1px solid var(--line);padding:22px 0}.faq summary{font-size:20px;font-weight:500;cursor:pointer;min-height:44px;padding-right:12px}.faq details p{color:var(--ink-2);margin-top:14px;line-height:1.6;max-width:780px}.closing{max-width:760px}.closing .pill{margin-top:28px}.preview-note{font-size:13px;color:var(--mute);margin-top:24px}.u{text-decoration:underline;text-decoration-color:var(--blue-deep);text-decoration-thickness:3px;text-underline-offset:.12em}
+@media(max-width:900px){.split{grid-template-columns:1fr;gap:28px}.hero{padding-top:28px}.grid{gap:40px}.side{max-width:560px}.example-stage{height:420px}.section{padding:52px 0}}
+@media(max-width:640px){.hero{padding-top:22px}.h1{font-size:40px}.lead{font-size:18px}.nav-r .chip{font-size:11px;padding:10px 12px}.section h2{font-size:34px}.workflow li{grid-template-columns:35px 1fr;gap:12px}.example-stage{height:390px}.example-tabs{gap:8px}.example-tabs button{max-width:none;flex-basis:calc(20% - 8px)}.blue-note{padding:20px}.pill{padding:0 18px;font-size:14px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.pill{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap"><nav class="nav" aria-label="Навигация"><a class="nav-l" href="https://andreyandreev.me/"><img src="/ai-montage/assets/andrey.jpg" alt="Андрей Андреев"><span class="tag mono">Монтажёр рилсов<br>от Андрея Андреева</span></a><div class="nav-r"><span class="chip">предпросмотр программы</span></div></nav></div>
+<main>
+<section class="hero wrap" id="top"><div class="grid"><div>
+<p class="kick mono"><span class="star">✳</span> Обучение настройке своего AI-монтажёра</p>
+<h1 class="h1">Вы уже сняли видео.<br>Пора превратить их <span class="u">в рилсы.</span></h1>
+<p class="lead"><span class="dd">::</span> Когда на монтаж снова уходит весь вечер, даже хорошие исходники остаются в папке. На программе вы научитесь настраивать своего AI-агента: поручать ему сборку ролика и проверять результат перед публикацией.</p>
+<ul class="steps"><li>Ваши исходники и мысли остаются основой видео</li><li>Агент собирает монтаж, субтитры, врезки и обложку</li><li>Вы задаёте оформление и решаете, что готово к публикации</li></ul>
+<div class="hero-actions"><a class="pill" href="https://t.me/andrey_andreev">Обсудить программу</a><p class="note">Напишите Андрею, какие видео вы снимаете и на чём застреваете в монтаже. Обсудим, подходит ли вам такой способ работы.</p></div>
+</div>
+   <div class="side" aria-label="Примеры работы агента">
+    <p class="side-label mono">Примеры монтажа · выберите ролик</p>
+    <div class="example-stage" id="example-stage" role="tabpanel" aria-labelledby="example-1" tabindex="0">
+     <video src="/montager/media/DdTBhdiIAiX.mp4" poster="/montager/media/DdTBhdiIAiX.jpg" controls playsinline preload="metadata" aria-label="Пример 1"></video>
+    </div>
+    <div class="example-tabs" role="tablist" aria-label="Выберите пример">
+     <button type="button" id="example-1" role="tab" aria-controls="example-stage" aria-selected="true" tabindex="0" aria-label="Пример 1">01</button>
+     <button type="button" id="example-2" role="tab" aria-controls="example-stage" aria-selected="false" tabindex="-1" aria-label="Пример 2">02</button>
+     <button type="button" id="example-3" role="tab" aria-controls="example-stage" aria-selected="false" tabindex="-1" aria-label="Пример 3">03</button>
+     <button type="button" id="example-4" role="tab" aria-controls="example-stage" aria-selected="false" tabindex="-1" aria-label="Пример 4">04</button>
+     <button type="button" id="example-5" role="tab" aria-controls="example-stage" aria-selected="false" tabindex="-1" aria-label="Пример 5">05</button>
+     <button type="button" id="example-6" role="tab" aria-controls="example-stage" aria-selected="false" tabindex="-1" aria-label="Пример 6">06</button>
+     <button type="button" id="example-7" role="tab" aria-controls="example-stage" aria-selected="false" tabindex="-1" aria-label="Пример 7">07</button>
+     <button type="button" id="example-8" role="tab" aria-controls="example-stage" aria-selected="false" tabindex="-1" aria-label="Пример 8">08</button>
+     <button type="button" id="example-9" role="tab" aria-controls="example-stage" aria-selected="false" tabindex="-1" aria-label="Пример 9">09</button>
+     <button type="button" id="example-10" role="tab" aria-controls="example-stage" aria-selected="false" tabindex="-1" aria-label="Пример 10">10</button>
+    </div>
+    <p class="example-caption" aria-live="polite"><span id="example-title">Пример 1</span><small id="example-credit">Рилсы Андрея Андреева</small></p>
+    <p class="example-context">Примеры с исходной страницы программы. Это ориентир по монтажу, а не результаты учеников и не обещание такого же результата на любых исходниках.</p>
+   </div>
+</div></section>
+<section class="section gray" id="situation"><div class="wrap split"><div><p class="kick mono">Знакомая ситуация</p><h2>Материал есть.<br>До публикации всё время что-то мешает.</h2><p class="section-intro">Вы можете рассказать о своей работе, показать процесс или разобрать случай из практики. Но между записью и готовым роликом остаётся ещё одна работа.</p></div><ul class="editorial-list"><li><h3>Каждый ролик приходится собирать руками</h3><p>Убрать паузы, поправить субтитры, найти вставку, оформить обложку. Для следующего видео всё начинается заново.</p></li><li><h3>Правки съедают желание продолжать</h3><p>Хочется живого видео в своём стиле. Получается очередной вечер с редактором и ролик, который всё ещё «надо доделать».</p></li><li><h3>Снятые кейсы лежат без дела</h3><p>В архиве уже есть что показать. Хочется использовать эти материалы, а не каждый раз придумывать и снимать всё с нуля.</p></li></ul></div></section>
+<section class="section" id="result"><div class="wrap split"><div><p class="kick mono">Чему вы учитесь</p><h2>Повторять процесс.<br>Сохранять <span class="u">свой стиль.</span></h2><p class="section-intro">Цель программы — настроить агента под ваши задачи и понять, как с ним работать дальше. От подготовки исходника до проверки собранного ролика.</p><div class="blue-note">Вы осваиваете настройку собственного монтажёра. Это потребует вашего участия: выбрать материал, объяснить задачу, посмотреть результат и уточнить требования.</div></div><ul class="editorial-list"><li><h3>Понятное задание вместо догадок</h3><p>Что оставить в видео, где нужна врезка, как должны выглядеть субтитры. Вы учитесь формулировать требования, по которым можно проверить монтаж.</p></li><li><h3>Оформление, которое можно повторить</h3><p>Опираетесь на свои примеры и предпочтения. Проверяете, соответствует ли результат вашей подаче, и уточняете настройки для следующих роликов.</p></li><li><h3>Контроль у автора</h3><p>Агент берёт на себя операции с видео. За вами остаются смысл, точность формулировок и решение о публикации.</p></li></ul></div></section>
+<section class="section gray" id="workflow"><div class="wrap"><p class="kick mono">Как устроена работа</p><h2>Сначала настройка.<br>Затем практика на своих видео.</h2><ol class="workflow"><li><span class="step-label mono">01</span><div><h3>Определяете задачу для первого ролика</h3><p>Выбираете материал и мысль, которую хотите донести. Можно начать с уже снятого видео. Большой архив сначала нужно разобрать: автоматический поиск нужного кадра среди любых файлов здесь не обещаем.</p></div></li><li><span class="step-label mono">02</span><div><h3>Настраиваете своего агента</h3><p>Задаёте требования к монтажу и оформлению. Учитесь понимать, что нужно изменить в задании или настройках, если результат вам не подходит.</p></div></li><li><span class="step-label mono">03</span><div><h3>Отправляете исходник в Telegram</h3><p>После настройки агент собирает ролик: убирает паузы, добавляет субтитры и врезки, готовит обложку. Качество зависит от исходного видео и поставленной задачи.</p></div></li><li><span class="step-label mono">04</span><div><h3>Проверяете и повторяете на следующем материале</h3><p>Смотрите, сохранился ли смысл, верны ли субтитры, уместны ли вставки. Вносите правки и используете уточнённые требования дальше. Результат не отправляется в блог без вашего решения.</p></div></li></ol></div></section>
+<section class="section" id="fit"><div class="wrap split"><div><p class="kick mono">Кому подойдёт</p><h2>Тем, кто хочет разобраться со своим монтажом.</h2><ul class="editorial-list"><li><p>Вы снимаете экспертные видео, показываете работу или делаете анонсы. Рутинная сборка мешает доводить материал до публикации.</p></li><li><p>Вам важна своя подача. Вы готовы задавать требования и проверять видео, а не принимать первый вариант автоматически.</p></li><li><p>Вы делаете контент для себя или клиентов и хотите освоить настройку агента самостоятельно.</p></li></ul></div><div><p class="kick mono">Границы программы</p><h2>Монтаж решает свою часть задачи.</h2><ul class="editorial-list"><li><p>Если вам нужен готовый сервис или специалист, которому можно сразу отдать всю работу, учитывайте: здесь обучение и самостоятельная настройка.</p></li><li><p>Если пока непонятно, для кого блог и что вы продаёте, один монтаж этого не определит. Позиционирование, воронки продаж, сайты и карусели — отдельные задачи.</p></li><li><p>Если вы ждёте гарантированных охватов, заявок или дохода, таких обещаний у программы нет. Решение о том, что говорить аудитории, остаётся за вами.</p></li></ul></div></div></section>
+<section class="section gray" id="questions"><div class="wrap"><p class="kick mono">Перед решением</p><h2>Что стоит знать заранее</h2><div class="faq"><details><summary>Я устал разбираться в новых сервисах. Здесь тоже придётся?</summary><p>Да, потребуется освоить настройку агента. Смысл обучения в том, чтобы понимать свой рабочий процесс и повторять его. Если сейчас вы совсем не готовы заниматься настройками, обсудите это с Андреем до записи.</p></details><details><summary>Видео не станут одинаковыми и «слишком нейросетевыми»?</summary><p>Вы работаете со своими исходниками и задаёте требования к подаче. Референсы помогают объяснить желаемый стиль, но сами по себе не гарантируют точного совпадения. Результат нужно смотреть и корректировать.</p></details><details><summary>Можно использовать видео, которые я уже снял?</summary><p>Да, они могут стать исходниками для монтажа. Начните с конкретного материала и задачи. Если у вас длинные записи, большой архив или особый формат, сначала покажите пример Андрею: возможности работы с ним стоит проверить заранее.</p></details><details><summary>Будут ли дополнительные расходы?</summary><p>Для работы агента могут понадобиться платные инструменты. Состав сервисов и расходы нужно уточнить перед участием. Бесплатную работу всех инструментов и определённую сумму экономии мы не обещаем.</p></details><details><summary>Сколько длится программа и как проходит обучение?</summary><p>Программа в разработке. Даты, длительность, стоимость и формат участия нужно уточнить у Андрея. На этой странице можно оценить задачу программы и примеры монтажа.</p></details></div></div></section>
+<section class="section" id="contact"><div class="wrap"><div class="closing"><p class="kick mono">Начните со своей задачи</p><h2>Какой ролик вы давно хотите доделать?</h2><p class="section-intro">Расскажите, что уже снято, какой результат нужен и что сейчас приходится делать вручную. Так проще понять, подходит ли вам программа по настройке AI-монтажёра.</p><a class="pill" href="https://t.me/andrey_andreev">Обсудить программу</a><p class="note">Откроется личный чат с Андреем в Telegram.</p><p class="preview-note">Предпросмотр новой версии страницы. Условия участия здесь не опубликованы.</p></div></div></section>
+</main>
+<footer class="footer"><div class="wrap rowf"><span>© Create Today</span><nav aria-label="Юридические ссылки"><a href="https://andreyandreev.me/ai/privacy/" target="_blank" rel="noreferrer">Политика конфиденциальности</a><a href="https://t.me/andrey_andreev" target="_blank" rel="noreferrer">Написать Андрею</a></nav></div></footer>
+<script>
+(function(){
+ var examples=[{"title": "Пример 1", "src": "/montager/media/DdTBhdiIAiX.mp4", "poster": "/montager/media/DdTBhdiIAiX.jpg", "credit": "Рилсы Андрея Андреева"}, {"title": "Пример 2", "src": "/montager/media/DdRuN_CsT5w.mp4", "poster": "/montager/media/DdRuN_CsT5w.jpg", "credit": "Автор: @_damorozova"}, {"title": "Пример 3", "src": "/montager/media/DdWWIzfIcna.mp4", "poster": "/montager/media/DdWWIzfIcna.jpg", "credit": "Рилсы Андрея Андреева"}, {"title": "Пример 4", "src": "/montager/media/DdQjXBpoTMV.mp4", "poster": "/montager/media/DdQjXBpoTMV.jpg", "credit": "Рилсы Андрея Андреева"}, {"title": "Пример 5", "src": "/montager/media/Ddjlj_sil1C.mp4", "poster": "/montager/media/Ddjlj_sil1C.jpg", "credit": "Автор: @provotorov"}, {"title": "Пример 6", "src": "/montager/media/DdORHGNRZpx.mp4", "poster": "/montager/media/DdORHGNRZpx.jpg", "credit": "Рилсы Андрея Андреева"}, {"title": "Пример 7", "src": "/montager/media/DdM2id1Avra.mp4", "poster": "/montager/media/DdM2id1Avra.jpg", "credit": "Рилсы Андрея Андреева"}, {"title": "Пример 8", "src": "/montager/media/DdJES4oCZdq.mp4", "poster": "/montager/media/DdJES4oCZdq.jpg", "credit": "Рилсы Андрея Андреева"}, {"title": "Пример 9", "src": "/montager/media/DdHEZS9odOa.mp4", "poster": "/montager/media/DdHEZS9odOa.jpg", "credit": "Рилсы Андрея Андреева"}, {"title": "Пример 10", "src": "/montager/media/DdrTk1Qsiub.mp4", "poster": "/montager/media/DdrTk1Qsiub.jpg", "credit": "Автор: @_damorozova"}];
+ var stage=document.getElementById('example-stage'),tabs=Array.from(document.querySelectorAll('.example-tabs button')),selected=0;
+ function select(index){
+  if(index===selected)return;
+  var previous=stage.querySelector('video');
+  if(previous){previous.pause();previous.removeAttribute('src');previous.load()}
+  selected=index;
+  var item=examples[index],media=document.createElement('video');
+  media.controls=true;media.playsInline=true;media.preload='metadata';media.src=item.src;media.poster=item.poster;media.setAttribute('aria-label',item.title);
+  stage.replaceChildren(media);
+  tabs.forEach(function(tab,i){tab.setAttribute('aria-selected',String(i===index));tab.tabIndex=i===index?0:-1});
+  stage.setAttribute('aria-labelledby',tabs[index].id);
+  document.getElementById('example-title').textContent=item.title;
+  document.getElementById('example-credit').textContent=item.credit;
+ }
+ tabs.forEach(function(tab,index){
+  tab.addEventListener('click',function(){select(index)});
+  tab.addEventListener('keydown',function(event){
+   var next=index;
+   if(event.key==='ArrowRight')next=(index+1)%tabs.length;
+   else if(event.key==='ArrowLeft')next=(index+tabs.length-1)%tabs.length;
+   else if(event.key==='Home')next=0;
+   else if(event.key==='End')next=tabs.length-1;
+   else return;
+   event.preventDefault();select(next);tabs[next].focus();
+  });
+ });
+})();
+</script>
+</body>
+</html>
