@@ -97,6 +97,20 @@ h2{font-size:clamp(32px,3.8vw,52px);line-height:1.04;letter-spacing:-.04em;font-
 .pr p:not(.how){margin-bottom:16px}
 .how{margin-top:auto;padding-top:16px;border-top:1px solid var(--line);color:var(--ink);font-size:16px}
 .how-k{display:block;width:max-content;background:var(--blue);border-radius:999px;padding:6px 12px;color:var(--ink);margin-bottom:10px}
+.ex{margin-top:14px;border-top:1px dashed var(--line);padding-top:12px}
+.ex summary{list-style:none;cursor:pointer;display:flex;flex-direction:column;gap:4px;position:relative;padding-right:28px}
+.ex summary::-webkit-details-marker{display:none}
+.ex summary:after{content:"+";position:absolute;right:2px;top:0;line-height:1;font-family:'JetBrains Mono',monospace;font-size:18px;color:var(--blue-deep)}
+.ex[open] summary:after{content:"×"}
+.ex-k{color:var(--blue-deep)}
+.ex-p{font-size:13.5px;color:var(--mute);line-height:1.35}
+.ex[open] .ex-p{display:none}
+.ex ul{list-style:none;margin-top:10px;display:flex;flex-direction:column;gap:10px}
+.ex li{display:flex;flex-direction:column;gap:1px;font-size:14px;line-height:1.35;color:var(--ink-2)}
+.ex-n{font-size:10.5px;color:var(--blue-deep);letter-spacing:.04em}
+.ex-w{color:var(--ink);font-weight:500}
+.ex-y{color:var(--mute)}
+.ex summary:focus-visible{outline:3px solid var(--blue-deep);outline-offset:3px;border-radius:6px}
 /* cta */
 .ctas{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:36px}
 .cc{background:#fff;border:1px solid var(--line);border-radius:22px;padding:32px;display:flex;flex-direction:column}
@@ -288,30 +302,35 @@ h2{font-size:clamp(32px,3.8vw,52px);line-height:1.04;letter-spacing:-.04em;font-
   <h3>Всё решает человек на обложке</h3>
   <p>Пост про Каск собрал 152 919 охвата, про Резерфорд — 8 688. Каск ругали за книгу о материнстве, называли «женщиной, ненавидящей своих детей». Четыре поста из 16 (Каск, Рил, Стац, Холлис) дали 60% охвата и 76% подписок.</p>
   <p class="how"><span class="mono how-k">Как применить у себя</span>Выпишите 10 людей из своей темы и к каждому напишите строчку, за что его ругали — оставьте тех, у кого строчка написалась.</p>
+  <details class="ex"><summary><span class="mono ex-k">Примеры для своей ниши · 5</span><span class="ex-p">Милгрэм, Юдкин, Швитцер, Карсон, Фрайд</span></summary><ul><li><span class="ex-n mono">психолог</span><span class="ex-w">Стэнли Милгрэм, «Подчинение авторитету»</span><span class="ex-y">коллеги ругали за опыт, где люди думали, что бьют другого током</span></li><li><span class="ex-n mono">нутрициолог</span><span class="ex-w">Джон Юдкин, «Pure, White and Deadly»</span><span class="ex-y">его теорию, что вредит сахар, а не жир, назвали «горой чепухи»</span></li><li><span class="ex-n mono">фитнес</span><span class="ex-w">Кэтрин Швитцер, «Marathon Woman»</span><span class="ex-y">в 1967-м организатор пытался стащить её с Бостонского марафона</span></li><li><span class="ex-n mono">дизайнер</span><span class="ex-w">Дэвид Карсон, «The End of Print»</span><span class="ex-y">его вёрстку называли нечитаемой</span></li><li><span class="ex-n mono">предприниматель</span><span class="ex-w">Джейсон Фрайд, «Rework»</span><span class="ex-y">запретил спорить о политике в рабочих чатах Basecamp, и ушла около трети сотрудников</span></li></ul></details>
 </article>
 <article class="pr">
   <p class="mono pr-no">02</p>
   <h3>Тема, о которой неловко говорить</h3>
   <p>Лучше всего зашли посты про мужскую депрессию (Рил, 102 404 охвата), мужские чувства (Холлис, 58 800) и материнство (Каск). Фрейд про деньги собрал 9 279 охвата, а Толстые про деньги в браке — 39 107, в 4 раза больше.</p>
   <p class="how"><span class="mono how-k">Как применить у себя</span>Если тему неловко обсуждать с коллегой за обедом, берите её.</p>
+  <details class="ex"><summary><span class="mono ex-k">Примеры для своей ниши · 5</span><span class="ex-p">Клонц, Рос, Гюнтер, Лэнг, Хоровиц</span></summary><ul><li><span class="ex-n mono">коуч</span><span class="ex-w">Брэд и Тед Клонц, «Mind over Money»</span><span class="ex-y">тайные траты и финансовая неверность в паре</span></li><li><span class="ex-n mono">нутрициолог</span><span class="ex-w">Джанин Рос, «Женщины, еда и Бог»</span><span class="ex-y">когда заедаешь чувства</span></li><li><span class="ex-n mono">женское здоровье</span><span class="ex-w">Джен Гюнтер, «Менопауза»</span><span class="ex-y">приливы, сон и секс</span></li><li><span class="ex-n mono">психолог</span><span class="ex-w">Оливия Лэнг, «Одинокий город»</span><span class="ex-y">одиночество взрослого человека в большом городе</span></li><li><span class="ex-n mono">предприниматель</span><span class="ex-w">Бен Хоровиц, «Легко не будет»</span><span class="ex-y">страх основателя и увольнения</span></li></ul></details>
 </article>
 <article class="pr">
   <p class="mono pr-no">03</p>
   <h3>Только настоящие цитаты из книги</h3>
   <p>У Резерфорд цитаты из выступлений получились короткими и слабыми, поэтому я стал брать их прямо из её книги. Каждую цитату я сверяю с книгой и под ней пишу, откуда она.</p>
   <p class="how"><span class="mono how-k">Как применить у себя</span>Ищите фразу поиском по тексту книги в Google Books: нет её в книге — не ставьте.</p>
+  <details class="ex"><summary><span class="mono ex-k">Примеры для своей ниши · 5</span><span class="ex-p">Франкл, Мураками, Клеон, Поллан, Найт</span></summary><ul><li><span class="ex-n mono">коуч</span><span class="ex-w">Виктор Франкл, «Человек в поисках смысла»</span><span class="ex-y">его самую известную фразу про «пространство между стимулом и реакцией» в книге не найти, проверяйте каждую</span></li><li><span class="ex-n mono">фитнес</span><span class="ex-w">Харуки Мураками, «О чём я говорю, когда говорю о беге»</span><span class="ex-y">про бег и возраст от первого лица</span></li><li><span class="ex-n mono">дизайнер</span><span class="ex-w">Остин Клеон, «Кради как художник»</span><span class="ex-y">главы названы готовыми фразами</span></li><li><span class="ex-n mono">нутрициолог</span><span class="ex-w">Майкл Поллан, «В защиту еды»</span><span class="ex-y">правила про еду в одну строку</span></li><li><span class="ex-n mono">предприниматель</span><span class="ex-w">Фил Найт, «Продавец обуви»</span><span class="ex-y">мемуар написан сценами, фразы легко найти поиском и проверить</span></li></ul></details>
 </article>
 <article class="pr">
   <p class="mono pr-no">04</p>
   <h3>Одна понятная мысль на слайд</h3>
   <p>У Холлиса я выкинул последний слайд про «тень Сатурна», потому что без объяснений он непонятен. У белл хукс я взял только цитаты без слова «патриархат», иначе пост звучал бы как статья про политику.</p>
   <p class="how"><span class="mono how-k">Как применить у себя</span>Прочитайте цитату вслух кому-нибудь не из вашей темы, и если пришлось объяснять — убирайте.</p>
+  <details class="ex"><summary><span class="mono ex-k">Примеры для своей ниши · 5</span><span class="ex-p">Канеман, Готтман, Мате, Клир, Норман</span></summary><ul><li><span class="ex-n mono">предприниматель</span><span class="ex-w">Даниэль Канеман, «Думай медленно… решай быстро»</span><span class="ex-y">берите бытовые примеры ошибок, пропускайте «Систему 1» и «Систему 2»</span></li><li><span class="ex-n mono">коуч</span><span class="ex-w">Джон Готтман, «7 принципов счастливого брака»</span><span class="ex-y">берите про обычные ссоры, пропускайте термин «четыре всадника»</span></li><li><span class="ex-n mono">психолог</span><span class="ex-w">Габор Мате, «Когда тело говорит нет»</span><span class="ex-y">берите про тех, кто не умеет отказывать, пропускайте медицинские объяснения</span></li><li><span class="ex-n mono">фитнес</span><span class="ex-w">Джеймс Клир, «Атомные привычки»</span><span class="ex-y">берите «на 1% лучше каждый день», пропускайте «четыре закона»</span></li><li><span class="ex-n mono">дизайнер</span><span class="ex-w">Дон Норман, «Дизайн привычных вещей»</span><span class="ex-y">берите про двери, где непонятно, толкать или тянуть, пропускайте «аффордансы»</span></li></ul></details>
 </article>
 <article class="pr">
   <p class="mono pr-no">05</p>
   <h3>Лицо крупно и одна фраза</h3>
   <p>На обложке портрет во весь слайд и поверх него одна фраза — у Стаца это его собственные слова: «Я скажу вам что делать». Для Уайта сначала была общая фраза про усталость, и я заменил её фактом: «Boeing нанимал его читать стихи инженерам».</p>
   <p class="how"><span class="mono how-k">Как применить у себя</span>Напишите 5 вариантов фразы до 7 слов и оставьте тот, который вам самим хочется кому-то переслать.</p>
+  <details class="ex"><summary><span class="mono ex-k">Примеры для своей ниши · 5</span><span class="ex-p">Линехан, Гоггинс, Спектор, Шер, Блейкли</span></summary><ul><li><span class="ex-n mono">психолог</span><span class="ex-w">Марша Линехан</span><span class="ex-y">«В 17 лет — два года в психбольнице»</span></li><li><span class="ex-n mono">фитнес</span><span class="ex-w">Дэвид Гоггинс</span><span class="ex-y">«Сбросил 48 кг за три месяца»</span></li><li><span class="ex-n mono">нутрициолог</span><span class="ex-w">Тим Спектор</span><span class="ex-y">«Сын 10 дней ел только McDonald's»</span></li><li><span class="ex-n mono">дизайнер</span><span class="ex-w">Пола Шер</span><span class="ex-y">«Нарисовала логотип Citi на салфетке»</span></li><li><span class="ex-n mono">предприниматель</span><span class="ex-w">Сара Блейкли</span><span class="ex-y">«Семь лет продавала факсы по офисам»</span></li></ul></details>
 </article>
   </div>
  </div>
@@ -357,6 +376,7 @@ h2{font-size:clamp(32px,3.8vw,52px);line-height:1.04;letter-spacing:-.04em;font-
 <script>
 (function(){var b=document.getElementById('more'),g=document.getElementById('posts');b.addEventListener('click',function(){g.classList.remove('collapsed');b.remove();try{window.ym&&ym(109255989,'reachGoal','quotes_show_all')}catch(_){}})})();
 (function(){var b=document.getElementById('vid-play');if(!b)return;b.addEventListener('click',function(){var f=document.createElement('iframe');f.src='https://www.loom.com/embed/1e1a90bc56e74a26938c1ac23fbedcb0?autoplay=1&hideEmbedTopBar=true';f.title=b.getAttribute('aria-label');f.allow='autoplay; fullscreen';f.setAttribute('allowfullscreen','');b.replaceWith(f)})})();
+document.querySelectorAll('details.ex').forEach(function(d){d.addEventListener('toggle',function(){if(d.open){try{window.ym&&ym(109255989,'reachGoal','quotes_examples_open')}catch(_){}}})});
 document.querySelectorAll('[data-goal]').forEach(function(a){a.addEventListener('click',function(){try{window.ym&&ym(109255989,'reachGoal',a.dataset.goal)}catch(_){}})});
 </script>
 <!-- Yandex.Metrika counter -->
