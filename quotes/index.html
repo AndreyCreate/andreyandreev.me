@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Как создавать посты, которые залетают. Часть 1: цитаты — Андрей Андреев</title>
-<meta name="description" content="16 постов с цитатами: 661 026 охвата, 8 819 репостов, 773 подписок. Сколько подписок дал каждый пост, 5 правил и видео, как это делается.">
+<meta name="description" content="16 постов с цитатами: 661 026 охвата, 8 819 репостов, 773 подписок. Сколько подписок дал каждый пост, 5 правил и видео из канала, как такие посты делает AI-агент.">
 <meta name="robots" content="noindex, nofollow">
 <meta property="og:title" content="Как создавать посты, которые залетают. Часть 1: цитаты">
-<meta property="og:description" content="16 постов с цитатами: 661 026 охвата, 8 819 репостов, 773 подписок. Сколько подписок дал каждый пост, 5 правил и видео, как это делается.">
+<meta property="og:description" content="16 постов с цитатами: 661 026 охвата, 8 819 репостов, 773 подписок. Сколько подписок дал каждый пост, 5 правил и видео из канала, как такие посты делает AI-агент.">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://andreyandreev.me/quotes/covers/DZSDXYdjC-z.jpg">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
@@ -112,25 +112,31 @@ h2{font-size:clamp(32px,3.8vw,52px);line-height:1.04;letter-spacing:-.04em;font-
 .ex-y{color:var(--mute)}
 .ex summary:focus-visible{outline:3px solid var(--blue-deep);outline-offset:3px;border-radius:6px}
 /* cta */
-.ctas{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:36px}
-.cc{background:#fff;border:1px solid var(--line);border-radius:22px;padding:32px;display:flex;flex-direction:column}
-.cc-blue{background:var(--blue);border-color:var(--blue)}
-.cc-k{color:var(--blue-deep)}
-.cc-blue .cc-k{color:#1f4f8a}
-.cc h3{font-size:clamp(24px,2.4vw,32px);letter-spacing:-.035em;font-weight:500;line-height:1.08;margin:10px 0 12px}
-.cc p{color:var(--ink-2);font-size:16.5px}
-.cc p+p{margin-top:10px}
+.gets{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:32px;max-width:1000px}
+.gets li{display:flex;gap:14px;align-items:flex-start;background:#fff;border-radius:18px;padding:18px 20px;font-size:16.5px;line-height:1.42;color:var(--ink-2)}
+.g-no{flex:none;background:var(--blue);border-radius:999px;padding:3px 9px;color:var(--ink);margin-top:1px}
+.tvs{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:36px;max-width:1000px}
+.tv{text-decoration:none;display:flex;flex-direction:column;min-width:0}
+.tv-ph{display:block;position:relative;border-radius:16px;overflow:hidden;aspect-ratio:9/16;background:#e9e9e9;box-shadow:0 10px 28px rgba(0,0,0,.10);transition:transform .15s}
+.tv:hover .tv-ph{transform:translateY(-3px)}
+.tv-ph video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.tv-dt{margin-top:12px;color:var(--mute);font-size:11.5px}
+.tv-tx{margin-top:4px;font-size:15px;line-height:1.35;color:var(--ink);letter-spacing:-.005em}
+.tv-go{margin-top:8px;color:var(--blue-deep);font-size:12px}
+.ch-cta{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px;margin-top:40px}
+.ch-cta .pill{margin-top:0}
+.ch-cta .mono{color:var(--mute)}
 .pill{display:inline-flex;align-items:center;justify-content:center;height:56px;padding:0 30px;border-radius:999px;text-decoration:none;font-size:15px;font-weight:500;font-family:'JetBrains Mono',monospace;white-space:nowrap;margin-top:24px;align-self:flex-start;transition:transform .15s}
 .pill:hover{transform:translateY(-1px)}
 .pill.coral{background:var(--coral);color:#fff}
 .pill.dark{background:var(--ink);color:#fff}
-.pill:focus-visible,.post:focus-visible,.tc:focus-visible{outline:3px solid var(--blue-deep);outline-offset:3px}
+.pill:focus-visible,.post:focus-visible,.tc:focus-visible,.tv:focus-visible{outline:3px solid var(--blue-deep);outline-offset:3px}
 .footer{padding:26px 0 34px;border-top:1px solid var(--line)}
 .footer .rowf{display:flex;flex-wrap:wrap;gap:12px 30px;align-items:center;justify-content:space-between;font-size:14px;color:var(--mute)}
 .footer a{color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--line)}
 @media (max-width:1100px){.posts{grid-template-columns:repeat(4,1fr)}}
 @media (max-width:1100px){.prs{grid-template-columns:1fr 1fr}}
-@media (max-width:900px){.hgrid{grid-template-columns:1fr}.tilt{height:360px;max-width:420px;margin:8px auto 0;width:100%}.posts{grid-template-columns:repeat(3,1fr)}.prs,.ctas{grid-template-columns:1fr}}
+@media (max-width:900px){.hgrid{grid-template-columns:1fr}.tilt{height:360px;max-width:420px;margin:8px auto 0;width:100%}.posts{grid-template-columns:repeat(3,1fr)}.prs,.gets{grid-template-columns:1fr}.tvs{grid-template-columns:1fr 1fr}}
 @media (max-width:640px){
  .wrap{padding:0 20px}.nav-l .tag{display:none}
  .hero{padding:8px 0 48px}h1{font-size:9.6vw}
@@ -140,7 +146,8 @@ h2{font-size:clamp(32px,3.8vw,52px);line-height:1.04;letter-spacing:-.04em;font-
  .posts{grid-template-columns:1fr 1fr;gap:22px 12px}
  .posts.collapsed .post:nth-child(n+7){display:none}.more{display:block;width:100%}
  .post .st b{font-size:13px}.post .st i{font-size:9.5px}.post .fl b{font-size:26px}.vid{border-radius:12px}
- .pr{padding:22px 20px 18px}.cc{padding:24px 20px}.pill{width:100%;align-self:stretch}
+ .pr{padding:22px 20px 18px}.pill{width:100%;align-self:stretch}
+ .gets li{padding:14px 16px;font-size:15.5px;gap:12px}.tvs{gap:22px 12px}.tv-ph{border-radius:12px}.tv-tx{font-size:14px}.tv-dt{font-size:10.5px}
 }
 </style>
 </head>
@@ -148,7 +155,7 @@ h2{font-size:clamp(32px,3.8vw,52px);line-height:1.04;letter-spacing:-.04em;font-
 <div class="wrap">
  <nav class="nav" aria-label="Навигация">
   <a class="nav-l" href="https://andreyandreev.me/"><img src="../ai-montage/assets/andrey.jpg" alt="Андрей Андреев"><span class="tag mono">Посты, которые залетают<br>Андрей Андреев</span></a>
-  <a class="chip" href="#cta">Канал и предзапись</a>
+  <a class="chip" href="#channel">Telegram-канал</a>
  </nav>
 </div>
 
@@ -157,7 +164,7 @@ h2{font-size:clamp(32px,3.8vw,52px);line-height:1.04;letter-spacing:-.04em;font-
   <div>
    <p class="kick mono"><span class="star">✳</span> Разбор · часть 1 из серии</p>
    <h1>Как создавать посты, которые залетают. Часть&nbsp;1: <span class="u">цитаты</span></h1>
-   <div class="lead"><p>Я разобрал свои 16 постов с цитатами — вместе они собрали 661 026 охвата, 8 819 репостов и 773 подписчика. В каждом на обложке портрет человека и фраза, а внутри 7–10 его цитат из книг и интервью. Ниже — сколько дал каждый пост, пять правил и видео, где я показываю, как это делаю.</p></div>
+   <div class="lead"><p>Я разобрал свои 16 постов с цитатами — вместе они собрали 661 026 охвата, 8 819 репостов и 773 подписчика. В каждом на обложке портрет человека и фраза, а внутри 7–10 его цитат из книг и интервью. Ниже — сколько дал каждый пост, пять правил и видео из моего канала, как такие посты делает агент.</p></div>
    <div class="res" role="list">
     <div class="rc" role="listitem"><span class="mono">охват</span><b>661 026</b><span class="s">за 16 постов</span></div>
     <div class="rc" role="listitem"><span class="mono">репосты</span><b>8 819</b><span class="s">за 16 постов</span></div>
@@ -336,34 +343,42 @@ h2{font-size:clamp(32px,3.8vw,52px);line-height:1.04;letter-spacing:-.04em;font-
  </div>
 </section>
 
-<section class="sec gray" id="video">
- <div class="wrap">
-  <p class="kick mono"><span class="star">✳</span> Видео · Loom</p>
-  <h2>Как я делаю такие посты — 12 минут</h2>
-  <div class="intro"><p>Ребята, это делается вот так просто. Смотрите первые 12 минут: как выбрать человека, где искать его цитаты и как проверить, что они настоящие. Дальше я рассказываю про посты с юмором.</p></div>
-  <div class="vid" id="vid"><button type="button" class="vid-play" id="vid-play" aria-label="Смотреть видео: Как я делаю такие посты — 12 минут" data-goal="quotes_video_play"><img src="loom_poster.jpg" alt="" loading="lazy" width="1024" height="666"><span class="vid-btn" aria-hidden="true"></span><span class="vid-len mono">17:55 · Loom</span></button></div>
- </div>
-</section>
 
-<section class="sec" id="cta">
+
+<section class="sec gray" id="channel">
  <div class="wrap">
-  <p class="kick mono"><span class="star">✳</span> Что дальше</p>
-  <h2>Если хотите делать такие посты быстро</h2>
-  <div class="intro"><p>Сейчас цитаты в книге ищет и проверяет мой AI-агент, слайды делает тоже он. Я выбираю человека, цитаты и фразу на обложку.</p></div>
-  <div class="ctas">
-<div class="cc ">
-  <p class="mono cc-k">01 · канал</p>
-  <h3>Telegram-канал «Андрей, бесишь!»</h3>
-  <p>Здесь я пишу про свои эксперименты с контентом, показываю результаты участников и зову на группы.</p>
-  <a class="pill dark" href="https://t.me/mbga_materials" target="_blank" rel="noopener" data-goal="quotes_tg_click">Открыть канал</a>
-</div>
-<div class="cc cc-blue">
-  <p class="mono cc-k">02 · программа</p>
-  <h3>Предзапись на программу «Монтажёр рилсов»</h3>
-  <p>Вы настроите своего AI-агента для монтажа рилсов: отправляете ему в Telegram то, что сняли, и получаете ролики с субтитрами. Запись бесплатная и без обязательств, а чем раньше вы в списке, тем больше скидка.</p>
-  <a class="pill coral" href="https://andreyandreev.me/montager/?src=quotes" target="_blank" rel="noopener" data-goal="quotes_montager_click">Записаться бесплатно</a>
-</div>
+  <p class="kick mono"><span class="star">✳</span> Telegram · «Андрей, бесишь!»</p>
+  <h2>Как мой агент делает посты и рилсы</h2>
+  <div class="intro"><p>Сейчас цитаты и слайды делает он — показываю на видео в Telegram-канале «Андрей, бесишь!».</p></div>
+  <p class="mono" style="margin-top:32px;color:var(--blue-deep)">Что вы получите</p>
+  <ul class="gets" style="margin-top:12px"><li><span class="mono g-no">01</span><span>Видео: от темы или голосового агенту до готового поста или рилса, с минутами. За сентябрь — больше десяти.</span></li><li><span class="mono g-no">02</span><span>Статистику моего Instagram по неделям: публикации, охват, подписки, разница с прошлой.</span></li><li><span class="mono g-no">03</span><span>Эксперименты, неудачные тоже: после 25 пробных рилсов охват упал на 21%.</span></li><li><span class="mono g-no">04</span><span>Результаты участников групп: посты, дизайн-системы, продажи.</span></li></ul>
+  <div class="tvs">
+<a class="tv" href="https://t.me/mbga_materials/243" target="_blank" rel="noopener" data-goal="quotes_tg_post">
+  <span class="tv-ph"><video class="lp" src="tg/ch_243.mp4" poster="tg/ch_243.jpg" muted loop playsinline preload="none" width="720" height="1280" aria-hidden="true"></video></span>
+  <span class="tv-dt mono">12.09 · пост в канале</span>
+  <span class="tv-tx">Цитаты Рейчел Каск агент ищет в её книге: от темы до поста около 10 минут</span>
+  <span class="tv-go mono">Открыть пост →</span>
+</a>
+<a class="tv" href="https://t.me/mbga_materials/264" target="_blank" rel="noopener" data-goal="quotes_tg_post">
+  <span class="tv-ph"><video class="lp" src="tg/ch_264.mp4" poster="tg/ch_264.jpg" muted loop playsinline preload="none" width="720" height="1280" aria-hidden="true"></video></span>
+  <span class="tv-dt mono">14.09 · пост в канале</span>
+  <span class="tv-tx">«Маленький принц»: голосовое из троллейбуса, пост за 72 минуты, ролик за 34 минуты</span>
+  <span class="tv-go mono">Открыть пост →</span>
+</a>
+<a class="tv" href="https://t.me/mbga_materials/230" target="_blank" rel="noopener" data-goal="quotes_tg_post">
+  <span class="tv-ph"><video class="lp" src="tg/ch_230.mp4" poster="tg/ch_230.jpg" muted loop playsinline preload="none" width="720" height="1280" aria-hidden="true"></video></span>
+  <span class="tv-dt mono">10.09 · пост в канале</span>
+  <span class="tv-tx">Рилс без монтажёра: 30 минут на первую версию, правки одним сообщением — ещё 20</span>
+  <span class="tv-go mono">Открыть пост →</span>
+</a>
+<a class="tv" href="https://t.me/mbga_materials/335" target="_blank" rel="noopener" data-goal="quotes_tg_post">
+  <span class="tv-ph"><video class="lp" src="tg/ch_335.mp4" poster="tg/ch_335.jpg" muted loop playsinline preload="none" width="720" height="1280" aria-hidden="true"></video></span>
+  <span class="tv-dt mono">26.09 · пост в канале</span>
+  <span class="tv-tx">Агент разобрал мой аккаунт: что работает, что нет, кнопка «Создать такой же пост»</span>
+  <span class="tv-go mono">Открыть пост →</span>
+</a>
   </div>
+  <div class="ch-cta"><a class="pill dark" href="https://t.me/mbga_materials" target="_blank" rel="noopener" data-goal="quotes_tg_click">Перейти в канал</a><span class="mono">t.me/mbga_materials</span></div>
  </div>
 </section>
 
@@ -375,7 +390,13 @@ h2{font-size:clamp(32px,3.8vw,52px);line-height:1.04;letter-spacing:-.04em;font-
 </footer>
 <script>
 (function(){var b=document.getElementById('more'),g=document.getElementById('posts');b.addEventListener('click',function(){g.classList.remove('collapsed');b.remove();try{window.ym&&ym(109255989,'reachGoal','quotes_show_all')}catch(_){}})})();
-(function(){var b=document.getElementById('vid-play');if(!b)return;b.addEventListener('click',function(){var f=document.createElement('iframe');f.src='https://www.loom.com/embed/1e1a90bc56e74a26938c1ac23fbedcb0?autoplay=1&hideEmbedTopBar=true';f.title=b.getAttribute('aria-label');f.allow='autoplay; fullscreen';f.setAttribute('allowfullscreen','');b.replaceWith(f)})})();
+
+(function(){var vs=[].slice.call(document.querySelectorAll('video.lp'));if(!vs.length)return;
+if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+function go(v){v.muted=true;var p=v.play();if(p&&p.catch)p.catch(function(){})}
+if(!('IntersectionObserver' in window)){vs.forEach(go);return}
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)go(e.target);else e.target.pause()})},{rootMargin:'200px 0px'});
+vs.forEach(function(v){io.observe(v)})})();
 document.querySelectorAll('details.ex').forEach(function(d){d.addEventListener('toggle',function(){if(d.open){try{window.ym&&ym(109255989,'reachGoal','quotes_examples_open')}catch(_){}}})});
 document.querySelectorAll('[data-goal]').forEach(function(a){a.addEventListener('click',function(){try{window.ym&&ym(109255989,'reachGoal',a.dataset.goal)}catch(_){}})});
 </script>
