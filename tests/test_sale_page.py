@@ -106,21 +106,17 @@ def test_sale_page_keeps_active_checkout_and_distinct_cta_measurement():
     assert "white-space:nowrap" not in html
 
 
-def test_sale_page_publishes_the_approved_deadline():
-    html, _ = parsed_page()
-
-    assert "6 августа 2026" not in html
-    assert 'data-deadline-status="approved"' in html
-    assert html.count("6 сентября 2026") >= 3
-    assert "23:59 по московскому времени" in html
-    assert ".deadline:before" not in html
-    assert ".final .note{margin-top:14px;color:rgba(241,238,230,.75)}" in html
-
-
-def test_sale_last_day_price_without_promo():
+def test_sale_page_has_no_deadline_or_false_urgency():
     import re
     html, _ = parsed_page()
-    assert "Последний день распродажи" in html
+
+    assert not re.search(r"deadline|countdown|setInterval|сентябр|августа 2026|23:59|последний|закроется|уходят из продажи|final sale|сегодня|завтра|насовсем", html, re.I)
+
+
+def test_sale_price_without_promo():
+    import re
+    html, _ = parsed_page()
+
     assert "9 900 ₽ без промокода" in html
     assert "419 400 ₽" in html
     assert not re.search(r"МИША|1[49][\s\u00a0\u202f]*900|of_6JnvXPPgT8L5", html, re.I)
