@@ -2,6 +2,8 @@
 
 User-agent: *
 Allow: /
+Disallow: /dubai/
+Disallow: /pult/
 
 # AI-краулеры — явно разрешены (GEO)
 User-agent: GPTBot
